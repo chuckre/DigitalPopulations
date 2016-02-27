@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="The Ehlschlaeger RGIK" default="build">
+	<path id="cp" description="complete classpath">
+        <fileset dir="lib" includes="**/*.jar"/>
+    </path>
+	
+	
+	<target name="build" description="Build main DP products">
+		<mkdir dir="build/class"/>
+		<javac destdir="build/class" debug="true"
+			 classpathref="cp">
+			<src>
+				<pathelement location="../Graph2D/src"/>
+				<pathelement location="src"/>
+			</src>
+		</javac>
+		
+    	<copy todir="build/class">
+    		<fileset dir="src" excludes="**/*.java **/package.html"/>
+		</copy>
+	</target>
+
+	
+	<target name="dist" description="Build distribution for Digital Populations"
+		depends="dpdist-win-batch, dpdist-unix-batch">
+	</target>
+	
+	
+	<!-- Copy all the files dpdist needs -->
+	<target name="dpdist-copyfiles" depends="build">
+		<mkdir dir="build/dp/lib"/>
+		
+	    <jar destfile="build/dp/lib/DigitalPopulations.jar">
+	        <fileset dir="build/class"/>
+		</jar>		
+
+		<copy todir="build/dp/lib" flatten="true">
+			<path refid="cp"/>
+		</copy>
+		
+		<copy todir="build/dp">
+			<!--fileset dir="projects">
+			    <include name="IllinoisDigitalPopulations/il01.bat"/>
+			    <include name="IllinoisDigitalPopulations/data/*"/>
+			</fileset-->
+			<fileset dir="projects">
+			    <include name="RhodeIslandDigitalPopulations/all-columns.html"/>
+			    <include name="RhodeIslandDigitalPopulations/all-hoh-all-pop.html"/>
+			    <include name="RhodeIslandDigitalPopulations/rhodeisland"/>
+			    <include name="RhodeIslandDigitalPopulations/RhodeIsland.bat"/>
+			    <include name="RhodeIslandDigitalPopulations/data/*"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	<!-- Build DP batch files for Windows -->
+	<target name="dpdist-win-batch" depends="dpdist-copyfiles">
+		<!-- Build CLASSPATH string for batch file -->
+		<property name="cproot" location="build/dp"/>
+		<pathconvert property="wincp" targetos="windows">
+			<fileset dir="build/dp/lib" includes="*.jar"/>
+			<map from="${cproot}" to="%P%"/>
+		</pathconvert>
+		
+		<echo file="build/dp/CensusGen.bat">@echo off
+REM
+REM Digital Populations Census Synthesizer
+REM
+
+set P=%~dp0
+set CLASSPATH=${wincp}
+
+java -Xmx1000m mil.army.usace.ehlschlaeger.digitalpopulations.censusgen.ConflatePumsQueryWithTracts %*
+</echo>
+
+		<echo file="build/dp/Select.bat">@echo off
+REM
+REM Generate a table containing only a subset of another table.
+REM
+
+set P=%~dp0
+set CLASSPATH=%CLASSPATH%;%P%\lib\SuperCSV-1.52.jar
+set CLASSPATH=%CLASSPATH%;%P%\lib\jopt-simple-3.1.jar
+set CLASSPATH=%CLASSPATH%;%P%\lib\commons\commons-primitives-1.0.jar
+
+java mil.army.usace.ehlschlaeger.rgik.util.Select %*
+		</echo>
+	
+		<echo file="build/dp/Csv2Kml.bat">@echo off
+REM
+REM General-purpose app to convert a CSV table into a KML file that can
+REM be used in Google Earth.
+REM
+
+set P=%~dp0
+set CLASSPATH=${wincp}
+
+java mil.army.usace.ehlschlaeger.digitalpopulations.csv2kml.Csv2Kml %*
+</echo>
+		
+		<echo file="build/dp/Dp2Kml.bat">@echo off
+REM
+REM Like Csv2Kml, but specific to Digital Populations.
+REM Can handle much larger numbers of households.
+REM
+
+set P=%~dp0
+set CLASSPATH=${wincp}
+
+java mil.army.usace.ehlschlaeger.digitalpopulations.csv2kml.Dp2Kml %*
+</echo>
+	</target>
+
+	<!-- Build DP batch files for UNIX -->
+	<target name="dpdist-unix-batch" depends="dpdist-copyfiles">
+		<!-- Build CLASSPATH string for batch file -->
+		<property name="cproot" location="build/dp"/>
+		<pathconvert property="unixcp" targetos="unix">
+			<fileset dir="build/dp/lib" includes="*.jar"/>
+			<map from="${cproot}" to="$P"/>
+		</pathconvert>
+		
+		<echo file="build/dp/censusgen.sh">#!/bin/bash
+#
+# Digital Populations Census Synthesizer
+#
+
+P=`dirname $0`
+CLASSPATH=${unixcp}
+
+java -Xmx1000m mil.army.usace.ehlschlaeger.digitalpopulations.censusgen.ConflatePumsQueryWithTracts $*
+</echo>
+		
+		<echo file="build/dp/select.sh">#!/bin/bash
+#
+# Generate a table containing only a subset of another table.
+#
+
+P=`dirname $0`
+CLASSPATH=${unixcp}
+
+java mil.army.usace.ehlschlaeger.rgik.util.Select %*
+</echo>
+
+		<echo file="build/dp/csv2kml.sh">#!/bin/bash
+#
+# General-purpose app to convert a CSV table into a KML file that can
+# be used in Google Earth.
+#
+
+P=`dirname $0`
+CLASSPATH=${unixcp}
+
+java mil.army.usace.ehlschlaeger.digitalpopulations.csv2kml.Csv2Kml %*
+</echo>
+
+		<echo file="build/dp/dp2kml.sh">#!/bin/bash
+#
+# Like Csv2Kml, but specific to Digital Populations.
+# Can handle much larger numbers of households.
+#
+
+P=`dirname $0`
+CLASSPATH=${unixcp}
+
+java mil.army.usace.ehlschlaeger.digitalpopulations.csv2kml.Dp2Kml %*
+</echo>
+	</target>
+	
+	
+	<target name="javadoc" description="Build a complete set of javadocs."
+			depends="build">
+        <javadoc 
+            access="public" 
+            author="true" 
+            destdir="build/javadocs" 
+            doctitle="The Ehlschlaeger RGIK" 
+            nodeprecated="false" 
+            nodeprecatedlist="false" 
+            noindex="false" 
+            nonavbar="false" 
+            notree="false" 
+            packagenames="*"
+            source="1.5" 
+            sourcepath="src" 
+            splitindex="false" 
+            use="true" 
+            version="true">
+        	<classpath>
+        		<pathelement location="build/class"/>
+        		<path refid="cp"/>
+        	</classpath>
+        </javadoc>
+    </target>
+
+
+    <target name="cafe" description="Build the stand-alone CAFE Display distributable."
+    		depends="build">
+    	<mkdir dir="build/CAFE-Display/software"/>
+    	
+    	<delete file="build/CAFE-Display/software/csv2kml.jar"/>
+    	
+        <jar destfile="build/CAFE-Display/software/csv2kml.jar">
+            <manifest>
+            	<!-- Tell Java to run JarRsrcLoader -->
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Class-Path" value="."/>
+            	<!-- Tell JarRsrcLoader to run Csv2Kml -->
+                <attribute name="Rsrc-Main-Class" value="mil.army.usace.ehlschlaeger.digitalpopulations.csv2kml.Csv2Kml"/>
+                <attribute name="Rsrc-Class-Path" value="./ jopt-simple-3.1.jar junit-4.7.jar SuperCSV-1.52.jar commons-io-1.4.jar commons-lang-2.5.jar commons-primitives-1.0.jar jsr-275-1.0-beta-2.jar geoapi-2.3-M1.jar jts-1.11.jar JavaAPIforKml.jar vecmath-1.3.2.jar geoapi-pending-2.3-M1.jar gt-metadata-2.7-M1.jar gt-referencing-2.7-M1.jar gt-api-2.7-M1.jar hsqldb-1.8.0.7.jar gt-epsg-hsql-2.7-M1.jar truezip-6.6.jar activation.jar jaxb-api.jar jsr173_1.0_api.jar jaxb-impl.jar commons-collections-3.2.1.jar h2-1.2.140.jar velocity-tools-generic-2.0.jar velocity-1.7.jar"/>
+            </manifest>
+        	
+            <zipfileset src="lib/jar-in-jar-loader.zip"/>
+            <fileset dir="build/class"/>
+        	
+            <zipfileset dir="lib" includes="h2-1.2.140.jar"/>
+            <zipfileset dir="lib" includes="jopt-simple-3.1.jar"/>
+            <zipfileset dir="lib" includes="junit-4.7.jar"/>
+            <zipfileset dir="lib" includes="SuperCSV-1.52.jar"/>
+            <zipfileset dir="lib" includes="truezip-6.6.jar"/>
+            <zipfileset dir="lib\commons"/>
+            <zipfileset dir="lib\geotools"/>
+            <zipfileset dir="lib\jak"/>
+            <zipfileset dir="lib\jaxb"/>
+            <zipfileset dir="lib\velocity"/>
+        </jar>
+    	
+    	<copy todir="build/CAFE-Display">
+    		<fileset dir="projects/CAFE-Display" includes="README.txt GenerateKML.bat TestTemplate.bat"/>
+		</copy>
+    	
+    	<copy todir="build/CAFE-Display/software">
+    		<fileset dir="projects/CAFE-Display" includes="AutoBubble.html CAFEStyle.html CollapsingSections.vm"/>
+		</copy>
+    </target>
+	
+	
+	<!-- May not work, use dp-schemagen.bat instead. -->
+	<target name="schemagen" description="UNTESTED! Generate XSD schema files for Digital Populations input files.">
+		<java classname="com.sun.tools.internal.jxc.SchemaGenerator"
+			classpath="src"
+			args="src/mil/army/usace/ehlschlaeger/digitalpopulations/censusgen/fittingcriteria/FittingCriteria.java"/>
+		<move file="schema1.xsd"
+			tofile="src/mil/army/usace/ehlschlaeger/digitalpopulations/censusgen/fittingcriteria/FittingCriteria.xsd"
+			overwrite="yes"/>
+		
+		<java classname="com.sun.tools.internal.jxc.SchemaGenerator"
+			classpath="src"
+			args="src/mil/army/usace/ehlschlaeger/digitalpopulations/censusgen/filerelationship/FileRelationship.java"/>
+		<move file="schema1.xsd"
+			tofile="src/mil/army/usace/ehlschlaeger/digitalpopulations/censusgen/filerelationship/FileRelationship.xsd"
+			overwrite="yes"/>
+	</target>
+	
+	
+	<target name="clean" description="delete built products">
+		<delete dir="build"/>
+	</target>
+</project>

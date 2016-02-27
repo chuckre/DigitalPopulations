@@ -1,0 +1,541 @@
+
+TODO:
+
+ - make big doc from pbworks
+ - -D param=value for anything in the properties file
+
+1. In a log file, to move the description of what each phase does right after the title and add a number of a current realization, e.g.
+*********************************************************************
+**** START PHASE 4: Pattern Optimization for realization [1]    *****
+*********************************************************************
+Since results for parallel runs are written out of order, that will also make a log file easier to read.
+
+2. At the end of Phase 1 there is a table with final expansion factors. After this table, there should be one more table that lists final expansion factors together with a corresponding household ID in a form of "id: final expansion factor"
+(makes it easier to catch a problematic household)
+
+3. Instead of -p <phase> option to make -p <pattern optimization minutes> option, where -1 = no phase 4, 0 = run till "optimum" (i.e., not getting an improvement for x number of minutes, and >=1 is the number of minutes phase 4 runs. he default will be 0. (With the [w] and [f] key strokes, the user can stop runs when they please.)
+
+4. [w] and [f] keystrokes as per Chuck's email. Question: how to input them via console in Eclipse?
+   "Type [w] to write out current DigPop results and update log file with latest statistics."
+   "Type [f] to write out current DigPop results, log file with latest statistics, and exit program."
+
+5. On the wiki, to get a description of all last-run.properties lines
+
+6. To write out intermediate Phase 4 statistics to a separate file whenever results are saved (final stats are to be saved to the log file as usual), ie intermediate stat file name can be something like "intermediate-statistics.txt"
+(without this option, all the results are essentially useless if a computer reboots).
+
+7. Private CERL version is still broken or not updated so we can't run conditional simulation.
+
+
+ - add gadgets to our OMS support
+   - expose components/classes to load/build the PDF
+
+loader = dp.Loader
+ggc = dp.GeneralizeGISClass
+ggc.grid = loader.loadGrid(gridfile)
+ggc.input = loader.loadMap(mapfile)
+-> ggc.output
+
+
+loader = dp.GISClass
+loader.resample = dp.GISGrid(..)
+loader.file = ".."
+-> loader.output
+
+Chuck sez priorities:
+1) DigPop Documentation
+2) DigPop Improvements (Is this done?)
+3) DigPop OMS-ization
+4) OMS component construction to get GIS data into input form for DigPop and NetLogo
+
+
+
+TODO:
+
+ - c_bnd p4 gives up awfully fast
+ - phase 4 swaps random hoh in same tract .. even if attrib maps don't allow it!
+
+ - use PopDensityConstraint?
+   RegionConstraint?  disable RegionConstraint when MatchConstraint is used?
+
+ - doc: attrib map trait vs constraint
+   and doc that attrib map feature that Chuck rejected
+
+ - -r doesn't seem to work (where? cluster-detect, i think)
+ 
+ - add csv metadata support to dp2kml
+
+ - *2kml: add option to disable Overview layer
+
+ - update GUIs to edit multiple <regions> elements
+
+ - GUI: some fields are optional.  allow to be erased!
+
+ - dp2kml: support for custom icons
+
+ - Marina sez: fittingcriteria GUI doesn't really work. I mean none of the buttons (I think except for "open") work - it doesn't allow one to save or save as and it doesn't allow to select a pre-existing fittingcriteria file from the window. And "close" button in "About" doesn't work either.
+   - mostly with fc gui
+
+ - create population file generator
+      -r random seed
+   - linear CDF (probability -> integer)
+     map to array of double-ranges, gender/age-range pairs, etc.
+
+ - command line arg to cap amount of time in phase 3 (default none)
+   - create polite exit that writes result as-is?
+
+ - finish dp2shp
+    dp2shp -r _ -s _ -o _ -x file x y
+      -r random seed
+      -s select random %
+      -o output file name
+      -a include all attributes
+      -c coord system (default UTM)
+      -x create index
+
+ - update docs with new PopDens tab
+
+ - rel file traits get 'nodata-vals="blank,0"'
+   fit weights get 'nodata="True,False,Ignore"'
+   support in gui
+     T/F: add to denom, Ignore: don't
+     T: add to numer, F: don't
+   -> don't code, just crash on any value we don't currently support
+
+ - tract tab: display min/max next to combos
+
+ - sim should crash if tract.csv has bad (blank, negative) vals
+
+ - second rzn output is hosed
+
+ - try RunAll.bat again, see if 'tests' dir can be whittled and checked in
+
+ - Chuck's `masking layer for phase one' in LandcoverPopulationDensity
+
+ - RelationshipFile classes
+    replace String classes with List<>; auto-manage string on import/export
+    new LanduseMembersCtrl
+    add add/remove methods to all controllers
+    overhaul TransferHandlers to use controllers
+    should be able to delete getActiveGroup after above
+
+
+
+DEFERRED:
+
+ - attribute attraction map
+  - each cell describes attributes most desired in that cell
+  - raster map + csv table
+   - map cell has ID number
+   - each ID maps to a row which specifies attrib values desired in that cell
+   - attrib is an expression like "1-3,7" or "!7-8"
+ -> DEFERRED; may be covered by multiple region maps
+
+ - hot-spot analysis
+   - (awaiting design spec)
+
+ - new command-line tool to sift through dp output and compute density function
+   - (awaiting design spec)
+
+
+
+MIGHT BE NICE:
+
+ - nice Ctrl-C intercept?  (save file then exit)
+ - phase pre-1: linear programming
+ - phase 4: fudge PopulationRealizations to *exactly* match census data
+ - for( int i = cdfs.length - 1; i >= 0; i--) {
+   -> sort cdfs by pop.
+ - At line 235, householdsInAggregated and peopleInAggregated represent the number of households and people to create. If you create a new variable "ratioSampleSize", adjusting those variables about line 238 will probably make the program run quicker for testing purposes.
+   - SAMPLE_SIZE_PORTION
+   - needs to hack the goals too
+//TODO //WRZ something ain't right here .. we shouldn't need to do this.
+//    our stats are track by *proportion* objects, so the absolute values
+//    of numer and denom shouldn't matter.  I think ConflatePums* needs to
+//    be fixed.
+   -> replaced with P2_RANDOM_TRACT_PROB, etc.
+ - eliminate use of low_values
+   - see Conflate's minRegionCode and maxRegionCode with Map
+   - need to overhaul Proportion
+   		 numInRegion = new double[ maxClassValue - minClassValue + 1];
+		   totInRegion = new double[ maxClassValue - minClassValue + 1];
+ - eliminate GISPoint.iAtts, make PumsHousehold extend GISPoint
+
+
+
+DONE:
+
+ - doc: WARNING: Match stat for X eliminated all regions from consideration for PumsHousehold "Y"
+=== checkin
+ - marina cant get <forbid> to work
+ - proportion of elec/non-elec hoh change when forbid was enabled
+ - RGIKPrivate is broken!
+ - forbid throws when table cell is empty
+   indexoutofbounds line 78
+ - new <forbid> element, new Forbid class, rename Trait to PumsTrait, and make new Trait parent class
+ - make rzr support <forbid>
+ - make rzr take List<PointConstraint> instead of building it
+ - attmaphelper.getAMCkey - add support for <forbid>
+ - make all phases use same rzr
+ - catch all exceptions at top level, dump to log
+ - Fix ArrayIndexOutOfBoundsException in writeLandPercentTable.
+ - fix divide-by-zero in Proportion
+ - CensusGenInput should take File not String
+ - tweak logger for dp output (see example)
+ - areaOfInterest still being used?
+   -> no
+ - LandcoverPopulationDensity.<init>(LandcoverPopulationDensity.java:157)
+     at mil.army.usace.ehlschlaeger.digitalpopulations.censusgen.
+   -> regionAtRow is returning -1, which means region table is missing a value present in the map
+   -> add validation to ensure table has a value for every cell in map
+ - Fix Phase_LocatePrecisely to work if <match> set is over-specd.
+ - add diagnostics to ConstrainedRealizer
+ - runAllParallel only if >1 rzn
+ - updated docs
+ - Support ordering and ranking of <position-rules> elements.
+ - create proper Realizer from phase 4 code
+ - writer with pqfilter needs to produce same e/n as non-pqfilter
+ - refactor out Realizer classes, so p4 doesn't need direct access to PDF, and p2 and p3 can use it, and CDF construction can be moved out of DataPreparer
+   - make ConstrainedRealizer from realizeHouseholdsConstrained()
+ - refactor code into HohRznWriter and CDFRealizer
+ - attribute maps: update phase 4
+ - rename "tract" to "region" in Phase_LocatePrecisely
+ - don't use reclass on region maps
+ - replace term "voids" with "low-rate clusters"
+ - style template vars 'name' and 'desc'
+ - *.kmz finally works!
+ - pumsquery xml
+ - PumsQuery.main()
+ - clusterdetect: -d is mandatory, -e default is .5
+ - runAllParallel:
+   - reduce priority if > 1 threads
+   - add arg --parallel=n : +n==n threads; -n==(processorThreads-n) threads
+ - copy desc from trait into Match
+ - extract phases to seperate classes
+ - rename <phase1> and <phase4> to <expansion-factor> and <position-rules>
+ - rename <trait> inside of <position-rules> to <match>
+ - p4: isn't dumping Match objects
+ - p4: when printing stat dumps, prefix with "stat[i]"
+ - disable auto PumsQuery in censusgen, don't write rzn001-signif-households.csv
+ - moved PopDensity; was in wrong package
+ - csv metadata and support in csv2kml
+ - make <phase1> crash if there is any text inside
+   - i.e. <phase1>trust="50"</phase1>
+ - multi map redesign: new <attribute> element and support
+ - multi map redesign: update phase 4 to use these new traits
+   - new <phase4> section in fitting criteria
+ - update GUIs to not crash with multiple <regions> elements
+ - docs: If it can't parse a cell from the households or population tables, it quietly replaces it with -999999.  hoh and pop tables are read as ints.  Note the ID col will appear in the attribs; as int if int, as NODATA if not.
+ - docs: hohid/rznid forms unique id
+ - docs: in hoh.csv, uid col is optional.  if absent, DP will assign uids by row starting from 1.
+   first row = col names, so uid=1 is 2nd line of file.
+ - docs: multiple region maps
+   if one, traits don't need traitTable.  if >1, they all do.
+   only one can have vac/pop/hoh -- this is "primary" map, and must cover entire region of interest
+ - docs: phase1-cache contains only the result of analyzing region data, so fiddling with <phase1> does NOT require the analysis to be rerun.
+ - support multiple region maps
+   - region table per map
+   - rel file specifies which region map to use for each trait
+ - verify 'trust' really is mandatory
+ - replace hohid and rznid with single uid column
+ - docs: new <phase1> element
+ - docs: dp2kml and csv2kml are same, except:
+   - dp2kml supports pop file
+   - dp2kml uses db to support larger inputs
+   - dp2kml has col name defaults
+ - docs: phase3SaveIntermediate also used for phase 4
+ - docs: templates:
+   Velocity has no general interface for util functions, so I've provided:
+   $ConversionTool   $DisplayTool   $MathTool
+ - docs: howto pick CRS for *2Kml (SEE BOTTOM)
+ - doc: termination conditions for each phase
+ - docs: *2Kml style template
+ - docs: CsvPlusMap
+ - "dial" indicates trust in survey vs aggregate data
+   - multiplier is called "expansion factor"
+   -> 100% use phase 1; 0% use naive multiplier or cols below; 50% use halfway between
+   -> optional expansion factor column
+   -> optional column to provide std dev; above col will be interpreted as mean, and multiplier will be random
+ - list 11/24 #5: weights should support 0-infinity
+ - buff csv2kml to match dp2kml
+ - ensure new lpd-*.csv files with comments can be fed back into DP
+ - dump phase 4 every hour
+ - download "arcgis explorer", make kmz work with it
+ - list 11/24 #4: create two CSV files:
+   - for each region, for each class, print #pop
+   - again for %land
+ - log the existance of aux tables and maps that are written
+ - make phase1 print log like phase3
+ - list 11/24 #7: phase 1 "quality of" tables should be folded together so before and after values appear adjacent
+ - bug report 12/3 #1: blank cells should be replaced with NODATA
+ - bug report 12/3 #2: round floats probabilistically
+ - dump number clones:  print WARNING for every zero
+ - BUG: random.nextInt cannot accept zero!!
+ - list 11/24 #3: print ******* lines to clearly separate phases
+ - list 11/24 #2: Print quantities of archtypes 20 per line
+ - list 11/24 #1: trait includes 'desc' field, so make Proportion and Count use it
+ - Google Earth placemark styling
+  - determine the color/size/symbol of the households based on attributes within the CSV file
+   - when enabled, generate style for every placemark.  when disabled, use style file
+ - use getId when writing SERIALNO to csv files
+   householdID is ok, SERIALNO is broken
+ + p3: don't undo failed move; just keep moving until done, then move to best tract found
+ + p3: 1. start at random archtype; on success, pick another random; on fail, do in order
+ + p3: 2. start at random rzn #
+ + p3: 3. skip to next archtype if rzn is moved
+ + p3: 4. skip rzn if its tract has already been tested (valid only because of 3)
+          (if rzn won't move, don't do the other copies of the tract number)
+ + print suitable abort message when p3 can't find more moves
+ + print final stats line when p3 ends for any reason
+ - make beta/error print class names
+ - don't write pop file if we didn't get one
+ - LPD table in log should print class description too
+ - relationship file: <landuse> element class # collisions must be detected and alerted
+   i.e. vacant="20", then some other class gets mapped to 20 -- what happens?
+ - end phase 3 when the loops complete with no changes; eliminate timer
+ - phase 4: if enabled, then write_all_fields must be enabled too
+ - phase3_time_limit=0 stops immediately
+ - when phase 4 ends, print big table:
+   - Lag | Init Iner | Cur Iner | Goal Iner | Cur Reduc | Goal Reduc 
+ - refine goal reduction
+ - "reduction", not "improvement"
+ - move both_ends into last-run, default TRUE
+ - After phase 4 is done, have the log file indicate how much the shortest lag was reduced.
+ - save results of phase3 and phase4 for comparison
+ - docs for dp2kml
+ - doc: loc wt needs to be fine-tuned
+ - doc: DP needs *planar* coords, i.e. UTM
+   (i think most phases work fine, but phase 4 will act funny if not planar)
+ - doc: phases, and how params shortcut them, and how they use files
+ - doc: the <cluster> element!
+ - if <cluster> is missing or empty, skip phase 4
+ - phase4_time_limit
+ - phase 4 should say why it's stopping: no more moves, achieved improvement, timed out
+ - P4: use all traits plus <cluster> element
+ - P4: new quality evaluation:
+   calc initial PSV
+   multiply inertial vals by % improvement, progressively, out to distance:
+     1st lag *= %
+     lag at given distance *= 1.0
+     interpolate % for the lags between
+     ** this becomes our GOAL PSV
+   use chuck's spread() to keep swaps that move psv closer to goal
+ - P4: user sez "i want 50% improvement out to 150m"
+   -> new <cluster trait amount distance> elements in fittingcriteria
+ - Revert RI to metric
+ - Dp2Kml: opt for pix-per-hoh
+ - Dp2Kml: finish loadPoints()
+ - Dp2Kml: finish testtemplate
+ - Dp2Kml: only load csv if newer than database
+ - when printing stats, add goal proportion
+ - image is offset from points by a pixel
+ - translate csv columns into safe Velocity IDs (i.e. replace space with _, etc)
+   $data$_$column$ becomes _data_column_
+   "#@$% you" becomes "_you"
+ - Csv2Kml prints % instead of  tile IDs
+ - Select should allow "*" which copies all fields
+ - make trait for absolute hoh and pop counts
+ - Moves: 580978, fails: 2142934, fit: 6.361082686228887E8
+   fit is same as end of phase 2!!  what happend to phase 3?
+ - why is RI wrong with -s 0
+   - cuz it can't handle trait that calcs abs pop
+ - LPD-input should not include cols that are all zero
+ - LPD-landuse.csv receives all classes with zeros for the bad ones.  include the names from rel file
+ - add row random % to select.java
+      -r random seed
+      -s select random %
+ - zip distro tweaks:
+   - add readme
+   - move jars to "app"
+   - put RI data in "data"
+ - CSV.findColumn should never throw NPE
+ - remove "#" from file names
+ - gui window titles
+ - fcedit: enable all weights by default
+ - delete phase1 cache if seed changes
+ - 3 ways to create PDF
+   - auto - linear regression
+   - specify betas
+   - specify PDF directly
+ - allow user to specify phase 1 soln
+   - chuck 5/12 and telecon 5/7
+ - allow user to specify phase 1 soln
+   - export csv: region#/#hoh/cells per class
+   - export our pdf to help (NOT cdf)
+ - document how to run the program; every option; every input and output
+   - glossary: realization, archtype
+ - log file name should include requested rzn numbers
+ - Marina's bug list for gui
+ - FCEditor: open/save start in proper dir
+ - FCEditor: open/save validate, but not crash
+ - eliminate requirement for Population file so DP can work only with Households
+ - dash-option for phase 2 skip probabilities
+ - region total should allow "1"
+ - doc: DP -opts are optional.  doc defaults.
+ - hoh not being distd among classes properly, create junit test for CDFs?
+   - pdf was built wrong
+ - force min number of rzns of each archtype to be no less than one
+ - PumsQuery support multiple ranges
+ - use java.util.logging instead of System.out
+   Logger.getLogger("rgik")
+   by default, write log to output dir as well as screen
+ - trait table auto-creates rows too much when table dropdown selected
+ - trait table add/remove does wrong rows
+ - trait select docs: if spec'd, values are averaged over what's specd' by total
+ - population tooltips
+ - changing name of group doesn't update Members title
+ - docs for select.java
+ - add "1" as the first option in Total Field
+ - add comfort text and tooltips to traits tab
+ - other tabs need getProjectFile()
+ - finished all combo boxes
+ - "Vacant Household Count Field"
+ - class group numbers should start at 1 and inc
+ - [Save] button
+ - finish class name management and file
+ - pumsTraitSelect support ""
+ - support regionTotal="1"
+   -> already supported
+ - write population file
+ - don't compute easting/northing for households, only keep tract numbers
+   - condense arrays as much as possible (i.e. PumsHousehold.realizations only contains tract nums)
+   - generate easting/northing when writing files
+ - remove # comments from csv files, mangle file name instead (or create txt file)
+ - run phase1 once only if needed, cache the result
+ - BooleanGrid use BitSet, not boolean[]
+ - phase 2 only uses 1 cell in each tract
+ - fittingcriteria must contain ENTIRE list of traits (verify none are missing)
+ - remove RI from PumsPopulation
+ - opts WRITE_POP_EXTRA_FIELDS and HOH_*_FIELDS
+ - move makeHoh / loadPop to DataPreparer
+ - make movesAtLastSave NOT run for a full hour regardless, but exit as soon as possible
+ - make phase2 not deadlock when all archtypes have rzns
+ - add first-realization/last-realization args and more formal arg handling
+ - create 3rd output file (households filtered by pumsQuery)
+ - new output files: append copy of household archetype record to each household
+ - also write population: x,y,archetype,id,(copy of population record)
+ - nuke optInitial0.txt, rename above outputs to rzn#<num>-<table>.csv
+ - rename rtrait in fitting file
+ - crash if not all landuse classes have been mapped
+ - crash if a class has been spec'd twice
+ - critical bugs:
+   - CSVTable.findAllRowsWithAttribute didn't copy array when enlarging
+   - Conflat* off-by-one error
+     for( int j = 0; j < numHouseholdArchtypes - 1; j++) {
+       numArchtypes2Make[ j] = 100;
+		 }
+ - replace ALL Math.random with Random object
+   -> everything currently important is done.
+ - make use of LanduseCombination, build class->name attrib table
+ - implement new <trait>
+   - also add pumsTraitContinuous="range"; if outside range, consider no-data, and don't count denom either.
+ - long fail counter
+ - change putNumberColumns and all other puts to sets
+ - add static RGIS.setOutputFolder()
+ - add interface RGISData.distance(point)
+ - change TransformAttributes2double to interface
+ - unit test for serializing QuadTree
+ - serialize ConflatePums (intended to support checkpointing)
+ - replace esriFileName method with ESRI_ASCII
+ - move BooleanGrid to util
+ - move Reclass to core, make test, replace SkipList with Map<int,int>, del ActionObject
+ - replace LinkList with java.util.LinkedList
+ - replace EmptyListException with EmptyStackException
+
+
+
+DENIED:
+
+ - move ESRI I/O into own class, same for GRASS4
+   - methods work better sprinkled into their classes
+ - is there an official "java bean" spec? what's a "bean function" look like? fix Reclass to match.
+   - Yes.  Sun's bean spec v1.01 sect 2.2 says:
+     "The methods a Java Bean exports are just normal Java methods which can be called from other components or from a scripting environment. By default all of a bean’s public methods will be exported, but a bean can choose to export only a subset of its public methods (see Section 8.5)."
+   - thus methods should be implemented as ordinary methods.
+   - to turn reclass into a bean, we'll want to think about how an actual gui should work, and decide the best properties and events for that.  (i.e. if a table changes, does reclass auto-re-run?)
+
+
+
+QUESTIONS:
+
+none.
+
+
+ANSWERED:
+
+ - chuck mentioned full phase1 yields superior result to random phase1.  How do you tell?
+   (I verified it's *faster* .. after 18 hrs, still wan't done.)
+   -> fitness
+ - why don't you just use 100% census data?
+   -> government(s) won't allow access
+   -> in some places, it's not collected
+ - what's the value to phase2? could replace with fast random placment, let phase3 do all the work?
+   -> phase2 and 3 seem to have identical algorithms, but Chuck's early testing indicated phase2 improves the final results.
+ - bump QT to 100 pts per node, check speed
+   -> QuadTree serialization test much slower at 100 than 10
+
+
+
+SUGGESTIONS:
+
+ - Eclipse visual editor at:
+   http://wiki.eclipse.org/VE/Update
+
+
+
+------
+
+
+
+7/28 - some benchmarks
+
+ - quick test of loading large data sets into simple Point class
+    RI 10%    6MB   2sec
+    RI 100%  71MB  26sec
+    AF 100% 400MB 165sec
+
+ - Csv2Kml generating bubbles from template file
+   RI 10%    :  2s  20MB / 93s 24MB
+   RI 10%  -b:  3s  50MB / 85s 50MB
+   RI 100%   : 24s 112MB
+   RI 100% -b 4cols: 29s 354MB
+   RI 100% -b all-cols: out of memory
+
+ - AF 100%, no bubble
+   3 mins Input, 2h22m Output; 76MB file
+
+7/29 - paralleliing Csv2Kml
+
+ - loadCSV only sped up by 20%
+   -Xmx500m
+   11t 27s 360MB
+   3t  28s 355MB
+   1t  34s 360MB
+   -Xmx1000m
+   11t 23s 354MB
+   3t  22s 354MB
+   1t  29s 354MB
+
+ - createKml sped by 100%
+   * RI 10%
+   8t 44s 51MB
+   1t 91s 50MB  (parallel=true, but threads=1)
+   0t 91s 50MB  (parallel=false)
+
+7/30 - benchmarks
+
+ - RI with Marina's new maps, 30m, already in WGS84, 10% sub-sample
+   bubble    0t ZIP 12s in, 153s out, 377MB
+   bubble    8t ZIP 12s in, 109s out, 378MB
+   bubble    8t dir 11s in,  47s out, 377MB
+   no bubble 8t ZIP  4s in,  41s out,  20MB
+
+ - I just discoverd power management had capped the cpu speed for all benchmarks above.
+   bubble    0t ZIP  6s in,  65s out, 377MB  *uncapped cpu
+   bubble    0t dir  6s in,  61s out, 377MB  *uncapped cpu
+   bubble    8t ZIP  6s in,  48s out, 373MB  *uncapped cpu
+   bubble    8t dir  5s in,  24s out, 377MB  *uncapped cpu
+
+8/19 - benchmarks
+
+ - Dp2Kml RI 100% hoh+pop:  35 min total, 121MB peak

@@ -1,0 +1,193 @@
+##
+## Automatic bubble generator for annotated CSV.
+##
+##  - First row must be contain column names.  Only columns referenced by name need be
+##    populated (currently just Easting, Northing, and name).
+##
+##  - This script processes rows one at a time, and columns from left to right.
+##    Each row becomes a bubble in Google Earth, and column values are displayed
+##    as rows, grouped into sections (which are displayed as HTML tables.)  The
+##    process is controlled by metadata rows that must appear at the top of the
+##    file just below the column names.  These metadata rows are required:
+##
+##    -  ##section      : A value here will create a new "section" (HTML table) to
+##         encapsulate all subsequent values.  Section title will be this value.
+##    -  ##sectionIcon  : A URL here will display an icon to the left of the
+##         section header.  If ##section is blank, this field is ignored.
+##    -  ##questionText : Full text of question.  Will be displayed next to answers,
+##         which are read from the data rows.
+##    -  ##infoType     : A value here indicates that a row should be added to the
+##         current section.  The value determines appearance of row, and how many CSV
+##         columns will be processed.  Only first column can have a value here; all
+##         affiliated columns must be blank.  Legal values:
+##      - summary             : 1 column.  Must appear under a ##section value.  Data
+##          values are displayed in the section header, not in the section proper.
+##      - value               : 1 column.  ##questionText and value are
+##        displayed as a row.
+##      - valueDescription    : 2 columns.  ## questionText, this column, and
+##          the subsequent column are displayed as a row.
+##      - nameIconDescription : 3 columns.  Icon, name, and description fields
+##          are displayed as a row.
+##      - (blank)             : Skipped, under the assumption the field was
+##          processed by a prior column with one of the above values.
+##      - All other values will appear in the output with a red background to
+##          indicate an error.
+##    - ##presentation : Values can only appear in 'value' columns (i.e. the
+##        columns directly under 'value' and 'valueDescription' markers.)  A
+##        blank here indicates the value should be displayed as-is, while a
+##        value will convert the value to another form.  Legal values:
+##      - noYes       : 0 appears as "NO"; all other values as "YES".
+##      - letterGrade : Data values 0-4 are displayed as letter grades from F to A.
+##
+
+#parse( "CollapsingSections.vm" )
+
+##
+## Prepare a data value for display according to a ##presentation marker.
+##
+#macro( present $presentation $value )
+  #if($value != "")
+    #if($presentation && $presentation == "noYes")
+      #if($value == 0)
+        NO
+      #else
+        YES
+      #end
+    #elseif($presentation && $presentation == "letterGrade")
+      #set($f = $ConversionTool.toDouble($value))
+      #if($f >= 0 && $f < 0.35)
+        #set($s = "F")
+      #elseif($f >= 0.35 && $f < 0.85)
+        #set($s = "D-")
+      #elseif($f >= 0.85 && $f < 1.25)
+        #set($s = "D")
+      #elseif($f >= 1.25 && $f < 1.6)
+        #set($s = "D+")
+      #elseif($f >= 1.6 && $f < 1.85)
+        #set($s = "C-")
+      #elseif($f >= 1.85 && $f < 2.25)
+        #set($s = "C")
+      #elseif($f >=2.25 && $f < 2.6)
+        #set($s = "C+")
+      #elseif($f >= 2.6 && $f < 2.85)
+        #set($s = "B-")
+      #elseif($f >= 2.85 && $f < 3.15)
+        #set($s = "B")
+      #elseif($f >= 3.15 && $f < 3.5)
+        #set($s = "B+")
+      #elseif($f >= 3.5 && $f < 3.85)
+        #set($s = "A-")
+      #elseif($f >= 3.85 && $f <= 4)
+        #set($s = "A")
+      #end
+      $s
+    #else
+      $value
+    #end
+  #end
+#end
+
+
+#CS_Init
+#set( $CS_Section = 1 )
+
+<div style="width:35em;height:30em;overflow:auto">
+
+## Start with no section active.
+#set($curSection = "")
+
+#set($last_point = $point.size() - 1)
+#foreach($c in [0..$last_point])
+  #set($m = false)
+  #set($m = $metadata[$c])
+
+  ##
+  ## Change to new section.
+  ##   "if m is defined and m.section is defined and m.section contains something"
+  ##
+  #if($m && $m.section && $m.section != "")
+    ##
+    ## End previous section.
+    ##
+    #if($curSection != "")
+      </TBODY>
+      </TABLE>
+      #CS_Collapse("collapse_$CS_Section")
+      #set( $CS_Section = $CS_Section + 1 )
+    #end
+    
+    ##
+    ## Start next section only if there's data in this column.
+    ##
+    #set($curSection = $m.section)
+    #if($point[$c] && $point[$c] != "")
+      <TABLE STYLE="text-align: left; width: 100%" BORDER="1" CELLPADDING="2" CELLSPACING="0">
+        <TR><TH STYLE="vertical-align: middle; background: rgb(198,198,196); font-weight: bold; font-size: large; " COLSPAN=3 ONCLICK="switchMenu('collapse_$CS_Section')">
+        <DIV STYLE="float: left">
+          #CS_ExpandoImg
+          <IMG STYLE="vertical-align: middle" HSPACE="10" SRC="$m.sectionIcon"/>
+          $curSection
+        </DIV>
+        #if($m.infoType && $m.infoType == "summary")
+          ## infoType 'summary' is embedded here in section header.
+          ## width/text-align provides consistent width and horizontal centering
+          ## but there's no vertical equivalent, so padding fakes it.
+          <DIV STYLE="float: right; padding: .5em 0 .5em 0; width: 3em; text-align: center; background:black; color:white">#present($m.presentation, $point[$c])</DIV>
+        #end
+        </TH></TR>
+        <TBODY ID="collapse_$CS_Section">
+    #else
+      ## Else disable this section completely.
+      #set($curSection = "")
+    #end
+  #end
+
+  ##
+  ## Write data row in current section.
+  ##
+  #if($curSection != "")
+    #if($m && $m.infoType)
+      #if($m.infoType == "valueDescription")
+        ## Row contains three cells: question text, value, and description
+        <TR>
+          <TD>$m.questionText</TD>
+          <TD STYLE="white-space: nowrap; text-align: center">#present($m.presentation, $point[$c])</TD>
+          #set($c1 = $c + 1)
+          <TD>$point[$c1]</TD>
+        </TR>
+      #elseif($m.infoType == "value")
+        ## Row contains two cells: question text, and value
+        <TR>
+          <TD>$m.questionText</TD>
+          <TD STYLE="">$point[$c]</TD>
+        </TR>
+      #elseif($m.infoType == "nameIconDescription")
+        ## Row contains two cells: icon plus name, and description
+        #if($point[$c] && $point[$c] != "")
+          #set($c1 = $c + 1)
+          #set($c2 = $c + 2)
+          <TR>
+            <TD><IMG STYLE="float: left" SRC="$point[$c1]"/>$point[$c]</TD>
+            <TD>$point[$c2]</TD>
+          </TR>
+        #end
+      #elseif($m.infoType == "summary")
+        ## skip; was embedded in section header
+      #elseif($m.infoType == "")
+        ## skip; is just one of the other columns from the above codes.
+      #else
+        <TR><TH COLSPAN=99 STYLE="color:yellow; background:red">Unknown infoType == $m.infoType</TH></TR>
+      #end
+    #end
+  #end
+#end
+
+## end final section
+</TBODY>
+</TABLE>
+#CS_Collapse("collapse_$CS_Section")
+#set( $CS_Section = $CS_Section + 1 )
+
+## end bubble
+</TABLE>
+</DIV>

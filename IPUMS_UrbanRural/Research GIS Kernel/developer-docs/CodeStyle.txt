@@ -1,0 +1,8 @@
+
+CODE STYLE NOTES
+
+ * Classes should be Serializable so they can be written to disk, and a computation paused and resumed.  "implements Serializable" has been added to class RGIS, which gives it to everything for free.
+   * Nonetheless, some classes have been individually stamped "implements Serializable" to signal that the class has been examined, and doesn't save anything unnecessary.
+   * This does NOT mean member classes have been examined; there may still be UnSerializableExceptions hiding somewhere.
+   * This also does not mean that serialization has been tested. :(
+   * All remaining classes should be examined and stamped.

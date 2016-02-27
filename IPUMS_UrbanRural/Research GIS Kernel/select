@@ -1,0 +1,7 @@
+#!/bin/bash
+
+CD="`pwd`"
+CLASSPATH="$CD/bin:$CD/lib/SuperCSV-1.52.jar:$CD/lib/jopt-simple-3.1.jar"
+
+java -ea -cp "$CLASSPATH" mil.army.usace.ehlschlaeger.rgik.util.Select "$@"
+

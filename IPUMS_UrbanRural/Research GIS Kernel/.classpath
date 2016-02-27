@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Graph2D"/>
+	<classpathentry exported="true" kind="lib" path="lib/jopt-simple-3.1.jar" sourcepath="C:/Users/Bill/.m2/repository/net/sf/jopt-simple/jopt-simple/3.1/jopt-simple-3.1-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://jopt-simple.sourceforge.net/apidocs/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/junit-4.7.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://junit.sourceforge.net/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/SuperCSV-1.52.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://supercsv.sourceforge.net/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/commons/commons-io-1.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons/commons-lang-2.5.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://commons.apache.org/lang/api-2.5/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/commons/commons-primitives-1.0.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://commons.apache.org/primitives/api-release/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/geotools/geoapi-2.3-M1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://docs.geotools.org/stable/javadocs/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/geotools/jts-1.11.jar" sourcepath="C:/Users/Bill/.m2/repository/com/vividsolutions/jts/1.11/jts-1.11-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jak/JavaAPIforKml.jar" sourcepath="lib-docs/JavaAPIforKml-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/geotools/gt-referencing-2.7-M1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://docs.geotools.org/stable/javadocs/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/geotools/gt-api-2.7-M1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://docs.geotools.org/stable/javadocs/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/geotools/gt-epsg-hsql-2.7-M1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://docs.geotools.org/stable/javadocs/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/truezip-6.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jaxb/activation.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jaxb/jaxb-api.jar" sourcepath="C:/Users/Bill/.m2/repository/javax/xml/bind/jaxb-api/2.2.1/jaxb-api-2.2.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jaxb/jaxb-impl.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jaxb/jsr173_1.0_api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons/commons-collections-3.2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/h2-1.2.140.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="lib/velocity/velocity-tools-generic-2.0.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://velocity.apache.org/tools/releases/2.0/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/velocity/velocity-1.7.jar" sourcepath="C:/Users/Bill/.m2/repository/org/apache/velocity/velocity/1.7/velocity-1.7-sources.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

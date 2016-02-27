@@ -1,0 +1,18 @@
+#!/bin/bash
+##
+## Digital Populations Census Synthesizer
+##
+
+P=`pwd`
+
+CLASSPATH="$P/bin"
+CLASSPATH="$CLASSPATH;$P/lib/SuperCSV-1.52.jar"
+CLASSPATH="$CLASSPATH;$P/lib/jopt-simple-3.1.jar"
+CLASSPATH="$CLASSPATH;$P/lib/commons/commons-lang-2.5.jar"
+CLASSPATH="$CLASSPATH;$P/lib/commons/commons-primitives-1.0.jar"
+
+# -Xrunhprof:help
+# -Xrunhprof:cpu=samples,depth=6,interval=20 
+# -Xrunhprof:cpu=times
+
+java -ea -Xmx1000m mil.army.usace.ehlschlaeger.digitalpopulations.censusgen.ConflatePumsQueryWithTracts %*

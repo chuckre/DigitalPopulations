@@ -1,0 +1,10 @@
+
+Simple Hand-Made Distro of DPGUI
+
+ * To avoid requiring users to install Netbeans, the compiled app is kept in dir "runnable", which is checked into SVN.  To build:
+ 
+   * In NetBeans, click Run->Clean and Build Main Project.
+   * Copy resulting jar from dist/DPGUI.jar into runnable.
+   * Check it into SVN.
+
+ * Contrary to Netbean's own docs, required libs are NOT copied into dist\lib.  build.xml must be hand-modified to support this.  Instead, we simply hand-copy the required libs here and check them in.

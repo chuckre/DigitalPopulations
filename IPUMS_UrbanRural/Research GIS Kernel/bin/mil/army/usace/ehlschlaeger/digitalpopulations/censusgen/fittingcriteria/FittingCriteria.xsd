@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="FittingCriteria" type="fittingCriteria"/>
+
+  <xs:complexType name="clusterSpec">
+    <xs:complexContent>
+      <xs:extension base="traitRefElement">
+        <xs:sequence/>
+        <xs:attribute name="reduction" type="xs:double" use="required"/>
+        <xs:attribute name="distance" type="xs:double" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="traitRefElement">
+    <xs:sequence/>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="regionTrait" type="xs:string"/>
+    <xs:attribute name="desc" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="expansionFactor">
+    <xs:sequence/>
+    <xs:attribute name="trust" type="xs:double" use="required"/>
+    <xs:attribute name="factor" type="xs:string"/>
+    <xs:attribute name="std-dev" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="fittingCriteria">
+    <xs:sequence>
+      <xs:element name="traits">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="trait" type="pumsTrait"/>
+              <xs:element name="forbid" type="forbid"/>
+            </xs:choice>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="weights" type="weights"/>
+      <xs:element name="expansion-factor" type="expansionFactor" minOccurs="0"/>
+      <xs:element name="position-rules" type="preciseLocation" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="relationshipFile" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="pumsTrait">
+    <xs:sequence/>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="desc" type="xs:string"/>
+    <xs:attribute name="regionTable" type="xs:string"/>
+    <xs:attribute name="regionTrait" type="xs:string"/>
+    <xs:attribute name="regionTotal" type="xs:string"/>
+    <xs:attribute name="attribute" type="xs:string"/>
+    <xs:attribute name="attributeSelect" type="xs:string"/>
+    <xs:attribute name="pumsTraitTable" type="type" use="required"/>
+    <xs:attribute name="pumsTraitField" type="xs:string" use="required"/>
+    <xs:attribute name="pumsTraitSelect" type="xs:string"/>
+    <xs:attribute name="pumsTraitContinuous" type="xs:string"/>
+    <xs:attribute name="pumsTotalTable" type="type"/>
+    <xs:attribute name="pumsTotalField" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="forbid">
+    <xs:sequence/>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="desc" type="xs:string"/>
+    <xs:attribute name="pumsTraitTable" type="type" use="required"/>
+    <xs:attribute name="pumsTraitField" type="xs:string" use="required"/>
+    <xs:attribute name="pumsTraitSelect" type="xs:string" use="required"/>
+    <xs:attribute name="map" type="xs:string" use="required"/>
+    <xs:attribute name="mapSelect" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="weights">
+    <xs:sequence>
+      <xs:element name="trait" type="traitWeight" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="location" type="xs:double" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="traitWeight">
+    <xs:complexContent>
+      <xs:extension base="traitRefElement">
+        <xs:sequence/>
+        <xs:attribute name="weight" type="xs:double" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="preciseLocation">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="cluster" type="clusterSpec"/>
+        <xs:element name="match" type="matchSpec"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="matchSpec">
+    <xs:complexContent>
+      <xs:extension base="traitRefElement">
+        <xs:sequence/>
+        <xs:attribute name="rank" type="xs:int"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:simpleType name="type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="HOUSEHOLDS"/>
+      <xs:enumeration value="POPULATION"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+

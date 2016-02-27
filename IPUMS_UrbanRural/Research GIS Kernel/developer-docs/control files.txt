@@ -1,0 +1,63 @@
+
+
+ - merge mapsStats and otherStats into one array?
+
+ - new file is 2x fast
+
+phase 2:
+1.8 mins per 5%
+.87 mins per 5%
+
+phase 3:
+55000 fails/sec
+11
+
+only 595 identical moves
+2x quit after 744, 1x >800
+
+
+CHUCK'S SKETCH:
+
+Relationship File:
+ - ask for:
+   - Land use map
+   A Census Tract ASC
+   B Census Tract CSV
+   C Household Info CSV
+   D Population Info CSV
+ - Determine which land use classes are not lived on
+ - Determine which land use classes are the same
+ - connect A-B: Find column that represents values in ASC
+ - connect serial # of C to serial # of D
+ - connect each column in B to columns in C & D
+ - allow for description of columns to be typed in
+
+Pums Query File:
+ - seperate from Relationship File
+
+
+
+CHUCK'S SECOND SKETCH:
+
+above is incomplete, we really need:
+
+ - Census numerator
+ - Census denominator
+ - Pums column
+ - Pums min
+ - Pums max
+
+
+
+PUMSQUERY FILE:
+"DP fitting criteria"
+
+NO:
+RACBLK=1 and SEX=2 and 50<=AGEP<=64
+weights go here  (0,1]
+
+YES:
+  list of col specs copied from rel file
+  how to AND/OR
+  weights
+

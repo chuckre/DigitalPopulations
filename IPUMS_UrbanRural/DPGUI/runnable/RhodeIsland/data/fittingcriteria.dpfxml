@@ -1,0 +1,28 @@
+<!-- Digital Populations Fitting-Criteria File -->
+<FittingCriteria relationshipFile="relationship.dprxml">
+  <!--
+  | The traits we care about for this run.  Each line must be an exact
+  | copy from the relationship file.  Docs for these attributes are in
+  | that file.
+  -->
+  <traits>
+    <trait id="1" regionTrait="AGE_50_64" regionTotal="POP2000" pumsTraitTable="POPULATION" pumsTraitField="AGEP"   pumsTraitSelect="50-64" pumsTotalTable="POPULATION" pumsTotalField="1" desc="Ages 50-64"/>
+    <trait id="2" regionTrait="MALES"     regionTotal="POP2000" pumsTraitTable="POPULATION" pumsTraitField="SEX"    pumsTraitSelect="1"     pumsTotalTable="POPULATION" pumsTotalField="1" desc="Male"/>
+    <trait id="3" regionTrait="FEMALES"   regionTotal="POP2000" pumsTraitTable="POPULATION" pumsTraitField="SEX"    pumsTraitSelect="2"     pumsTotalTable="POPULATION" pumsTotalField="1" desc="Female"/>
+    <trait id="4" regionTrait="BLACK"     regionTotal="POP2000" pumsTraitTable="POPULATION" pumsTraitField="RACBLK" pumsTraitSelect="1"     pumsTotalTable="POPULATION" pumsTotalField="1" desc="Black"/>
+    <trait id="A1" regionTrait="AVE_HH_SZ" regionTotal="1" pumsTraitTable="HOUSEHOLDS" pumsTraitField="NP" pumsTotalTable="HOUSEHOLDS" pumsTotalField="1" desc="Average Household Size"/>
+    <trait id="A2" regionTrait="MED_AGE" regionTotal="1" pumsTraitTable="POPULATION" pumsTraitField="AGEP" pumsTraitContinuous="0-89" pumsTotalTable="POPULATION" pumsTotalField="1" desc="Median vs Average Age"/>
+  </traits>
+
+  <!--
+  | How important each trait is.  Weights must be between 0.0 and 1.0,
+  | but don't need to add up to anything in particular.
+  | Every trait listed above must appear here along with one location
+  | weight.  Traits can be identified by id, regionTrait, or desc.
+  -->
+  <weights location="1.0">
+    <trait id="1" weight="1.0"/>
+    <trait id="3" weight="1.0"/>
+    <trait id="4" weight="1.0"/>
+  </weights>
+</FittingCriteria>

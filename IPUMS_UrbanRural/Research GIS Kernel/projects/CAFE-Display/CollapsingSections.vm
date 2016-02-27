@@ -1,0 +1,72 @@
+##
+## Helpers to generate clickable table headers that show and hide the body of
+## their table.  Each section must be formatted as a table, with the body of
+## the table in an explicit <TBODY> element which has a unique ID.  Clicking
+## the header will show/hide the TBODY by referring to its ID.
+##
+## General plan:
+##   At top of template:
+##     #parse( "CollapsingSections.vm" )
+##     #CS_Init
+##     #set( $CS_Section = 1 )
+##   Format each section as a table:
+##     <TABLE BORDER="1" CELLPADDING="2" CELLSPACING="0">
+##       <TR><TH COLSPAN=3 ONCLICK="switchMenu('collapse_$CS_Section')">
+##         #CS_ExpandoImg
+##         Header Title
+##       </TH></TR>
+##       <TBODY ID="collapse_$CS_Section">
+##         <!-- Place data rows here -->
+##       </TBODY>
+##     </TABLE>
+##   Add this if section should default to collapsed:
+##     #CS_Collapse("collapse_$CS_Section")
+##   Every section must have a unique ID:
+##     #set( $CS_Section = $CS_Section + 1 )
+##
+
+#macro( CS_Init )
+<script type="text/javascript">
+function switchMenu(obj) {
+  var el = document.getElementById(obj);
+  if ( el.style.display != 'none' )
+    el.style.display = 'none';
+  else
+    el.style.display = '';
+}
+
+function $(objs){
+  var elements = new Array();
+  for (var i = 0; i < objs.length; i++)
+    elements.push(document.getElementById(objs[i]));
+  return elements;
+}
+
+
+function collapseAll(objs) {
+  for (var i=0;i<objs.length;i++ )
+    objs[i].style.display = 'none';
+}
+</script>
+#end
+
+
+
+#macro( CS_CollapseAll $sections )
+<script type="text/javascript">
+collapseAll($([#foreach($s in $sections)'$s'#if( $foreach.hasNext ),#end#end]));
+</script>
+#end
+
+
+
+#macro( CS_Collapse $section )
+<script type="text/javascript">collapseAll($(['$section']));</script>
+#end
+
+
+
+#macro( CS_ExpandoImg )
+<img src="http://publib.boulder.ibm.com/infocenter/cqhelp/v7r0m0/topic/com.ibm.rational.clearquest.user_web.doc/images/cqw_icon_plus_minus.gif" style="float:left;"/>
+##<SPAN STYLE="font-size:small;float:left">[&plusmn;]</SPAN>
+#end

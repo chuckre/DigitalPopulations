@@ -1,0 +1,44 @@
+WRZ says:
+Running *2Kml with a large project can exceed the amount of memory in the system, so I rewrote everything to hold data in a disk-based database.  The result is much slower, but reasonable.  Note we still have a memory limit somewhere, due to some structures we build in memory (i.e. the quad tree and the tile collection).
+
+I had to try several database systems to find something we can use.
+
+* Perst was the best (easy to work with, object oriented, and has a geographic index built in.)  But license is not compatible with this project.
+* H2 was the best, with good speed and good database size limits.
+* HSQL was decent, but has a 2GB database limit, which is below what we need (not to mention, less than the amount of RAM in many systems.)
+* Derby (don't remember)
+* Jdbm (don't remember)  Is object oriented.
+* NeoDatis is object oriented, but too immature.  Accessing any part of a list will load the entire list into memory, which defeats the whole purpose.
+* CSVTable wastes way too much memory.
+* List<String> also wastes too much memory.
+
+
+//Benchmark of loadCSV with different database engines:
+//  CSV -> H2 +index:    7700 lines/sec
+//  CSV -> HSQL +index:  6000
+//  CSV -> Derby +index: 4050
+
+
+//Docs for H2 claim this:
+//To speed up large imports, consider using the following options temporarily:
+//
+//SET LOG 0 (disabling the transaction log)
+//SET CACHE_SIZE (a large cache is faster)
+//SET LOCK_MODE 0 (disable locking)
+//SET UNDO_LOG 0 (disable the session undo log)
+//
+// These options can be set in the database URL:
+// jdbc:h2:~/test;LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0.
+// Most of those options are not recommended for regular use, that means you
+// need to reset them after use.
+//
+// As I recall, the speed boost is not significant enough to worry about.
+// Strangely, increasing the cache actually made the program run much slower!
+
+
+// Benchmark of RI 100% (demonstrates that more cache is SLOWER):
+//   Csv2Kml -b 4cols:  29s 354MB
+//   KmlH2 name:       158s  94MB   cache=16MB
+//   KmlH2 name:       185s 500MB   cache=256MB
+//   KmlH2 name:         ?s   ?MB   cache=750MB  *aborted after 64 mins, but may have been done
+//   KmlH2 hoh+pop:   1578s 184MB   cache=128MB  *26 mins; GE took 990MB then hung, but worked fine before it hung

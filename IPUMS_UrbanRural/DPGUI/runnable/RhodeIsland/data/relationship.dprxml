@@ -1,0 +1,142 @@
+<!-- Digital Populations Data Relationship File -->
+<FileRelationship>
+  <!--
+  | The land use map guides where households can and cannot be placed.
+  | All classes in map must be covered by either <vacancy> or a <combination>
+  | element.  This might seem strict, but we have no other data dictionary
+  | for the map.
+  -->
+  <landuse map="ri_nlcd240.asc">
+    <!-- this is a good place to describe the classification system -->
+    <comment>NLCD 2001</comment>
+    <vacant desc="Open Water" classes="11"/>
+    <combination desc="Wetland" target="9" classes="90-99"/>
+    <combination desc="Farm/Pasture" target="8" classes="81-89"/>
+    <combination desc="Forest/Scrub/Grass/Moss" target="4" classes="41-60,71-80"/>
+    <combination desc="Undefined" target="6" classes="61-70"/>
+    <combination desc="Barren/Shore" target="3" classes="31-40"/>
+
+    <combination desc="Developed, Open Space" target="21" classes="21"/>
+    <combination desc="Developed, Low Intensity" target="22" classes="22"/>
+    <combination desc="Developed, Medium Intensity" target="23" classes="23"/>
+    <combination desc="Developed, High Intensity" target="24" classes="24"/>
+  </landuse>
+  
+  <!--
+  | DP needs a population density map (aka. population density function, or
+  | PDF) to determine where the households need to go.  DP normally computes
+  | the map by analyzing the distribution of land-use classes in each region
+  | vs. the number of occupants in the region.  The analysis is very
+  | rudimentary, so this element can be used to bypass it and provide
+  | density data directly.
+  |
+  | Only one of the attributes can be specified:
+  |  * 'map' specifies a finished PDF, ready to use.  The map must provide
+  |    values for every cell in every region covered by the region map.  Each
+  |    cell in this map specifies a relative density for that patch of ground.
+  |  * 'landuse' specifies a CSV table that provides a relative density
+  |    for each land-use class code.  DP will build a PDF by substituting the
+  |    values into the appropriate cells in the land-use map.
+  |
+  | "Relative density" simply means a proportion, using the same scale for
+  | all cells.  Thus a cell with the value 3.2 will receive twice as many
+  | households as one with the value 1.6.
+  |
+  | <popdensity map="custom-pdf.asc"/>
+  | <popdensity landuse="LandcoverPopulationDensity-result.csv"/>
+  -->
+  <!--popdensity landuse="../LandcoverPopulationDensity-landuse.csv"/-->
+  <!--popdensity map="../LandcoverPopulationDensity-map.asc"/-->
+  
+  <!--
+  | Aggregate table defines total counts of population characteristics
+  | for each region defined in a map.
+  | key links the map and the table.
+  | households (optional) gives the number of households in each region.
+  | population (optional) gives the number of people in each region.
+  -->
+  <regions map="ri_tracts240.asc" table="ri_tracts.csv" key="CNTY_TRACT_FIPS"
+    households="HSE_UNITS" population="POP2000" vacancies="VACANT"/>
+  
+  <!--
+  | Random sampling of households in the area covered by the region map.
+  | 'key' (optional) names the column that provides a unique ID for each record.
+  -->
+  <households table="SS01HRI.CSV" key="SERIALNO" members="NP"/>
+
+  <!--
+  | OPTIONAL, only required if <traits> need it.
+  | Random sampling of people in the area covered by the region map.
+  | 'household' names the column that provides a link to a record in
+  | the households table.
+  -->  
+  <population table="SS01PRI.CSV" household="SERIALNO"/>
+
+  <!--
+  | Trait table specifies how to relate specific households and people
+  | to the larger aggregate picture.  Households will be randomly placed
+  | so that their individual characteristics, when totaled per-region,
+  | resemble the region characteristics in the aggregate table.
+  |
+  | Household and population data typically comes from PUMS-style random
+  | sampling of actual census data.  The aggregate data typically comes
+  | from short-form census data.
+  |
+  | General:
+  |   id
+  |   desc
+  | Aggregate region data:
+  |   regionTrait - Column in region table which provides the number of
+  |                 items with a specific trait in each region.  Used as
+  |                 numerator for target proportion.
+  |   regionTotal - Column in region table which provides the total number
+  |                 of people.  Used as denominator for target proportion.
+  |                 Specify "1" if regionTrait is already the target proportion.
+  | Specific numerator:
+  |   pumsTraitTable      - Which type of object we're analyzing: HOUSEHOLDS
+  |                         or POPULATION.  "Pums" data fields will come from
+  |                         the corresponding table.
+  |   pumsTraitField      - Which field contains trait data for each object.
+  |                         Can contain a single number instead.
+  |   pumsTraitSelect     - Switches to 'flag' mode (see below.)
+  |   pumsTraitContinuous - Enables no-data capability (sele below.)
+  | Specific denominator:
+  |   pumsTotalTable      - Type of object to draw totals from.
+  |   pumsTotalField      - Which field contains total values for each object.
+  |                         Can contain a single number instead.
+  |
+  | Use cases:
+  |   CONTINUOUS MODE:  For each object of requested type, the trait fields are
+  |     fetched and summed together.  Total fields are seperately fetched and
+  |     summed, and dividing the two yields the "proportion" value for the
+  |     objects.
+  |   CONTINUOUS NO-DATA FEATURE:  pumsTraitContinuous can contain a single
+  |     numeric range.  Objects are totaled as above, but only where the trait
+  |     is in the given range.  If not, neither the trait sum nor the total is
+  |     updated.  In other words, objects with values outside the range are
+  |     considered to have "no-data", and are ignored when computing
+  |     proportions.
+  |   FLAG MODE:  pumsTraitSelect can contain a list of numbers and number
+  |     ranges (i.e. "1,2,4,7,9-11,17-29".  For each object, the trait field is
+  |     fetched, and if the field has a value in the list, the object is counted
+  |     as "1".  If not, it's "0".  These are summed to yield a count of
+  |     objects, and this count acts as numerator.  The denominator (total
+  |     value) is as above.
+  -->
+  <traits>
+    <trait id="1" regionTrait="AGE_50_64" regionTotal="POP2000" pumsTraitTable="POPULATION" pumsTraitField="AGEP"   pumsTraitSelect="50-64" pumsTotalTable="POPULATION" pumsTotalField="1" desc="Ages 50-64"/>
+    <trait id="2" regionTrait="MALES"     regionTotal="POP2000" pumsTraitTable="POPULATION" pumsTraitField="SEX"    pumsTraitSelect="1"     pumsTotalTable="POPULATION" pumsTotalField="1" desc="Male"/>
+    <trait id="3" regionTrait="FEMALES"   regionTotal="POP2000" pumsTraitTable="POPULATION" pumsTraitField="SEX"    pumsTraitSelect="2"     pumsTotalTable="POPULATION" pumsTotalField="1" desc="Female"/>
+    <trait id="4" regionTrait="BLACK"     regionTotal="POP2000" pumsTraitTable="POPULATION" pumsTraitField="RACBLK" pumsTraitSelect="1"     pumsTotalTable="POPULATION" pumsTotalField="1" desc="Black"/>
+    
+    <trait id="A1" regionTrait="AVE_HH_SZ" regionTotal="1" pumsTraitTable="HOUSEHOLDS" pumsTraitField="NP" pumsTotalTable="HOUSEHOLDS" pumsTotalField="1" desc="Average Household Size"/>
+    
+    <!--
+    | Average age example
+    | (Note: our current tract table has 'median age', but we can only
+    | calculate average.)
+    -->
+    <trait id="A2" regionTrait="MED_AGE" regionTotal="1" pumsTraitTable="POPULATION" pumsTraitField="AGEP" pumsTraitContinuous="0-89" pumsTotalTable="POPULATION" pumsTotalField="1" desc="Median vs Average Age"/>
+  </traits>
+
+</FileRelationship>

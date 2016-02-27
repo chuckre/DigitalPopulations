@@ -1,0 +1,70 @@
+<FileRelationship>
+  <!--
+  | Empty land-use map.
+  -->
+  <landuse map="landuse.asc">
+    <comment>Fake Test Data</comment>
+  </landuse>
+  
+  <!--
+  | Trivial tracts map containing a single 1-pixel tract.  Attributes are
+  | consistent with the rest of the test data.
+  -->
+  <regions map="tracts.asc" table="tracts.csv" key="KEY"
+    households="HOUSES" population="PERSONS" vacancies="HOUSES_VACANT"/>
+  
+  <!--
+  | These tables must have a full set of US pums headers due to the object we
+  | use to manage the data.  This test only uses a few fields to keep things
+  | simple.
+  |
+  | Households fields: SERIALNO NP TYPE ACR
+  |  * SERIALNO = unique id, NP = number of members in each house
+  |  * TYPE and ACR = two random fields selected to hold test data.
+  | Population fields: SERIALNO AGEP CIT
+  |  * SERIALNO = which household this person is a member of
+  |  * AGEP and CIT = two random fields selected to hold test data.
+  -->
+  <households table="households.csv" key="SERIALNO" members="NP"/>
+  <population table="population.csv" household="SERIALNO"/>
+
+  <traits>
+    <!--
+    | Trait ID contains a coded string which drives testing.  Format:
+    |
+    |   <test code>=<expected trait>=<expected total>
+    |
+    | <test code> is simply a reminder of what's being tested, it's not used
+    | by the software.  Any text can precede the first '=', but here's the
+    | scheme used below:
+    | The code has 5 letters:
+    |   1. hasRange = Y/N
+    |      Y = pumsContinuous is specified
+    |      N = no pumsContinuous
+    |   2. traitTable = H/P (households or population)
+    |   3. totalTable = H/P (households or population)
+    |   4. trait.fixedValue = Y/N (pumsTraitField is constant or field name)
+    |   5. total.fixedValue = Y/N/x (pumsTotalField is consant, field name, or
+    |      absent)
+    |
+    | <expected trait> = numeric value expected when the trait getter function
+    |   processes the test data
+    | <expected total> = numeric value expected when the total getter function
+    |   processes the test data, or "x" to indicate that nothing will be
+    |   totalled.
+     -->
+    
+    <trait id="NHHNx=1=x"   regionTrait="PERSONS" regionTotal="PERSONS" pumsTraitTable="HOUSEHOLDS" pumsTraitField="TYPE"/>
+    
+    <trait id="NHHNN=1=2"   regionTrait="PERSONS" regionTotal="PERSONS" pumsTraitTable="HOUSEHOLDS" pumsTraitField="TYPE" pumsTotalTable="HOUSEHOLDS" pumsTotalField="ACR"/>
+    <trait id="NPPNN=20=40" regionTrait="PERSONS" regionTotal="PERSONS" pumsTraitTable="POPULATION" pumsTraitField="AGEP" pumsTotalTable="POPULATION" pumsTotalField="CIT"/>
+
+    <trait id="NPPYY=3=7"   regionTrait="PERSONS" regionTotal="PERSONS" pumsTraitTable="HOUSEHOLDS" pumsTraitField="3"    pumsTotalTable="HOUSEHOLDS" pumsTotalField="7"/>
+    <trait id="NPPYY=6=14"  regionTrait="PERSONS" regionTotal="PERSONS" pumsTraitTable="POPULATION" pumsTraitField="3"    pumsTotalTable="POPULATION" pumsTotalField="7"/>
+
+    <trait id="NPPNN=1=40"  regionTrait="PERSONS" regionTotal="PERSONS" pumsTraitTable="POPULATION" pumsTraitField="AGEP" pumsTraitSelect="3-6"   pumsTotalTable="POPULATION" pumsTotalField="CIT"/>
+    <trait id="YPPNN=4=8"   regionTrait="PERSONS" regionTotal="PERSONS" pumsTraitTable="POPULATION" pumsTraitField="AGEP" pumsTraitContinuous="3-6" pumsTotalTable="POPULATION" pumsTotalField="CIT"/>
+    <trait id="NPPNY=1=14"  regionTrait="PERSONS" regionTotal="PERSONS" pumsTraitTable="POPULATION" pumsTraitField="AGEP" pumsTraitSelect="10-20" pumsTotalTable="POPULATION" pumsTotalField="7"/>
+    <trait id="YPPNY=16=7"  regionTrait="PERSONS" regionTotal="PERSONS" pumsTraitTable="POPULATION" pumsTraitField="AGEP" pumsTraitContinuous="10-20" pumsTotalTable="POPULATION" pumsTotalField="7"/>
+  </traits>
+</FileRelationship>

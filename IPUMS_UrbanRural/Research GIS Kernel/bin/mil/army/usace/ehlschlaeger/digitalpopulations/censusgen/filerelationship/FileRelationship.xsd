@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="FileRelationship" type="fileRelationship"/>
+
+  <xs:complexType name="attributeMap">
+    <xs:sequence/>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="map" type="xs:string" use="required"/>
+    <xs:attribute name="table" type="xs:string"/>
+    <xs:attribute name="key" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="fileRelationship">
+    <xs:sequence>
+      <xs:element name="landuse" type="landuse" minOccurs="0"/>
+      <xs:element name="popdensity" type="popDensity" minOccurs="0"/>
+      <xs:element name="regions" type="regions" maxOccurs="unbounded"/>
+      <xs:element name="attribute" type="attributeMap" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="households" type="households" minOccurs="0"/>
+      <xs:element name="population" type="population" minOccurs="0"/>
+      <xs:element name="traits">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="trait" type="pumsTrait"/>
+              <xs:element name="forbid" type="forbid"/>
+            </xs:choice>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="landuse">
+    <xs:sequence>
+      <xs:element name="comment" type="xs:string" minOccurs="0"/>
+      <xs:element name="vacant" type="landuseVacant"/>
+      <xs:element name="combination" type="landuseCombination" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="map" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="landuseVacant">
+    <xs:sequence/>
+    <xs:attribute name="desc" type="xs:string"/>
+    <xs:attribute name="classes" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="landuseCombination">
+    <xs:sequence/>
+    <xs:attribute name="desc" type="xs:string"/>
+    <xs:attribute name="target" type="xs:int" use="required"/>
+    <xs:attribute name="classes" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="popDensity">
+    <xs:sequence/>
+    <xs:attribute name="landuse" type="xs:string"/>
+    <xs:attribute name="map" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="regions">
+    <xs:sequence/>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="map" type="xs:string" use="required"/>
+    <xs:attribute name="table" type="xs:string" use="required"/>
+    <xs:attribute name="key" type="xs:string"/>
+    <xs:attribute name="households" type="xs:string"/>
+    <xs:attribute name="population" type="xs:string"/>
+    <xs:attribute name="vacancies" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="households">
+    <xs:sequence/>
+    <xs:attribute name="table" type="xs:string"/>
+    <xs:attribute name="key" type="xs:string"/>
+    <xs:attribute name="members" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="population">
+    <xs:sequence/>
+    <xs:attribute name="table" type="xs:string"/>
+    <xs:attribute name="household" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="pumsTrait">
+    <xs:sequence/>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="desc" type="xs:string"/>
+    <xs:attribute name="regionTable" type="xs:string"/>
+    <xs:attribute name="regionTrait" type="xs:string"/>
+    <xs:attribute name="regionTotal" type="xs:string"/>
+    <xs:attribute name="attribute" type="xs:string"/>
+    <xs:attribute name="attributeSelect" type="xs:string"/>
+    <xs:attribute name="pumsTraitTable" type="type" use="required"/>
+    <xs:attribute name="pumsTraitField" type="xs:string" use="required"/>
+    <xs:attribute name="pumsTraitSelect" type="xs:string"/>
+    <xs:attribute name="pumsTraitContinuous" type="xs:string"/>
+    <xs:attribute name="pumsTotalTable" type="type"/>
+    <xs:attribute name="pumsTotalField" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="forbid">
+    <xs:sequence/>
+    <xs:attribute name="id" type="xs:string"/>
+    <xs:attribute name="desc" type="xs:string"/>
+    <xs:attribute name="pumsTraitTable" type="type" use="required"/>
+    <xs:attribute name="pumsTraitField" type="xs:string" use="required"/>
+    <xs:attribute name="pumsTraitSelect" type="xs:string" use="required"/>
+    <xs:attribute name="map" type="xs:string" use="required"/>
+    <xs:attribute name="mapSelect" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:simpleType name="type">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="HOUSEHOLDS"/>
+      <xs:enumeration value="POPULATION"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+

@@ -1,0 +1,87 @@
+## Not really an HTML file.
+## This defines vars which style the placemark icons:
+##   icon.img = name or file (default "household.png")
+##   icon.scale = multiple of standard size (default 0.4)
+##   icon.color = name or code (default "white") (acts as color filter for icon)
+##   label.scale = multiple of standard size (default 1.0)
+##   label.color = name or code (default "white")
+
+
+#if($point.influenceScore != "")
+	#set($influence = $ConversionTool.toInteger($point.influenceScore))
+#if($influence >= -10 && $influence <= -8)
+	#set($icon.color = "#B2182B")
+#elseif($influence >= -7 && $influence <= -5)
+	#set($icon.color = "#EF8A62")
+#elseif($influence >= -4  && $influence <= -2)
+	#set($icon.color = "#FDDBC7")
+#elseif($influence >= -1  && $influence <= 1)
+	#set($icon.color = "#F7F7F7")
+#elseif($influence >= 2 && $influence <= 4)
+	#set($icon.color = "#D1E5F0")
+#elseif($influence >= 5 && $influence <= 7)
+	#set($icon.color = "#67A9CF")
+#elseif($influence >= 8 && $influence <= 10)
+	#set($icon.color = "#2166AC")
+#end
+#end
+
+
+#if($point.groupType == "City")
+	##set( $icon.img = "http://maps.google.com/mapfiles/kml/paddle/wht-circle-lv.png" )
+	#set( $icon.img = "http://maps.google.com/mapfiles/kml/paddle/wht-blank-lv.png")
+	#set ($icon.img = "http://maps.google.com/mapfiles/kml/pal4/icon56.png" )
+#elseif($point.groupType == "Group")
+	##set ($icon.img = "http://maps.google.com/mapfiles/kml/paddle/wht-blank-lv.png" )
+	#set ($icon.img = "http://maps.google.com/mapfiles/kml/pal4/icon57.png" )
+#elseif($point.groupType == "County")
+	#set( $icon.img = "http://maps.google.com/mapfiles/kml/pal4/icon59.png")
+	#set($icon.color = "#BEBEBE")
+#elseif($point.groupType == "State")
+	##set( $icon.img = "http://maps.google.com/mapfiles/kml/paddle/wht-blank-lv.png")
+	##set ($icon.img = "http://maps.google.com/mapfiles/kml/pal4/icon61.png" )
+	#set( $icon.img ="http://maps.google.com/mapfiles/kml/pal4/icon59.png")
+	#set($icon.color = "#BEBEBE")
+#end
+
+#if($point.demographicPopulation == "")
+	#set($icon.scale = 0.14)
+#else
+#set($pop=$ConversionTool.toInteger($point.demographicPopulation))
+#if($pop>=0 && $pop <=30)
+	#set($icon.scale = 0.14)
+#elseif($pop >= 31 && $pop <= 1500)
+	#set($icon.scale = 0.33)
+#elseif($pop >= 1501 && $pop <= 5000)
+	#set($icon.scale = 0.48)
+#elseif($pop >= 5001 && $pop <= 25000)
+	#set($icon.scale = 0.6)
+#elseif($pop >= 25001 && $pop <= 50000)
+	#set($icon.scale = 0.7)
+#elseif($pop >= 50001 && $pop <= 800000)
+	#set($icon.scale = 0.8)
+#else
+	#set($icon.scale = 0.9)
+#end
+#end
+
+
+
+## to assign shape based on car ownership
+## 1 = yes car; 2 = no car
+## See http://jyotirmaya.blogspot.com/2008/03/google-map-files-kml-icon.html
+##"http://maps.google.com/mapfiles/kml/paddle/wht-stars-lv.png"
+
+##if( $point.V51_CarHomeDummy == 1)
+##set( $icon.img = "http://maps.google.com/mapfiles/kml/paddle/wht-blank-lv.png" )
+ ##set( $icon.img = "http://maps.google.com/mapfiles/kml/pal3/icon21.png" )
+##elseif ($point.V51_CarHomeDummy == 2)
+##set( $icon.img = "http://maps.google.com/mapfiles/kml/paddle/wht-circle-lv.png" )
+ ##set( $icon.img = "http://maps.google.com/mapfiles/kml/pal3/icon56.png" )
+##end
+
+
+##
+## This prints out the selections for testing purposes.
+##
+##Icon: $icon.img  $icon.scale  $icon.color

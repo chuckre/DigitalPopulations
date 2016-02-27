@@ -1,0 +1,63 @@
+
+== CensusGenCS ==
+
+CensusGenCS is an extension to ConflatePumsQueryWithTracts that adds conditional simulation to the process.  Conditional simulation allows the user to provide a partial "answer" (i.e. data which would normally be computed by the program).  The program adapts its own answer around the given data, and folds that data into the generated output files.
+
+Using conditional simulation requires creating a suitable input file, adjusting the project to reference the file, then running the application.
+
+
+-- Creating the Input File --
+
+The input file provides a list of "concrete" households -- houses that are know to exist at specific locations.  So at the very least, coordinates for each household must be provided.  But additional attributes can also be specified, and the program will copy them into the generated list of households.
+
+The process actually occurs in two steps:  selection of households, and realization.  CensusGenCS uses the parent code to generate a set of realizations of the archtypes.  It then selects a household to convert into a concrete realization by scanning for households that most closely match the given records, then overwriting their attributes with the ones in the given file.  Thus the generated households will have a complete set of attributes from the archtype file, while also incorporating the modified attributes from the concrete file.
+
+The input file is simply a comma-seperated value file, where the first line names the columns, and subsequent lines provide concrete households.  Columns "x" and "y" are mandatory, and provide the location of the households.  If other columns are provided, their names must match columns from the projects households archtypes file.
+
+For example:
+
+x,y,Ethnicity,Tribe
+103,770,3,2
+104,770,3,2
+103,771,3,2
+106,774,3,4
+107,774,3,4
+
+CensusGenCS will place households at precisely the x/y (i.e. easting/northing) coordinates given, and the households will have the appropriate attributes from the file.  All other attributes will come from an archtype in the same tract that most closely matches in the given Ethnicity and Tribe columns.
+
+
+-- Feeding the File to CensusGenCS --
+
+To keep this feature hidden from the public code base, there is no formal parameter for the concrete table.  Instead, the user must create a suitable line in the .properties file.  (Remember, last-run.properties is rewritten every time the program is run, so to preserve your file, give it a different name, and run the program with the -c option.)
+
+The parameter key is "condsim_file", and its value is the path to the file constructed above.  The path can be specified in absolute form (starting with C:) or relative to the configured output directory.  As usual for .properties files, backslashes must be doubled, or replaced with forward slashes.  ("data\file" will not work; use "data\\file" or "data/file" instead.)
+
+To modify an existing project, insert the parameter line into the appropriate .properties file:
+
+  #Last run of ConflatePumsQueryWithTracts
+  #Tue Nov 02 19:05:23 PDT 2010
+  condsim_file=data/conditional_simulation.csv
+  criteria_file=data/fittingcriteria.dpfxml
+  do_dump_number_archtypes=true
+  etc..
+
+If constructing a new project, simply place the parameter line into last-run.properties.  The program will rewrite the file, retaining that line, and adding all the other parameters with their default values.
+
+If ConflatePumsQueryWithTracts is run on a modified project, nothing bad will happen.  That program will simply ignore condsim_file, but it will preserve the setting when it (re)writes last-run.properties.
+
+
+-- Running CensusGenCS --
+
+CensusGenCS has its own main() function, and it's the only way to start the modified application.  The conditional simulation feature need not be *used* when started this way, but this is the only way to access the feature.  So:
+
+  java <classpath> mil.army.usace.censusgen.CensusGenCS
+
+will start the modified census generator, while:
+
+  java <classpath> mil.army.usace.ehlschlaeger.digitalpopulations.censusgen.ConflatePumsQueryWithTracts
+
+will start the standard one.
+
+If condsim_file is not specified, then both entry points will act exactly the same.  If condsim_file is specified, then only CensusGenCS will make use of it.
+
+The <classpath> must be contain RGIK Private, plus Research GIS Kernel and all its libraries.

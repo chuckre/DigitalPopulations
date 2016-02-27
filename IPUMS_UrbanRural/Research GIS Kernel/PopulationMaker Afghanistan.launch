@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/Research GIS Kernel/src/mil/army/usace/ehlschlaeger/digitalpopulations/popgen/PopulationMaker.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="mil.army.usace.ehlschlaeger.digitalpopulations.popgen.PopulationMaker"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Research GIS Kernel"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:Afghanistan}"/>
+</launchConfiguration>
