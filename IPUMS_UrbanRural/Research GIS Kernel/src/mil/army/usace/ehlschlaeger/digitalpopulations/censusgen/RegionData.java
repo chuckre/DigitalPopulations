@@ -276,6 +276,8 @@ public class RegionData {
     	
     	Vector<String> idVector = this.table.getColumn(keycol);   	
     	String [] idString = idVector.toArray(new String[idVector.size()]);
+        String [] missedRegions = new String[5];
+        int errCount = 0;
     	
     	HashMap<Integer, Integer> idMap = new HashMap<>();
     	
@@ -303,12 +305,17 @@ public class RegionData {
 					}
 					else
 					{
-						System.err.println("Region ID " + regionIDOld + " exists in the ASC file, but not in the Region table");
+                        if (errCount < 5)
+    						missedRegions[errCount]=Integer.toString(regionIDOld);
+                        errCount ++;
 					}
 				}
 			}
 		}
-		
+        if (errCount > 0) {
+            System.err.println(errCount + " Region IDs existes in the ASC file, but not in the Region table");
+            System.err.println("E.g : " + missedRegions[0]);
+        }
 		this.map = newMap;
 	}
 }
