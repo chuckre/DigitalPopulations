@@ -279,7 +279,7 @@ public class RegionData {
         String [] missedRegions = new String[5];
         int errCount = 0;
     	
-    	HashMap<Integer, Integer> idMap = new HashMap<>();
+    	HashMap<Integer, Integer> idMap = new HashMap<Integer, Integer>();
     	
     	int regionIDNew = 1;
 		int regionIDOld;
@@ -316,6 +316,7 @@ public class RegionData {
             System.err.println(errCount + " Region IDs existes in the ASC file, but not in the Region table");
             System.err.println("E.g : " + missedRegions[0]);
         }
+        
 		this.map = newMap;
 	}
 }

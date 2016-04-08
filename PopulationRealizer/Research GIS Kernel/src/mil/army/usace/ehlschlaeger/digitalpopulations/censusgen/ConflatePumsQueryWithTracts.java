@@ -48,7 +48,6 @@ import mil.army.usace.ehlschlaeger.rgik.util.ObjectUtil;
 import mil.army.usace.ehlschlaeger.rgik.util.QueuePutPolicy;
 import mil.army.usace.ehlschlaeger.rgik.util.TimeTracker;
 
-import org.apache.velocity.runtime.log.Log;
 import org.xml.sax.SAXException;
 
 
@@ -554,8 +553,9 @@ public class ConflatePumsQueryWithTracts implements Serializable {
         LogUtil.cr(log);
         LogUtil.progress(log, "ConflatePumsQueryWithTracts: realization [" + realizationNum + "] started at " + realizationStartTime.toString());
         LogUtil.cr(log);
-
-        //Yizhao Gao --- The summary statistics of archtype can go here
+        
+      //Yizhao Gao --- The summary statistics of archtype can go here
+        /*
         for(int i = 0; i < this.soln.householdArchTypes.length; i++)
         {
         	this.soln.addRealization(i, 0);
@@ -594,6 +594,8 @@ public class ConflatePumsQueryWithTracts implements Serializable {
         {
         	this.soln.removeRealization(i, 0);
         }
+        */
+
         
         // --- Phase 1 --- //
         printSection("START PHASE 1");
