@@ -24,19 +24,18 @@ import mil.army.usace.ehlschlaeger.rgik.util.LogUtil;
 import mil.army.usace.ehlschlaeger.rgik.util.ObjectUtil;
 
 
-
 /**
  * Move households around to find the arrangement that best fits the
  * statistic evaluators.
- * <P>
+ * <p/>
  * Is phase 3 of censusgen.
- * <p>
+ * <p/>
  * Copyright <a href="http://faculty.wiu.edu/CR-Ehlschlaeger2/">Charles R.
  * Ehlschlaeger</a>, work: 309-298-1841, fax: 309-298-3003, This software is
  * freely usable for research and educational purposes. Contact C. R.
  * Ehlschlaeger for permission for other purposes. Use of this software requires
  * appropriate citation in all published and unpublished documentation.
- * 
+ *
  * @author William R. Zwicky
  */
 public class Phase_OptimizeRegions {
@@ -46,8 +45,10 @@ public class Phase_OptimizeRegions {
     protected GISClass regionMap;
     protected ArrayList<Integer> regionList;
     protected GISLattice popDensityMap;
-    
-    /** Our run-time configuration. */
+
+    /**
+     * Our run-time configuration.
+     */
     protected Params params = new Params();
     protected Random random = new Random();
 
@@ -57,96 +58,94 @@ public class Phase_OptimizeRegions {
      * Build standard instance. You will generally want to call setParams() and
      * setRandomSource(), then call go() to run and generate output files, or
      * call writeFileSet() to save given solution to disk.
-     * 
-     * @param solution
-     *            initial arrangement that we will optimize
-     * @param regionMap
-     *            map which specifies the region that covers each cell
-     * @param popDensityMap
-     *            raster map of relative population density for each cell. Only
-     *            used to guide generation of random locations for houses that
-     *            are written to disk.
+     *
+     * @param solution      initial arrangement that we will optimize
+     * @param regionMap     map which specifies the region that covers each cell
+     * @param popDensityMap raster map of relative population density for each cell. Only
+     *                      used to guide generation of random locations for houses that
+     *                      are written to disk.
      */
     public Phase_OptimizeRegions(Solution solution,
-            GISClass regionMap,
-            GISLattice popDensityMap) {
+                                 GISClass regionMap,
+                                 GISLattice popDensityMap) {
         this.soln = solution;
         this.regionMap = regionMap;
         this.popDensityMap = popDensityMap;
-        
+
         this.regionList = new ArrayList<Integer>(regionMap.makeInventory());
         Collections.sort(regionList);
     }
 
     /**
      * Install run-time configuration.
-     * 
+     *
      * @param params current set of run-time parameters.  MUST include phase 3 params.
      */
     public void setParams(Params params) {
         this.params = params;
     }
-    
+
     /**
      * Change our source of random numbers.
-     * 
-     * @param source
-     *            new random number generator
+     *
+     * @param source new random number generator
      */
     public void setRandomSource(Random source) {
         random = source;
     }
-    
+
     /**
      * Install a custom realizer. In this class, this is only used to generate
      * easting/northing values when writing output files. If none is provided
      * here, we will generate one from our inputs.
-     * 
-     * @param rzr
-     *            new realizer
+     *
+     * @param rzr new realizer
      */
     public void setRealizer(Realizer rzr) {
         this.realizer = rzr;
     }
-    
+
     /**
      * Perform the process as currently configured.
-     * 
+     *
      * @throws IOException on any error writing output files
      */
     public void go(int realizationNum) {
         assert soln.householdArchTypes != null && soln.householdArchTypes.length > 0;
-        
+
         double bestFit = soln.getSpread();
-        
+        Object[] diagnostic = new Object[1];
+
         // If pstats is null, attMapHelper will just return regionList.
         AttMapHelper attMapHelper = new AttMapHelper(
-            regionMap, regionList,
-            soln.pcons);
-        
+                regionMap, regionList,
+                soln.pcons);
+
         // Timers (1 billion nanoseconds per second)
+        int log_interval = 5; // in seconds
         long tMainStart = System.nanoTime();
-        long tNextStats = tMainStart + 60 * (long)1e9;
-        long tNextSave = tMainStart + (long)(params.getPhase3SaveIntermediate() * 60 * 1e9);
+        long tNextStats = tMainStart + log_interval * (long) 1e9;
+        long tNextSave = tMainStart + (long) (params.getPhase3SaveIntermediate() * 60 * 1e9);
 
         // Determine time limit.
         long tMainAbort = -1;
-        if(params.getPhase3TimeLimit() > 0)
-            tMainAbort = tMainStart + (long)(params.getPhase3TimeLimit() * 60 * 1e9);
+        if (params.getPhase3TimeLimit() > 0)
+            tMainAbort = tMainStart + (long) (params.getPhase3TimeLimit() * 60 * 1e9);
 
         // Print field reference for the lines that will follow
         LogUtil.cr(log);
         printHeader();
         printStats(0, 0, tMainStart);
 
-        Object[] diagnostic = new Object[1];
-
+        // loop variables
         long moves = 0;
         long fails = 0;
         long movesAtLastSave = 0;
         int startHoh = random.nextInt(soln.householdArchTypes.length);
-        for (int hohoff = 0; hohoff < soln.householdArchTypes.length; hohoff++) {
-            int hoh = (startHoh + hohoff) % soln.householdArchTypes.length;
+        int nArchMiss = 0;
+        //for (int hohoff = 0; hohoff < soln.householdArchTypes.length; hohoff++) {
+        //    int hoh = (startHoh + hohoff) % soln.householdArchTypes.length;
+        for (int hoh = 0; hoh < soln.householdArchTypes.length; hoh++) {
             PumsHousehold house = soln.householdArchTypes[hoh];
 
             // ArchType with no realization is skipped
@@ -171,15 +170,20 @@ public class Phase_OptimizeRegions {
                     throw new IllegalStateException("goodRegions==null due to internal logic bug.");
             }
             BitSet tested = new BitSet();
+
+            // Random start is logically not needed here, but it seems running faster on test data
             int startRzn = random.nextInt(house.getNumberRealizations());
-            for (int rznoff = 0; rznoff < house.getNumberRealizations(); rznoff++) {
-                int rzn = (startRzn + rznoff) % house.getNumberRealizations();
-                boolean found = false;
+            boolean rznFound = false;
+            //for (int rznoff = 0; rznoff < house.getNumberRealizations(); rznoff++) {
+            //    int rzn = (startRzn + rznoff) % house.getNumberRealizations();
+
+            for (int rzn = 0; rzn < house.getNumberRealizations(); rzn++) {
+                boolean tractFound = false;
                 int origTract = house.getRealizationTract(rzn);
 
                 // since we break on success,
                 // no need to try same arctype in same origTract, bound to fail again
-                if (tested.get(origTract)){
+                if (tested.get(origTract)) {
                     continue;
                 }
                 tested.set(origTract);
@@ -196,61 +200,79 @@ public class Phase_OptimizeRegions {
                     if (newSpread < bestFit) {
                         bestFit = newSpread;
                         bestTract = newTract;
-                        found = true;
+                        tractFound = true;
                         //break;
                     }
+
+                    // -- Do time-sensitive tasks -- //
+                    long tNow = System.nanoTime();
+
+                    // Abort run after time limit if requested.
+                    if (tMainAbort > 0 && tNow > tMainAbort) {
+                        printStats(moves, fails, tMainStart);
+                        LogUtil.progress(log, "** Aborting run: time limit has been reached.");
+                        break;
+                    }
+
+                    // Print stats every minute.
+                    if (tNow > tNextStats) {
+                        // Perform dump at uniform increments.
+                        tNextStats += log_interval * (long) 1e9;
+                        // Dump stats
+                        printStats(moves, fails, tMainStart);
+                    }
+
+                    // Save intermediate results periodically.
+                    if (tNow > tNextSave) {
+                        // Save only if something has changed.
+                        if (moves != movesAtLastSave) {
+                            movesAtLastSave = moves;
+
+                            LogUtil.progress(log, "Long run, saving intermediate data set.");
+                            try {
+                                writeFileSet(realizationNum, "intermediate", null);
+                            } catch (IOException e) {
+                                log.log(Level.WARNING, "Unable to save intermediate data, continuing anyway.", e);
+                            }
+                        }
+                        // Save again precisely one increment from now. Ignore
+                        // however late we are performing this save, and also
+                        // ignore however long this save took.
+                        tNextSave = System.nanoTime() + (long) (params.getPhase3SaveIntermediate() * 60 * 1e9);
+                    }
+
                 }
-                if (!found) {
+
+
+                if (!tractFound) {
                     soln.move(hoh, rzn, origTract);
                     fails += 1;
                 } else {
                     soln.move(hoh, rzn, bestTract);
-                    startHoh = random.nextInt(soln.householdArchTypes.length);
-                    hohoff = 0;
+                    tested.clear(origTract);
                     moves += 1;
+                    rznFound = true;
+                    //startHoh = random.nextInt(soln.householdArchTypes.length);
+                    //hohoff = 0;
                     break;
                 }
             }
-
-            // -- Do time-sensitive tasks -- //
-            long tNow = System.nanoTime();
-
-            // Abort run after time limit if requested.
-            if(tMainAbort > 0 && tNow > tMainAbort) {
-                printStats(moves, fails, tMainStart);
-                LogUtil.progress(log, "** Aborting run: time limit has been reached.");
+            if (!rznFound) {
+                nArchMiss += 1;
+                LogUtil.progress(log, "RZN not found for ArchType " + hoh + ", total miss =  " +nArchMiss);
+            } else {
+                nArchMiss = 0;
+            }
+            if (nArchMiss == soln.householdArchTypes.length) {
                 break;
-            }
-
-            // Print stats every minute.
-            if(tNow > tNextStats) {
-                // Perform dump at uniform increments.
-                tNextStats += 60 * (long)1e9;
-                // Dump stats
-                printStats(moves, fails, tMainStart);
-            }
-
-            // Save intermediate results periodically.
-            if(tNow > tNextSave) {
-                // Save only if something has changed.
-                if(moves != movesAtLastSave) {
-                    movesAtLastSave = moves;
-
-                    LogUtil.progress(log, "Long run, saving intermediate data set.");
-                    try {
-                        writeFileSet(realizationNum, "intermediate", null);
-                    } catch (IOException e) {
-                        log.log(Level.WARNING, "Unable to save intermediate data, continuing anyway.", e);
-                    }
+            } else { // cotinue arctype loop
+                if (hoh == soln.householdArchTypes.length - 1) {
+                    hoh = -1; // start over
                 }
-                // Save again precisely one increment from now. Ignore
-                // however late we are performing this save, and also
-                // ignore however long this save took.
-                tNextSave = System.nanoTime() + (long)(params.getPhase3SaveIntermediate() * 60 * 1e9);
             }
         }
         printStats(moves, fails, tMainStart);
-   }
+    }
 
     /**
      * Print field reference for the lines that will follow.
@@ -259,30 +281,30 @@ public class Phase_OptimizeRegions {
     protected void printHeader() {
         StringOutputStream sos = new StringOutputStream();
         sos.format("%8s %11s %6s", "Moves", "Fails", "Mins");
-        for( int i = 0; i < soln.stats.size(); i++) {
-            sos.format( " %10s", "stat[" + i + "]");
+        for (int i = 0; i < soln.stats.size(); i++) {
+            sos.format(" %10s", "stat[" + i + "]");
         }
-        sos.format( " %s", "Spread");
+        sos.format(" %s", "Spread");
         LogUtil.progress(log, sos.toString());
     }
 
     /**
      * Print stats for the progress achieved so far.
      * Must be synchronized with _p3_printHeader.
-     * 
+     *
      * @param moves
      * @param fails
      * @param startTime
      */
     protected void printStats(long moves, long fails, long startTime) {
         long tNow = System.nanoTime();
-        double totalSeconds = (tNow-startTime) / (long)1e9;
-        
+        double totalSeconds = (tNow - startTime) / (long) 1e9;
+
         StringOutputStream sos = new StringOutputStream();
-        sos.format("%8d %11d %6.1f", moves, fails, totalSeconds/60.0);
+        sos.format("%8d %11d %6.1f", moves, fails, totalSeconds / 60.0);
         for (int iii = 0; iii < soln.stats.size(); iii++) {
             sos.format(" %10.1f",
-                Math.sqrt(soln.stats.get(iii).spread(soln.goals.get(iii))));
+                    Math.sqrt(soln.stats.get(iii).spread(soln.goals.get(iii))));
         }
         double bestFit = soln.getSpread();
         sos.format(" %f", Math.sqrt(bestFit));
@@ -291,26 +313,20 @@ public class Phase_OptimizeRegions {
 
     /**
      * Write all required output files, and remove older versions.
-     * 
-     * @param runNumber
-     *            realization ID of current solution
-     * @param nameNote
-     *            tag to append to file name
-     * @param pumsQuery
-     *            subset of households to write
-     * @param allHohFields
-     *            true to write all household data fields to output file, false
-     *            to only write easting/northing/household id/realization id.
-     * @param allPopFields
-     *            true to write all population data fields to output file, false
-     *            to only write easting/northing/household id/realization id.
-     * 
+     *
+     * @param runNumber    realization ID of current solution
+     * @param nameNote     tag to append to file name
+     * @param pumsQuery    subset of households to write
+     * @param allHohFields true to write all household data fields to output file, false
+     *                     to only write easting/northing/household id/realization id.
+     * @param allPopFields true to write all population data fields to output file, false
+     *                     to only write easting/northing/household id/realization id.
      * @throws IOException
      */
     public void writeFileSet(int runNumber, String nameNote,
-            PumsQuery pumsQuery) throws IOException {
+                             PumsQuery pumsQuery) throws IOException {
         // Realize archtypes and assign locations.
-        if(realizer == null) {
+        if (realizer == null) {
             // Preserve realizer for every call to writeFileSet.
             realizer = new ConstrainedRealizer(regionMap, popDensityMap, soln.pcons);
             realizer.setRandomSource(random);
@@ -321,30 +337,30 @@ public class Phase_OptimizeRegions {
         // northing values is to generate and capture the whole list.
         // If we have enough memory for phase 4, we have enough memory for this.
         ArrayList<PumsHouseholdRealization> hohs = ObjectUtil.list(realizer.iterate(
-            Arrays.asList(soln.householdArchTypes).iterator()));
-        
+                Arrays.asList(soln.householdArchTypes).iterator()));
+
         HohRznWriter writer = new HohRznWriter(RGIS.getOutputFolder());
 
         // Write filtered set first.
-        if(pumsQuery != null) {
+        if (pumsQuery != null) {
             String newNote = "(filtered)" + ObjectUtil.nz(nameNote);
 
             writer.writeFileSet(
-                runNumber, newNote,
-                pumsQuery.iterateRzn(hohs.iterator()),
-                true,
-                false,
-                params.getWriteAllHohFields(), params.getWriteAllPopFields(),
-                soln.hohKeyCol, soln.popHohCol);
+                    runNumber, newNote,
+                    pumsQuery.iterateRzn(hohs.iterator()),
+                    true,
+                    false,
+                    params.getWriteAllHohFields(), params.getWriteAllPopFields(),
+                    soln.hohKeyCol, soln.popHohCol);
         }
-        
+
         // Now write complete set.
         writer.writeFileSet(
-            runNumber, nameNote,
-            hohs.iterator(),
-            true,
-            true,
-            params.getWriteAllHohFields(), params.getWriteAllPopFields(),
-            soln.hohKeyCol, soln.popHohCol);
+                runNumber, nameNote,
+                hohs.iterator(),
+                true,
+                true,
+                params.getWriteAllHohFields(), params.getWriteAllPopFields(),
+                soln.hohKeyCol, soln.popHohCol);
     }
 }
