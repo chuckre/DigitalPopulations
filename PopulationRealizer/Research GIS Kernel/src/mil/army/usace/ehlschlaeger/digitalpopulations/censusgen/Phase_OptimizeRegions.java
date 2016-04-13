@@ -202,10 +202,12 @@ public class Phase_OptimizeRegions {
                 }
                 if (!found) {
                     soln.move(hoh, rzn, origTract);
+                    fails += 1;
                 } else {
                     soln.move(hoh, rzn, bestTract);
                     startHoh = random.nextInt(soln.householdArchTypes.length);
                     hohoff = 0;
+                    moves += 1;
                     break;
                 }
             }
@@ -247,173 +249,8 @@ public class Phase_OptimizeRegions {
                 tNextSave = System.nanoTime() + (long)(params.getPhase3SaveIntermediate() * 60 * 1e9);
             }
         }
-        printStats(0, 0, tMainStart);
-
-        // Init loop vars.
-        //int hoh = random.nextInt(soln.householdArchTypes.length);
-        //int startHoh = hoh;
-        //long moves = 0;
-        //long fails = 0;
-        //long movesAtLastSave = 0;
-
-        //
-        //// Move households around in search of a better fit.
-        //// Continue moving until we can find no more moves.
-        //hoh_loop: for(;;) {
-        //    boolean houseMoved = false;
-        //    PumsHousehold house = soln.householdArchTypes[hoh];
-        //    // Track tractable tracts.
-        //    BitSet tested = new BitSet();
-        //
-        //    // Start at a random rzn.
-        //    int startRzn = -1;
-        //    // Move only if we have rzns to move.  (Also, nextInt() crashes on zero.)
-        //    if(house.getNumberRealizations() > 0) {
-        //        startRzn = random.nextInt(house.getNumberRealizations());
-
-        //        // like phase 2, check attrib maps for validRegions, only try to move to those
-        //        List<Integer> goodRegions = attMapHelper.validRegions(house, diagnostic);
-
-        //        if (goodRegions.isEmpty() || diagnostic[0] != null) {
-        //            String msg = String.format(
-        //                "%s eliminated all regions from consideration for %s.",
-        //                diagnostic[0], house);
-        //            log.warning(msg);
-        //            attMapHelper.diagnose(house, log);
-
-        //            // Paranoid check: validRegions() must at least
-        //            // return the list of all regions; if we get an empty
-        //            // list, something is horribly wrong.
-        //            if(goodRegions.isEmpty())
-        //                throw new IllegalStateException("goodRegions==null due to internal logic bug.");
-        //        }
-        //
-        //        // Loop from startRzn back to startRzn, wrapping around end.
-        //        for(int i=0; i<house.getNumberRealizations(); i++) {
-        //            int rzn = (startRzn+i) % house.getNumberRealizations();
-        //
-        //            int origTract = house.getRealizationTract(rzn);
-    
-        //            // Skip tract if we've already tried this archtype here. If
-        //            // we've failed before, we will fail every other time we
-        //            // try.
-        //            //
-        //            // Note this trick is only valid if we stop scanning rzns after
-        //            // finding one move. It's possible a rzn at the beginning of the
-        //            // list will not move, but a later rzn in the same tract *will*
-        //            // move due to changes in the rzns between them.
-        //            if(tested.get(origTract))
-        //                continue;
-        //            tested.set(origTract);
-        //
-        //            // Best tract (we know of) is current tract; bestFit is already set.
-        //            int bestTract = house.getRealizationTract(rzn);
-        //
-        //            // Test relocation to every other tract.
-        //            for (int newTract : goodRegions) {
-        //                // Skip starting tract.
-        //                if (newTract == origTract)
-        //                    continue;
-    
-        //                // Re-evaluate all the statistics as if the household
-        //                // had been moved. We never undo this move in the loop;
-        //                // move() will cancel the value at the old location for us.
-        //                // So any sequence of move()s followed by a move(oldTract)
-        //                // should result in the original set of statistics.
-        //                soln.move(hoh, rzn, newTract);
-        //
-        //                double newSpread = soln.getSpread();
-    
-        //                // Is new location a better fit?
-        //                if (newSpread < bestFit) {
-        //                    // Yes! Keep it.
-        //                    bestFit = newSpread;
-        //                    bestTract = newTract;
-        //                    moves++; // maybe break after finding the first fit
-        //                } else {
-        //                    // No!  Count failure; we'll undo the move below.
-        //                    fails++;
-        //                }
-        //            }
-        //
-        //            // Move rzn to best tract found. If no better tract was found,
-        //            // bestTract is simply origTract, and we're moving the rzn back
-        //            // into place.
-        //            soln.move(hoh, rzn, bestTract);
-        //            if(bestTract != origTract) {
-        //                // We don't want to over-work this archtype, so we'll stop with
-        //                // the first rzn moved.
-        //                houseMoved = true;
-        //                break;
-        //            }
-        //
-        //            // Iterate next rzn, wrapping around the end.
-        //            rzn = (rzn+1) % house.getNumberRealizations();
-        //            // Quit when we hit our starting point.
-        //            if(rzn == startRzn)
-        //                break;
-        //        } // for(rzn)
-        //    }
-        //
-        //    // -- Do time-sensitive tasks -- //
-        //    long tNow = System.nanoTime();
-        //
-        //    // Abort run after time limit if requested.
-        //    if(tMainAbort > 0 && tNow > tMainAbort) {
-        //        printStats(moves, fails, tMainStart);
-        //        LogUtil.progress(log, "** Aborting run: time limit has been reached.");
-        //        break hoh_loop;
-        //    }
-        //
-        //    // Print stats every minute.
-        //    if(tNow > tNextStats) {
-        //        // Perform dump at uniform increments.
-        //        tNextStats += 60 * (long)1e9;
-        //        // Dump stats
-        //        printStats(moves, fails, tMainStart);
-        //    }
-        //
-        //    // Save intermediate results periodically.
-        //    if(tNow > tNextSave) {
-        //        // Save only if something has changed.
-        //        if(moves != movesAtLastSave) {
-        //            movesAtLastSave = moves;
-
-        //            LogUtil.progress(log, "Long run, saving intermediate data set.");
-        //            try {
-        //                writeFileSet(realizationNum, "intermediate", null);
-        //            } catch (IOException e) {
-        //                log.log(Level.WARNING, "Unable to save intermediate data, continuing anyway.", e);
-        //            }
-        //        }
-        //        // Save again precisely one increment from now. Ignore
-        //        // however late we are performing this save, and also
-        //        // ignore however long this save took.
-        //        tNextSave = System.nanoTime() + (long)(params.getPhase3SaveIntermediate() * 60 * 1e9);
-        //    }
-
-        //
-        //    // Pick another archtype.
-        //    if(houseMoved) {
-        //        // As long as we find moves, we'll just bounce around randomly.
-        //        hoh = random.nextInt(soln.householdArchTypes.length);
-        //        startHoh = hoh;
-        //    }
-        //    else {
-        //        // Failed to find a move for this archtype, so proceed to next
-        //        // one in order, wrapping around the end.
-        //        hoh = (hoh+1) % soln.householdArchTypes.length;
-        //        // Quit when we hit our starting point.
-        //        if(hoh == startHoh) {
-        //            // We've probed every rzn of every hoh and could find no
-        //            // moves. Time to give up!
-        //            printStats(moves, fails, tMainStart);
-        //            LogUtil.progress(log, "** Aborting run: All households tested, no more moves found.");
-        //            break hoh_loop;
-        //        }
-        //    }
-        //} // hoh_loop
-    }
+        printStats(moves, fails, tMainStart);
+   }
 
     /**
      * Print field reference for the lines that will follow.
