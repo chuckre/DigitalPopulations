@@ -122,7 +122,7 @@ public class Phase_OptimizeRegions {
                 soln.pcons);
 
         // Timers (1 billion nanoseconds per second)
-        int log_interval = 5; // in seconds
+        int log_interval = 1; // in seconds
         long tMainStart = System.nanoTime();
         long tNextStats = tMainStart + log_interval * (long) 1e9;
         long tNextSave = tMainStart + (long) (params.getPhase3SaveIntermediate() * 60 * 1e9);
@@ -167,22 +167,25 @@ public class Phase_OptimizeRegions {
                 if (goodRegions.isEmpty())
                     throw new IllegalStateException("goodRegions==null due to internal logic bug.");
             }
-            BitSet tested = new BitSet();
 
+            BitSet tested = new BitSet();
             boolean rznFound = false;
             for (int rzn = 0; rzn < house.getNumberRealizations(); rzn++) {
                 boolean tractFound = false;
                 int origTract = house.getRealizationTract(rzn);
 
-                // no need to try same arctype in same origTract
+                // skip same arctype in same origTract
                 // if it failed before
                 if (tested.get(origTract)) {
                     continue;
                 }
+
                 tested.set(origTract);
 
                 int bestTract = origTract;
                 for (int newTract : goodRegions) {
+
+                    // skip original Tract
                     if (newTract == origTract) {
                         continue;
                     }
@@ -196,42 +199,6 @@ public class Phase_OptimizeRegions {
                         tractFound = true;
                     }
 
-                    // -- Do time-sensitive tasks -- //
-                    long tNow = System.nanoTime();
-
-                    // Abort run after time limit if requested.
-                    if (tMainAbort > 0 && tNow > tMainAbort) {
-                        printStats(moves, fails, tMainStart);
-                        LogUtil.progress(log, "** Aborting run: time limit has been reached.");
-                        break;
-                    }
-
-                    // Print stats every minute.
-                    if (tNow > tNextStats) {
-                        // Perform dump at uniform increments.
-                        tNextStats += log_interval * (long) 1e9;
-                        // Dump stats
-                        printStats(moves, fails, tMainStart);
-                    }
-
-                    // Save intermediate results periodically.
-                    if (tNow > tNextSave) {
-                        // Save only if something has changed.
-                        if (moves != movesAtLastSave) {
-                            movesAtLastSave = moves;
-
-                            LogUtil.progress(log, "Long run, saving intermediate data set.");
-                            try {
-                                writeFileSet(realizationNum, "intermediate", null);
-                            } catch (IOException e) {
-                                log.log(Level.WARNING, "Unable to save intermediate data, continuing anyway.", e);
-                            }
-                        }
-                        // Save again precisely one increment from now. Ignore
-                        // however late we are performing this save, and also
-                        // ignore however long this save took.
-                        tNextSave = System.nanoTime() + (long) (params.getPhase3SaveIntermediate() * 60 * 1e9);
-                    }
                 }
 
                 if (!tractFound) {
@@ -243,13 +210,51 @@ public class Phase_OptimizeRegions {
                     moves += 1;
                     rznFound = true;
                 }
+
+                // -- Do time-sensitive tasks -- //
+                long tNow = System.nanoTime();
+
+                // Abort run after time limit if requested.
+                if (tMainAbort > 0 && tNow > tMainAbort) {
+                    printStats(moves, fails, tMainStart);
+                    LogUtil.progress(log, "** Aborting run: time limit has been reached.");
+                    break;
+                }
+
+                // Print stats every minute.
+                if (tNow > tNextStats) {
+                    // Perform dump at uniform increments.
+                    tNextStats += log_interval * (long) 1e9;
+                    // Dump stats
+                    printStats(moves, fails, tMainStart);
+                }
+
+                // Save intermediate results periodically.
+                if (tNow > tNextSave) {
+                    // Save only if something has changed.
+                    if (moves != movesAtLastSave) {
+                        movesAtLastSave = moves;
+
+                        LogUtil.progress(log, "Long run, saving intermediate data set.");
+                        try {
+                            writeFileSet(realizationNum, "intermediate", null);
+                        } catch (IOException e) {
+                            log.log(Level.WARNING, "Unable to save intermediate data, continuing anyway.", e);
+                        }
+                    }
+                    // Save again precisely one increment from now. Ignore
+                    // however late we are performing this save, and also
+                    // ignore however long this save took.
+                    tNextSave = System.nanoTime() + (long) (params.getPhase3SaveIntermediate() * 60 * 1e9);
+                }
+
             }
             if (!rznFound) {
                 nArchMiss += 1;
             } else {
                 nArchMiss = 0;
             }
-            hoh = (hoh + 1)%soln.householdArchTypes.length;
+            hoh = (hoh + 1) % soln.householdArchTypes.length;
         }
         printStats(moves, fails, tMainStart);
     }
