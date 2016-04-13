@@ -141,11 +141,9 @@ public class Phase_OptimizeRegions {
         long moves = 0;
         long fails = 0;
         long movesAtLastSave = 0;
-        int startHoh = random.nextInt(soln.householdArchTypes.length);
         int nArchMiss = 0;
-        //for (int hohoff = 0; hohoff < soln.householdArchTypes.length; hohoff++) {
-        //    int hoh = (startHoh + hohoff) % soln.householdArchTypes.length;
-        for (int hoh = 0; hoh < soln.householdArchTypes.length; hoh++) {
+        int hoh = 0;
+        while (nArchMiss < soln.householdArchTypes.length) {
             PumsHousehold house = soln.householdArchTypes[hoh];
 
             // ArchType with no realization is skipped
@@ -171,18 +169,13 @@ public class Phase_OptimizeRegions {
             }
             BitSet tested = new BitSet();
 
-            // Random start is logically not needed here, but it seems running faster on test data
-            int startRzn = random.nextInt(house.getNumberRealizations());
             boolean rznFound = false;
-            //for (int rznoff = 0; rznoff < house.getNumberRealizations(); rznoff++) {
-            //    int rzn = (startRzn + rznoff) % house.getNumberRealizations();
-
             for (int rzn = 0; rzn < house.getNumberRealizations(); rzn++) {
                 boolean tractFound = false;
                 int origTract = house.getRealizationTract(rzn);
 
-                // since we break on success,
-                // no need to try same arctype in same origTract, bound to fail again
+                // no need to try same arctype in same origTract
+                // if it failed before
                 if (tested.get(origTract)) {
                     continue;
                 }
@@ -201,7 +194,6 @@ public class Phase_OptimizeRegions {
                         bestFit = newSpread;
                         bestTract = newTract;
                         tractFound = true;
-                        //break;
                     }
 
                     // -- Do time-sensitive tasks -- //
@@ -240,9 +232,7 @@ public class Phase_OptimizeRegions {
                         // ignore however long this save took.
                         tNextSave = System.nanoTime() + (long) (params.getPhase3SaveIntermediate() * 60 * 1e9);
                     }
-
                 }
-
 
                 if (!tractFound) {
                     soln.move(hoh, rzn, origTract);
@@ -252,24 +242,14 @@ public class Phase_OptimizeRegions {
                     tested.clear(origTract);
                     moves += 1;
                     rznFound = true;
-                    //startHoh = random.nextInt(soln.householdArchTypes.length);
-                    //hohoff = 0;
-                    break;
                 }
             }
             if (!rznFound) {
                 nArchMiss += 1;
-                LogUtil.progress(log, "RZN not found for ArchType " + hoh + ", total miss =  " +nArchMiss);
             } else {
                 nArchMiss = 0;
             }
-            if (nArchMiss == soln.householdArchTypes.length) {
-                break;
-            } else { // cotinue arctype loop
-                if (hoh == soln.householdArchTypes.length - 1) {
-                    hoh = -1; // start over
-                }
-            }
+            hoh = (hoh + 1)%soln.householdArchTypes.length;
         }
         printStats(moves, fails, tMainStart);
     }
