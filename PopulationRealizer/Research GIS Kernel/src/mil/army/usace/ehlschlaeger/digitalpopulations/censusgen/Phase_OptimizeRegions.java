@@ -122,7 +122,7 @@ public class Phase_OptimizeRegions {
                 soln.pcons);
 
         // Timers (1 billion nanoseconds per second)
-        int log_interval = 1; // in seconds
+        int log_interval = 60; // in seconds
         long tMainStart = System.nanoTime();
         long tNextStats = tMainStart + log_interval * (long) 1e9;
         long tNextSave = tMainStart + (long) (params.getPhase3SaveIntermediate() * 60 * 1e9);
@@ -142,7 +142,10 @@ public class Phase_OptimizeRegions {
         long fails = 0;
         long movesAtLastSave = 0;
         int nArchMiss = 0;
-        int hoh = 0;
+        int nRound = 0;
+        int startHoh = random.nextInt(soln.householdArchTypes.length);
+        int hoh = startHoh;
+        boolean TLE = false;
         while (nArchMiss < soln.householdArchTypes.length) {
             PumsHousehold house = soln.householdArchTypes[hoh];
 
@@ -218,6 +221,7 @@ public class Phase_OptimizeRegions {
                 if (tMainAbort > 0 && tNow > tMainAbort) {
                     printStats(moves, fails, tMainStart);
                     LogUtil.progress(log, "** Aborting run: time limit has been reached.");
+                    TLE = true;
                     break;
                 }
 
@@ -249,13 +253,22 @@ public class Phase_OptimizeRegions {
                 }
 
             }
+            if (TLE) {
+                break;
+            }
             if (!rznFound) {
                 nArchMiss += 1;
             } else {
                 nArchMiss = 0;
             }
             hoh = (hoh + 1) % soln.householdArchTypes.length;
+            if (hoh == startHoh) {
+                nRound += 1;
+            }
         }
+        StringOutputStream sos = new StringOutputStream();
+        sos.format("Number of Rounds: %d", nRound);
+        LogUtil.progress(log, sos.toString());
         printStats(moves, fails, tMainStart);
     }
 
