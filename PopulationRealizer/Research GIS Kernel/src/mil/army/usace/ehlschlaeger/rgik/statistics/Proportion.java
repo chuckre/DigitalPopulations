@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Formatter;
 import java.util.List;
 
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+
 import mil.army.usace.ehlschlaeger.digitalpopulations.PumsHousehold;
 import mil.army.usace.ehlschlaeger.digitalpopulations.PumsHouseholdRealization;
 import mil.army.usace.ehlschlaeger.rgik.core.CSVTableNoSwing;
@@ -251,9 +253,30 @@ public class Proportion extends RGIS implements PointSpatialStatistic, TractSpat
 		// Build arrays to hold statistics for regions.
 		numInRegion = new double[ maxClassValue - minClassValue + 1];
 		totInRegion = new double[ maxClassValue - minClassValue + 1];
+
+        // Accumulate errors so we can report them all.
+        List<String> errors = new ArrayList<String>();
 		
 		int key = attributeTable.findColumn( keyColumn);
 		int attC = attributeTable.findColumn( attributeColumn);
+		if(key < 0)
+		{
+			errors.add(String.format("Key Column %s not found", keyColumn));
+		}
+		if(attC < 0)
+		{
+			errors.add(String.format("Attribute Column %s not found", attributeColumn));
+		}
+		
+		// Report all errors found.
+				if(errors.size() > 0) {
+				    StringBuilder buf = new StringBuilder();
+				    buf.append("Errors found in region table:\n");
+				    for (String error : errors) {
+		                buf.append("  ").append(error).append("\n");
+		            }
+				    throw new DataException(buf.toString());
+				}
 
 		int totC = -1;
 		try {
@@ -266,8 +289,6 @@ public class Proportion extends RGIS implements PointSpatialStatistic, TractSpat
             totC = attributeTable.findColumn( totalColumn);
         }
         
-        // Accumulate errors so we can report them all.
-        List<String> errors = new ArrayList<String>();
         
         int rows = attributeTable.getRowCount();
 		for( int r = 0; r < rows; r++) {
