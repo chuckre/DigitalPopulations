@@ -1,5 +1,6 @@
 package mil.army.usace.ehlschlaeger.digitalpopulations;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -18,7 +19,7 @@ import java.util.Random;
  * 
  * @author William R. Zwicky
  */
-public abstract class Realizer {
+public abstract class Realizer implements Serializable{
     protected Random random = new Random();
     
     

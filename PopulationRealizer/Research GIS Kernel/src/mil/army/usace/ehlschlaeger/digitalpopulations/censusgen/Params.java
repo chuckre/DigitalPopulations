@@ -1,11 +1,6 @@
 package mil.army.usace.ehlschlaeger.digitalpopulations.censusgen;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 import java.util.Properties;
 
 import mil.army.usace.ehlschlaeger.rgik.core.DataException;
@@ -30,7 +25,7 @@ import mil.army.usace.ehlschlaeger.rgik.util.SortedProperties;
  * Ehlschlaeger for permission for other purposes. Use of this software requires
  * appropriate citation in all published and unpublished documentation.
  */
-public class Params {
+public class Params implements Serializable{
     public static final String WRITE_ALL_HOH_FIELDS = "do_write_all_hoh_fields";
     public static final String WRITE_ALL_POP_FIELDS = "do_write_all_pop_fields";
        

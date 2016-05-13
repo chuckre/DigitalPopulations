@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 import mil.army.usace.ehlschlaeger.rgik.core.DataException;
 
+import java.io.Serializable;
 
 
 /**
@@ -18,7 +19,7 @@ import mil.army.usace.ehlschlaeger.rgik.core.DataException;
  * 
  * @author William R. Zwicky
  */
-public class ClusterSpec extends TraitRefElement {
+public class ClusterSpec extends TraitRefElement implements Serializable {
     /**
      * Percentage reduction in "inertia," which is a measure of the randomness
      * of an arrangement of households. A reduction of inertia is an increase of

@@ -1,5 +1,6 @@
 package mil.army.usace.ehlschlaeger.digitalpopulations.censusgen.filerelationship;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.xml.bind.Unmarshaller;
@@ -60,7 +61,7 @@ import mil.army.usace.ehlschlaeger.rgik.util.ObjectUtil;
                       "attribute", "attributeSelect",
                       "pumsTraitTable", "pumsTraitField", "pumsTraitSelect", "pumsTraitContinuous",
                       "pumsTotalTable", "pumsTotalField"})
-public class PumsTrait extends Trait {
+public class PumsTrait extends Trait implements Serializable{
     /*
      ** *****
      **

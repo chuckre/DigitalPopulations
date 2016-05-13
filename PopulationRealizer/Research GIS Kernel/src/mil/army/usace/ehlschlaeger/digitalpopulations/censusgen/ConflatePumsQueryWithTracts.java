@@ -9,12 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -29,18 +24,16 @@ import mil.army.usace.ehlschlaeger.digitalpopulations.PumsHousehold;
 import mil.army.usace.ehlschlaeger.digitalpopulations.PumsQuery;
 import mil.army.usace.ehlschlaeger.digitalpopulations.censusgen.filerelationship.FileRelationship;
 import mil.army.usace.ehlschlaeger.digitalpopulations.censusgen.filerelationship.PumsTrait;
+import mil.army.usace.ehlschlaeger.digitalpopulations.censusgen.filerelationship.Trait;
 import mil.army.usace.ehlschlaeger.digitalpopulations.censusgen.fittingcriteria.FittingCriteria;
+import mil.army.usace.ehlschlaeger.digitalpopulations.censusgen.fittingcriteria.TraitRefElement;
 import mil.army.usace.ehlschlaeger.rgik.core.CSVTableNoSwing;
 import mil.army.usace.ehlschlaeger.rgik.core.DataException;
 import mil.army.usace.ehlschlaeger.rgik.core.GISClass;
 import mil.army.usace.ehlschlaeger.rgik.core.GISLattice;
 import mil.army.usace.ehlschlaeger.rgik.core.RGIS;
 import mil.army.usace.ehlschlaeger.rgik.io.StringOutputStream;
-import mil.army.usace.ehlschlaeger.rgik.statistics.Count;
-import mil.army.usace.ehlschlaeger.rgik.statistics.PointSpatialStatistic;
-import mil.army.usace.ehlschlaeger.rgik.statistics.Proportion;
-import mil.army.usace.ehlschlaeger.rgik.statistics.SpatialStatistic;
-import mil.army.usace.ehlschlaeger.rgik.statistics.TractSpatialStatistic;
+import mil.army.usace.ehlschlaeger.rgik.statistics.*;
 import mil.army.usace.ehlschlaeger.rgik.util.FileUtil;
 import mil.army.usace.ehlschlaeger.rgik.util.LogUtil;
 import mil.army.usace.ehlschlaeger.rgik.util.NullExecutorService;
@@ -627,7 +620,7 @@ public class ConflatePumsQueryWithTracts implements Serializable {
 
         
         // --- Phase 3 --- //
-        boolean doPhase3 = ! params.getPhase3Skip();
+        boolean doPhase3 = false;//! params.getPhase3Skip();
 //cdfMaps are gone; we may want to add a field regionList to contains the subset of regions to focus on.
 //        if(doPhase3) {
 //            if(cdfMaps.size() > 1)
@@ -815,6 +808,19 @@ public class ConflatePumsQueryWithTracts implements Serializable {
     protected void phase4_locatePrecisely(int realizationNum, long seed) throws IOException {
         // Run phase 4.
 //        Phase_LocatePrecisely p4 = new Phase_LocatePrecisely( //Edited by Yizhao
+        // Serialization
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("phase4_input.se"));
+        out.writeObject(realizationNum);
+        out.writeObject(soln.householdArchTypes);
+        out.writeObject(primaryRegion.map);
+        out.writeObject(popDensityMap);
+        out.writeObject(soln.pcons);
+        out.writeObject(fitCrit.traitCluster);
+        out.writeObject(params);
+        out.writeObject(seed);
+        out.writeObject(realizer);
+        out.close();
+
     	Phase_LocatePrecisely_GridIndex p4 = new Phase_LocatePrecisely_GridIndex(
             realizationNum,
             soln.householdArchTypes,
@@ -828,6 +834,31 @@ public class ConflatePumsQueryWithTracts implements Serializable {
         p4.go();
     }
 
+    protected void phase4_fromFile(String filename) throws Exception{
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
+        int realizationNum = (int)in.readObject();
+        PumsHousehold[] householdArchTypes = (PumsHousehold[]) in.readObject();
+        GISClass map = (GISClass) in.readObject();
+        GISLattice densityMap = (GISLattice) in.readObject();
+        List<PointConstraint> pcons = (List<PointConstraint>) in.readObject();
+        LinkedHashMap<Trait,TraitRefElement> traitCluster = (LinkedHashMap<Trait,TraitRefElement>) in.readObject();
+        Params params = (Params) in.readObject();
+        long seed = (long) in.readObject();
+        ConstrainedRealizer realizer = (ConstrainedRealizer) in.readObject();
+        in.close();
+
+        Phase_LocatePrecisely_GridIndex p4 = new Phase_LocatePrecisely_GridIndex(
+                realizationNum,
+                householdArchTypes,
+                map,
+                densityMap,
+                pcons,
+                traitCluster);
+        p4.setParams(params);
+        p4.setRandomSource(new Random(seed));
+        p4.setRealizer(realizer);
+        p4.go();
+    }
     /**
      * Print all stats from our Solution object. 
      * @return getSpread()

@@ -1,5 +1,7 @@
 package mil.army.usace.ehlschlaeger.rgik.util;
 
+import java.io.Serializable;
+
 /**
  * Map from a list of ints to object. More efficient than
  * HashMap<Integer,Object>, but requires storage for all keys from 0 to the
@@ -20,7 +22,7 @@ package mil.army.usace.ehlschlaeger.rgik.util;
  * @author William R. Zwicky
  */
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class IntsMap<T> {
+public class IntsMap<T> implements Serializable{
     // cannot have a type; element may be a T or another ExtList.
     ExtendableList map = new ExtendableList();
 
