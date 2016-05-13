@@ -395,7 +395,7 @@ public class ConflatePumsQueryWithTracts implements Serializable {
      * 
      * @throws IOException 
      */
-    public void run() throws IOException {
+    public void run() throws Exception {
         Date start = new Date();
 
         if(params.getRandomSeed() == null)
@@ -440,7 +440,7 @@ public class ConflatePumsQueryWithTracts implements Serializable {
      * 
      * @throws IOException
      */
-    public void runAll(int firstReal, int lastReal) throws IOException {
+    public void runAll(int firstReal, int lastReal) throws Exception {
         // Pull out a set of seeds before we start processing.
         // This allows different computers to work on different realizations
         // from the same set of random numbers.
@@ -534,7 +534,12 @@ public class ConflatePumsQueryWithTracts implements Serializable {
      * @param randomSeed 
      * @throws IOException
      */
-    public void runOne(int realizationNum) throws IOException {
+    public void runOne(int realizationNum) throws Exception {
+        phase4_fromFile("phase4_input.se");
+        if (1+2 ==3) {
+            return;
+        }
+
         Date realizationStartTime = new Date();
 
         // Pull random seeds ahead of time for repeatability.
@@ -620,7 +625,7 @@ public class ConflatePumsQueryWithTracts implements Serializable {
 
         
         // --- Phase 3 --- //
-        boolean doPhase3 = false;//! params.getPhase3Skip();
+        boolean doPhase3 = ! params.getPhase3Skip();
 //cdfMaps are gone; we may want to add a field regionList to contains the subset of regions to focus on.
 //        if(doPhase3) {
 //            if(cdfMaps.size() > 1)
