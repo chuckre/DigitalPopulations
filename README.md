@@ -20,17 +20,27 @@ Digital population toolkit contains a list of components:
 ##Documentation:
 
 [Introduction and Tutorial](http://digitalpopulations.pbworks.com/Digital-Populations-Tutorial)
+
 [The Relationship File GUI](http://digitalpopulations.pbworks.com/The-Relationship-File-GUI)
+
 [Running Digital Populations](http://digitalpopulations.pbworks.com/Running-Digital-Populations)
+
 [Data File Reference](http://digitalpopulations.pbworks.com/Data-File-Reference)
+
 [Glossary](http://digitalpopulations.pbworks.com/Glossary)
+
 [FAQ](http://digitalpopulations.pbworks.com/FAQ)
  
 [Phases of the CensusGen Algorithm]()
+
 [Dp2Kml](http://digitalpopulations.pbworks.com/w/page/Dp2Kml-Tool): Viewing the results from Digital Populations in Google Earth
+
 [Csv2Kml](http://digitalpopulations.pbworks.com/w/page/Csv2Kml-Tool): Viewing general CSV files in Google Earth
+
 [CsvPlusMap](http://digitalpopulations.pbworks.com/w/page/CsvPlusMap-Tool):  Append values from a map to a table as a new column
+
 [Cluster Detection](http://digitalpopulations.pbworks.com/ClusterDetection): Scan for clusters of related people around certain events.
+
 [KernelAnalysis](http://digitalpopulations.pbworks.com/KernelAnalysis): Develop maps of variable proportions using kernel functions.
  
 Part of this research was directly or indirectly supported by the following organizations:
