@@ -2,6 +2,7 @@ package mil.army.usace.ehlschlaeger.digitalpopulations.censusgen;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -65,7 +66,7 @@ import org.xml.sax.SAXException;
  * @author William R. Zwicky
  * @author Yizhao Gao
  */
-public class Phase_LocatePrecisely_GridIndex {
+public class Phase_LocatePrecisely_GridIndex implements Serializable {
     /** Name of params key that switches on pre-cluster output. */
     public static final String PARAM_SAVEBOTHENDS = "phase4_save_both_ends";
     

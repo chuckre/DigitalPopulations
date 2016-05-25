@@ -1,5 +1,6 @@
 package mil.army.usace.ehlschlaeger.digitalpopulations.censusgen;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -10,7 +11,7 @@ import mil.army.usace.ehlschlaeger.digitalpopulations.PumsHouseholdRealization;
 
 
 /** Index of household realizations by region code. */
-class RegionIndex {
+class RegionIndex implements Serializable{
     // can be a Map<>, but I'll take a chance that region codes aren't too large.
     protected Vector<List<PumsHouseholdRealization>> index;
 

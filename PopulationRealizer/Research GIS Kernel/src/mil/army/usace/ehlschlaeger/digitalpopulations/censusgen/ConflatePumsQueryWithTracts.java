@@ -535,8 +535,8 @@ public class ConflatePumsQueryWithTracts implements Serializable {
      * @throws IOException
      */
     public void runOne(int realizationNum) throws Exception {
-        phase4_fromFile("phase4_input.se");
-        if (1+2 ==3) {
+        if (true == true) {
+            phase4_fromFile("phase4_input.se");
             return;
         }
 
@@ -814,17 +814,6 @@ public class ConflatePumsQueryWithTracts implements Serializable {
         // Run phase 4.
 //        Phase_LocatePrecisely p4 = new Phase_LocatePrecisely( //Edited by Yizhao
         // Serialization
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("phase4_input.se"));
-        out.writeObject(realizationNum);
-        out.writeObject(soln.householdArchTypes);
-        out.writeObject(primaryRegion.map);
-        out.writeObject(popDensityMap);
-        out.writeObject(soln.pcons);
-        out.writeObject(fitCrit.traitCluster);
-        out.writeObject(params);
-        out.writeObject(seed);
-        out.writeObject(realizer);
-        out.close();
 
     	Phase_LocatePrecisely_GridIndex p4 = new Phase_LocatePrecisely_GridIndex(
             realizationNum,
@@ -837,32 +826,50 @@ public class ConflatePumsQueryWithTracts implements Serializable {
         p4.setRandomSource(new Random(seed));
         p4.setRealizer(realizer);
         p4.go();
+
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("phase4_input.se"));
+        out.writeObject(p4);
+//        out.writeObject(realizationNum);
+//        out.writeObject(soln.householdArchTypes);
+//        out.writeObject(primaryRegion.map);
+//        out.writeObject(popDensityMap);
+//        out.writeObject(soln.pcons);
+//        out.writeObject(fitCrit.traitCluster);
+//        out.writeObject(params);
+//        out.writeObject(seed);
+//        out.writeObject(realizer);
+        out.close();
     }
 
     protected void phase4_fromFile(String filename) throws Exception{
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
-        int realizationNum = (int)in.readObject();
-        PumsHousehold[] householdArchTypes = (PumsHousehold[]) in.readObject();
-        GISClass map = (GISClass) in.readObject();
-        GISLattice densityMap = (GISLattice) in.readObject();
-        List<PointConstraint> pcons = (List<PointConstraint>) in.readObject();
-        LinkedHashMap<Trait,TraitRefElement> traitCluster = (LinkedHashMap<Trait,TraitRefElement>) in.readObject();
-        Params params = (Params) in.readObject();
-        long seed = (long) in.readObject();
-        ConstrainedRealizer realizer = (ConstrainedRealizer) in.readObject();
+//        int realizationNum = (int)in.readObject();
+//        PumsHousehold[] householdArchTypes = (PumsHousehold[]) in.readObject();
+//        GISClass map = (GISClass) in.readObject();
+//        GISLattice densityMap = (GISLattice) in.readObject();
+//        List<PointConstraint> pcons = (List<PointConstraint>) in.readObject();
+//        LinkedHashMap<Trait,TraitRefElement> traitCluster = (LinkedHashMap<Trait,TraitRefElement>) in.readObject();
+//        Params params = (Params) in.readObject();
+//        long seed = (long) in.readObject();
+//        ConstrainedRealizer realizer = (ConstrainedRealizer) in.readObject();
+        Phase_LocatePrecisely_GridIndex p4 = (Phase_LocatePrecisely_GridIndex)in.readObject();
         in.close();
 
-        Phase_LocatePrecisely_GridIndex p4 = new Phase_LocatePrecisely_GridIndex(
-                realizationNum,
-                householdArchTypes,
-                map,
-                densityMap,
-                pcons,
-                traitCluster);
-        p4.setParams(params);
-        p4.setRandomSource(new Random(seed));
-        p4.setRealizer(realizer);
+//        Phase_LocatePrecisely_GridIndex p4 = new Phase_LocatePrecisely_GridIndex(
+//                realizationNum,
+//                householdArchTypes,
+//                map,
+//                densityMap,
+//                pcons,
+//                traitCluster);
+//        p4.setParams(params);
+//        p4.setRandomSource(new Random(seed));
+//        p4.setRealizer(realizer);
         p4.go();
+
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("phase4_input.se"));
+        out.writeObject(p4);
+        out.close();
     }
     /**
      * Print all stats from our Solution object. 
