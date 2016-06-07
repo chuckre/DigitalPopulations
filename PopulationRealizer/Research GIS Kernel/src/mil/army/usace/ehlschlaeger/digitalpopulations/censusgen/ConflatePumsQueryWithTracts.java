@@ -535,10 +535,15 @@ public class ConflatePumsQueryWithTracts implements Serializable {
      * @throws IOException
      */
     public void runOne(int realizationNum) throws Exception {
-        if (true == true) {
-            phase4_fromFile("phase4_input.se");
-            return;
-        }
+
+        // This is the beginning of the program,
+        // The following block of code will resume an old Phase4 from file, run it and exit the program
+        // Therefore everything else (Phase1-3, and normal Phase4) is skipped
+        // To enable a normal run from Phase1, comment out this block and re-compile
+        //if (true == true) {
+        //    phase4_fromFile("phase4_input.se");
+        //    return;
+        //}
 
         Date realizationStartTime = new Date();
 
@@ -865,7 +870,7 @@ public class ConflatePumsQueryWithTracts implements Serializable {
 //        p4.setParams(params);
 //        p4.setRandomSource(new Random(seed));
 //        p4.setRealizer(realizer);
-        p4.go();
+        p4.resume();
 
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("phase4_input.se"));
         out.writeObject(p4);

@@ -328,6 +328,39 @@ public class Phase_LocatePrecisely_GridIndex implements Serializable {
         }
         TimeTracker.finished("Writing files");
     }
+    /**
+     * Perform the process as currently configured.
+     *
+     * @throws IOException on any error writing output files
+     */
+    public void resume() throws IOException {
+        // true to save incoming hoh as well as final hoh arrangement for
+        // comparison. false to purge older when saving final.
+        boolean saveBothEnds = params.getBoolean(PARAM_SAVEBOTHENDS, true);
+
+        for(int i=0; i<stats.size(); i++) {
+            origPss.set(i, (PointSpatialStatistic) stats.get(i).createCopy());
+        }
+
+        LogUtil.cr(log);
+        LogUtil.progress(log, "Resuming optimizing clustering of households within regions.");
+        doCluster();
+
+        TimeTracker.finished("Phase 4");
+
+        // Save final file(s).
+        LogUtil.cr(log);
+        LogUtil.progress(log, "ConflatePumsQueryWithTracts: saving final household locations ...");
+        if(saveBothEnds) {
+            // Save results, preserve precluster.
+            writeFileSet(POSTCLUSTER_LABEL, rznIndex, null, false);
+        }
+        else {
+            // Save final results.
+            writeFileSet(null, rznIndex, null, true);
+        }
+        TimeTracker.finished("Writing files");
+    }
 
     /**
      * Construct initial arrangement of households. This is like
