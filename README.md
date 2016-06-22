@@ -1,6 +1,8 @@
 
 #Digital Populations
 
+[Lateset stable version](https://github.com/chuckre/DigitalPopulations/tree/603ae017b4f25774415b38e3fbf8427fb090ece8)
+
 ##What is Digital Populations?
  
 Digital Populations is a software suite for synthesizing plausible geo-referenced households and people from census or polling data.
