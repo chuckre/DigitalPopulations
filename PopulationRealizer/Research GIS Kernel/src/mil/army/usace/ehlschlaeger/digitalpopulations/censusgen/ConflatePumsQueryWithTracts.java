@@ -536,7 +536,8 @@ public class ConflatePumsQueryWithTracts implements Serializable {
      */
     public void runOne(int realizationNum) throws Exception {
 
-        // This is the beginning of the program,
+        // Dandong Yin
+        //
         // The following block of code will resume an old Phase4 from file, run it and exit the program
         // Therefore everything else (Phase1-3, and normal Phase4) is skipped
         // To enable a normal run from Phase1, comment out this block and re-compile
