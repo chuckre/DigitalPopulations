@@ -3,6 +3,8 @@
 
 <!--[Lateset stable version](https://github.com/chuckre/DigitalPopulations/tree/603ae017b4f25774415b38e3fbf8427fb090ece8)-->
 
+The compiled jar is at [PopulationRealizer/out/artifacts/Research_GIS_Kernel_jar](https://github.com/chuckre/DigitalPopulations/tree/master/PopulationRealizer/out/artifacts/Research_GIS_Kernel_jar)
+
 ##What is Digital Populations?
  
 Digital Populations is a software suite for synthesizing plausible geo-referenced households and people from census or polling data.
