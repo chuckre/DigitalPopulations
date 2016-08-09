@@ -1,6 +1,6 @@
 last-run.properties001
-out
 .idea
+out
 *.iml
 *.class
 .DS_Store
