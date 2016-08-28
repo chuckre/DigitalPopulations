@@ -280,7 +280,7 @@ public class ConflatePumsQueryWithTracts implements Serializable {
         popDensityMap = gen.makePDF(primaryRegion);
         validatePDF(popDensityMap, primaryRegion.map);
 
-        this.realizer = new ConstrainedRealizer(primaryRegion.map, popDensityMap, soln.pcons);
+        this.realizer = new ConstrainedRealizer(primaryRegion.map, popDensityMap, soln.pcons, primaryRegion.idReverseMap);
         
         // Log time of completion.
         Date dataPrep = new Date();
@@ -386,7 +386,7 @@ public class ConflatePumsQueryWithTracts implements Serializable {
         Set<Integer> regions = regionMap.makeInventory();
         for(int region : regions) {
             if(totals[region] <= 0)
-                log.warning(String.format("Population density map is zero for all of region %d", region));
+                log.warning(String.format("Population density map is zero for all of region %d", this.primaryRegion.idReverseMap.get(region)));
         }
     }
     
@@ -542,7 +542,7 @@ public class ConflatePumsQueryWithTracts implements Serializable {
         // Therefore everything else (Phase1-3, and normal Phase4) is skipped
         // To enable a normal run from Phase1, comment out this block and re-compile
         //if (true == true) {
-        //    phase4_fromFile("phase4_input.se");
+        //    phase4_fromFile("phase4_save_"+realizationNum+".se");
         //    return;
         //}
 
@@ -795,7 +795,7 @@ public class ConflatePumsQueryWithTracts implements Serializable {
         LogUtil.cr(log);
         LogUtil.progress(log, "Starting phase 3: Optimizing the sorting of households into regions");
         
-        Phase_OptimizeRegions p3 = new Phase_OptimizeRegions(soln, primaryRegion.map, popDensityMap);
+        Phase_OptimizeRegions p3 = new Phase_OptimizeRegions(soln, primaryRegion.map, popDensityMap, primaryRegion.idReverseMap);
         p3.setParams(params);
         p3.setRandomSource(new Random(seed));
         p3.setRealizer(realizer);
@@ -827,13 +827,14 @@ public class ConflatePumsQueryWithTracts implements Serializable {
             primaryRegion.map,
             popDensityMap,
             soln.pcons,
-            fitCrit.traitCluster);
+            fitCrit.traitCluster,
+            primaryRegion.idReverseMap);
         p4.setParams(params);
         p4.setRandomSource(new Random(seed));
         p4.setRealizer(realizer);
         p4.go();
 
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("phase4_input.se"));
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("phase4_save_"+realizationNum+".se"));
         out.writeObject(p4);
 //        out.writeObject(realizationNum);
 //        out.writeObject(soln.householdArchTypes);
@@ -873,7 +874,7 @@ public class ConflatePumsQueryWithTracts implements Serializable {
 //        p4.setRealizer(realizer);
         p4.resume();
 
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("phase4_input.se"));
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename));
         out.writeObject(p4);
         out.close();
     }
@@ -991,7 +992,7 @@ public class ConflatePumsQueryWithTracts implements Serializable {
     protected void writeFileSet(int runNumber, String nameNote, PumsQuery pumsQuery)
         throws IOException {
         // Abuse Phase 3 to write our files.
-        Phase_OptimizeRegions helper = new Phase_OptimizeRegions(soln, primaryRegion.map, popDensityMap);
+        Phase_OptimizeRegions helper = new Phase_OptimizeRegions(soln, primaryRegion.map, popDensityMap, primaryRegion.idReverseMap);
         helper.setParams(params);
         helper.setRandomSource(random);
         helper.writeFileSet(runNumber, nameNote, pumsQuery);
