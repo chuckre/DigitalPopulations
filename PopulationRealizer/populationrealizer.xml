@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="populationrealizer" default="all">
+  
+  
+  <property file="populationrealizer.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.swc"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.ear"/>
+    <include name="*.egg"/>
+    <include name="*.ane"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.7" value="${jdk.home.1.7}/bin"/>
+  <path id="jdk.classpath.1.7">
+    <fileset dir="${jdk.home.1.7}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+      <include name="jre/lib/htmlconverter.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfr.jar"/>
+      <include name="jre/lib/jfxrt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+      <include name="lib/ant-javafx.jar"/>
+      <include name="lib/dt.jar"/>
+      <include name="lib/javafx-doclet.jar"/>
+      <include name="lib/javafx-mx.jar"/>
+      <include name="lib/jconsole.jar"/>
+      <include name="lib/sa-jdi.jar"/>
+      <include name="lib/tools.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.7}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.7}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.7"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.commons.classpath">
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/commons/commons-collections-3.2.1.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/commons/commons-io-1.4.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/commons/commons-lang-2.5.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/commons/commons-primitives-1.0.jar"/>
+  </path>
+  
+  <path id="library.geotools.classpath">
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/geoapi-2.3-M1.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/geoapi-pending-2.3-M1.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/gt-api-2.7-M1.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/gt-epsg-hsql-2.7-M1.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/gt-metadata-2.7-M1.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/gt-referencing-2.7-M1.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/hsqldb-1.8.0.7.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/jsr-275-1.0-beta-2.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/jts-1.11.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/vecmath-1.3.2.jar"/>
+  </path>
+  
+  <path id="library.jars.classpath">
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI/runnable/jars/SuperCSV-1.52.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI/runnable/jars/appframework-1.0.3.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI/runnable/jars/beansbinding-1.2.1.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI/runnable/jars/commons-lang-2.5.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI/runnable/jars/commons-primitives-1.0.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI/runnable/jars/jopt-simple-3.1.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI/runnable/jars/swing-worker-1.1.jar"/>
+  </path>
+  
+  <path id="library.javaapiforkml.classpath">
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/jak/JavaAPIforKml.jar"/>
+  </path>
+  
+  <path id="library.jaxb.classpath">
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/jaxb/activation.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/jaxb/jaxb-api.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/jaxb/jaxb-impl.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/jaxb/jsr173_1.0_api.jar"/>
+  </path>
+  
+  <path id="library.lib.classpath">
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/SuperCSV-1.52.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/h2-1.2.140.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/jar-in-jar-loader.zip"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/jopt-simple-3.1.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/junit-4.7.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/truezip-6.6.jar"/>
+  </path>
+  
+  <path id="library.research_gis_kernel.classpath">
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/artifacts/Research_GIS_Kernel_jar/Research GIS Kernel.jar"/>
+  </path>
+  
+  <path id="library.velocity.classpath">
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/velocity/velocity-1.7.jar"/>
+    <pathelement location="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/velocity/velocity-tools-generic-2.0.jar"/>
+  </path>
+  
+  
+  <!-- Global Libraries -->
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module Graph2D -->
+  
+  <dirname property="module.graph2d.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.graph2d" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.graph2d" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.graph2d" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.graph2d" value="-encoding UTF-8 -source 1.7 -target 1.7 ${compiler.args}"/>
+  
+  <property name="graph2d.output.dir" value="${module.graph2d.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/production/Graph2D"/>
+  <property name="graph2d.testoutput.dir" value="${module.graph2d.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/test/Graph2D"/>
+  
+  <path id="graph2d.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="graph2d.module.production.classpath">
+    <path refid="${module.jdk.classpath.graph2d}"/>
+  </path>
+  
+  <path id="graph2d.runtime.production.module.classpath">
+    <pathelement location="${graph2d.output.dir}"/>
+  </path>
+  
+  <path id="graph2d.module.classpath">
+    <path refid="${module.jdk.classpath.graph2d}"/>
+    <pathelement location="${graph2d.output.dir}"/>
+  </path>
+  
+  <path id="graph2d.runtime.module.classpath">
+    <pathelement location="${graph2d.testoutput.dir}"/>
+    <pathelement location="${graph2d.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.graph2d">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.graph2d">
+    <patternset refid="excluded.from.module.graph2d"/>
+  </patternset>
+  
+  <path id="graph2d.module.sourcepath">
+    <dirset dir="${module.graph2d.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Graph2D">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.graph2d" depends="compile.module.graph2d.production,compile.module.graph2d.tests" description="Compile module Graph2D"/>
+  
+  <target name="compile.module.graph2d.production" description="Compile module Graph2D; production classes">
+    <mkdir dir="${graph2d.output.dir}"/>
+    <javac destdir="${graph2d.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.graph2d}/javac">
+      <compilerarg line="${compiler.args.graph2d}"/>
+      <bootclasspath refid="graph2d.module.bootclasspath"/>
+      <classpath refid="graph2d.module.production.classpath"/>
+      <src refid="graph2d.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.graph2d"/>
+    </javac>
+    
+    <copy todir="${graph2d.output.dir}">
+      <fileset dir="${module.graph2d.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Graph2D/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.graph2d.tests" depends="compile.module.graph2d.production" description="compile module Graph2D; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.graph2d" description="cleanup module">
+    <delete dir="${graph2d.output.dir}"/>
+    <delete dir="${graph2d.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module Research GIS Kernel -->
+  
+  <dirname property="module.research_gis_kernel.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.research_gis_kernel" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.research_gis_kernel" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.research_gis_kernel" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.research_gis_kernel" value="-encoding UTF-8 -source 1.7 -target 1.7 ${compiler.args}"/>
+  
+  <property name="research_gis_kernel.output.dir" value="${module.research_gis_kernel.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/production/Research GIS Kernel"/>
+  <property name="research_gis_kernel.testoutput.dir" value="${module.research_gis_kernel.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/test/Research GIS Kernel"/>
+  
+  <path id="research_gis_kernel.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="research_gis_kernel.module.production.classpath">
+    <path refid="${module.jdk.classpath.research_gis_kernel}"/>
+    <path refid="library.velocity.classpath"/>
+    <path refid="library.javaapiforkml.classpath"/>
+    <path refid="library.geotools.classpath"/>
+    <path refid="library.jars.classpath"/>
+    <path refid="library.research_gis_kernel.classpath"/>
+    <path refid="library.commons.classpath"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.jaxb.classpath"/>
+    <pathelement location="${graph2d.output.dir}"/>
+  </path>
+  
+  <path id="research_gis_kernel.runtime.production.module.classpath">
+    <pathelement location="${research_gis_kernel.output.dir}"/>
+    <path refid="library.velocity.classpath"/>
+    <path refid="library.javaapiforkml.classpath"/>
+    <path refid="library.geotools.classpath"/>
+    <path refid="library.jars.classpath"/>
+    <path refid="library.research_gis_kernel.classpath"/>
+    <path refid="library.commons.classpath"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.jaxb.classpath"/>
+    <path refid="graph2d.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="research_gis_kernel.module.classpath">
+    <path refid="${module.jdk.classpath.research_gis_kernel}"/>
+    <pathelement location="${research_gis_kernel.output.dir}"/>
+    <path refid="library.velocity.classpath"/>
+    <path refid="library.javaapiforkml.classpath"/>
+    <path refid="library.geotools.classpath"/>
+    <path refid="library.jars.classpath"/>
+    <path refid="library.research_gis_kernel.classpath"/>
+    <path refid="library.commons.classpath"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.jaxb.classpath"/>
+    <pathelement location="${graph2d.testoutput.dir}"/>
+    <pathelement location="${graph2d.output.dir}"/>
+  </path>
+  
+  <path id="research_gis_kernel.runtime.module.classpath">
+    <pathelement location="${research_gis_kernel.testoutput.dir}"/>
+    <pathelement location="${research_gis_kernel.output.dir}"/>
+    <path refid="library.velocity.classpath"/>
+    <path refid="library.javaapiforkml.classpath"/>
+    <path refid="library.geotools.classpath"/>
+    <path refid="library.jars.classpath"/>
+    <path refid="library.research_gis_kernel.classpath"/>
+    <path refid="library.commons.classpath"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.jaxb.classpath"/>
+    <path refid="graph2d.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.research_gis_kernel">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.research_gis_kernel">
+    <patternset refid="excluded.from.module.research_gis_kernel"/>
+  </patternset>
+  
+  <path id="research_gis_kernel.module.sourcepath">
+    <dirset dir="${module.research_gis_kernel.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.research_gis_kernel" depends="compile.module.research_gis_kernel.production,compile.module.research_gis_kernel.tests" description="Compile module Research GIS Kernel"/>
+  
+  <target name="compile.module.research_gis_kernel.production" depends="compile.module.graph2d" description="Compile module Research GIS Kernel; production classes">
+    <mkdir dir="${research_gis_kernel.output.dir}"/>
+    <javac destdir="${research_gis_kernel.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.research_gis_kernel}/javac">
+      <compilerarg line="${compiler.args.research_gis_kernel}"/>
+      <bootclasspath refid="research_gis_kernel.module.bootclasspath"/>
+      <classpath refid="research_gis_kernel.module.production.classpath"/>
+      <src refid="research_gis_kernel.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.research_gis_kernel"/>
+    </javac>
+    
+    <copy todir="${research_gis_kernel.output.dir}">
+      <fileset dir="${module.research_gis_kernel.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.research_gis_kernel.tests" depends="compile.module.research_gis_kernel.production" description="compile module Research GIS Kernel; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.research_gis_kernel" description="cleanup module">
+    <delete dir="${research_gis_kernel.output.dir}"/>
+    <delete dir="${research_gis_kernel.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module DPGUI -->
+  
+  <dirname property="module.dpgui.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.dpgui" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.dpgui" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.dpgui" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.dpgui" value="-encoding UTF-8 -source 1.7 -target 1.7 ${compiler.args}"/>
+  
+  <property name="dpgui.output.dir" value="${module.dpgui.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/production/DPGUI"/>
+  <property name="dpgui.testoutput.dir" value="${module.dpgui.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/test/DPGUI"/>
+  
+  <path id="dpgui.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="dpgui.module.production.classpath">
+    <path refid="${module.jdk.classpath.dpgui}"/>
+    <path refid="library.jars.classpath"/>
+    <path refid="library.research_gis_kernel.classpath"/>
+    <path refid="library.lib.classpath"/>
+    <pathelement location="${research_gis_kernel.output.dir}"/>
+  </path>
+  
+  <path id="dpgui.runtime.production.module.classpath">
+    <pathelement location="${dpgui.output.dir}"/>
+    <path refid="library.jars.classpath"/>
+    <path refid="library.research_gis_kernel.classpath"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="research_gis_kernel.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="dpgui.module.classpath">
+    <path refid="${module.jdk.classpath.dpgui}"/>
+    <pathelement location="${dpgui.output.dir}"/>
+    <path refid="library.jars.classpath"/>
+    <path refid="library.research_gis_kernel.classpath"/>
+    <path refid="library.lib.classpath"/>
+    <pathelement location="${research_gis_kernel.testoutput.dir}"/>
+    <pathelement location="${research_gis_kernel.output.dir}"/>
+  </path>
+  
+  <path id="dpgui.runtime.module.classpath">
+    <pathelement location="${dpgui.testoutput.dir}"/>
+    <pathelement location="${dpgui.output.dir}"/>
+    <path refid="library.jars.classpath"/>
+    <path refid="library.research_gis_kernel.classpath"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="research_gis_kernel.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.dpgui">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.dpgui">
+    <patternset refid="excluded.from.module.dpgui"/>
+  </patternset>
+  
+  <path id="dpgui.module.sourcepath">
+    <dirset dir="${module.dpgui.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.dpgui" depends="compile.module.dpgui.production,compile.module.dpgui.tests" description="Compile module DPGUI"/>
+  
+  <target name="compile.module.dpgui.production" depends="compile.module.research_gis_kernel" description="Compile module DPGUI; production classes">
+    <mkdir dir="${dpgui.output.dir}"/>
+    <javac destdir="${dpgui.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.dpgui}/javac">
+      <compilerarg line="${compiler.args.dpgui}"/>
+      <bootclasspath refid="dpgui.module.bootclasspath"/>
+      <classpath refid="dpgui.module.production.classpath"/>
+      <src refid="dpgui.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.dpgui"/>
+    </javac>
+    
+    <copy todir="${dpgui.output.dir}">
+      <fileset dir="${module.dpgui.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.dpgui.tests" depends="compile.module.dpgui.production" description="compile module DPGUI; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.dpgui" description="cleanup module">
+    <delete dir="${dpgui.output.dir}"/>
+    <delete dir="${dpgui.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module RGIK Private -->
+  
+  <dirname property="module.rgik_private.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.rgik_private" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.rgik_private" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.rgik_private" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.rgik_private" value="-encoding UTF-8 -source 1.7 -target 1.7 ${compiler.args}"/>
+  
+  <property name="rgik_private.output.dir" value="${module.rgik_private.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/production/RGIK Private"/>
+  <property name="rgik_private.testoutput.dir" value="${module.rgik_private.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/test/RGIK Private"/>
+  
+  <path id="rgik_private.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="rgik_private.module.production.classpath">
+    <path refid="${module.jdk.classpath.rgik_private}"/>
+    <path refid="library.research_gis_kernel.classpath"/>
+    <path refid="library.commons.classpath"/>
+    <path refid="library.jaxb.classpath"/>
+    <pathelement location="${research_gis_kernel.output.dir}"/>
+  </path>
+  
+  <path id="rgik_private.runtime.production.module.classpath">
+    <pathelement location="${rgik_private.output.dir}"/>
+    <path refid="library.research_gis_kernel.classpath"/>
+    <path refid="library.commons.classpath"/>
+    <path refid="library.jaxb.classpath"/>
+    <path refid="research_gis_kernel.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="rgik_private.module.classpath">
+    <path refid="${module.jdk.classpath.rgik_private}"/>
+    <pathelement location="${rgik_private.output.dir}"/>
+    <path refid="library.research_gis_kernel.classpath"/>
+    <path refid="library.commons.classpath"/>
+    <path refid="library.jaxb.classpath"/>
+    <pathelement location="${research_gis_kernel.testoutput.dir}"/>
+    <pathelement location="${research_gis_kernel.output.dir}"/>
+  </path>
+  
+  <path id="rgik_private.runtime.module.classpath">
+    <pathelement location="${rgik_private.testoutput.dir}"/>
+    <pathelement location="${rgik_private.output.dir}"/>
+    <path refid="library.research_gis_kernel.classpath"/>
+    <path refid="library.commons.classpath"/>
+    <path refid="library.jaxb.classpath"/>
+    <path refid="research_gis_kernel.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.rgik_private">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.rgik_private">
+    <patternset refid="excluded.from.module.rgik_private"/>
+  </patternset>
+  
+  <path id="rgik_private.module.sourcepath">
+    <dirset dir="${module.rgik_private.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/RGIK Private/RGIK Private">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.rgik_private" depends="compile.module.rgik_private.production,compile.module.rgik_private.tests" description="Compile module RGIK Private"/>
+  
+  <target name="compile.module.rgik_private.production" depends="compile.module.research_gis_kernel" description="Compile module RGIK Private; production classes">
+    <mkdir dir="${rgik_private.output.dir}"/>
+    <javac destdir="${rgik_private.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.rgik_private}/javac">
+      <compilerarg line="${compiler.args.rgik_private}"/>
+      <bootclasspath refid="rgik_private.module.bootclasspath"/>
+      <classpath refid="rgik_private.module.production.classpath"/>
+      <src refid="rgik_private.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.rgik_private"/>
+    </javac>
+    
+    <copy todir="${rgik_private.output.dir}">
+      <fileset dir="${module.rgik_private.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/RGIK Private/RGIK Private/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.rgik_private.tests" depends="compile.module.rgik_private.production" description="compile module RGIK Private; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.rgik_private" description="cleanup module">
+    <delete dir="${rgik_private.output.dir}"/>
+    <delete dir="${rgik_private.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.graph2d, clean.module.research_gis_kernel, clean.module.dpgui, clean.module.rgik_private" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.graph2d, compile.module.research_gis_kernel, compile.module.dpgui, compile.module.rgik_private" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.research_gis_kernel:jar" value="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/artifacts/Research_GIS_Kernel_jar"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.Research GIS Kernel.jar" value="${artifacts.temp.dir}/Research GIS Kernel.jar"/>
+  </target>
+  
+  <target name="artifact.research_gis_kernel:jar" depends="init.artifacts, compile.module.research_gis_kernel, compile.module.graph2d" description="Build &#39;Research GIS Kernel:jar&#39; artifact">
+    <property name="artifact.temp.output.research_gis_kernel:jar" value="${artifacts.temp.dir}/Research_GIS_Kernel_jar"/>
+    <mkdir dir="${artifact.temp.output.research_gis_kernel:jar}"/>
+    <jar destfile="${temp.jar.path.Research GIS Kernel.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${research_gis_kernel.output.dir}"/>
+      <zipfileset dir="${graph2d.output.dir}"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/commons/commons-primitives-1.0.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/commons/commons-io-1.4.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/commons/commons-collections-3.2.1.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/commons/commons-lang-2.5.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/jak/JavaAPIforKml.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/jaxb/jaxb-api.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/jaxb/jsr173_1.0_api.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/jaxb/activation.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/jaxb/jaxb-impl.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/artifacts/Research_GIS_Kernel_jar/Research GIS Kernel.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/velocity/velocity-1.7.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/velocity/velocity-tools-generic-2.0.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/truezip-6.6.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/h2-1.2.140.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/junit-4.7.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/jopt-simple-3.1.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/jar-in-jar-loader.zip"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/SuperCSV-1.52.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI/runnable/jars/SuperCSV-1.52.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI/runnable/jars/swing-worker-1.1.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI/runnable/jars/appframework-1.0.3.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI/runnable/jars/jopt-simple-3.1.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI/runnable/jars/commons-primitives-1.0.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI/runnable/jars/beansbinding-1.2.1.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI/runnable/jars/commons-lang-2.5.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/geoapi-2.3-M1.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/jts-1.11.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/gt-epsg-hsql-2.7-M1.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/gt-metadata-2.7-M1.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/gt-referencing-2.7-M1.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/jsr-275-1.0-beta-2.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/vecmath-1.3.2.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/gt-api-2.7-M1.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/geoapi-pending-2.3-M1.jar"/>
+      <zipfileset src="${basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/lib/geotools/hsqldb-1.8.0.7.jar"/>
+    </jar>
+    <copy file="${temp.jar.path.Research GIS Kernel.jar}" tofile="${artifact.temp.output.research_gis_kernel:jar}/Research GIS Kernel.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.research_gis_kernel:jar" description="Build all artifacts">
+    <mkdir dir="${artifact.output.research_gis_kernel:jar}"/>
+    <copy todir="${artifact.output.research_gis_kernel:jar}">
+      <fileset dir="${artifact.temp.output.research_gis_kernel:jar}"/>
+    </copy>
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>
