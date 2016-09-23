@@ -55,43 +55,6 @@
     <exclude name="**/?*.aj"/>
   </patternset>
   
-  <!-- JDK definitions -->
-  
-  <property name="jdk.bin.1.7" value="${jdk.home.1.7}/bin"/>
-  <path id="jdk.classpath.1.7">
-    <fileset dir="${jdk.home.1.7}">
-      <include name="jre/lib/charsets.jar"/>
-      <include name="jre/lib/deploy.jar"/>
-      <include name="jre/lib/ext/dnsns.jar"/>
-      <include name="jre/lib/ext/localedata.jar"/>
-      <include name="jre/lib/ext/sunec.jar"/>
-      <include name="jre/lib/ext/sunjce_provider.jar"/>
-      <include name="jre/lib/ext/sunpkcs11.jar"/>
-      <include name="jre/lib/ext/zipfs.jar"/>
-      <include name="jre/lib/htmlconverter.jar"/>
-      <include name="jre/lib/javaws.jar"/>
-      <include name="jre/lib/jce.jar"/>
-      <include name="jre/lib/jfr.jar"/>
-      <include name="jre/lib/jfxrt.jar"/>
-      <include name="jre/lib/jsse.jar"/>
-      <include name="jre/lib/management-agent.jar"/>
-      <include name="jre/lib/plugin.jar"/>
-      <include name="jre/lib/resources.jar"/>
-      <include name="jre/lib/rt.jar"/>
-      <include name="lib/ant-javafx.jar"/>
-      <include name="lib/dt.jar"/>
-      <include name="lib/javafx-doclet.jar"/>
-      <include name="lib/javafx-mx.jar"/>
-      <include name="lib/jconsole.jar"/>
-      <include name="lib/sa-jdi.jar"/>
-      <include name="lib/tools.jar"/>
-    </fileset>
-  </path>
-  
-  <property name="project.jdk.home" value="${jdk.home.1.7}"/>
-  <property name="project.jdk.bin" value="${jdk.bin.1.7}"/>
-  <property name="project.jdk.classpath" value="jdk.classpath.1.7"/>
-  
   
   <!-- Project Libraries -->
   
@@ -165,9 +128,6 @@
   <dirname property="module.graph2d.basedir" file="${ant.file}"/>
   
   
-  <property name="module.jdk.home.graph2d" value="${project.jdk.home}"/>
-  <property name="module.jdk.bin.graph2d" value="${project.jdk.bin}"/>
-  <property name="module.jdk.classpath.graph2d" value="${project.jdk.classpath}"/>
   
   <property name="compiler.args.graph2d" value="-encoding UTF-8 -source 1.7 -target 1.7 ${compiler.args}"/>
   
@@ -178,16 +138,13 @@
     <!-- Paths to be included in compilation bootclasspath -->
   </path>
   
-  <path id="graph2d.module.production.classpath">
-    <path refid="${module.jdk.classpath.graph2d}"/>
-  </path>
+  <path id="graph2d.module.production.classpath"/>
   
   <path id="graph2d.runtime.production.module.classpath">
     <pathelement location="${graph2d.output.dir}"/>
   </path>
   
   <path id="graph2d.module.classpath">
-    <path refid="${module.jdk.classpath.graph2d}"/>
     <pathelement location="${graph2d.output.dir}"/>
   </path>
   
@@ -216,7 +173,7 @@
   
   <target name="compile.module.graph2d.production" description="Compile module Graph2D; production classes">
     <mkdir dir="${graph2d.output.dir}"/>
-    <javac destdir="${graph2d.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.graph2d}/javac">
+    <javac destdir="${graph2d.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
       <compilerarg line="${compiler.args.graph2d}"/>
       <bootclasspath refid="graph2d.module.bootclasspath"/>
       <classpath refid="graph2d.module.production.classpath"/>
@@ -245,9 +202,6 @@
   <dirname property="module.research_gis_kernel.basedir" file="${ant.file}"/>
   
   
-  <property name="module.jdk.home.research_gis_kernel" value="${project.jdk.home}"/>
-  <property name="module.jdk.bin.research_gis_kernel" value="${project.jdk.bin}"/>
-  <property name="module.jdk.classpath.research_gis_kernel" value="${project.jdk.classpath}"/>
   
   <property name="compiler.args.research_gis_kernel" value="-encoding UTF-8 -source 1.7 -target 1.7 ${compiler.args}"/>
   
@@ -259,7 +213,6 @@
   </path>
   
   <path id="research_gis_kernel.module.production.classpath">
-    <path refid="${module.jdk.classpath.research_gis_kernel}"/>
     <path refid="library.velocity.classpath"/>
     <path refid="library.javaapiforkml.classpath"/>
     <path refid="library.geotools.classpath"/>
@@ -285,7 +238,6 @@
   </path>
   
   <path id="research_gis_kernel.module.classpath">
-    <path refid="${module.jdk.classpath.research_gis_kernel}"/>
     <pathelement location="${research_gis_kernel.output.dir}"/>
     <path refid="library.velocity.classpath"/>
     <path refid="library.javaapiforkml.classpath"/>
@@ -333,7 +285,7 @@
   
   <target name="compile.module.research_gis_kernel.production" depends="compile.module.graph2d" description="Compile module Research GIS Kernel; production classes">
     <mkdir dir="${research_gis_kernel.output.dir}"/>
-    <javac destdir="${research_gis_kernel.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.research_gis_kernel}/javac">
+    <javac destdir="${research_gis_kernel.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
       <compilerarg line="${compiler.args.research_gis_kernel}"/>
       <bootclasspath refid="research_gis_kernel.module.bootclasspath"/>
       <classpath refid="research_gis_kernel.module.production.classpath"/>
@@ -362,9 +314,6 @@
   <dirname property="module.dpgui.basedir" file="${ant.file}"/>
   
   
-  <property name="module.jdk.home.dpgui" value="${project.jdk.home}"/>
-  <property name="module.jdk.bin.dpgui" value="${project.jdk.bin}"/>
-  <property name="module.jdk.classpath.dpgui" value="${project.jdk.classpath}"/>
   
   <property name="compiler.args.dpgui" value="-encoding UTF-8 -source 1.7 -target 1.7 ${compiler.args}"/>
   
@@ -376,7 +325,6 @@
   </path>
   
   <path id="dpgui.module.production.classpath">
-    <path refid="${module.jdk.classpath.dpgui}"/>
     <path refid="library.jars.classpath"/>
     <path refid="library.research_gis_kernel.classpath"/>
     <path refid="library.lib.classpath"/>
@@ -392,7 +340,6 @@
   </path>
   
   <path id="dpgui.module.classpath">
-    <path refid="${module.jdk.classpath.dpgui}"/>
     <pathelement location="${dpgui.output.dir}"/>
     <path refid="library.jars.classpath"/>
     <path refid="library.research_gis_kernel.classpath"/>
@@ -430,7 +377,7 @@
   
   <target name="compile.module.dpgui.production" depends="compile.module.research_gis_kernel" description="Compile module DPGUI; production classes">
     <mkdir dir="${dpgui.output.dir}"/>
-    <javac destdir="${dpgui.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.dpgui}/javac">
+    <javac destdir="${dpgui.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
       <compilerarg line="${compiler.args.dpgui}"/>
       <bootclasspath refid="dpgui.module.bootclasspath"/>
       <classpath refid="dpgui.module.production.classpath"/>
@@ -459,9 +406,6 @@
   <dirname property="module.rgik_private.basedir" file="${ant.file}"/>
   
   
-  <property name="module.jdk.home.rgik_private" value="${project.jdk.home}"/>
-  <property name="module.jdk.bin.rgik_private" value="${project.jdk.bin}"/>
-  <property name="module.jdk.classpath.rgik_private" value="${project.jdk.classpath}"/>
   
   <property name="compiler.args.rgik_private" value="-encoding UTF-8 -source 1.7 -target 1.7 ${compiler.args}"/>
   
@@ -473,7 +417,6 @@
   </path>
   
   <path id="rgik_private.module.production.classpath">
-    <path refid="${module.jdk.classpath.rgik_private}"/>
     <path refid="library.research_gis_kernel.classpath"/>
     <path refid="library.commons.classpath"/>
     <path refid="library.jaxb.classpath"/>
@@ -489,7 +432,6 @@
   </path>
   
   <path id="rgik_private.module.classpath">
-    <path refid="${module.jdk.classpath.rgik_private}"/>
     <pathelement location="${rgik_private.output.dir}"/>
     <path refid="library.research_gis_kernel.classpath"/>
     <path refid="library.commons.classpath"/>
@@ -527,7 +469,7 @@
   
   <target name="compile.module.rgik_private.production" depends="compile.module.research_gis_kernel" description="Compile module RGIK Private; production classes">
     <mkdir dir="${rgik_private.output.dir}"/>
-    <javac destdir="${rgik_private.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.rgik_private}/javac">
+    <javac destdir="${rgik_private.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
       <compilerarg line="${compiler.args.rgik_private}"/>
       <bootclasspath refid="rgik_private.module.bootclasspath"/>
       <classpath refid="rgik_private.module.production.classpath"/>
