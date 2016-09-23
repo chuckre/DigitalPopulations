@@ -5,6 +5,11 @@
 
 The compiled jar is at [PopulationRealizer/out/artifacts/Research_GIS_Kernel_jar](https://github.com/chuckre/DigitalPopulations/tree/master/PopulationRealizer/out/artifacts/Research_GIS_Kernel_jar)
 
+##Build project from source
+
+ant artifact.research_gis_kernel:jar -buildfile PopulationRealizer/populationrealizer.xml
+The result jar will be at PopulationRealizer/__artifacts_temp/Research GIS Kernel.jar
+
 ##What is Digital Populations?
  
 Digital Populations is a software suite for synthesizing plausible geo-referenced households and people from census or polling data.
