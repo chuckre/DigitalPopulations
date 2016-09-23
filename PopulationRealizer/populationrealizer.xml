@@ -171,8 +171,8 @@
   
   <property name="compiler.args.graph2d" value="-encoding UTF-8 -source 1.7 -target 1.7 ${compiler.args}"/>
   
-  <property name="graph2d.output.dir" value="${module.graph2d.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/production/Graph2D"/>
-  <property name="graph2d.testoutput.dir" value="${module.graph2d.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/test/Graph2D"/>
+  <property name="graph2d.output.dir" value="${module.graph2d.basedir}/out/production/Graph2D"/>
+  <property name="graph2d.testoutput.dir" value="${module.graph2d.basedir}/out/test/Graph2D"/>
   
   <path id="graph2d.module.bootclasspath">
     <!-- Paths to be included in compilation bootclasspath -->
@@ -206,7 +206,7 @@
   </patternset>
   
   <path id="graph2d.module.sourcepath">
-    <dirset dir="${module.graph2d.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Graph2D">
+    <dirset dir="${module.graph2d.basedir}/Graph2D">
       <include name="src"/>
     </dirset>
   </path>
@@ -225,7 +225,7 @@
     </javac>
     
     <copy todir="${graph2d.output.dir}">
-      <fileset dir="${module.graph2d.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Graph2D/src">
+      <fileset dir="${module.graph2d.basedir}/Graph2D/src">
         <patternset refid="compiler.resources"/>
         <type type="file"/>
       </fileset>
@@ -251,8 +251,8 @@
   
   <property name="compiler.args.research_gis_kernel" value="-encoding UTF-8 -source 1.7 -target 1.7 ${compiler.args}"/>
   
-  <property name="research_gis_kernel.output.dir" value="${module.research_gis_kernel.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/production/Research GIS Kernel"/>
-  <property name="research_gis_kernel.testoutput.dir" value="${module.research_gis_kernel.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/test/Research GIS Kernel"/>
+  <property name="research_gis_kernel.output.dir" value="${module.research_gis_kernel.basedir}/out/production/Research GIS Kernel"/>
+  <property name="research_gis_kernel.testoutput.dir" value="${module.research_gis_kernel.basedir}/out/test/Research GIS Kernel"/>
   
   <path id="research_gis_kernel.module.bootclasspath">
     <!-- Paths to be included in compilation bootclasspath -->
@@ -323,7 +323,7 @@
   </patternset>
   
   <path id="research_gis_kernel.module.sourcepath">
-    <dirset dir="${module.research_gis_kernel.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel">
+    <dirset dir="${module.research_gis_kernel.basedir}/Research GIS Kernel">
       <include name="src"/>
     </dirset>
   </path>
@@ -342,7 +342,7 @@
     </javac>
     
     <copy todir="${research_gis_kernel.output.dir}">
-      <fileset dir="${module.research_gis_kernel.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/Research GIS Kernel/src">
+      <fileset dir="${module.research_gis_kernel.basedir}/Research GIS Kernel/src">
         <patternset refid="compiler.resources"/>
         <type type="file"/>
       </fileset>
@@ -368,8 +368,8 @@
   
   <property name="compiler.args.dpgui" value="-encoding UTF-8 -source 1.7 -target 1.7 ${compiler.args}"/>
   
-  <property name="dpgui.output.dir" value="${module.dpgui.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/production/DPGUI"/>
-  <property name="dpgui.testoutput.dir" value="${module.dpgui.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/test/DPGUI"/>
+  <property name="dpgui.output.dir" value="${module.dpgui.basedir}/out/production/DPGUI"/>
+  <property name="dpgui.testoutput.dir" value="${module.dpgui.basedir}/out/test/DPGUI"/>
   
   <path id="dpgui.module.bootclasspath">
     <!-- Paths to be included in compilation bootclasspath -->
@@ -420,7 +420,7 @@
   </patternset>
   
   <path id="dpgui.module.sourcepath">
-    <dirset dir="${module.dpgui.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI">
+    <dirset dir="${module.dpgui.basedir}/DPGUI">
       <include name="src"/>
     </dirset>
   </path>
@@ -439,7 +439,7 @@
     </javac>
     
     <copy todir="${dpgui.output.dir}">
-      <fileset dir="${module.dpgui.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/DPGUI/src">
+      <fileset dir="${module.dpgui.basedir}/DPGUI/src">
         <patternset refid="compiler.resources"/>
         <type type="file"/>
       </fileset>
@@ -465,8 +465,8 @@
   
   <property name="compiler.args.rgik_private" value="-encoding UTF-8 -source 1.7 -target 1.7 ${compiler.args}"/>
   
-  <property name="rgik_private.output.dir" value="${module.rgik_private.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/production/RGIK Private"/>
-  <property name="rgik_private.testoutput.dir" value="${module.rgik_private.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/out/test/RGIK Private"/>
+  <property name="rgik_private.output.dir" value="${module.rgik_private.basedir}/out/production/RGIK Private"/>
+  <property name="rgik_private.testoutput.dir" value="${module.rgik_private.basedir}/out/test/RGIK Private"/>
   
   <path id="rgik_private.module.bootclasspath">
     <!-- Paths to be included in compilation bootclasspath -->
@@ -517,7 +517,7 @@
   </patternset>
   
   <path id="rgik_private.module.sourcepath">
-    <dirset dir="${module.rgik_private.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/RGIK Private/RGIK Private">
+    <dirset dir="${module.rgik_private.basedir}/RGIK Private/RGIK Private">
       <include name="src"/>
     </dirset>
   </path>
@@ -536,7 +536,7 @@
     </javac>
     
     <copy todir="${rgik_private.output.dir}">
-      <fileset dir="${module.rgik_private.basedir}/../../../../../../lab/chuck/DigitalPopulations/PopulationRealizer/RGIK Private/RGIK Private/src">
+      <fileset dir="${module.rgik_private.basedir}/RGIK Private/RGIK Private/src">
         <patternset refid="compiler.resources"/>
         <type type="file"/>
       </fileset>
