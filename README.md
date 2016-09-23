@@ -7,7 +7,8 @@ The compiled jar is at [PopulationRealizer/out/artifacts/Research_GIS_Kernel_jar
 
 ##Build project from source
 
-ant artifact.research_gis_kernel:jar -buildfile PopulationRealizer/populationrealizer.xml
+```ant artifact.research_gis_kernel:jar -buildfile PopulationRealizer/populationrealizer.xml```
+
 The result jar will be at PopulationRealizer/__artifacts_temp/Research GIS Kernel.jar
 
 ##What is Digital Populations?
