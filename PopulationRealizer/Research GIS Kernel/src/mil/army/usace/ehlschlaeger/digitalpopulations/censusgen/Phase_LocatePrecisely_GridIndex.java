@@ -3,13 +3,7 @@ package mil.army.usace.ehlschlaeger.digitalpopulations.censusgen;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -113,6 +107,8 @@ public class Phase_LocatePrecisely_GridIndex implements Serializable {
     ArrayList<PointSpatialStatistic> goals;
 
     double GRIDSIZE = 1000.0;
+
+    public HashMap<Integer, Integer> idReverseMap;
     
     // OUTPUT DATA //
     //  -> none; results are written to disk
@@ -143,7 +139,8 @@ public class Phase_LocatePrecisely_GridIndex implements Serializable {
             GISClass regionMap,
             GISLattice popDensityMap,
             List<? extends PointConstraint> constraints,
-            LinkedHashMap<Trait,TraitRefElement> criteria) {
+            LinkedHashMap<Trait,TraitRefElement> criteria,
+            HashMap<Integer, Integer> idReverseMap) {
         this.realizationNum = realizationNum;
         this.households = Arrays.asList(households);
         this.regionMap = regionMap;
@@ -151,6 +148,7 @@ public class Phase_LocatePrecisely_GridIndex implements Serializable {
         this.popDensityMap = popDensityMap;
         this.constraints = constraints;
         this.locationSpecs = criteria;
+        this.idReverseMap = idReverseMap;
 
         // Capture the archtype schemas.
         for(PumsHousehold house : households) {
@@ -375,7 +373,8 @@ public class Phase_LocatePrecisely_GridIndex implements Serializable {
             realizer = new ConstrainedRealizer(
                 regionMap,
                 popDensityMap,
-                constraints);
+                constraints,
+                idReverseMap);
             realizer.setRandomSource(random);
         }
         

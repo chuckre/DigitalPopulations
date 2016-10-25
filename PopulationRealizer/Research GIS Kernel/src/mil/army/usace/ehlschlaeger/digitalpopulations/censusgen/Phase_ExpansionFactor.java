@@ -677,7 +677,7 @@ public class Phase_ExpansionFactor {
         int idxWid = 1;
         if(numRealizations2Make.length > 9)
             idxWid = 1 + (int) Math.floor(Math.log10(numRealizations2Make.length));
-        String idxFmt = "%"+idxWid+"d:";
+        String idxFmt = " %"+idxWid+"d:";
 
         // Compute maximum printed width of values.
         // - Same deal as above.

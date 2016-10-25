@@ -1,6 +1,7 @@
 package mil.army.usace.ehlschlaeger.digitalpopulations;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +48,8 @@ public class ConstrainedRealizer extends Realizer {
     // Note: This is preserved between calls to iterate(), which is just fine.
     protected IntsMap<CumulativeDistributionFunction> cdfCache;
 
+    private HashMap<Integer, Integer> idReverseMap;
+
     /**
      * Construct instance.
      * 
@@ -67,11 +70,12 @@ public class ConstrainedRealizer extends Realizer {
     public ConstrainedRealizer(
             GISClass regionMap,
             GISLattice popDensityMap,
-            List<? extends PointConstraint> constraints) {
+            List<? extends PointConstraint> constraints,
+            HashMap<Integer, Integer> idReverseMap) {
         this.regionMap = regionMap;
         this.popDensityMap = popDensityMap;
         this.pcons = constraints;
-        
+        this.idReverseMap = idReverseMap;
         this.cdfCache = new IntsMap<CumulativeDistributionFunction>();
     }
 
@@ -114,11 +118,11 @@ public class ConstrainedRealizer extends Realizer {
                     // place a hoh here.
                     throw new IllegalStateException(String.format(
                         "Population density map is zero everywhere in region %d.",
-                        tract));
+                        idReverseMap.get(tract)));
                 }
                 String msg = String.format(
                     "Can't place %s in region %d:  %s eliminated all cells from consideration.",
-                    arch, tract, diagnostic[0]);
+                    arch, idReverseMap.get(tract), diagnostic[0]);
                 log.warning(msg);
                 
                 AttMapHelper amh = new AttMapHelper(regionMap, null, pcons);
@@ -206,7 +210,7 @@ public class ConstrainedRealizer extends Realizer {
             throw new DataException(String.format(
                 "Region map %s contains no cells for region %d",
                 regionMap.getName(),
-                regionID));
+                idReverseMap.get(regionID)));
         
         //
         // DEV NOTE:

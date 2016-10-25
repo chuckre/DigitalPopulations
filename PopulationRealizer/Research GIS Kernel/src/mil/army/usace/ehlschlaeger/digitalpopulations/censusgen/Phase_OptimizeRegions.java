@@ -1,12 +1,8 @@
 package mil.army.usace.ehlschlaeger.digitalpopulations.censusgen;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.io.InterruptedIOException;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,6 +42,7 @@ public class Phase_OptimizeRegions {
     protected ArrayList<Integer> regionList;
     protected GISLattice popDensityMap;
 
+    public HashMap<Integer,Integer> idReverseMap;
     /**
      * Our run-time configuration.
      */
@@ -67,11 +64,12 @@ public class Phase_OptimizeRegions {
      */
     public Phase_OptimizeRegions(Solution solution,
                                  GISClass regionMap,
-                                 GISLattice popDensityMap) {
+                                 GISLattice popDensityMap,
+                                 HashMap<Integer,Integer> idReverseMap) {
         this.soln = solution;
         this.regionMap = regionMap;
         this.popDensityMap = popDensityMap;
-
+        this.idReverseMap = idReverseMap;
         this.regionList = new ArrayList<Integer>(regionMap.makeInventory());
         Collections.sort(regionList);
     }
@@ -326,7 +324,7 @@ public class Phase_OptimizeRegions {
         // Realize archtypes and assign locations.
         if (realizer == null) {
             // Preserve realizer for every call to writeFileSet.
-            realizer = new ConstrainedRealizer(regionMap, popDensityMap, soln.pcons);
+            realizer = new ConstrainedRealizer(regionMap, popDensityMap, soln.pcons, idReverseMap);
             realizer.setRandomSource(random);
         }
 

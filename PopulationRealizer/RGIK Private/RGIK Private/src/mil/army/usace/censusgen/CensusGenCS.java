@@ -235,7 +235,7 @@ public class CensusGenCS extends mil.army.usace.ehlschlaeger.digitalpopulations.
         // Realize archtypes and assign locations.
         if(realizer == null) {
             // Preserve realizer for every call to writeFileSet.
-            realizer = new ConstrainedRealizer(primaryRegion.map, popDensityMap, soln.pcons);
+            realizer = new ConstrainedRealizer(primaryRegion.map, popDensityMap, soln.pcons, primaryRegion.idReverseMap);
             realizer.setRandomSource(random);
         }
 

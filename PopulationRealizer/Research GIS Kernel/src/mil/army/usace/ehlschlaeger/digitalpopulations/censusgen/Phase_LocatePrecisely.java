@@ -2,16 +2,7 @@ package mil.army.usace.ehlschlaeger.digitalpopulations.censusgen;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -113,7 +104,7 @@ public class Phase_LocatePrecisely {
     /** User's declaration of "good enough". */
     ArrayList<PointSpatialStatistic> goals;
 
-    
+    HashMap<Integer, Integer> idReverseMap;
     
     // OUTPUT DATA //
     //  -> none; results are written to disk
@@ -144,7 +135,8 @@ public class Phase_LocatePrecisely {
             GISClass regionMap,
             GISLattice popDensityMap,
             List<? extends PointConstraint> constraints,
-            LinkedHashMap<Trait,TraitRefElement> criteria) {
+            LinkedHashMap<Trait,TraitRefElement> criteria,
+            HashMap<Integer, Integer> idReverseMap) {
         this.realizationNum = realizationNum;
         this.households = Arrays.asList(households);
         this.regionMap = regionMap;
@@ -152,6 +144,7 @@ public class Phase_LocatePrecisely {
         this.popDensityMap = popDensityMap;
         this.constraints = constraints;
         this.locationSpecs = criteria;
+        this.idReverseMap = idReverseMap;
 
         // Capture the archtype schemas.
         for(PumsHousehold house : households) {
@@ -195,12 +188,14 @@ public class Phase_LocatePrecisely {
             List<PumsHouseholdRealization> households,
             GISClass regionMap,
             List<? extends PointConstraint> constraints,
-            LinkedHashMap<Trait, TraitRefElement> criteria) {
+            LinkedHashMap<Trait, TraitRefElement> criteria,
+            HashMap<Integer, Integer> idReverseMap) {
         this.realizationNum = realizationNum;
         this.regionMap = regionMap;
         this.bounds = new GISData(regionMap);
         this.constraints = constraints;
         this.locationSpecs = criteria;
+        this.idReverseMap = idReverseMap;
 
         // Capture the attribute schemas.
         for(PumsHouseholdRealization house : households) {
@@ -343,7 +338,8 @@ public class Phase_LocatePrecisely {
             realizer = new ConstrainedRealizer(
                 regionMap,
                 popDensityMap,
-                constraints);
+                constraints,
+                idReverseMap);
             realizer.setRandomSource(random);
         }
         
@@ -834,7 +830,8 @@ public class Phase_LocatePrecisely {
                 hohs,
                 gen.getPrimaryRegion().map,
                 gen.makeConstraints(),
-                fc.traitCluster);
+                fc.traitCluster,
+                gen.getPrimaryRegion().idReverseMap);
         phase.setParams(params);
 //        phase.setRandomSource(random);
         

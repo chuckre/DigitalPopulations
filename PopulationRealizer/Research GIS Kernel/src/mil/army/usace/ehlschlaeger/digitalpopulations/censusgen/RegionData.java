@@ -49,6 +49,11 @@ public class RegionData {
     public int      aggregateHouseholds;
 
     /**
+    * Reverse look up for original region ID
+    */
+    public HashMap<Integer, Integer> idReverseMap = new HashMap<Integer, Integer>();
+
+    /**
      * Total number of people present in region table. The population PUMS table
      * will only contain a sampling of these.
      */
@@ -280,7 +285,8 @@ public class RegionData {
         int errCount = 0;
     	
     	HashMap<Integer, Integer> idMap = new HashMap<Integer, Integer>();
-    	
+        this.idReverseMap = new HashMap<Integer, Integer>();
+
     	int regionIDNew = 1;
 		int regionIDOld;
 		for(int i = 0; i < idString.length; i++)
@@ -289,7 +295,8 @@ public class RegionData {
 			this.table.setValueAt(regionIDNew, i, keycol);
 			
 			idMap.put(regionIDOld, regionIDNew);
-			
+            this.idReverseMap.put(regionIDNew, regionIDOld);
+
 			regionIDNew ++;
 		}
 		
