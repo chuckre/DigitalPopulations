@@ -9,7 +9,6 @@ import cerl.gui.standard.utilities.FileType;
 import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.Result;
 import java.io.File;
-import java.io.IOException;
 
 /**
  *
@@ -57,6 +56,10 @@ public class StepOneUtilityClass {
                 result = FileUtility.VerifyFileType(HOUSEHOLD_MICRO_DATA_FILE_TYPE, file);
                 break;
             default:
+                result.setErrorMessage(
+                        "verifyFile", 
+                        "Selected DigPopFileTypeEnum value not a valid switch option.");
+                result.setSuccess(false);
                 break;
         }
         
