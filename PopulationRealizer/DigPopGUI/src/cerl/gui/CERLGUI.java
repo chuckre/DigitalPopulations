@@ -5,7 +5,7 @@
  */
 package cerl.gui;
 
-import cerl.gui.utilities.*;
+import cerl.gui.utilities.RunFile;
 /**
  *
  * @author ajohnson

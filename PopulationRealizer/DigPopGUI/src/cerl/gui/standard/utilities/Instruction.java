@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cerl.gui.utilities;
+package cerl.gui.standard.utilities;
 
 import javax.xml.bind.annotation.XmlElement;
 
