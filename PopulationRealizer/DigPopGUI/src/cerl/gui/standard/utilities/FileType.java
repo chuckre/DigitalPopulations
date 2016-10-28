@@ -11,9 +11,13 @@ package cerl.gui.standard.utilities;
  */
 public enum FileType {
     CVS("CSV"),
-    ACS("ACS"),
-    PRJ("PRJ");
+    ASC("ASC"),
+    PRJ("PRJ"),
+    TXT("TXT"),
+    XML("XML");
+    
     private String fileTypeName = ""; 
+    
     private FileType(String name)
     {
         this.fileTypeName = name;

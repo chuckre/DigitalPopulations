@@ -153,35 +153,15 @@ public class Result {
     public String getErrorMessage() {
         return errorMessage;
     }
-
-    /**
-     * Setter for the variable: errorMessage
-     * @param errorMessage 
-     */
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
     
     /**
      * Setter for the variable: errorMessage
-     * Uses both the error function name and an error message.
-     * @param errorFunction
-     * @param errorMessage 
-     */
-    public void setErrorMessage(String errorFunction, String errorMessage) {
-        this.errorMessage = String.format(
-                "%s: %s",
-                errorFunction, 
-                errorMessage);
-    }
-    
-    /**
      * Appends a new error message to the existing error message. 
      * Starts on new line if this.errorMessage 
      * already contains an error message.
      * @param errorMessage 
      */
-    public void appendErrorMessage(String errorMessage) {
+    public void setErrorMessage(String errorMessage) {
         if(this.errorMessage != null
                 && !this.errorMessage.isEmpty())
         {
@@ -192,11 +172,13 @@ public class Result {
         }
         else
         {
-            setErrorMessage(errorMessage);
+            this.errorMessage = errorMessage;
         }
     }
     
     /**
+     * Setter for the variable: errorMessage
+     * Uses both the error function name and an error message.
      * Appends a new error message to the existing error message. 
      * Starts on new line if this.errorMessage 
      * already contains an error message.
@@ -204,7 +186,7 @@ public class Result {
      * @param errorFunction
      * @param errorMessage 
      */
-    public void appendErrorMessage(String errorFunction, String errorMessage) {
+    public void setErrorMessage(String errorFunction, String errorMessage) {
         if(this.errorMessage != null
                 && !this.errorMessage.isEmpty())
         {
@@ -216,7 +198,10 @@ public class Result {
         }
         else
         {
-            setErrorMessage(errorFunction, errorMessage);
+            this.errorMessage = String.format(
+                "%s: %s",
+                errorFunction, 
+                errorMessage);
         }
     }
 }

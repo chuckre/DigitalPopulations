@@ -3,14 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cerl.gui;
+package cerl.gui.forms;
 
+import cerl.gui.standard.utilities.Result;
+import cerl.gui.utilities.DigPopGUIFiles;
+import cerl.gui.utilities.StepOneUtilityClass;
+import cerl.gui.utilities.StepOneUtilityClass.DigPopFileTypeEnum;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -18,13 +21,16 @@ import javax.swing.JFileChooser;
  */
 public class StepOne extends javax.swing.JFrame {
     
-    
+    private DigPopGUIFiles digPopGUIFiles; 
+    private DefaultTableModel constraintMapsDataModel;
 
     /**
      * Creates new form StepOne
      */
     public StepOne() {
         initComponents();
+        setIntialWarningIcons();
+        digPopGUIFiles = new DigPopGUIFiles();
     }
 
     /**
@@ -44,6 +50,8 @@ public class StepOne extends javax.swing.JFrame {
         rbtnHouseholdDensityMap = new javax.swing.JRadioButton();
         txtLandUseHouseholdMap = new javax.swing.JTextField();
         btnLandMapHouseholdMap = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        lblLandUseHouseholdDensityMap = new javax.swing.JLabel();
         jPanelRegionMapCensusEnum = new javax.swing.JPanel();
         txtRegionMap = new javax.swing.JTextField();
         btnRegionMap = new javax.swing.JButton();
@@ -54,8 +62,8 @@ public class StepOne extends javax.swing.JFrame {
         jPanelConstraintMap = new javax.swing.JPanel();
         btnConstaintMap = new javax.swing.JButton();
         lblConstraintMap = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblConstraintMaps = new javax.swing.JTable();
         jPanelHouseholdMicroData = new javax.swing.JPanel();
         txtHouseholdMicroData = new javax.swing.JTextField();
         btnHouseholdMicroData = new javax.swing.JButton();
@@ -65,6 +73,7 @@ public class StepOne extends javax.swing.JFrame {
         btnPopulationMicroData = new javax.swing.JButton();
         lblPopulationMicroData = new javax.swing.JLabel();
         btnNextStep = new javax.swing.JButton();
+        lblErrorMessages = new javax.swing.JLabel();
         jMenuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuItemExitApplication = new javax.swing.JMenuItem();
@@ -95,12 +104,23 @@ public class StepOne extends javax.swing.JFrame {
 
         txtLandUseHouseholdMap.setEditable(false);
 
-        btnLandMapHouseholdMap.setText("Select ACS File");
+        btnLandMapHouseholdMap.setText("Select ASC File");
         btnLandMapHouseholdMap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLandMapHouseholdMapActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblLandUseHouseholdDensityMap, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblLandUseHouseholdDensityMap, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanelLandUseHouseholdMapLayout = new javax.swing.GroupLayout(jPanelLandUseHouseholdMap);
         jPanelLandUseHouseholdMap.setLayout(jPanelLandUseHouseholdMapLayout);
@@ -108,36 +128,51 @@ public class StepOne extends javax.swing.JFrame {
             jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(rbtnLandUseMap)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rbtnHouseholdDensityMap, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtLandUseHouseholdMap, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnLandMapHouseholdMap)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rbtnLandUseMap, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rbtnHouseholdDensityMap, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                        .addGap(373, 373, 373)
+                        .addComponent(btnLandMapHouseholdMap))
+                    .addComponent(txtLandUseHouseholdMap))
+                .addContainerGap())
         );
         jPanelLandUseHouseholdMapLayout.setVerticalGroup(
             jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbtnLandUseMap)
-                    .addComponent(rbtnHouseholdDensityMap)
-                    .addComponent(txtLandUseHouseholdMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLandMapHouseholdMap))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnLandMapHouseholdMap)
+                        .addComponent(rbtnHouseholdDensityMap)
+                        .addComponent(rbtnLandUseMap)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtLandUseHouseholdMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanelRegionMapCensusEnum.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         txtRegionMap.setEditable(false);
 
-        btnRegionMap.setText("Select ACS File");
+        btnRegionMap.setText("Select ASC File");
+        btnRegionMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegionMapActionPerformed(evt);
+            }
+        });
 
         txtCensusEnumerations.setEditable(false);
 
         btnCensusEnumerations.setText("Select CSV File");
+        btnCensusEnumerations.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCensusEnumerationsActionPerformed(evt);
+            }
+        });
 
         lblRegionMap.setText("Region Map:");
 
@@ -149,18 +184,20 @@ public class StepOne extends javax.swing.JFrame {
             jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblCensusEnumerations)
-                    .addComponent(lblRegionMap))
-                .addGap(4, 4, 4)
-                .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtCensusEnumerations, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
-                    .addComponent(txtRegionMap))
+                .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
+                        .addComponent(lblCensusEnumerations)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCensusEnumerations))
+                    .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
+                        .addComponent(lblRegionMap)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtRegionMap)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnRegionMap)
+                    .addComponent(btnRegionMap, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnCensusEnumerations, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanelRegionMapCensusEnumLayout.setVerticalGroup(
             jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,18 +218,21 @@ public class StepOne extends javax.swing.JFrame {
         jPanelConstraintMap.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanelConstraintMap.setMinimumSize(new java.awt.Dimension(100, 100));
 
-        btnConstaintMap.setText("Select ACS File");
+        btnConstaintMap.setText("Select ASC File");
+        btnConstaintMap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConstaintMapActionPerformed(evt);
+            }
+        });
 
-        lblConstraintMap.setText("Constraint Maps:");
+        lblConstraintMap.setText("Constraint Maps (Optional):");
 
-        jTable1.setAutoCreateColumnsFromModel(false);
-        jTable1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblConstraintMaps.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Selected Constaint Maps"
+                "File Path"
             }
         ) {
             Class[] types = new Class [] {
@@ -210,23 +250,21 @@ public class StepOne extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tblConstraintMaps);
 
         javax.swing.GroupLayout jPanelConstraintMapLayout = new javax.swing.GroupLayout(jPanelConstraintMap);
         jPanelConstraintMap.setLayout(jPanelConstraintMapLayout);
         jPanelConstraintMapLayout.setHorizontalGroup(
             jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelConstraintMapLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelConstraintMapLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
+                    .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
                         .addComponent(lblConstraintMap)
-                        .addGap(397, 397, 397)
-                        .addComponent(btnConstaintMap))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelConstraintMapLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnConstaintMap)))
+                .addContainerGap())
         );
         jPanelConstraintMapLayout.setVerticalGroup(
             jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,9 +273,9 @@ public class StepOne extends javax.swing.JFrame {
                 .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConstaintMap)
                     .addComponent(lblConstraintMap))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanelHouseholdMicroData.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -246,6 +284,11 @@ public class StepOne extends javax.swing.JFrame {
         txtHouseholdMicroData.setEditable(false);
 
         btnHouseholdMicroData.setText("Select CSV File");
+        btnHouseholdMicroData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHouseholdMicroDataActionPerformed(evt);
+            }
+        });
 
         lblHouseholdMicroData.setText("Household Micro-data:");
 
@@ -254,10 +297,10 @@ public class StepOne extends javax.swing.JFrame {
         jPanelHouseholdMicroDataLayout.setHorizontalGroup(
             jPanelHouseholdMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelHouseholdMicroDataLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(lblHouseholdMicroData)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtHouseholdMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtHouseholdMicroData)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnHouseholdMicroData)
                 .addContainerGap())
@@ -279,18 +322,23 @@ public class StepOne extends javax.swing.JFrame {
         txtPopulationMicroData.setEditable(false);
 
         btnPopulationMicroData.setText("Select CSV File");
+        btnPopulationMicroData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPopulationMicroDataActionPerformed(evt);
+            }
+        });
 
-        lblPopulationMicroData.setText("Population Micro-data:");
+        lblPopulationMicroData.setText("Population Micro-data (Optional):");
 
         javax.swing.GroupLayout jPanelPopulationMicroDataLayout = new javax.swing.GroupLayout(jPanelPopulationMicroData);
         jPanelPopulationMicroData.setLayout(jPanelPopulationMicroDataLayout);
         jPanelPopulationMicroDataLayout.setHorizontalGroup(
             jPanelPopulationMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPopulationMicroDataLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(lblPopulationMicroData)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPopulationMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPopulationMicroData)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPopulationMicroData)
                 .addContainerGap())
@@ -312,31 +360,34 @@ public class StepOne extends javax.swing.JFrame {
             jPanelStepOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelStepOneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelStepOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanelHouseholdMicroData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelPopulationMicroData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelConstraintMap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelRegionMapCensusEnum, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelLandUseHouseholdMap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanelStepOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelRegionMapCensusEnum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelLandUseHouseholdMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelConstraintMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelPopulationMicroData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelHouseholdMicroData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanelStepOneLayout.setVerticalGroup(
             jPanelStepOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelStepOneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanelLandUseHouseholdMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelRegionMapCensusEnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelConstraintMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelPopulationMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelHouseholdMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnNextStep.setText("Next Step");
+
+        lblErrorMessages.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblErrorMessages.setForeground(new java.awt.Color(255, 0, 0));
 
         menuFile.setText("File");
 
@@ -355,22 +406,24 @@ public class StepOne extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanelStepOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanelStepOne, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnNextStep)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(354, 354, 354)
+                .addComponent(lblErrorMessages)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanelStepOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblErrorMessages)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelStepOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnNextStep)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -378,30 +431,49 @@ public class StepOne extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rbtnLandUseMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnLandUseMapActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbtnLandUseMapActionPerformed
+    private void btnRegionMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegionMapActionPerformed
 
-    private void rbtnHouseholdDensityMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnHouseholdDensityMapActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbtnHouseholdDensityMapActionPerformed
+        getAndVerifyFile(DigPopFileTypeEnum.Region_Map);
+
+    }//GEN-LAST:event_btnRegionMapActionPerformed
 
     private void btnLandMapHouseholdMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLandMapHouseholdMapActionPerformed
-        
-            File file = getFileFromFileChooser();
-        
-            if(file != null)
-            {
-                
-                /**
-                 * NEED TO ADD SOME TYPE OF FILE VALIDATION UTILITY
-                 * THIS SHOULD BE HOUSED IN THE UTILITY PACKAGE
-                 */
-                
-                txtLandUseHouseholdMap.setText(file.getPath());
-            }
-        
+
+        getAndVerifyFile(DigPopFileTypeEnum.Land_Use_Household_Map);
+
     }//GEN-LAST:event_btnLandMapHouseholdMapActionPerformed
+
+    private void rbtnHouseholdDensityMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnHouseholdDensityMapActionPerformed
+
+    }//GEN-LAST:event_rbtnHouseholdDensityMapActionPerformed
+
+    private void rbtnLandUseMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnLandUseMapActionPerformed
+
+    }//GEN-LAST:event_rbtnLandUseMapActionPerformed
+
+    private void btnCensusEnumerationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCensusEnumerationsActionPerformed
+
+        getAndVerifyFile(DigPopFileTypeEnum.Census_Enumerations);
+
+    }//GEN-LAST:event_btnCensusEnumerationsActionPerformed
+
+    private void btnConstaintMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConstaintMapActionPerformed
+
+        getAndVerifyFile(DigPopFileTypeEnum.Constraint_Map);
+
+    }//GEN-LAST:event_btnConstaintMapActionPerformed
+
+    private void btnPopulationMicroDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPopulationMicroDataActionPerformed
+
+        getAndVerifyFile(DigPopFileTypeEnum.Population_Micro_Data);
+
+    }//GEN-LAST:event_btnPopulationMicroDataActionPerformed
+
+    private void btnHouseholdMicroDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHouseholdMicroDataActionPerformed
+
+        getAndVerifyFile(DigPopFileTypeEnum.Household_Micro_Data);
+
+    }//GEN-LAST:event_btnHouseholdMicroDataActionPerformed
 
     /**
      * @param args the command line arguments
@@ -438,24 +510,125 @@ public class StepOne extends javax.swing.JFrame {
         });
     }
     
-    private File getFileFromFileChooser()
-    {
+    private void setIntialWarningIcons(){
+        setIconImage(DigPopFileTypeEnum.Census_Enumerations, false);
+        setIconImage(DigPopFileTypeEnum.Household_Micro_Data, false);
+        setIconImage(DigPopFileTypeEnum.Land_Use_Household_Map, false);
+        setIconImage(DigPopFileTypeEnum.Region_Map, false);
+    }
+
+    private void getAndVerifyFile(DigPopFileTypeEnum fileType) {
+
+        File file = getFileFromFileChooser();
+        if (file != null) {
+            Result result = StepOneUtilityClass.verifyFile(file, fileType);
+
+            if (result.isSuccess()
+                    && (boolean)result.getValue()) {
+
+                switch (fileType) {
+                    case Land_Use_Household_Map:
+                        txtLandUseHouseholdMap.setText(file.getPath());
+                        digPopGUIFiles.setLandUseHouseholdMapFilePath(file.getPath());
+                        break;
+                    case Region_Map:
+                        txtRegionMap.setText(file.getPath());
+                        digPopGUIFiles.setRegionMapFilePath(file.getPath());
+                        break;
+                    case Census_Enumerations:
+                        txtCensusEnumerations.setText(file.getPath());
+                        digPopGUIFiles.setCensusEnumerationsFilePath(file.getPath());
+                        break;
+                    case Constraint_Map:
+                        /**
+                         * TODO Need to figure out how I am displaying this
+                         */
+                        
+                        digPopGUIFiles.addConstraintMapFilePath(file.getPath());
+                        
+                        AddItemToConstaintMapTable(file.getPath());
+                                
+            //            constraintMapsDataModel = new DefaultTableModel(digPopGUIFiles.getConstraintMapFilePaths().toArray(),0);
+        
+        //tblConstraintMaps.setModel((TableModel) digPopGUIFiles.getConstraintMapFilePaths());
+                        
+                        break;
+                    case Population_Micro_Data:
+                        txtPopulationMicroData.setText(file.getPath());
+                        digPopGUIFiles.setPopulationMicroDataFilePath(file.getPath());
+                        break;
+                    case Household_Micro_Data:
+                        txtHouseholdMicroData.setText(file.getPath());
+                        digPopGUIFiles.setHouseholdMicroData(file.getPath());
+                        break;
+                }
+                setIconImage(fileType, true);
+            } else {
+                steErrorMessage(fileType + ":" +result.getErrorMessage());
+                setIconImage(fileType, false);
+                
+            }
+        }
+    }
+
+    private File getFileFromFileChooser() {
         File returnFile = null;
-        
+
         int returnVal = fileChooser.showOpenDialog(this);
-        
+
         /**
-         * FileChooser will return APPROVE_OPTION if the user selected a file 
+         * FileChooser will return APPROVE_OPTION if the user selected a file
          * from the dialog.
          */
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             returnFile = fileChooser.getSelectedFile();
-        } 
-        
+        }
+
         return returnFile;
     }
+
+    private void setIconImage(DigPopFileTypeEnum fileType, boolean showValidIcon) {
+
+        ImageIcon imageIcon;
+
+        if (showValidIcon) {
+            imageIcon = StepOneUtilityClass.GetValidImageIcon();
+        } else {
+            imageIcon = StepOneUtilityClass.GetInValidImageIcon();
+        }
+
+        switch (fileType) {
+            case Land_Use_Household_Map:
+                lblLandUseHouseholdDensityMap.setIcon(imageIcon);
+                break;
+            case Region_Map:
+                lblRegionMap.setIcon(imageIcon);
+                break;
+            case Census_Enumerations:
+                lblCensusEnumerations.setIcon(imageIcon);
+                break;
+            case Constraint_Map:
+                lblConstraintMap.setIcon(imageIcon);
+                break;
+            case Population_Micro_Data:
+                lblPopulationMicroData.setIcon(imageIcon);
+                break;
+            case Household_Micro_Data:
+                lblHouseholdMicroData.setIcon(imageIcon);
+                break;
+        }
+    }
     
+    private void AddItemToConstaintMapTable(String value){
+        DefaultTableModel model = (DefaultTableModel)tblConstraintMaps.getModel();
+        Object[] obj = {value};
+        model.addRow(obj);
+    }
     
+    private void steErrorMessage(String error)
+    {
+        lblErrorMessages.setText(error);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCensusEnumerations;
@@ -467,17 +640,19 @@ public class StepOne extends javax.swing.JFrame {
     private javax.swing.JButton btnRegionMap;
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelConstraintMap;
     private javax.swing.JPanel jPanelHouseholdMicroData;
     private javax.swing.JPanel jPanelLandUseHouseholdMap;
     private javax.swing.JPanel jPanelPopulationMicroData;
     private javax.swing.JPanel jPanelRegionMapCensusEnum;
     private javax.swing.JPanel jPanelStepOne;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCensusEnumerations;
     private javax.swing.JLabel lblConstraintMap;
+    private javax.swing.JLabel lblErrorMessages;
     private javax.swing.JLabel lblHouseholdMicroData;
+    private javax.swing.JLabel lblLandUseHouseholdDensityMap;
     private javax.swing.JLabel lblPopulationMicroData;
     private javax.swing.JLabel lblRegionMap;
     private javax.swing.ButtonGroup mapRadioButtonGroup;
@@ -486,6 +661,7 @@ public class StepOne extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemExitApplication;
     private javax.swing.JRadioButton rbtnHouseholdDensityMap;
     private javax.swing.JRadioButton rbtnLandUseMap;
+    private javax.swing.JTable tblConstraintMaps;
     private javax.swing.JTextField txtCensusEnumerations;
     private javax.swing.JTextField txtHouseholdMicroData;
     private javax.swing.JTextField txtLandUseHouseholdMap;

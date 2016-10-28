@@ -7,6 +7,7 @@
 import cerl.gui.standard.utilities.Screen;
 import cerl.gui.standard.utilities.HelpFile;
 import cerl.gui.standard.utilities.FileUtility;
+import cerl.gui.standard.utilities.Result;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -50,6 +51,11 @@ public class FileUtilityJUnitTest {
 //        ArrayList<Screen> screens = helpFile.getScreen();
 //        
 //        assertEquals(2, screens.size());
+        
+        Result result = FileUtility.getFileExtension("Testerhjhjkh.hjkhk", '.');
+        
+        System.out.println(result.getValue());
+        
     }
     
     @Test 
