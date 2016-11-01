@@ -94,7 +94,6 @@ public class FileUtility {
         int seperatorIndex = fileNameWithExtension.lastIndexOf(pathSeperator);
         
         if (seperatorIndex > -1) {
-            seperatorIndex++;
             foundFileNameNoExtension = fileNameWithExtension.substring(0, seperatorIndex);
             result.setSuccess(true);
         } else {
