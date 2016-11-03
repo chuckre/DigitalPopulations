@@ -5,16 +5,10 @@
 
 The compiled jar is at [PopulationRealizer/out/artifacts/Research_GIS_Kernel_jar](https://github.com/chuckre/DigitalPopulations/tree/master/PopulationRealizer/out/artifacts/Research_GIS_Kernel_jar)
 
-##Depedency
-
-Java
-
-[Apache Ant](http://ant.apache.org/)
-
 ##Instructions from scratch
 
 1. Install Java SDK >=1.7
-2. Install Ant 
+2. Install [Ant](http://ant.apache.org/)
 3. Install Git
 4. Open command line terminal
 5. cd to a directory you want to store the DigitalPopulations repo
