@@ -1,6 +1,9 @@
 # DigPopKernelAnalysis
 KernelAnalysis is software developed to create indicator maps from Digital Populations realizations based on the attributes of household attributes and person attributes. It aims to answer questions of this kind: give all or a subset of population (or households), what is the ratio of the population (or households) that meets certain standards. What does it do?
 
+## Developers:
+* Yizhao Gao (yizhaotsccsj@gmail.com)
+
 #Software instruction
 http://digitalpopulations.pbworks.com/w/page/88807286/KernelAnalysis
 
