@@ -1,3 +1,5 @@
+# Contributors: Yizhao Gao (yizhaotsccsj@gmail.com)
+
 GCC= g++
 
 GCCFLAG= -std=c++0x
