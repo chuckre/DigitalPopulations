@@ -1,3 +1,7 @@
+/*	
+	Contributors: Yizhao Gao (yizhaotsccsj@gmail.com)
+*/
+
 #ifndef RSH
 #define RSH
 
