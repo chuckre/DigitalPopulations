@@ -5,25 +5,37 @@
 
 The compiled jar is at [PopulationRealizer/out/artifacts/Research_GIS_Kernel_jar](https://github.com/chuckre/DigitalPopulations/tree/master/PopulationRealizer/out/artifacts/Research_GIS_Kernel_jar)
 
-##Instructions from scratch
+##Download and run
 
+1. Install Java SDK >=1.7
+2. Download the pre-compiled jar at [PopulationRealizer/out/artifacts/Research_GIS_Kernel_jar](https://github.com/chuckre/DigitalPopulations/tree/master/PopulationRealizer/out/artifacts/Research_GIS_Kernel_jar)
+3. Open command line terminal 
+4. The jar is a standalone environment which can be renamed and moved around, to run Digigtal Populations with the jar:
+```
+    java -jar "path_to_the_jar" -c "path_to_the_last_run_properties"
+```    
+##Build software development environment
+
+1. Register a Github account
+1. Contact [Dr. Charles Ehlschlaeger](https://github.com/chuckre) to get permission
 1. Install Java SDK >=1.7
 2. Install [Ant](http://ant.apache.org/)
 3. Install Git
 4. Open command line terminal
 5. cd to a directory you want to store the DigitalPopulations repo
 6. run commands sequence
-```
+    ```
     git clone https://github.com/chuckre/DigitalPopulations
     cd DigitalPopulations
     ant artifact.research_gis_kernel:jar -buildfile PopulationRealizer/populationrealizer.xml
-```
+    ```
 
 7. The compiled jar will be generated at ```./PopulationRealizer/__artifacts_temp/Research GIS Kernel.jar```
 8. The jar is a standalone environment which can be renamed and moved around, to run Digigtal Populations with the jar:
-```
+    ```
     java -jar "path_to_the_jar" -c "path_to_the_last_run_properties"
-```    
+    ```    
+    
 ##What is Digital Populations?
  
 Digital Populations is a software suite for synthesizing plausible geo-referenced households and people from census or polling data.
