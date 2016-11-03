@@ -2,6 +2,9 @@
 
 PopulationDensity is software developed to generate population density maps of digital population realizations using kernel density estimation.
 
+## Developers:
+* Yizhao Gao (yizhaotsccsj@gmail.com)
+
 # Software instruction
 http://digitalpopulations.pbworks.com/w/page/110076190/PopulationDensity
 
