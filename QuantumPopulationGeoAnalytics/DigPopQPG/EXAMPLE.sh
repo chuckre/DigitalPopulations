@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Contributors: Yizhao Gao (yizhaotsccsj@gmail.com)
+
 minRzn=1
 maxRzn=3
 
