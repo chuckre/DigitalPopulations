@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Contributors: Yizhao Gao (yizhaotsccsj@gmail.com)
+
 function randomNumber {
 	range=`echo $2 - $1 | bc -l`
 	rd=`shuf -i 0-1000 -n 1`
