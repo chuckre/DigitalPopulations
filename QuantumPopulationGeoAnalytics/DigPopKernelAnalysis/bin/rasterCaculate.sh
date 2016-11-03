@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Contributors: Yizhao Gao (yizhaotsccsj@gmail.com)
+
 args=($@)
 
 firstRzn=${args[0]}
