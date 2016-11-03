@@ -1,3 +1,7 @@
+/*	
+	Contributors: Yizhao Gao (yizhaotsccsj@gmail.com)
+*/
+
 #ifndef FIELDH
 #define FIELDH
 void getNoise(double * noise, int cellCount);
