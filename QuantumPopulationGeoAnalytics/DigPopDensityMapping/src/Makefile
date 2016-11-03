@@ -1,4 +1,6 @@
 
+# Contributors: Yizhao Gao (yizhaotsccsj@gmail.com)
+
 GCC	?= g++
 
 # Gdal
