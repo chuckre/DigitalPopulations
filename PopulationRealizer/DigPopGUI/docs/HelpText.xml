@@ -13,11 +13,11 @@
         </instruction>
         <instruction>
             <instructionname>Census Enumerations</instructionname>
-            <helpText></helpText>
+            <helpText>Regional summaries of socioeconomically attributes of interests</helpText>
         </instruction>
         <instruction>
             <instructionname>Constraint Map</instructionname>
-            <helpText></helpText>
+            <helpText>Optional: Specifies areas where households with a specific value are NOT allowed, by explicitly disallowing the placement of certain households into certain map cells.  To use the constraint map, users must specify the map, then specify the household trait and value from the microdata that links to corresponding raster value on the map.  For example, houses with grid electricity would only be placed where a raster map of grid power has a specific raster value corresponding to access to electricity. For example, urban/rural regions, regions with/without electric </helpText>
         </instruction>
         <instruction>
             <instructionname>Population Micro-Data</instructionname>
@@ -37,11 +37,11 @@
         </instruction>
         <instruction>
             <instructionname>Population File</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The population table where each row describes one individual.</helpText>
         </instruction>
         <instruction>
             <instructionname>Household File</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The household table provides a Unique ID Field that identifies the specific house each person lives in.  Records without household ID values will be ignored.</helpText>
         </instruction>
         <instruction>
             <instructionname>Household Denisty Map File</instructionname>
