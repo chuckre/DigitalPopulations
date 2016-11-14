@@ -18,6 +18,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="help")
 public class HelpFile {
     private ArrayList<Screen> screens;
+    private String introduction;
+    private String name;
 
     public ArrayList<Screen> getScreen() {
         return screens;
@@ -25,6 +27,22 @@ public class HelpFile {
 
     public void setScreen(ArrayList<Screen> screens) {
         this.screens = screens;
+    }
+    
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
     
     public Screen getSelectedScreenByName(String screenName)
@@ -39,19 +57,27 @@ public class HelpFile {
         return foundScreen;
     }
 
+    
+
     @Override
     public String toString() {
-        return "HelpFile TEST";
+        return name + " Help Information";
     }
     
     public String getDisplayText()
     {
-        return "";
+        return introduction;
+    }
+    
+    private DefaultMutableTreeNode root;
+
+    public DefaultMutableTreeNode getRoot() {
+        return root;
     }
     
     public DefaultTreeModel getAsDefaultTreeModel()
     {
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode(this);
+        root = new DefaultMutableTreeNode(this);
         
         for(Screen screen : screens)
         {

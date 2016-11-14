@@ -37,4 +37,8 @@ public class Instruction {
     public String toString() {
         return instructionname;
     }
+    
+    public String getDisplayText() {
+        return String.format("%s\n%s", instructionname, helpText);
+    }
 }

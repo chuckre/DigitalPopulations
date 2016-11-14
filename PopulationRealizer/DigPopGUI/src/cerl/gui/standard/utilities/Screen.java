@@ -48,4 +48,17 @@ public class Screen {
     public String toString() {
         return name;
     }
+    
+    public String getDisplayText() {
+        String displayText = String.format("%s\n%s", name, description);
+        
+        for(Instruction displayInstruction : instruction){
+            displayText = String.format(
+                    "%s\n\n%s", 
+                    displayText, 
+                    displayInstruction.getDisplayText());
+        }
+        
+        return displayText;
+    }
 }
