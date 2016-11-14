@@ -32,4 +32,9 @@ public class Instruction {
     public void setInstructionname(String instructionname) {
         this.instructionname = instructionname;
     }
+
+    @Override
+    public String toString() {
+        return instructionname;
+    }
 }

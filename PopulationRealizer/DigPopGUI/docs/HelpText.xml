@@ -13,63 +13,67 @@
         </instruction>
         <instruction>
             <instructionname>Census Enumerations</instructionname>
-            <helpText></helpText>
+            <helpText>Regional summaries of socioeconomically attributes of interests</helpText>
         </instruction>
         <instruction>
             <instructionname>Constraint Map</instructionname>
-            <helpText></helpText>
+            <helpText>Optional: Specifies areas where households with a specific value are NOT allowed, by explicitly disallowing the placement of certain households into certain map cells.  To use the constraint map, users must specify the map, then specify the household trait and value from the microdata that links to corresponding raster value on the map.  For example, houses with grid electricity would only be placed where a raster map of grid power has a specific raster value corresponding to access to electricity. For example, urban/rural regions, regions with/without electric </helpText>
         </instruction>
         <instruction>
             <instructionname>Population Micro-Data</instructionname>
-            <helpText></helpText>
+            <helpText>This optional table provides residents for the households.  Each record identifies which household it resides within, and the residents are cloned when their household is cloned.  This allows Digital Populations to compute statistics from personal data.</helpText>
         </instruction>
         <instruction>
             <instructionname>Household Micro-Data</instructionname>
-            <helpText></helpText>
+            <helpText>Digital Populations can't create households and people from scratch.  Instead, it clones the households from this table in a way that matches the region statistics.  The more households provided here, the fewer times any particular archtype needs to be cloned, and the better the result.  The relationship file describes how data in this table relates to the statistics in the region table.</helpText>
         </instruction>
     </screen>
     <screen>
         <name>Step 2 - Goal Relationship File</name>
-        <description>This page allows users to setup the Goal Relationship File.</description>
+        <description>This page allows users to setup the Goal Relationship File, which specifies a complete set of files for one region and how they relate to each other.</description>
         <instruction>
             <instructionname>Census File</instructionname>
-            <helpText>Text</helpText>
+            <helpText>This is the name of the census enumeration file from Step 1, with the regional summaries of socioeconomically attributes of interests.</helpText>
         </instruction>
         <instruction>
             <instructionname>Population File</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The file provided in Step 1, the population table where each row describes one individual.</helpText>
         </instruction>
         <instruction>
             <instructionname>Household File</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The file provided in Step 1, the household table provides a Unique ID Field that identifies the specific house each person lives in.  Records without household ID values will be ignored.</helpText>
         </instruction>
         <instruction>
-            <instructionname>Household Denisty Map File</instructionname>
-            <helpText>Text</helpText>
+            <instructionname>Household Density Map File</instructionname>
+            <helpText>Population Density Map file is being used. In order to use a Land Use Population Map, please return to Step 1 and remove the selected Population Density Map. Only displayed if the user selected to use a Population Density Map in Step 1.</helpText>
         </instruction>
         <instruction>
             <instructionname>Land Use Map Information</instructionname>
-            <helpText>Text</helpText>
+            <helpText>Land Use Population Map file is being used. In order to use a Population Density Map, please return to Step 1 and remove the selected Land Use Population Map. Only displayed if the user selected to use a Land Use Population Map in Step 1.</helpText>
         </instruction>
         <instruction>
             <instructionname>Vacant Classes</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The land use map guides where households can and cannot be placed. Vacant classes are the numerical areas that households cannot be placed (e.g. Open Water).</helpText>
         </instruction>
         <instruction>
             <instructionname>Vacant Class Description</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The text description of the selected classes that households cannot be placed (e.g. Open Water).</helpText>
+        </instruction>
+        <instruction>
+            <instructionname>Combination Classes</instructionname>
+            <helpText>Combination classes group classes from the land use map that are expected to have similar population density to simplify analysis. All classes in the land use map must be covered either by a vacancy class or combination element. </helpText>
         </instruction>
         <instruction>
             <instructionname>Classes</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The class or list of classes to be grouped together into a single population type. This is either a single item (e.g. 23), a range (e.g. 90-99), or a comma delimited combination of both (e.g. 4,41-60,71-80)</helpText>
         </instruction>
         <instruction>
             <instructionname>Target</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The new class number for the combined class.</helpText>
         </instruction>
         <instruction>
             <instructionname>Description</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The text description of the new combination class, to describe the population type (e.g. "Developed, Low Intensity")</helpText>
         </instruction>
     </screen>
     <screen>
@@ -77,23 +81,23 @@
         <description>This page allows users to configure the linkages between the census and survey data.</description>
         <instruction>
             <instructionname>Available Census Data</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The columns from the census enumeration .csv file provided in Step 1. If a name has already been provided for the census data, it will be displayed as "[Census ID] - [Provided Name]".</helpText>
         </instruction>
         <instruction>
             <instructionname>Available Survey Data</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The columns from the household or population micro-data .csv file provided in Step 1. Only one survey data field may be selected per Markov Chain</helpText>
         </instruction>
         <instruction>
             <instructionname>User Defined Description</instructionname>
-            <helpText>Allows the user to edit the description for a census data trait ID. Will be pre-populated if previous Markov Chains have been created.</helpText>
+            <helpText>Allows the user to edit the description for a census data trait ID. Will be pre-populated, but editable, if previous Markov Chains have been created.</helpText>
         </instruction>
         <instruction>
-            <instructionname>Available Survey Data Column values</instructionname>
-            <helpText>Text</helpText>
+            <instructionname>Available Survey Data Column Values</instructionname>
+            <helpText>The values to be selected for combination into a single user defined description. Each data column value can only be used one per Markov Chain. Once a value has been added to a group, it will be removed from the Available Survey Data Column value list. </helpText>
         </instruction>
         <instruction>
             <instructionname>User Defined Description</instructionname>
-            <helpText>Allows the user to edit the description for a survey data column values. Will be pre-populated if previous Markov Chains have been created.</helpText>
+            <helpText>Allows the user to add or edit the description for a survey data column values. Will be pre-populated if previous Markov Chains have been created.</helpText>
         </instruction>
     </screen>
     <screen>
@@ -101,84 +105,84 @@
         <description>This page allows users to create a Markov Chain for creating multiple census enumeration files.</description>
         <instruction>
             <instructionname>Markov Chain Name</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The user entered name of the current Markov Chain matrix.</helpText>
         </instruction>
         <instruction>
             <instructionname>Census Information</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The user provided descriptions for census data traits selected in Step 3.</helpText>
         </instruction>
         <instruction>
             <instructionname>Survey Information</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The user provided descriptions for survey data traits selected in Step 3.</helpText>
         </instruction>
         <instruction>
             <instructionname>Amount Left</instructionname>
-            <helpText>Text</helpText>
+            <helpText>Calculated as the available minimum or maximum values for the associated survey/census information based on values entered in the associated row/column. System calculated; Min Range (constrained by the max values) is from 0 to "[Proportion] – [Sum(minimum values provided)]", Max Range (constrained by the min values) is from 0 to "[Proportion] – [Sum(maximum values provided)]".</helpText>
         </instruction>
     </screen>
     <screen>
         <name>Step 5 - Generate Fitting Criteria File</name>
-        <description>This page allows users to setup the Fitting Criteria File.</description>
+        <description>This page allows users to setup the Trait Weights for the Fitting Criteria File, which is the master control file.  The fitting criteria file specifies dependent file and criteria for one run.  The Markov Table generates new census region trait columns for the census enumeration .csv based on the microdata values (e.g. enumerations for 'flushed to pipe sewer').</description>
         <instruction>
             <instructionname>ID</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The system generated trait ID for the new census region trait columns from the Markov Chain matrix. Populates the ID XML value.</helpText>
         </instruction>
         <instruction>
             <instructionname>Census Region Trait</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The new census region trait column names for the census enumeration based on the microdata values used in the Markov Chain matrix (e.g. enumerations for 'flushed to pipe sewer'). Populates the Region Trait XML value.</helpText>
         </instruction>
         <instruction>
             <instructionname>Census Region Total</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The Census Region Totals are generated by the system based on the Markov Chain name as "[Markov Chain Name]_MC_Total". Proportion values are calculated by the software from the raw inputs for the Markov Chain matrix.  The 'Census Region Totals' calculated to determine the proportion values are added as a new field to the census enumeration .csv file. Populates the Region Total XML value.</helpText>
         </instruction>
         <instruction>
             <instructionname>Survey Trait Table</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The name of the table type that is being used, either HOUSEHOLDS or POPULATION. Populates the Pums Trait Table XML value.</helpText>
         </instruction>
         <instruction>
             <instructionname>Survey Trait Select</instructionname>
-            <helpText>Text</helpText>
+            <helpText>Populated from the selected Survey Trait column values in Step 3. Populates the Pums Trait Select XML value. </helpText>
         </instruction>
         <instruction>
             <instructionname>Survey Trait Field</instructionname>
-            <helpText>Text</helpText>
+            <helpText>Populated from the selected Survey Data traits in step 3. Populates the Pums Trait Field XML value.</helpText>
         </instruction>
         <instruction>
             <instructionname>Survey Total Table</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The name of the table type that is being used, either HOUSEHOLDS or POPULATION. Populates the Pums Total Table XML value.</helpText>
         </instruction>
         <instruction>
             <instructionname>Survey Total Field</instructionname>
-            <helpText>Text</helpText>
+            <helpText>System generated, will always be 1. Populates the Pums Total Field XML value.</helpText>
         </instruction>
         <instruction>
             <instructionname>User Entered Description</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The user defined description for the survey column data, provided in Step 3. To edit, please go back to Step 3. Populates the User Entered Description XML value.</helpText>
         </instruction>
         <instruction>
             <instructionname>Total Weight</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The only editable field on the page. Values must be between 0 and 1. Populates the Trait Weight XML value.</helpText>
         </instruction>
     </screen>
     <screen>
         <name>Step 6 - Generate Trait Clusters</name>
-        <description>This page allows users to Generate Trait Clusters.</description>
+        <description>This page allows users to Generate Trait Clusters. Cluster elements instruct the DigiPop tool's Phase 4 to introduce a degree of clustering by moving "similar" households closer to each other when computing precise easting/northing locations for each household.  The referenced trait provides a definition of "similar", and the remaining attributes specify an amount of clustering.</description>
         <instruction>
             <instructionname>Trait ID</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The identifier for one of the Trait elements specified in Step 5. The value of the selected trait IDs with weights that can be clustered.</helpText>
         </instruction>
         <instruction>
             <instructionname>Reduction</instructionname>
-            <helpText>Text</helpText>
+            <helpText>Percentage reduction in "inertia," which is a measure of the randomness of an arrangement of households.  A reduction of inertia is an increase of clustering, and is achieved by moving households closer together. Goal will be this much lower than the "inertia" values calculated when phase 4 begins. The integer value of the reduction must be greater than 1.</helpText>
         </instruction>
         <instruction>
             <instructionname>Distance</instructionname>
-            <helpText>Text</helpText>
+            <helpText>The Maximum size of clusters to build. Only houses within this radius will be considered for clustering.  This values is in the same units as the input maps. Value must be greater than 0.</helpText>
         </instruction>
     </screen>
     <screen>
         <name>Step 7 - Generate Run Parameter File</name>
-        <description>This page allows users to setup the Run Parameter File.</description>
+        <description>This page allows users to setup the Run Parameter File.  This is a record of all options and settings active the last time Digital Populations was run.  It provide access to "hidden" and internal options, and makes it easy to exactly reproduce an older run.</description>
         <instruction>
             <instructionname>Name of Run</instructionname>
             <helpText>Used as a comment to organize the runs</helpText>
