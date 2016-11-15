@@ -9,8 +9,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 /**
@@ -202,6 +205,34 @@ public class FileUtility {
             result.setSuccess(false);
         }
 
+        return result;
+    }
+    
+    public static Result ParseObjectToXML(
+            Object objectToParseIntoXML, 
+            String filePath,
+            Class classType){
+        Result result = new Result();
+        
+        try {
+            File file = new File(filePath);
+            
+            JAXBContext jaxbContext = JAXBContext.newInstance(classType);
+            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            
+            jaxbMarshaller.marshal(objectToParseIntoXML, file);
+            jaxbMarshaller.marshal(objectToParseIntoXML, System.out);
+            
+            result.setSuccess(true);
+            
+        } catch (JAXBException ex) {
+            result.setErrorMessage(
+                    "ParseObjectToXML",
+                    ex.getMessage());
+            result.setSuccess(false);
+        }
+        
         return result;
     }
 }

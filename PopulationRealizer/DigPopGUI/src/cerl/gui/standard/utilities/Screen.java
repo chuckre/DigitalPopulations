@@ -50,15 +50,27 @@ public class Screen {
     }
     
     public String getDisplayText() {
-        String displayText = String.format("%s\n%s", name, description);
+        String displayText = String.format("<b>%s</b><br>%s", name, description);
         
         for(Instruction displayInstruction : instruction){
             displayText = String.format(
-                    "%s\n\n%s", 
+                    "%s<br><br>%s", 
                     displayText, 
                     displayInstruction.getDisplayText());
         }
         
         return displayText;
+    }
+    
+    public Instruction getSelectedInstructionByName(String instructionName)
+    {
+        Instruction foundInstruction = new Instruction();
+        
+        foundInstruction = instruction.stream()
+                .filter(i -> i.getInstructionName().equals(instructionName))
+                .findFirst()
+                .orElse(new Instruction());
+        
+        return foundInstruction;
     }
 }

@@ -11,11 +11,9 @@ import cerl.gui.utilities.StepOneUtilityClass;
 import cerl.gui.utilities.StepOneUtilityClass.DigPopFileTypeEnum;
 import java.io.File;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -32,7 +30,6 @@ public class StepTwo extends javax.swing.JFrame {
      */
     public StepTwo() {
         initComponents();
-        setIntialWarningIcons();
         digPopGUIFiles = new DigPopGUIFiles();
         errors = new ArrayList<String>();
     }
@@ -442,13 +439,6 @@ public class StepTwo extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void setIntialWarningIcons(){
-        setIconImage(DigPopFileTypeEnum.Census_Enumerations, false);
-        setIconImage(DigPopFileTypeEnum.Household_Micro_Data, false);
-        setIconImage(DigPopFileTypeEnum.Land_Use_Household_Map, false);
-        setIconImage(DigPopFileTypeEnum.Region_Map, false);
-    }
 
     private void getAndVerifyFile(DigPopFileTypeEnum fileType) {
 
@@ -519,38 +509,6 @@ public class StepTwo extends javax.swing.JFrame {
         }
 
         return returnFile;
-    }
-
-    private void setIconImage(DigPopFileTypeEnum fileType, boolean showValidIcon) {
-
-        ImageIcon imageIcon;
-
-        if (showValidIcon) {
-            imageIcon = StepOneUtilityClass.GetValidImageIcon();
-        } else {
-            imageIcon = StepOneUtilityClass.GetInValidImageIcon();
-        }
-
-        switch (fileType) {
-            case Land_Use_Household_Map:
-                lblLandUseHouseholdDensityMap.setIcon(imageIcon);
-                break;
-            case Region_Map:
-                lblRegionMap.setIcon(imageIcon);
-                break;
-            case Census_Enumerations:
-                lblCensusEnumerations.setIcon(imageIcon);
-                break;
-            case Constraint_Map:
-                lblConstraintMap.setIcon(imageIcon);
-                break;
-            case Population_Micro_Data:
-                lblPopulationMicroData.setIcon(imageIcon);
-                break;
-            case Household_Micro_Data:
-                lblHouseholdMicroData.setIcon(imageIcon);
-                break;
-        }
     }
     
     private void AddItemToConstaintMapTable(String value){

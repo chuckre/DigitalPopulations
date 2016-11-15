@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlElement;
  */
 
 public class Instruction {
-    private String instructionname;
+    private String instructionName;
     private String helpText; 
 
     @XmlElement
@@ -24,21 +24,21 @@ public class Instruction {
     public void setHelpText(String helpText) {
         this.helpText = helpText;
     }
-    public String getInstructionname() {
-        return instructionname;
+    public String getInstructionName() {
+        return instructionName;
     }
     
     @XmlElement
-    public void setInstructionname(String instructionname) {
-        this.instructionname = instructionname;
+    public void setInstructionName(String instructionName) {
+        this.instructionName = instructionName;
     }
 
     @Override
     public String toString() {
-        return instructionname;
+        return instructionName;
     }
     
     public String getDisplayText() {
-        return String.format("%s\n%s", instructionname, helpText);
+        return String.format("<b>%s</b><br>%s", instructionName, helpText);
     }
 }
