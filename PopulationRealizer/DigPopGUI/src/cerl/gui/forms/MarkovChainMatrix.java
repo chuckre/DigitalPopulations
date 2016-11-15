@@ -7,17 +7,42 @@ package cerl.gui.forms;
 
 import java.util.*;
 import cerl.gui.standard.utilities.MarkovTableModel;
+import cerl.gui.utilities.MarkovTableCell;
 
 /**
- *
+ * Allows the user to set up a new Markov Chain. 
+ * Depends on the MarkovTableModel and MarkovTable Cell
  * @author mrivera
  */
 public class MarkovChainMatrix extends javax.swing.JFrame {
 
+    private MarkovTableModel myTable;
+            
     /**
      * Creates new form MarkovChainMatrix
+     * 
+     * TO DO: Pull from Survey/Census data files, Write out to CSV files
      */
     public MarkovChainMatrix() {
+        ArrayList<String> columnNames = new ArrayList<>();
+        columnNames.addAll(Arrays.asList("","Value","","","","Amount Left"));
+
+        //columns must be rows+1 because the header row is the -1th row.
+        MarkovTableCell[][] cellValues = new MarkovTableCell[5][6];
+        cellValues[0][0] = new MarkovTableCell(0, 0, "Value", false, false, false);
+        cellValues[4][0] = new MarkovTableCell(4, 0, "Amount Left", false, false, false);
+        cellValues[0][1] = new MarkovTableCell(0, 1, "Proportion", false, false, false);
+                
+        //proportions
+        cellValues[0][2] = new MarkovTableCell(0, 2, 0.22, false, false, false);
+        cellValues[0][3] = new MarkovTableCell(0, 3, 0.23, false, false, false);
+        cellValues[0][4] = new MarkovTableCell(0, 4, 0.24, false, false, false);
+        cellValues[1][1] = new MarkovTableCell(1, 1, 0.92, false, false, false);
+        cellValues[2][1] = new MarkovTableCell(2, 1, 0.93, false, false, false);
+        cellValues[3][1] = new MarkovTableCell(3, 1, 0.94, false, false, false);
+        
+        myTable = new MarkovTableModel(columnNames, cellValues);
+               //TO DO - add clear for row and column and overall grid
         initComponents();
     }
 
@@ -33,10 +58,11 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jTable_MarkovMatrix = new javax.swing.JTable();
+        jButton_Back = new javax.swing.JButton();
+        jButton_Cancel = new javax.swing.JButton();
+        jButton_Save = new javax.swing.JButton();
+        jButton_Clear = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -48,32 +74,41 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
 
         jLabel1.setText("Markov Chain Name:");
 
-        jTable1.setModel(new MarkovTableModel());
-        jTable1.setCellEditor(jTable1.getCellEditor());
-        jTable1.setCellSelectionEnabled(false);
-        jTable1.setName("Markov Chain Matrix"); // NOI18N
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTable_MarkovMatrix.setModel(myTable);
+        jTable_MarkovMatrix.setCellEditor(jTable_MarkovMatrix.getCellEditor());
+        jTable_MarkovMatrix.setCellSelectionEnabled(false);
+        jTable_MarkovMatrix.setName("Markov Chain Matrix"); // NOI18N
+        jTable_MarkovMatrix.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jTable_MarkovMatrix);
+        jTable_MarkovMatrix.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        jButton1.setText("Back to Definitions");
-        jButton1.setToolTipText("Go back to the previous step");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton_Back.setText("Back to Definitions");
+        jButton_Back.setToolTipText("Go back to the previous step");
+        jButton_Back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButton_BackActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Cancel Creation of New Markov Chain Matrix");
-        jButton2.setToolTipText("Cancel the creation of a new Markov Chain matrix");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButton_Cancel.setText("Cancel Creation of New Markov Chain Matrix");
+        jButton_Cancel.setToolTipText("Cancel the creation of a new Markov Chain matrix");
+        jButton_Cancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButton_CancelActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Save New Markov Chain");
-        jButton3.setToolTipText("Saves the current matrix as a new Markov Chain");
+        jButton_Save.setText("Save New Markov Chain");
+        jButton_Save.setToolTipText("Saves the current matrix as a new Markov Chain");
+
+        jButton_Clear.setText("Clear All Inputs");
+        jButton_Clear.setName("ClearButton"); // NOI18N
+        jButton_Clear.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jButton_Clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ClearActionPerformed(evt);
+            }
+        });
 
         jMenuBar1.setName("Markov Chain Matrix"); // NOI18N
 
@@ -103,12 +138,13 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(50, 50, 50)
-                                .addComponent(jButton1)
+                                .addComponent(jButton_Back)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2)
+                                .addComponent(jButton_Cancel)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton3))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jButton_Save))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_Clear))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -118,26 +154,47 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton_Clear)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButton_Back)
+                    .addComponent(jButton_Cancel)
+                    .addComponent(jButton_Save))
                 .addContainerGap())
         );
+
+        jButton_Clear.getAccessibleContext().setAccessibleDescription("Clear all user entered data from the table.");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    /**
+     * Sends the user back to the previous step
+     * @param evt 
+     */
+    private void jButton_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BackActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButton_BackActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    /**
+     * Cancels creation of the current Markov chain.
+     * @param evt 
+     */
+    private void jButton_CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CancelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButton_CancelActionPerformed
+
+    /**
+     * Clears the data entered by the user
+     * @param evt 
+     */
+    private void jButton_ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ClearActionPerformed
+        //Clear all user entered inputs from the grid.
+        myTable.clear(1,2);
+    }//GEN-LAST:event_jButton_ClearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,15 +232,16 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton_Back;
+    private javax.swing.JButton jButton_Cancel;
+    private javax.swing.JButton jButton_Clear;
+    private javax.swing.JButton jButton_Save;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable_MarkovMatrix;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
