@@ -7,7 +7,12 @@ package cerl.gui.forms;
 
 import java.util.*;
 import cerl.gui.standard.utilities.MarkovTableModel;
+import cerl.gui.standard.utilities.customTableCellRenderer;
 import cerl.gui.utilities.MarkovTableCell;
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 /**
  * Allows the user to set up a new Markov Chain. 
@@ -29,6 +34,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
 
         //columns must be rows+1 because the header row is the -1th row.
         MarkovTableCell[][] cellValues = new MarkovTableCell[5][6];
+        //MarkovTableCell(int row, int column, Object value, boolean calculated, boolean error, boolean editable)
         cellValues[0][0] = new MarkovTableCell(0, 0, "Value", false, false, false);
         cellValues[4][0] = new MarkovTableCell(4, 0, "Amount Left", false, false, false);
         cellValues[0][1] = new MarkovTableCell(0, 1, "Proportion", false, false, false);
@@ -42,8 +48,14 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         cellValues[3][1] = new MarkovTableCell(3, 1, 0.94, false, false, false);
         
         myTable = new MarkovTableModel(columnNames, cellValues);
+        
                //TO DO - add clear for row and column and overall grid
         initComponents();
+        
+        for(int i=0; i<columnNames.size(); i++){
+            TableColumn tableCol = jTable_MarkovMatrix.getColumnModel().getColumn(i);
+            tableCol.setCellRenderer(new customTableCellRenderer());
+        }
     }
 
     /**
@@ -70,13 +82,12 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(840, 500));
 
-        jTextField1.setText("jTextField1");
+        jTextField1.setToolTipText("Please enter the name of the Markov Chain for saving and reuse later.");
 
         jLabel1.setText("Markov Chain Name:");
 
         jTable_MarkovMatrix.setModel(myTable);
         jTable_MarkovMatrix.setCellEditor(jTable_MarkovMatrix.getCellEditor());
-        jTable_MarkovMatrix.setCellSelectionEnabled(false);
         jTable_MarkovMatrix.setName("Markov Chain Matrix"); // NOI18N
         jTable_MarkovMatrix.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable_MarkovMatrix);

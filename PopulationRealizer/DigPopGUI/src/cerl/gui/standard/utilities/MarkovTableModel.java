@@ -153,7 +153,42 @@ public class MarkovTableModel extends AbstractTableModel {
             return true; //(!(col==0)) && (!(col==1)) && (!(row==0));
         }
     }
+    
+    /***
+     * Specific to the Markov Table Cell, checks if a cell is calculated
+     * @param row
+     * @param col
+     * @return 
+     */
+    public boolean isCellCalculated(int row, int col){
+        if (markovTable[row][col] == null) {
+            return false;
+        }
+        else if (markovTable[row][col].getClass().equals(MarkovTableCell.class)) {
+            return ((MarkovTableCell) (markovTable[row][col])).isCalculated();
+        } else {
+            return false;  //if not the Markov calculated cells - leave alone
+        }    
+    }
 
+    /***
+     * Specific to the Markov table Cell, checks if a cell has an error
+     * @param row
+     * @param col
+     * @return 
+     */
+    public boolean isErrorInCell(int row, int col){
+        if (markovTable[row][col] == null) {
+            return false;
+        }
+        else if (markovTable[row][col].getClass().equals(MarkovTableCell.class)) {
+            return ((MarkovTableCell) (markovTable[row][col])).isError();
+        } else {
+            return false;  //if not the Markov calculated cells - leave alone
+        }    
+    }
+
+    
     /**
      * Sets the value for a specific cell in the Markov table
      *
