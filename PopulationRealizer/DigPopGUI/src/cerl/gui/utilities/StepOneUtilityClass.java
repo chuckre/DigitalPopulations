@@ -21,34 +21,34 @@ public class StepOneUtilityClass {
     private final static FileType LAND_USE_MAP_FILE_TYPE = FileType.ASC;
     private final static FileType LAND_USE_MAP_SECONDARY_FILE_TYPE = FileType.PRJ;
     public final static String LAND_USE_MAP_FILE_PATH_ERROR_MESSAGE = 
-            "LAND USE MAP: NEED ASC FILE AND MATCHING PRJ FILE.";
+            "*WARNING LAND USE MAP: NEED ASC FILE AND MATCHING PRJ FILE.";
     
     private final static FileType HOUSEHOLD_DENSITY_MAP_FILE_TYPE = FileType.ASC;
     private final static FileType HOUSEHOLD_DENSITY_MAP_SECONDARY_FILE_TYPE = FileType.PRJ;
     public final static String HOUSEHOLD_DENSITY_MAP_FILE_PATH_ERROR_MESSAGE = 
-            "HOUSEHOLD DENSITY MAP: NEED ASC FILE AND MATCHING PRJ FILE.";
+            "*WARNING HOUSEHOLD DENSITY MAP: NEED ASC FILE AND MATCHING PRJ FILE.";
     
     private final static FileType REGION_MAP_FILE_TYPE = FileType.ASC;
     private final static FileType REGION_MAP_SECONDARY_FILE_TYPE = FileType.PRJ;
     public final static String REGION_MAP_FILE_PATH_ERROR_MESSAGE = 
-            "REGION MAP: NEED ASC FILE AND MATCHING PRJ FILE.";
+            "*WARNING REGION MAP: NEED ASC FILE AND MATCHING PRJ FILE.";
     
     private final static FileType CENSUS_ENUMERATIONS_FILE_TYPE = FileType.CVS;
     public final static String CENSUS_ENUMERATIONS_FILE_PATH_ERROR_MESSAGE = 
-            "CENSUS ENUMERATIONS: NEED CSV FILE.";
+            "*WARNING CENSUS ENUMERATIONS: NEED CSV FILE.";
     
     private final static FileType CONSTRAINT_MAP_FILE_TYPE = FileType.ASC;
     private final static FileType CONSTRAINT_MAP_SECONDARY_FILE_TYPE = FileType.PRJ;
     public final static String CONSTRAINT_MAPS_FILE_PATH_ERROR_MESSAGE = 
-            "CONSTRAINT MAPS: NEED ASC FILE AND MATCHING PRJ FILE.";
+            "*WARNING CONSTRAINT MAPS: NEED ASC FILE AND MATCHING PRJ FILE.";
     
     private final static FileType POPULATION_MICRO_DATA_FILE_TYPE = FileType.CVS;
     public final static String POPULATION_MICRO_DATA_FILE_PATH_ERROR_MESSAGE = 
-            "POPULATION MICRO DATA: NEED CSV FILE.";
+            "*WARNING POPULATION MICRO DATA: NEED CSV FILE.";
     
     private final static FileType HOUSEHOLD_MICRO_DATA_FILE_TYPE = FileType.CVS;
     public final static String HOUSEHOLD_MICRO_DATA_FILE_PATH_ERROR_MESSAGE = 
-            "HOUSEHOLD MICRO DATA: NEED CSV FILE.";
+            "*WARNING HOUSEHOLD MICRO DATA: NEED CSV FILE.";
     
     private final static String VALID_IMAGE_ICON_FILEPATH = "src/cerl/gui/resources/check.png";
     private final static int VALID_IMAGE_ICON_WIDTH = 25;

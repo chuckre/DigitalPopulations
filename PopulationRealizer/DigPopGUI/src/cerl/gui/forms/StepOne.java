@@ -24,10 +24,43 @@ import javax.swing.table.DefaultTableModel;
  * @author ajohnson
  */
 public class StepOne extends javax.swing.JFrame {
+    
+        /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(StepOne.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(StepOne.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(StepOne.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(StepOne.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new StepOne().setVisible(true);
+            }
+        });
+    }
 
     private DigPopGUIInformation digPopGUIInformation;
-    private DefaultTableModel constraintMapsDataModel;
-    private ArrayList<String> errors;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_ONE_HELP_FILE_NAME.toString();
 
     /**
@@ -37,7 +70,6 @@ public class StepOne extends javax.swing.JFrame {
         initComponents();
         setIntialWarningIcons();
         digPopGUIInformation = new DigPopGUIInformation();
-        errors = new ArrayList<String>();
     }
 
     /**
@@ -71,22 +103,26 @@ public class StepOne extends javax.swing.JFrame {
         censusEnumerationsInfoIcon = new javax.swing.JLabel();
         regionMapInfoIcon = new javax.swing.JLabel();
         lblRegionMapErrorMessage = new javax.swing.JLabel();
+        lblCensusEnumerationsErrorMessage = new javax.swing.JLabel();
         jPanelConstraintMap = new javax.swing.JPanel();
         btnConstaintMap = new javax.swing.JButton();
         lblConstraintMap = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblConstraintMaps = new javax.swing.JTable();
         constraintMapsInfoIcon = new javax.swing.JLabel();
+        lblConstraintMapsErrorMessage = new javax.swing.JLabel();
         jPanelHouseholdMicroData = new javax.swing.JPanel();
         txtHouseholdMicroData = new javax.swing.JTextField();
         btnHouseholdMicroData = new javax.swing.JButton();
         lblHouseholdMicroData = new javax.swing.JLabel();
         householdMicroDataInfoIcon = new javax.swing.JLabel();
+        lblHouseholdMicroDataErrorMessage = new javax.swing.JLabel();
         jPanelPopulationMicroData = new javax.swing.JPanel();
         txtPopulationMicroData = new javax.swing.JTextField();
         btnPopulationMicroData = new javax.swing.JButton();
         lblPopulationMicroData = new javax.swing.JLabel();
         populationMicroDataInfoIcon = new javax.swing.JLabel();
+        lblPopulationMicroDataErrorMessage = new javax.swing.JLabel();
         btnNextStep = new javax.swing.JButton();
         lblErrorMessages = new javax.swing.JLabel();
         jMenuBar = new javax.swing.JMenuBar();
@@ -166,7 +202,7 @@ public class StepOne extends javax.swing.JFrame {
                         .addComponent(rbtnHouseholdDensityMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(landUseHouseholdDensityMapInfoIcon)
-                        .addGap(473, 473, 473)
+                        .addGap(618, 618, 618)
                         .addComponent(btnLandMapHouseholdMap))
                     .addComponent(txtLandUseHouseholdMap)
                     .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
@@ -235,6 +271,9 @@ public class StepOne extends javax.swing.JFrame {
         lblRegionMapErrorMessage.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblRegionMapErrorMessage.setForeground(new java.awt.Color(204, 0, 0));
 
+        lblCensusEnumerationsErrorMessage.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblCensusEnumerationsErrorMessage.setForeground(new java.awt.Color(204, 0, 0));
+
         javax.swing.GroupLayout jPanelRegionMapCensusEnumLayout = new javax.swing.GroupLayout(jPanelRegionMapCensusEnum);
         jPanelRegionMapCensusEnum.setLayout(jPanelRegionMapCensusEnumLayout);
         jPanelRegionMapCensusEnumLayout.setHorizontalGroup(
@@ -243,22 +282,26 @@ public class StepOne extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
-                        .addComponent(lblCensusEnumerations, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)
-                        .addComponent(censusEnumerationsInfoIcon)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCensusEnumerations, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
                         .addComponent(lblRegionMap)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(regionMapInfoIcon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
                                 .addComponent(lblRegionMapErrorMessage)
-                                .addGap(647, 647, 647))
-                            .addComponent(txtRegionMap, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtRegionMap)))
+                    .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
+                        .addComponent(lblCensusEnumerations)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(censusEnumerationsInfoIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
+                                .addComponent(lblCensusEnumerationsErrorMessage)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtCensusEnumerations))))
+                .addGap(8, 8, 8)
                 .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnRegionMap, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnCensusEnumerations, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -278,13 +321,14 @@ public class StepOne extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblRegionMapErrorMessage)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtCensusEnumerations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnCensusEnumerations))
-                    .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblCensusEnumerations)
-                        .addComponent(censusEnumerationsInfoIcon)))
+                    .addComponent(censusEnumerationsInfoIcon)
+                    .addComponent(lblCensusEnumerations))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblCensusEnumerationsErrorMessage)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -334,18 +378,23 @@ public class StepOne extends javax.swing.JFrame {
             }
         });
 
+        lblConstraintMapsErrorMessage.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblConstraintMapsErrorMessage.setForeground(new java.awt.Color(204, 0, 0));
+
         javax.swing.GroupLayout jPanelConstraintMapLayout = new javax.swing.GroupLayout(jPanelConstraintMap);
         jPanelConstraintMap.setLayout(jPanelConstraintMapLayout);
         jPanelConstraintMapLayout.setHorizontalGroup(
             jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelConstraintMapLayout.createSequentialGroup()
+            .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
                     .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
                         .addComponent(lblConstraintMap)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(constraintMapsInfoIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblConstraintMapsErrorMessage)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnConstaintMap)))
                 .addContainerGap())
@@ -358,9 +407,10 @@ public class StepOne extends javax.swing.JFrame {
                     .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnConstaintMap)
                         .addComponent(lblConstraintMap))
-                    .addComponent(constraintMapsInfoIcon))
+                    .addComponent(constraintMapsInfoIcon)
+                    .addComponent(lblConstraintMapsErrorMessage))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -387,6 +437,9 @@ public class StepOne extends javax.swing.JFrame {
             }
         });
 
+        lblHouseholdMicroDataErrorMessage.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblHouseholdMicroDataErrorMessage.setForeground(new java.awt.Color(204, 0, 0));
+
         javax.swing.GroupLayout jPanelHouseholdMicroDataLayout = new javax.swing.GroupLayout(jPanelHouseholdMicroData);
         jPanelHouseholdMicroData.setLayout(jPanelHouseholdMicroDataLayout);
         jPanelHouseholdMicroDataLayout.setHorizontalGroup(
@@ -397,9 +450,14 @@ public class StepOne extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(householdMicroDataInfoIcon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtHouseholdMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnHouseholdMicroData)
+                .addGroup(jPanelHouseholdMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelHouseholdMicroDataLayout.createSequentialGroup()
+                        .addComponent(lblHouseholdMicroDataErrorMessage)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelHouseholdMicroDataLayout.createSequentialGroup()
+                        .addComponent(txtHouseholdMicroData)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnHouseholdMicroData)))
                 .addContainerGap())
         );
         jPanelHouseholdMicroDataLayout.setVerticalGroup(
@@ -412,6 +470,8 @@ public class StepOne extends javax.swing.JFrame {
                         .addComponent(txtHouseholdMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnHouseholdMicroData)
                         .addComponent(lblHouseholdMicroData)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblHouseholdMicroDataErrorMessage)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -438,6 +498,9 @@ public class StepOne extends javax.swing.JFrame {
             }
         });
 
+        lblPopulationMicroDataErrorMessage.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblPopulationMicroDataErrorMessage.setForeground(new java.awt.Color(204, 0, 0));
+
         javax.swing.GroupLayout jPanelPopulationMicroDataLayout = new javax.swing.GroupLayout(jPanelPopulationMicroData);
         jPanelPopulationMicroData.setLayout(jPanelPopulationMicroDataLayout);
         jPanelPopulationMicroDataLayout.setHorizontalGroup(
@@ -448,9 +511,14 @@ public class StepOne extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(populationMicroDataInfoIcon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPopulationMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnPopulationMicroData)
+                .addGroup(jPanelPopulationMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelPopulationMicroDataLayout.createSequentialGroup()
+                        .addComponent(lblPopulationMicroDataErrorMessage)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelPopulationMicroDataLayout.createSequentialGroup()
+                        .addComponent(txtPopulationMicroData)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPopulationMicroData)))
                 .addContainerGap())
         );
         jPanelPopulationMicroDataLayout.setVerticalGroup(
@@ -463,6 +531,8 @@ public class StepOne extends javax.swing.JFrame {
                         .addComponent(txtPopulationMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnPopulationMicroData)
                         .addComponent(lblPopulationMicroData)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblPopulationMicroDataErrorMessage)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -487,13 +557,13 @@ public class StepOne extends javax.swing.JFrame {
                 .addComponent(jPanelLandUseHouseholdMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelRegionMapCensusEnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(19, 19, 19)
                 .addComponent(jPanelConstraintMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanelPopulationMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelPopulationMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanelHouseholdMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanelHouseholdMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, 57, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         btnNextStep.setText("Next Step");
@@ -548,10 +618,10 @@ public class StepOne extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(lblErrorMessages)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelStepOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanelStepOne, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNextStep)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -639,42 +709,7 @@ public class StepOne extends javax.swing.JFrame {
 
         getAndVerifyFile(DigPopFileTypeEnum.Region_Map);
     }//GEN-LAST:event_btnRegionMapActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(StepOne.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(StepOne.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(StepOne.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(StepOne.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new StepOne().setVisible(true);
-            }
-        });
-    }
-    
+  
     private void enableLandUseHouseholdDensityButton(){
         if(rbtnLandUseMap.isSelected() || rbtnHouseholdDensityMap.isSelected()){
             btnLandMapHouseholdMap.setEnabled(true);
@@ -706,23 +741,28 @@ public class StepOne extends javax.swing.JFrame {
                         digPopGUIInformation.setLandUseMapFilePath(file.getPath());
                         digPopGUIInformation.setValidLandUseMapFilePath(true);
                         lblLandUseHouseholdDensityMapErrorMessage.setText(null);
+                        setIconImage(fileType, true);
                         break;
                     case Household_Density_Map:
                         txtLandUseHouseholdMap.setText(file.getPath());
                         digPopGUIInformation.setHouseholdDensityMapFilePath(file.getPath());
                         digPopGUIInformation.setValidHouseholdDensityMapFilePath(true);
                         lblLandUseHouseholdDensityMapErrorMessage.setText(null);
+                        setIconImage(fileType, true);
                         break;
                     case Region_Map:
                         txtRegionMap.setText(file.getPath());
                         digPopGUIInformation.setRegionMapFilePath(file.getPath());
                         digPopGUIInformation.setValidRegionMapFilePath(true);
                         lblRegionMapErrorMessage.setText(null);
+                        setIconImage(fileType, true);
                         break;
                     case Census_Enumerations:
                         txtCensusEnumerations.setText(file.getPath());
                         digPopGUIInformation.setCensusEnumerationsFilePath(file.getPath());
                         digPopGUIInformation.setValidCensusEnumerationsFilePath(true);
+                        lblCensusEnumerationsErrorMessage.setText(null);
+                        setIconImage(fileType, true);
                         break;
                     case Constraint_Map:
                         /**
@@ -740,14 +780,17 @@ public class StepOne extends javax.swing.JFrame {
                         txtPopulationMicroData.setText(file.getPath());
                         digPopGUIInformation.setPopulationMicroDataFilePath(file.getPath());
                         digPopGUIInformation.setValidPopulationMicroDataFilePath(true);
+                        lblPopulationMicroDataErrorMessage.setText(null);
                         break;
                     case Household_Micro_Data:
                         txtHouseholdMicroData.setText(file.getPath());
                         digPopGUIInformation.setHouseholdMicroDataFilePath(file.getPath());
                         digPopGUIInformation.setValidHouseholdMicroDataFilePath(true);
+                        lblHouseholdMicroDataErrorMessage.setText(null);
+                        setIconImage(fileType, true);
                         break;
                 }
-                setIconImage(fileType, true);
+                //setIconImage(fileType, true);
             } else {
                 
                 //
@@ -758,23 +801,28 @@ public class StepOne extends javax.swing.JFrame {
                         digPopGUIInformation.setLandUseMapFilePath(null);
                         digPopGUIInformation.setValidLandUseMapFilePath(false);
                         lblLandUseHouseholdDensityMapErrorMessage.setText(StepOneUtilityClass.LAND_USE_MAP_FILE_PATH_ERROR_MESSAGE);
+                        setIconImage(fileType, false);
                         break;
                     case Household_Density_Map:
                         txtLandUseHouseholdMap.setText("");
                         digPopGUIInformation.setHouseholdDensityMapFilePath(null);
                         digPopGUIInformation.setValidHouseholdDensityMapFilePath(false);
                         lblLandUseHouseholdDensityMapErrorMessage.setText(StepOneUtilityClass.HOUSEHOLD_DENSITY_MAP_FILE_PATH_ERROR_MESSAGE);
+                        setIconImage(fileType, false);
                         break;
                     case Region_Map:
                         txtRegionMap.setText("");
                         digPopGUIInformation.setRegionMapFilePath(null);
                         digPopGUIInformation.setValidRegionMapFilePath(false);
                         lblRegionMapErrorMessage.setText(StepOneUtilityClass.REGION_MAP_FILE_PATH_ERROR_MESSAGE);
+                        setIconImage(fileType, false);
                         break;
                     case Census_Enumerations:
                         txtCensusEnumerations.setText("");
                         digPopGUIInformation.setCensusEnumerationsFilePath(null);
                         digPopGUIInformation.setValidCensusEnumerationsFilePath(false);
+                        lblCensusEnumerationsErrorMessage.setText(StepOneUtilityClass.CENSUS_ENUMERATIONS_FILE_PATH_ERROR_MESSAGE);
+                        setIconImage(fileType, false);
                         break;
                     case Constraint_Map:
                         /**
@@ -788,16 +836,19 @@ public class StepOne extends javax.swing.JFrame {
                         txtPopulationMicroData.setText("");
                         digPopGUIInformation.setPopulationMicroDataFilePath(null);
                         digPopGUIInformation.setValidPopulationMicroDataFilePath(false);
+                        lblPopulationMicroDataErrorMessage.setText(StepOneUtilityClass.POPULATION_MICRO_DATA_FILE_PATH_ERROR_MESSAGE);
                         break;
                     case Household_Micro_Data:
                         txtHouseholdMicroData.setText("");
                         digPopGUIInformation.setHouseholdMicroDataFilePath(null);
                         digPopGUIInformation.setValidHouseholdMicroDataFilePath(false);
+                        lblHouseholdMicroDataErrorMessage.setText(StepOneUtilityClass.HOUSEHOLD_MICRO_DATA_FILE_PATH_ERROR_MESSAGE);
+                        setIconImage(fileType, false);
                         break;
                 }
                 
            //     setErrorMessage();
-                setIconImage(fileType, false);
+                
 
             }
             pack();
@@ -902,12 +953,16 @@ public class StepOne extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel landUseHouseholdDensityMapInfoIcon;
     private javax.swing.JLabel lblCensusEnumerations;
+    private javax.swing.JLabel lblCensusEnumerationsErrorMessage;
     private javax.swing.JLabel lblConstraintMap;
+    private javax.swing.JLabel lblConstraintMapsErrorMessage;
     private javax.swing.JLabel lblErrorMessages;
     private javax.swing.JLabel lblHouseholdMicroData;
+    private javax.swing.JLabel lblHouseholdMicroDataErrorMessage;
     private javax.swing.JLabel lblLandUseHouseholdDensityMap;
     private javax.swing.JLabel lblLandUseHouseholdDensityMapErrorMessage;
     private javax.swing.JLabel lblPopulationMicroData;
+    private javax.swing.JLabel lblPopulationMicroDataErrorMessage;
     private javax.swing.JLabel lblRegionMap;
     private javax.swing.JLabel lblRegionMapErrorMessage;
     private javax.swing.ButtonGroup mapRadioButtonGroup;
