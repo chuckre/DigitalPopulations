@@ -23,6 +23,15 @@ public class MarkovTableCell {
     private boolean error;
     private boolean editable;
 
+    /**
+     * Creates a new, basic Markov Table Cell
+     * @param row - the index of the row the cell will reside in the table
+     * @param column - the index of the column the cell will reside in the table
+     * @param value - the value of the cell displayed to the user
+     * @param calculated - true if the cell is calculated by the system
+     * @param error - true if this cell causes an error in the Markov logic
+     * @param editable - true if the cell can be edited by the user
+     */
     public MarkovTableCell(int row, int column, Object value, boolean calculated, boolean error, boolean editable) {
         this.row = row;
         this.column = column;
@@ -32,6 +41,17 @@ public class MarkovTableCell {
         this.editable = editable;
     }
     
+    /**
+     * Creates a new, full Markov table cell with all attributes
+     * @param row - the index of the row the cell will reside in the table
+     * @param column - the index of the column the cell will reside in the table
+     * @param max - the maximum value entered for the cell
+     * @param min - the minimum value entered for the cell
+     * @param value - the value of the cell displayed to the user
+     * @param calculated - true if the cell is calculated by the system
+     * @param error - true if this cell causes an error in the Markov logic
+     * @param editable - true if the cell can be edited by the user
+     */
     public MarkovTableCell(int row, int column, double max, double min, Object value, boolean calculated, boolean error, boolean editable) {
         this.row = row;
         this.column = column;
@@ -43,70 +63,138 @@ public class MarkovTableCell {
         this.editable = editable;
     }
 
+    /**
+     * Gets the index of the row for the current cell
+     * @return 
+     */
     public int getRow() {
         return row;
     }
 
+    /**
+     * Gets the index of the column for the current cell
+     * @return 
+     */
     public int getColumn() {
         return column;
     }
 
+    /**
+     * Gets the maximum value for the current cell
+     * @return 
+     */
     public double getMax() {
         return max;
     }
 
+    /**
+     * Gets the minimum value for the current cell
+     * @return 
+     */
     public double getMin() {
         return min;
     }
 
+    /**
+     * Gets the value of the current cell
+     * @return 
+     */
     public Object getValue() {
         return value;
     }
 
+    /**
+     * Returns true if the cell is calculated by the system
+     * @return 
+     */
     public boolean isCalculated() {
         return calculated;
     }
 
+    /**
+     * Returns true if the cell breaks the Markov logic
+     * @return 
+     */
     public boolean isError() {
         return error;
     }
 
+    /**
+     * Returns true if the user can edit the cell
+     * @return 
+     */
     public boolean isEditable() {
         return editable;
     }
 
+    /**
+     * Sets the row index of the current cell.
+     * @param row 
+     */
     public void setRow(int row) {
         this.row = row;
     }
 
+    /**
+     * Sets the column index of the current cell.
+     * @param column 
+     */
     public void setColumn(int column) {
         this.column = column;
     }
 
+    /**
+     * Sets the maximum value of the current cell.
+     * @param max 
+     */
     public void setMax(double max) {
         this.max = max;
     }
 
+    /**
+     * Sets the minimum value of the current cell.
+     * @param min 
+     */
     public void setMin(double min) {
         this.min = min;
     }
 
+    /**
+     * Sets the value displayed to the user for the current cell.
+     * @param value 
+     */
     public void setValue(Object value) {
         this.value = value;
     }
 
+    /**
+     * Updates the flag if the current cell is calculated by the system.
+     * @param calculated 
+     */
     public void setCalculated(boolean calculated) {
         this.calculated = calculated;
     }
 
+    /**
+     * Updates the flag if the current cell does not abide by the Markov logic
+     * @param error 
+     */
     public void setError(boolean error) {
         this.error = error;
     }
 
+    /**
+     * Updates the flag for the current cell to be editable.
+     * @param editable 
+     */
     public void setEditable(boolean editable) {
         this.editable = editable;
     }
 
+    /**
+     * Returns the value of the cell displayed to the user
+     * @return 
+     */
     @Override
     public String toString() {
         return value.toString();

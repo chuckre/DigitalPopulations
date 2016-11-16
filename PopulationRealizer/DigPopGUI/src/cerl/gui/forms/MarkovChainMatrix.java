@@ -8,9 +8,8 @@ package cerl.gui.forms;
 import java.util.*;
 import cerl.gui.standard.utilities.MarkovTableModel;
 import cerl.gui.standard.utilities.customTableCellRenderer;
+import cerl.gui.standard.utilities.jTableButtonMouseListener;
 import cerl.gui.utilities.MarkovTableCell;
-import java.awt.Color;
-import java.awt.Component;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
@@ -21,7 +20,7 @@ import javax.swing.table.TableColumn;
  */
 public class MarkovChainMatrix extends javax.swing.JFrame {
 
-    private MarkovTableModel myTable;
+    private final MarkovTableModel myTable;
             
     /**
      * Creates new form MarkovChainMatrix
@@ -30,14 +29,16 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
      */
     public MarkovChainMatrix() {
         ArrayList<String> columnNames = new ArrayList<>();
-        columnNames.addAll(Arrays.asList("","Value","","","","Amount Left"));
+        columnNames.addAll(Arrays.asList("","Value","","","","Amount Left",""));
 
         //columns must be rows+1 because the header row is the -1th row.
-        MarkovTableCell[][] cellValues = new MarkovTableCell[5][6];
+        MarkovTableCell[][] cellValues = new MarkovTableCell[6][7];
         //MarkovTableCell(int row, int column, Object value, boolean calculated, boolean error, boolean editable)
         cellValues[0][0] = new MarkovTableCell(0, 0, "Value", false, false, false);
         cellValues[4][0] = new MarkovTableCell(4, 0, "Amount Left", false, false, false);
+        cellValues[5][0] = new MarkovTableCell(5, 0, "", false, false, false);
         cellValues[0][1] = new MarkovTableCell(0, 1, "Proportion", false, false, false);
+        cellValues[0][6] = new MarkovTableCell(5, 0, "", false, false, false);
                 
         //proportions
         cellValues[0][2] = new MarkovTableCell(0, 2, 0.22, false, false, false);
@@ -47,15 +48,18 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         cellValues[2][1] = new MarkovTableCell(2, 1, 0.93, false, false, false);
         cellValues[3][1] = new MarkovTableCell(3, 1, 0.94, false, false, false);
         
+        //create table with custom MarkovTableModel
         myTable = new MarkovTableModel(columnNames, cellValues);
-        
-               //TO DO - add clear for row and column and overall grid
+       
         initComponents();
-        
+       
+        //sets up columns with new renderer, and clear buttons for the rows/columns
         for(int i=0; i<columnNames.size(); i++){
             TableColumn tableCol = jTable_MarkovMatrix.getColumnModel().getColumn(i);
             tableCol.setCellRenderer(new customTableCellRenderer());
         }
+        //adds the mouse listener for the buttons to work in the jTable
+        jTable_MarkovMatrix.addMouseListener(new jTableButtonMouseListener(jTable_MarkovMatrix));
     }
 
     /**
@@ -87,7 +91,11 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         jLabel1.setText("Markov Chain Name:");
 
         jTable_MarkovMatrix.setModel(myTable);
+        jTable_MarkovMatrix.setAlignmentY(0.0F);
         jTable_MarkovMatrix.setCellEditor(jTable_MarkovMatrix.getCellEditor());
+        jTable_MarkovMatrix.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTable_MarkovMatrix.setFillsViewportHeight(true);
+        jTable_MarkovMatrix.setMinimumSize(new java.awt.Dimension(100, 300));
         jTable_MarkovMatrix.setName("Markov Chain Matrix"); // NOI18N
         jTable_MarkovMatrix.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable_MarkovMatrix);
@@ -204,7 +212,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
      */
     private void jButton_ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ClearActionPerformed
         //Clear all user entered inputs from the grid.
-        myTable.clear(1,2);
+        myTable.clear(1, 1, 2, 1);
     }//GEN-LAST:event_jButton_ClearActionPerformed
 
     /**

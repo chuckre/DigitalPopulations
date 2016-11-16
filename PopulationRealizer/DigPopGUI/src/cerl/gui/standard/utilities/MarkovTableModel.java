@@ -6,11 +6,14 @@
 package cerl.gui.standard.utilities;
 
 import cerl.gui.utilities.MarkovTableCell;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.table.AbstractTableModel;
 import java.util.*;
+import javax.swing.JButton;
 
 /**
- *
+ * The table model for the Markov Chain Matrix tables.
  * @author mrivera
  */
 public class MarkovTableModel extends AbstractTableModel {
@@ -45,14 +48,44 @@ public class MarkovTableModel extends AbstractTableModel {
     /**
      * Clears the data from cells in the grid
      * @param startRow The offset of which row to start clearing
+     * @param endRow The offset of which row to end clearing
      * @param startCol The offset of which column to start clearing
+     * @param endCol The offset of which column to end clearing
      */
-    public void clear(int startRow, int startCol){
+    public void clear(int startRow, int endRow, int startCol, int endCol){
         //Removes all data entered into the grid so far
-        for(int r=startRow;r<markovTable.length;r++){
-            for(int c=startCol;c<markovTable[r].length;c++){
+        for(int r=startRow;r<markovTable.length-endRow;r++){
+            for(int c=startCol;c<markovTable[r].length-endCol;c++){
                 this.setValueAt("", r, c);
                 this.fireTableCellUpdated(r, c);
+            }
+        }
+    }
+
+    /**
+     * Clears the data from all editable cells in the specified row
+     * @param row The offset of which column to start clearing
+     */
+    public void clearRow(int row){
+        //Removes all data entered into the specified row
+        for(int c=0;c<markovTable[row].length;c++){
+            if(isCellEditable(row,c)){
+                this.setValueAt("", row, c);
+                this.fireTableCellUpdated(row, c);
+            }
+        }
+    }
+    
+    /**
+     * Clears the data from all editable cells in the specified column
+     * @param column The column to clear
+     */
+    public void clearColumn(int column){
+        //Removes all data entered into the grid so far
+        for(int r=0;r<markovTable.length;r++){
+            if(isCellEditable(r,column)){
+                this.setValueAt("", r, column);
+                this.fireTableCellUpdated(r, column);
             }
         }
     }
@@ -124,13 +157,58 @@ public class MarkovTableModel extends AbstractTableModel {
      */
     @Override
     public Object getValueAt(int row, int column) {
+        //if the cell does not exist yet, create it as a new editable cell
         if (markovTable[row][column] == null) {
-            return null;
+            markovTable[row][column] = new MarkovTableCell(row, column, "", false, false, true);
+        }
+        
+        //Add a button to the last row/column of the grid to allow clearing
+        if(row == markovTable.length-1){ //if is the last row (where clear buttons are)
+            //clear the column that button is in
+            JButton colClear = createColumnClearButton(column); 
+            return colClear;
+        }
+        else if(column == columns.size()-1){ //if is the last column
+            //clear the row that button is in
+            JButton rowClear = createRowClearButton(row);
+            return rowClear;
         }
         else if (markovTable[row][column].getClass().equals(MarkovTableCell.class)) {
             return ((MarkovTableCell) (markovTable[row][column])).getValue();
         }
         return markovTable[row][column];
+    }
+    
+    /**
+     * Creates a new button for clearing rows.
+     * @param row - the row for which the button shall be created
+     * @return 
+     */
+    public JButton createRowClearButton(int row){
+        JButton clearButton = new JButton("Clear");
+        clearButton.addActionListener(new ActionListener(){ 
+            @Override
+            public void actionPerformed(ActionEvent arg0){
+                clearRow(row);
+            }
+        });
+        return clearButton;
+    }
+
+    /**
+     * Creates a new button for clearing columns
+     * @param col - the column for which the bottom shall be created
+     * @return 
+     */
+    public JButton createColumnClearButton(int col){
+        JButton clearButton = new JButton("Clear");
+        clearButton.addActionListener(new ActionListener(){ 
+            @Override
+            public void actionPerformed(ActionEvent arg0){
+                clearColumn(col);
+            }
+        });
+        return clearButton;
     }
 
     /**
@@ -184,7 +262,7 @@ public class MarkovTableModel extends AbstractTableModel {
         else if (markovTable[row][col].getClass().equals(MarkovTableCell.class)) {
             return ((MarkovTableCell) (markovTable[row][col])).isError();
         } else {
-            return false;  //if not the Markov calculated cells - leave alone
+            return false;  //if not the Markov cells - leave alone
         }    
     }
 
