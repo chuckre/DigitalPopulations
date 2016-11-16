@@ -32,4 +32,13 @@ public class Instruction {
     public void setInstructionname(String instructionname) {
         this.instructionname = instructionname;
     }
+
+    @Override
+    public String toString() {
+        return instructionname;
+    }
+    
+    public String getDisplayText() {
+        return String.format("%s\n%s", instructionname, helpText);
+    }
 }

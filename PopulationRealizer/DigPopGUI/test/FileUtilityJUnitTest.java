@@ -47,14 +47,24 @@ public class FileUtilityJUnitTest {
     @Test 
     public void readInHelpFileTest()
     {
-//        HelpFile helpFile = (HelpFile)FileUtility.ParseXMLFileIntoObject("C:\\Projects\\CERL GUI\\HelpFileTest2.xml", HelpFile.class);
-//        ArrayList<Screen> screens = helpFile.getScreen();
-//        
+        String base = "C:\\Projects\\CERL GIT FOLDER\\DigitalPopulations\\PopulationRealizer\\DigPopGUI\\test";
+        String path = "C:\\Projects\\CERL GIT FOLDER\\DigitalPopulations\\PopulationRealizer\\DigPopGUI\\docs\\HelpText.xml";
+        
+     //   System.out.print(relative);
+     
+     File test = new File("./docs/HelpText.xml");
+     
+     System.out.println(test.exists());
+
+//        Result result = FileUtility.ParseXMLFileIntoSpecifiedObject("\\..\\..\\..\\..\\docs\\HelpFile.xml", HelpFile.class);
+//        HelpFile helpFile = (HelpFile)result.getValue();
+//         ArrayList<Screen> screens = helpFile.getScreen();
+//        System.out.println(screens.size());
 //        assertEquals(2, screens.size());
         
-        Result result = FileUtility.getFileExtension("Testerhjhjkh.hjkhk", '.');
+      //  Result result = FileUtility.getFileExtension("Testerhjhjkh.hjkhk", '.');
         
-        System.out.println(result.getValue());
+     //   System.out.println(result.getValue());
         
     }
     

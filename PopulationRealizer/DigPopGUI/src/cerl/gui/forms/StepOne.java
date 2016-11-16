@@ -5,8 +5,10 @@
  */
 package cerl.gui.forms;
 
+import cerl.gui.standard.utilities.HelpFile;
 import cerl.gui.standard.utilities.Result;
 import cerl.gui.utilities.DigPopGUIFiles;
+import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.StepOneUtilityClass;
 import cerl.gui.utilities.StepOneUtilityClass.DigPopFileTypeEnum;
 import java.io.File;
@@ -15,7 +17,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -401,6 +402,15 @@ public class StepOne extends javax.swing.JFrame {
         jMenuBar.add(menuFile);
 
         menuHelp.setText("Help");
+        menuHelp.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                menuHelpMenuSelected(evt);
+            }
+        });
         jMenuBar.add(menuHelp);
 
         setJMenuBar(jMenuBar);
@@ -478,6 +488,11 @@ public class StepOne extends javax.swing.JFrame {
         getAndVerifyFile(DigPopFileTypeEnum.Household_Micro_Data);
 
     }//GEN-LAST:event_btnHouseholdMicroDataActionPerformed
+
+    private void menuHelpMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_menuHelpMenuSelected
+        HelpFile newHelpFile = DigPopGUIUtilityClass.getDefaultHelpFile();
+        new HelpFileDisplay(newHelpFile.getScreen().get(0), newHelpFile).setVisible(true);
+    }//GEN-LAST:event_menuHelpMenuSelected
 
     /**
      * @param args the command line arguments

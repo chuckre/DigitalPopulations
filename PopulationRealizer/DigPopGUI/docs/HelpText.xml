@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <help>
+    <name>DigPopGUI</name>
+    <introduction>Test something will need to go here</introduction>
     <screen>
         <name>Step 1 - Maps</name>
         <description>This page allows users to enter all the applicable files.</description>
