@@ -32,7 +32,7 @@ public class customTableCellRenderer extends DefaultTableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column){
         //Add button to table in first row and column.
-        System.out.println("table cell renderer called: row - " + row + " and col - " + column);
+        //System.out.println("table cell renderer called: row - " + row + " and col - " + column);
         if((value != null) && (value.getClass() == JButton.class)){
             JButton button = (JButton)value;
             return button;
@@ -40,6 +40,8 @@ public class customTableCellRenderer extends DefaultTableCellRenderer {
 
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         MarkovTableModel tableModel = (MarkovTableModel) table.getModel();
+        
+        //tableModel.calculateAmountLeft();
         
         //set the cell colors based on it's status
         if(tableModel.isCellCalculated(row,column)){ //calculated

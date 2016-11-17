@@ -30,7 +30,9 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
      */
     public MarkovChainMatrix() {
         myTable = populateMarkovTableModel();
-       
+        //myTable.calculateAmountLeft();
+        myTable.calculateAmountLeft(0,1,4,5);
+        
         initComponents();
         
         //sets up columns with new renderer, and clear buttons for the rows/columns
@@ -43,6 +45,14 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         
         //adds the listener for the cell calculations
         jTable_MarkovMatrix.getModel().addTableModelListener(new markovTableModelListener(jTable_MarkovMatrix));
+        
+                        
+        //load calculations
+        //census calcs
+        //cellValues[0][5] = new MarkovTableCell(0,5, sumRow(1.0,0,0,cellValues), true, false, false);
+        //survey calcs
+        //cellValues[4][1] = new MarkovTableCell(4, 1, sumColumn(1.0,1,0,cellValues), true, false, false);
+
     }
 
     private MarkovTableModel populateMarkovTableModel(){
@@ -74,65 +84,12 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         cellValues[2][1] = new MarkovTableCell(2, 1, 0.3963, false, false, false);
         cellValues[3][1] = new MarkovTableCell(3, 1, 0.0, false, false, false);
         
-        //load calculations
-        //census calcs
-        cellValues[0][5] = new MarkovTableCell(0,5, sumRow(1.0,0,0,cellValues), true, false, false);
-        //survey calcs
-        cellValues[4][1] = new MarkovTableCell(4, 1, sumColumn(1.0,1,0,cellValues), true, false, false);
-        
-        cellValues = calculateAmountLeft(cellValues,0,1,4,5);
-        
         //create table with custom MarkovTableModel
         MarkovTableModel mtmTable = new MarkovTableModel(columnNames, cellValues);
         
         return mtmTable;
     }
-    
-    private double sumRow(double total, int row, int startCol, MarkovTableCell[][] thisTable){
-        for(int c=startCol;c<thisTable[row].length;c++){
-            if((thisTable[row][c] != null) && (thisTable[row][c].getValue().getClass() == Double.class)){
-                total -= (double)thisTable[row][c].getValue();
-            }
-        }
-        return total;
-    }
-    
-    private double sumColumn(double total, int col, int startRow, MarkovTableCell[][] thisTable){
-        for(int r=startRow;r<thisTable.length;r++){
-            if((thisTable[r][col] != null) && (thisTable[r][col].getValue().getClass() == Double.class)){
-                total -= (double)thisTable[r][col].getValue();
-            }
-        }
-        return total;
-    }
         
-    private MarkovTableCell[][] calculateAmountLeft(MarkovTableCell[][] thisTable, int startValRow, int startValCol, int sumRow, int sumCol){
-        double colProportion = -1.0;
-        double rowProportion = -5.0;
-        
-        //calculate all columns
-        for(int c=startValCol+1;c<thisTable[startValRow].length-1;c++){
-            colProportion = sumColumn((double)thisTable[startValRow][c].getValue(), c, startValRow+1, thisTable);
-            
-            //set column total
-            if(thisTable[sumRow][c] == null){
-                thisTable[sumRow][c] = new MarkovTableCell(sumRow, c, colProportion, true, false, false);
-            } else{
-                thisTable[sumRow][c].setValue(colProportion);
-            }
-        }
-        
-        //calculate all rows
-        for(int r=startValRow+1;r<thisTable.length-1;r++){
-            rowProportion = sumRow((double)thisTable[r][startValCol].getValue(),r,startValCol+1, thisTable);
-                    
-            if(thisTable[r][sumCol] == null){
-                thisTable[r][sumCol] = new MarkovTableCell(r, sumCol, rowProportion, true, false, false);
-            }
-        }
-        return thisTable;
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

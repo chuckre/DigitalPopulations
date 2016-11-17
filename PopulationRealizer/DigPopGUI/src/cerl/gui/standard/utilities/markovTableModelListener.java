@@ -33,6 +33,7 @@ public class markovTableModelListener implements TableModelListener {
         Object data = model.getValueAt(row, column);
         
         //handle data
+        model.calculateAmountLeft();
         System.out.println("this was edited: row - " + row + " and col - " + column);
     }
 }
