@@ -9,6 +9,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
@@ -231,6 +234,21 @@ public class FileUtility {
                     "ParseObjectToXML",
                     ex.getMessage());
             result.setSuccess(false);
+        }
+        
+        return result;
+    }
+    
+    public static String createNewFileName(Boolean addCurrentDateTime, String starterName, FileType type){
+        String result = "";
+        
+        if(addCurrentDateTime){
+            String dateString = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+            result = String.format(
+                    "%s_%s.%s", 
+                    dateString,
+                    starterName,
+                    type.toString());
         }
         
         return result;

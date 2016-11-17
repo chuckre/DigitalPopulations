@@ -5,16 +5,19 @@
  */
 package cerl.gui.forms;
 
+import cerl.gui.standard.utilities.FileType;
+import cerl.gui.standard.utilities.FileUtility;
+import java.io.File;
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author ajohnson
  */
 public class StepZero extends javax.swing.JFrame {
     
-    /**
-     * Ex: 08_26_2016_DigiPop_Run.xml
-     */
-    private final String DEFAULT_NEW_FILE_NAME = "DigiPop_Run.xml";
+    private final String DEFAULT_NEW_FILE_NAME = "DigiPop_Run";
+    private final FileType DEFAULT_NEW_FILE_TYPE = FileType.XML;
     private final String NEW_TAB_NAME = "New";
     private final String OPEN_TAB_NAME = "Open";
     private final String DUPLICATE_TAB_NAME = "Duplicate";
@@ -39,7 +42,7 @@ public class StepZero extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFileChooser1 = new javax.swing.JFileChooser();
+        fileLocationChooser = new javax.swing.JFileChooser();
         buttonGroupSelectRun = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -52,7 +55,7 @@ public class StepZero extends javax.swing.JFrame {
         txtNewFileLocation = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        btnNext = new javax.swing.JButton();
         btnNew = new javax.swing.JRadioButton();
         btnOpen = new javax.swing.JRadioButton();
         btnDuplicate = new javax.swing.JRadioButton();
@@ -60,8 +63,8 @@ public class StepZero extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
-        jFileChooser1.setCurrentDirectory(new java.io.File("C:\\"));
-            jFileChooser1.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+        fileLocationChooser.setCurrentDirectory(new java.io.File("C:\\"));
+            fileLocationChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -154,11 +157,11 @@ public class StepZero extends javax.swing.JFrame {
 
             jTabbedPanel.addTab("Duplicate", jPanel4);
 
-            jButton2.setText("Next");
-            jButton2.setEnabled(false);
-            jButton2.addActionListener(new java.awt.event.ActionListener() {
+            btnNext.setText("Next");
+            btnNext.setEnabled(false);
+            btnNext.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jButton2ActionPerformed(evt);
+                    btnNextActionPerformed(evt);
                 }
             });
 
@@ -198,7 +201,7 @@ public class StepZero extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(0, 0, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jButton2)
+                                .addComponent(btnNext)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(btnNew)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -221,7 +224,7 @@ public class StepZero extends javax.swing.JFrame {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jTabbedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jButton2)
+                    .addComponent(btnNext)
                     .addContainerGap())
             );
 
@@ -254,12 +257,21 @@ public class StepZero extends javax.swing.JFrame {
         }// </editor-fold>//GEN-END:initComponents
 
     private void btnSelectNewFileLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectNewFileLocationActionPerformed
-        // TODO add your handling code here:
+        
+        File file = getDirectoryFromFileChooser();
+        
+        if(file != null 
+                && file.isDirectory()){
+            txtNewFileLocation.setText(file.getPath());
+            
+            btnNext.setEnabled(true);
+        }
+        
     }//GEN-LAST:event_btnSelectNewFileLocationActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        
+    }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         if(btnNew.isSelected())
@@ -267,6 +279,12 @@ public class StepZero extends javax.swing.JFrame {
             enableNewFileTab(true);
             enableOpenFileTab(false);
             enableDuplicateFileTab(false);
+            
+            txtNewFileName.setText(
+                    FileUtility.createNewFileName(
+                            true,
+                            DEFAULT_NEW_FILE_NAME,
+                            DEFAULT_NEW_FILE_TYPE));
         }
     }//GEN-LAST:event_btnNewActionPerformed
 
@@ -369,15 +387,31 @@ public class StepZero extends javax.swing.JFrame {
             jTabbedPanel.setSelectedIndex(index);
         }
     }
+    
+    private File getDirectoryFromFileChooser() {
+        File returnFile = null;
+
+        int returnVal = fileLocationChooser.showOpenDialog(this);
+
+        /**
+         * FileChooser will return APPROVE_OPTION if the user selected a directory
+         * from the dialog.
+         */
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            returnFile = fileLocationChooser.getSelectedFile();
+        }
+
+        return returnFile;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton btnDuplicate;
     private javax.swing.JRadioButton btnNew;
+    private javax.swing.JButton btnNext;
     private javax.swing.JRadioButton btnOpen;
     private javax.swing.JButton btnSelectNewFileLocation;
     private javax.swing.ButtonGroup buttonGroupSelectRun;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JFileChooser fileLocationChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
