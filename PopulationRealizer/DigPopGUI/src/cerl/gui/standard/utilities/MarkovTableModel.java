@@ -14,6 +14,7 @@ import javax.swing.JButton;
 
 /**
  * The table model for the Markov Chain Matrix tables.
+ *
  * @author mrivera
  */
 public class MarkovTableModel extends AbstractTableModel {
@@ -47,15 +48,16 @@ public class MarkovTableModel extends AbstractTableModel {
 
     /**
      * Clears the data from cells in the grid
+     *
      * @param startRow The offset of which row to start clearing
      * @param endRow The offset of which row to end clearing
      * @param startCol The offset of which column to start clearing
      * @param endCol The offset of which column to end clearing
      */
-    public void clear(int startRow, int endRow, int startCol, int endCol){
+    public void clear(int startRow, int endRow, int startCol, int endCol) {
         //Removes all data entered into the grid so far
-        for(int r=startRow;r<markovTable.length-endRow;r++){
-            for(int c=startCol;c<markovTable[r].length-endCol;c++){
+        for (int r = startRow; r < markovTable.length - endRow; r++) {
+            for (int c = startCol; c < markovTable[r].length - endCol; c++) {
                 this.setValueAt("", r, c);
                 this.fireTableCellUpdated(r, c);
             }
@@ -64,32 +66,34 @@ public class MarkovTableModel extends AbstractTableModel {
 
     /**
      * Clears the data from all editable cells in the specified row
+     *
      * @param row The offset of which column to start clearing
      */
-    public void clearRow(int row){
+    public void clearRow(int row) {
         //Removes all data entered into the specified row
-        for(int c=0;c<markovTable[row].length;c++){
-            if(isCellEditable(row,c)){
+        for (int c = 0; c < markovTable[row].length; c++) {
+            if (isCellEditable(row, c)) {
                 this.setValueAt("", row, c);
                 this.fireTableCellUpdated(row, c);
             }
         }
     }
-    
+
     /**
      * Clears the data from all editable cells in the specified column
+     *
      * @param column The column to clear
      */
-    public void clearColumn(int column){
+    public void clearColumn(int column) {
         //Removes all data entered into the grid so far
-        for(int r=0;r<markovTable.length;r++){
-            if(isCellEditable(r,column)){
+        for (int r = 0; r < markovTable.length; r++) {
+            if (isCellEditable(r, column)) {
                 this.setValueAt("", r, column);
                 this.fireTableCellUpdated(r, column);
             }
         }
     }
-    
+
     /**
      * Calculate the Markov values NOTE: NEEDS WORK!
      *
@@ -158,37 +162,42 @@ public class MarkovTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int row, int column) {
         //if the cell does not exist yet, create it as a new editable cell
-        if (markovTable[row][column] == null) {
-            markovTable[row][column] = new MarkovTableCell(row, column, "", false, false, true);
+        try {
+            if (markovTable[row][column] == null) {
+                markovTable[row][column] = new MarkovTableCell(row, column, "", false, false, true);
+            }
+
+            //Add a button to the last row/column of the grid to allow clearing
+            //with the exception of the non-editable rows/columns
+            if ((row == markovTable.length - 1) && (column > 1) && (column != columns.size() - 1)) {
+                //clear the column that button is in
+                JButton colClear = createColumnClearButton(column);
+                return colClear;
+            } else if ((column == columns.size() - 1) && (row > 0) && (row != markovTable.length - 1)) {
+                //clear the row that button is in
+                JButton rowClear = createRowClearButton(row);
+                return rowClear;
+            } else if (markovTable[row][column].getClass().equals(MarkovTableCell.class)) {
+                return ((MarkovTableCell) (markovTable[row][column])).getValue();
+            }
+            return markovTable[row][column];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.err.println("Caught ArrayIndexOutOfBoundsException" + e.getMessage());
+            return null;
         }
-        
-        //Add a button to the last row/column of the grid to allow clearing
-        if(row == markovTable.length-1){ //if is the last row (where clear buttons are)
-            //clear the column that button is in
-            JButton colClear = createColumnClearButton(column); 
-            return colClear;
-        }
-        else if(column == columns.size()-1){ //if is the last column
-            //clear the row that button is in
-            JButton rowClear = createRowClearButton(row);
-            return rowClear;
-        }
-        else if (markovTable[row][column].getClass().equals(MarkovTableCell.class)) {
-            return ((MarkovTableCell) (markovTable[row][column])).getValue();
-        }
-        return markovTable[row][column];
     }
-    
+
     /**
      * Creates a new button for clearing rows.
+     *
      * @param row - the row for which the button shall be created
-     * @return 
+     * @return
      */
-    public JButton createRowClearButton(int row){
+    public JButton createRowClearButton(int row) {
         JButton clearButton = new JButton("Clear");
-        clearButton.addActionListener(new ActionListener(){ 
+        clearButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent arg0){
+            public void actionPerformed(ActionEvent arg0) {
                 clearRow(row);
             }
         });
@@ -197,14 +206,15 @@ public class MarkovTableModel extends AbstractTableModel {
 
     /**
      * Creates a new button for clearing columns
+     *
      * @param col - the column for which the bottom shall be created
-     * @return 
+     * @return
      */
-    public JButton createColumnClearButton(int col){
+    public JButton createColumnClearButton(int col) {
         JButton clearButton = new JButton("Clear");
-        clearButton.addActionListener(new ActionListener(){ 
+        clearButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent arg0){
+            public void actionPerformed(ActionEvent arg0) {
                 clearColumn(col);
             }
         });
@@ -224,49 +234,49 @@ public class MarkovTableModel extends AbstractTableModel {
     public boolean isCellEditable(int row, int col) {
         if (markovTable[row][col] == null) {
             return true;
-        }
-        else if (markovTable[row][col].getClass().equals(MarkovTableCell.class)) {
+        } else if (markovTable[row][col].getClass().equals(MarkovTableCell.class)) {
             return ((MarkovTableCell) (markovTable[row][col])).isEditable();
         } else {
             return true; //(!(col==0)) && (!(col==1)) && (!(row==0));
         }
     }
-    
-    /***
+
+    /**
+     * *
      * Specific to the Markov Table Cell, checks if a cell is calculated
+     *
      * @param row
      * @param col
-     * @return 
+     * @return
      */
-    public boolean isCellCalculated(int row, int col){
+    public boolean isCellCalculated(int row, int col) {
         if (markovTable[row][col] == null) {
             return false;
-        }
-        else if (markovTable[row][col].getClass().equals(MarkovTableCell.class)) {
+        } else if (markovTable[row][col].getClass().equals(MarkovTableCell.class)) {
             return ((MarkovTableCell) (markovTable[row][col])).isCalculated();
         } else {
             return false;  //if not the Markov calculated cells - leave alone
-        }    
+        }
     }
 
-    /***
+    /**
+     * *
      * Specific to the Markov table Cell, checks if a cell has an error
+     *
      * @param row
      * @param col
-     * @return 
+     * @return
      */
-    public boolean isErrorInCell(int row, int col){
+    public boolean isErrorInCell(int row, int col) {
         if (markovTable[row][col] == null) {
             return false;
-        }
-        else if (markovTable[row][col].getClass().equals(MarkovTableCell.class)) {
+        } else if (markovTable[row][col].getClass().equals(MarkovTableCell.class)) {
             return ((MarkovTableCell) (markovTable[row][col])).isError();
         } else {
             return false;  //if not the Markov cells - leave alone
-        }    
+        }
     }
 
-    
     /**
      * Sets the value for a specific cell in the Markov table
      *
@@ -283,5 +293,6 @@ public class MarkovTableModel extends AbstractTableModel {
         } else {
             markovTable[row][col] = value;
         }
+        this.fireTableCellUpdated(row, col);
     }
 }

@@ -32,6 +32,7 @@ public class customTableCellRenderer extends DefaultTableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column){
         //Add button to table in first row and column.
+        System.out.println("table cell renderer called: row - " + row + " and col - " + column);
         if((value != null) && (value.getClass() == JButton.class)){
             JButton button = (JButton)value;
             return button;
@@ -41,12 +42,12 @@ public class customTableCellRenderer extends DefaultTableCellRenderer {
         MarkovTableModel tableModel = (MarkovTableModel) table.getModel();
         
         //set the cell colors based on it's status
-        if(!tableModel.isCellEditable(row,column)){ //editable
-            c.setBackground(Color.LIGHT_GRAY);
-        } else if(tableModel.isCellCalculated(row,column)){ //calculated
+        if(tableModel.isCellCalculated(row,column)){ //calculated
             c.setBackground(Color.ORANGE);
         } else if(tableModel.isErrorInCell(row, row)){ //errors
             c.setBackground(Color.RED);
+        } else if(!tableModel.isCellEditable(row,column)){ //editable
+            c.setBackground(Color.LIGHT_GRAY);
         } else{ //normal
             c.setBackground(Color.WHITE);
             c.setForeground(Color.BLACK);
