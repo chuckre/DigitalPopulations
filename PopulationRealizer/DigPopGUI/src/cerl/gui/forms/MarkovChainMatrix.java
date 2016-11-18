@@ -30,8 +30,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
      */
     public MarkovChainMatrix() {
         myTable = populateMarkovTableModel();
-        //myTable.calculateAmountLeft();
-        myTable.calculateAmountLeft(0,1,4,5);
+        myTable.calculateAmountLeft();
         
         initComponents();
         

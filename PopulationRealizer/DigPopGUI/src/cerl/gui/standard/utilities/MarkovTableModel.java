@@ -21,7 +21,9 @@ public class MarkovTableModel extends AbstractTableModel {
 
     private ArrayList<String> columns;
     private Object[][] markovTable;
-
+    private final int PROPORTION_COLUMN = 1;
+    private final int PROPORTION_ROW = 0;
+    
     /**
      * *
      * Creates a new, blank Markov Table Model
@@ -118,6 +120,23 @@ public class MarkovTableModel extends AbstractTableModel {
         return markovTable;
     }
     
+    private double getTotalByClass(MarkovTableCell currentCell, double total, Object value){
+        switch(currentCell.getClassOfValue()){
+            case 1: //Double
+                total -= (double)value;
+                break;
+            case 2: //String
+                //must handle strings here, because can't override getColumnClass if the columns must be dynamic
+                if(String.valueOf(value).length() > 0){
+                   total -= Double.parseDouble(String.valueOf(value));
+                }       
+                break;
+            default: //something else, do nothing
+                break;
+        }
+        return total;
+    }
+    
     /**
      * Sums all the values in a row for a given table
      * @param total - the starting value used as the base to subtract from to create the new sum
@@ -126,12 +145,17 @@ public class MarkovTableModel extends AbstractTableModel {
      * @param thisTable - the table to calculate
      * @return total amount left, total-sum(all values in row starting at startcolumn)
      */
-    private double sumRow(double total, int row, int startCol, Object[][] thisTable){
-        for(int c=startCol;c<thisTable[row].length;c++){
-            if((thisTable[row][c] != null) && (((MarkovTableCell)thisTable[row][c]).getValue().getClass() == Double.class)){
-                total -= (double)((MarkovTableCell)thisTable[row][c]).getValue();
+    private double sumRow(double total, int row, int startCol, int sumCol, Object[][] thisTable){
+        for(int c=startCol;c<sumCol;c++){
+            if(thisTable[row][c] != null){
+                MarkovTableCell currentCell = (MarkovTableCell)thisTable[row][c];
+                Object value = currentCell.getValue();
+                
+                total = getTotalByClass(currentCell, total, value);
             }
         }
+        System.out.println("New row total: " + total);
+        
         return total;
     }
     
@@ -143,14 +167,13 @@ public class MarkovTableModel extends AbstractTableModel {
      * @param thisTable - the table to calculate
      * @return total amount left, total-sum(all values in column starting at startrow)
      */
-    private double sumColumn(double total, int col, int startRow, Object[][] thisTable){
-        for(int r=startRow;r<thisTable.length;r++){
-            if((thisTable[r][col] != null) && (((MarkovTableCell)thisTable[r][col]).getValue().getClass() == Double.class)){
-                total -= (double)((MarkovTableCell)thisTable[r][col]).getValue();
-            }
-            //must handle strings here, because can't override getColumnClass if the columns must be dynamic
-            else if((thisTable[r][col] != null) && (((MarkovTableCell)thisTable[r][col]).getValue().getClass() == String.class) && (String.valueOf(((MarkovTableCell)thisTable[r][col]).getValue()).length() > 0)){
-                total -= Double.parseDouble(String.valueOf(((MarkovTableCell)thisTable[r][col]).getValue()));
+    private double sumColumn(double total, int col, int startRow, int sumRow, Object[][] thisTable){
+        for(int r=startRow;r<sumRow;r++){
+            if(thisTable[r][col] != null){
+                MarkovTableCell currentCell = (MarkovTableCell)thisTable[r][col];
+                Object value = currentCell.getValue();
+
+                total = getTotalByClass(currentCell, total, value);
             }
         }
         return total;
@@ -158,8 +181,8 @@ public class MarkovTableModel extends AbstractTableModel {
         
     public void calculateAmountLeft(){
         //uses model to recalculate
-        markovTable = calculateAmountLeft(0,1,4,5);
-        System.out.println("calculate was called");
+        //calculated "Amount Left" columns are the 2nd to last row and column
+        markovTable = calculateAmountLeft(this.getRowCount()-2,columns.size()-2);
     }
     
     /**
@@ -170,36 +193,39 @@ public class MarkovTableModel extends AbstractTableModel {
      * @param sumCol - the column containing the final summations for it's row
      * @return 
      */
-    public Object[][] calculateAmountLeft(int startValRow, int startValCol, int sumRow, int sumCol){
-        double colProportion = -1.0;
-        double rowProportion = -1.0;
-        
+    public Object[][] calculateAmountLeft(int sumRow, int sumCol){
         //calculate all columns
-        for(int c=startValCol+1;c<markovTable[startValRow].length-1;c++){
-            if(markovTable[startValRow][c]==null){
-                markovTable[startValRow][c] = new MarkovTableCell(startValRow, c, colProportion, true, false, false);
+        for(int c=PROPORTION_COLUMN+1; c<sumCol; c++){
+            if(markovTable[PROPORTION_ROW][c]==null){
+                markovTable[PROPORTION_ROW][c] = new MarkovTableCell(PROPORTION_ROW, c, 0.0, true, false, false);
             }
-            colProportion = sumColumn((double)((MarkovTableCell)markovTable[startValRow][c]).getValue(), c, startValRow+1, markovTable);
+            double colProportion = (double)((MarkovTableCell)markovTable[PROPORTION_ROW][c]).getValue();
+            double amountLeftCol = sumColumn(colProportion, c, PROPORTION_ROW+1, sumRow, markovTable);
             
             //set column total
             if(markovTable[sumRow][c] == null){
-                markovTable[sumRow][c] = new MarkovTableCell(sumRow, c, colProportion, true, false, false);
+                markovTable[sumRow][c] = new MarkovTableCell(sumRow, c, amountLeftCol, true, false, false);
             } else{
-                ((MarkovTableCell)markovTable[sumRow][c]).setValue(colProportion);
+                ((MarkovTableCell)markovTable[sumRow][c]).setValue(amountLeftCol);
             }
         }
         
         //calculate all rows
-        for(int r=startValRow+1;r<markovTable.length-1;r++){
-            if(markovTable[r][startValCol] == null){
-                markovTable[r][startValCol] = new MarkovTableCell(r, startValCol, rowProportion, true, false, false);
+        for(int r=PROPORTION_ROW+1; r<sumRow; r++){
+            if(markovTable[r][PROPORTION_COLUMN] == null){
+                markovTable[r][PROPORTION_COLUMN] = new MarkovTableCell(r, PROPORTION_COLUMN, 0.0, true, false, false);
             }
-            rowProportion = sumRow((double)((MarkovTableCell)markovTable[r][startValCol]).getValue(),r,startValCol+1, markovTable);
+            double rowProportion = (double)((MarkovTableCell)markovTable[r][PROPORTION_COLUMN]).getValue();
+            double amountLeftRow = sumRow(rowProportion, r, PROPORTION_COLUMN+1, sumCol, markovTable);
+            System.out.println("Row Propotion: " + rowProportion + ", Amount Left: " + amountLeftRow);
             
             if(markovTable[r][sumCol] == null){
-                markovTable[r][sumCol] = new MarkovTableCell(r, sumCol, rowProportion, true, false, false);
+                markovTable[r][sumCol] = new MarkovTableCell(r, sumCol, amountLeftRow, true, false, false);
+            } else{
+                ((MarkovTableCell)markovTable[r][sumCol]).setValue(amountLeftRow);
             }
         }
+        
         return markovTable;
     }
 
