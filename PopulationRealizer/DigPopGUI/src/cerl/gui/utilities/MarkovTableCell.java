@@ -128,6 +128,19 @@ public class MarkovTableCell {
     }
 
     /**
+     * Gets the class type of the value.
+     * @return 1 if Double, 2 if string, -1 otherwise
+     */
+    public int getClassOfValue(){
+        if(value.getClass() == Double.class){
+            return 1;
+        } else if(value.getClass() == String.class){
+            return 2;
+        }
+        return -1;
+    }
+    
+    /**
      * Sets the row index of the current cell.
      * @param row 
      */

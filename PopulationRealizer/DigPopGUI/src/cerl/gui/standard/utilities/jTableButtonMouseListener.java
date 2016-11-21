@@ -19,10 +19,19 @@ import javax.swing.JTable;
 public class jTableButtonMouseListener extends MouseAdapter {
     private final JTable table;
     
+    /***
+     * Handles the jTable Button mouse event
+     * @param table - The current JTable
+     */
     public jTableButtonMouseListener(JTable table){
         this.table = table;
     }
     
+    /***
+     * The mouse click event from the JTable
+     * If a button is in the cell, runs the button click event
+     * @param e 
+     */
     @Override
     public void mouseClicked(MouseEvent e){
         int column = table.getColumnModel().getColumnIndexAtX(e.getX());
