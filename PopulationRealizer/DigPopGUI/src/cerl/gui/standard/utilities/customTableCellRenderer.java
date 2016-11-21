@@ -41,8 +41,6 @@ public class customTableCellRenderer extends DefaultTableCellRenderer {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         MarkovTableModel tableModel = (MarkovTableModel) table.getModel();
         
-        //tableModel.calculateAmountLeft();
-        
         //set the cell colors based on it's status
         if(tableModel.isCellCalculated(row,column)){ //calculated
             c.setBackground(Color.ORANGE);
