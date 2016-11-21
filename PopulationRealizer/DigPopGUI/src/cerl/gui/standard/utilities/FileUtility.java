@@ -255,7 +255,7 @@ public class FileUtility {
     }
     
     public static String createNewValidCopyOfFileName(File file){
-        String newPath;
+        String newPath = null;
         
         boolean newValidFound = false;
         
