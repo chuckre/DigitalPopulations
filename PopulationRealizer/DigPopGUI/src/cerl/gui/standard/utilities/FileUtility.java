@@ -253,4 +253,22 @@ public class FileUtility {
         
         return result;
     }
+    
+    public static String createNewValidCopyOfFileName(File file){
+        String newPath;
+        
+        boolean newValidFound = false;
+        
+        int counter = 0;
+        
+        while(!newValidFound){
+            newPath = String.format("%s\\%s", file.getParent(), file.getName());
+            File newTestFile = new File(newPath);
+            if(newTestFile.exists()){
+                
+            }
+        }
+        
+        return newPath;
+    }
 }

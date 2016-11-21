@@ -15,6 +15,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="DigPopGUISaveFile")
 public class DigPopGUIInformation {
     
+    private String filePath;
+    
     private String createdDate;
     private String lastSaveDate;
 
@@ -190,5 +192,13 @@ public class DigPopGUIInformation {
 
     public void setLastSaveDate(String lastSaveDate) {
         this.lastSaveDate = lastSaveDate;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 }

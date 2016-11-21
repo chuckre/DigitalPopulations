@@ -11,6 +11,7 @@ import cerl.gui.standard.utilities.HelpFile;
 import cerl.gui.standard.utilities.Instruction;
 import cerl.gui.standard.utilities.Result;
 import java.io.File;
+import java.util.Calendar;
 
 /**
  *
@@ -41,5 +42,22 @@ public class DigPopGUIUtilityClass {
                         .getSelectedInstructionByName(instructionName);
         
         new HelpFileDisplay(selectedInstruction, newHelpFile).setVisible(true);
+    }
+    
+    public static Result saveDigPopGUIInformationSaveFile(
+            DigPopGUIInformation information, 
+            String path){
+        
+        information.setLastSaveDate(Calendar.getInstance().getTime().toString());
+        Result result = FileUtility.ParseObjectToXML(information, path, DigPopGUIInformation.class);
+        result.setValue(information);
+        
+        return result;
+    }
+    
+    public static Result readInDigPopGUIInformationSaveFile(String path){
+         Result result = FileUtility.ParseXMLFileIntoSpecifiedObject(path, DigPopGUIInformation.class);
+         
+         return result;
     }
 }
