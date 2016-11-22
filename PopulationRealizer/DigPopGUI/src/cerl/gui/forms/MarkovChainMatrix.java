@@ -85,12 +85,12 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         
         //load proportions
         //census - proportion min/max start the same
-        cellValues[0][2] = new MarkovTableCell(0, 2, 0.6965, 0.6965, 0.6965, false, false, false);
-        cellValues[0][3] = new MarkovTableCell(0, 3, 0.3035, 0.3035, 0.3035, false, false, false);
+        cellValues[0][2] = new MarkovTableCell(0, 2, 0.69, 0.69, 0.69, false, false, false);
+        cellValues[0][3] = new MarkovTableCell(0, 3, 0.30, 0.30, 0.30, false, false, false);
         cellValues[0][4] = new MarkovTableCell(0, 4, 0.0, 0.0, 0.0, false, false, false);
         //survey
-        cellValues[1][1] = new MarkovTableCell(1, 1, 0.6037, 0.6037, 0.6037, false, false, false);
-        cellValues[2][1] = new MarkovTableCell(2, 1, 0.3963, 0.3963, 0.3963, false, false, false);
+        cellValues[1][1] = new MarkovTableCell(1, 1, 0.60, 0.60, 0.60, false, false, false);
+        cellValues[2][1] = new MarkovTableCell(2, 1, 0.39, 0.39, 0.39, false, false, false);
         cellValues[3][1] = new MarkovTableCell(3, 1, 0.0, 0.0, 0.0, false, false, false);
         
         //create table with custom MarkovTableModel

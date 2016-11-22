@@ -37,9 +37,10 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
     
     /**
      * Sets up the min/max popup panel and adds data validations
+     * @param cellValue - The current string value of the current cell.
      * @return 
      */
-    public String setupDialog(){
+    public String setupDialog(String cellValue){
         String returnVal = "";
         JPanel myPanel = new JPanel();
         this.validationLabel = new JLabel();
@@ -68,6 +69,13 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
         min.setInputVerifier(verifyDoubles);
         max.setInputVerifier(verifyDoubles);
         
+        //populate with data from the cell, if data exists
+        int minValLocation = cellValue.indexOf(" - ");
+        if(minValLocation > 0){
+            min.setText(cellValue.substring(0, minValLocation));
+            max.setText(cellValue.substring(minValLocation+3));
+        }
+
         //Add textboxes and labels to the panel
         myPanel.add(new JLabel("Min:"));
         myPanel.add(min);
@@ -100,7 +108,10 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
      */
     @Override
     public Component getTableCellEditorComponent(JTable jtable, Object o, boolean bln, int i, int i1) {
-        String cellValue = setupDialog();
+        String cellValue = "";
+        if(o.getClass() == String.class){
+            cellValue = setupDialog(o.toString());
+        }
         JTextField cellEditor = (JTextField)super.getTableCellEditorComponent(jtable, o, bln, i, i1);
         
         if((cellValue != null) && (o!=null)){

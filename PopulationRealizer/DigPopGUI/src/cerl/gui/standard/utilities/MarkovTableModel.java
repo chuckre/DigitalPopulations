@@ -454,8 +454,8 @@ public class MarkovTableModel extends AbstractTableModel {
                 minVal = Double.parseDouble(thisCell.substring(0, minValLocation));
                 maxVal = Double.parseDouble(thisCell.substring(minValLocation+3));
 
-                System.out.println("minVal: " + minVal);
-                System.out.println("maxVal: " + maxVal);
+                System.out.println("minVal: " + minVal + ", " + DECIMAL_FORMAT.format(minVal));
+                System.out.println("maxVal: " + maxVal + ", " + DECIMAL_FORMAT.format(maxVal));
             }
         }
         
