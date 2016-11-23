@@ -20,6 +20,7 @@ public class MarkovTableCell {
     private double min;
     private Object value;
     private boolean calculated;
+    private boolean userEntered;
     private boolean error;
     private boolean editable;
 
@@ -29,14 +30,16 @@ public class MarkovTableCell {
      * @param column - the index of the column the cell will reside in the table
      * @param value - the value of the cell displayed to the user
      * @param calculated - true if the cell is calculated by the system
+     * @param userEntered - true if the cell was entered by a user
      * @param error - true if this cell causes an error in the Markov logic
      * @param editable - true if the cell can be edited by the user
      */
-    public MarkovTableCell(int row, int column, Object value, boolean calculated, boolean error, boolean editable) {
+    public MarkovTableCell(int row, int column, Object value, boolean calculated, boolean userEntered, boolean error, boolean editable) {
         this.row = row;
         this.column = column;
         this.value = value;
         this.calculated = calculated;
+        this.userEntered = userEntered;
         this.error = error;
         this.editable = editable;
     }
@@ -49,16 +52,18 @@ public class MarkovTableCell {
      * @param min - the minimum value entered for the cell
      * @param value - the value of the cell displayed to the user
      * @param calculated - true if the cell is calculated by the system
+     * @param userEntered - true if the cell was entered by a user
      * @param error - true if this cell causes an error in the Markov logic
      * @param editable - true if the cell can be edited by the user
      */
-    public MarkovTableCell(int row, int column, double max, double min, Object value, boolean calculated, boolean error, boolean editable) {
+    public MarkovTableCell(int row, int column, double max, double min, Object value, boolean calculated, boolean userEntered, boolean error, boolean editable) {
         this.row = row;
         this.column = column;
         this.max = max;
         this.min = min;
         this.value = value;
         this.calculated = calculated;
+        this.userEntered = userEntered;
         this.error = error;
         this.editable = editable;
     }
@@ -109,6 +114,14 @@ public class MarkovTableCell {
      */
     public boolean isCalculated() {
         return calculated;
+    }
+
+    /**
+     * Returns true if the cell value was entered by a user
+     * @return 
+     */
+    public boolean isUserEntered() {
+        return userEntered;
     }
 
     /**
@@ -188,6 +201,14 @@ public class MarkovTableCell {
         this.calculated = calculated;
     }
 
+    /**
+     * Updates the flag if the current cell was entered by a user
+     * @param userEntered 
+     */
+    public void setUserEntered(boolean userEntered) {
+        this.userEntered = userEntered;
+    }
+    
     /**
      * Updates the flag if the current cell does not abide by the Markov logic
      * @param error 

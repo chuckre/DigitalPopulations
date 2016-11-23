@@ -90,7 +90,6 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
         int result = JOptionPane.showConfirmDialog(null, myPanel, "Please enter min and max values", JOptionPane.OK_CANCEL_OPTION);
         if(result == JOptionPane.OK_OPTION){
             returnVal = min.getText() + " - " + max.getText();
-            System.out.println(min.getText() + " - " + max.getText());
         } else if(result == JOptionPane.CANCEL_OPTION){
             //do nothing
             return null;
@@ -160,7 +159,7 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
         @Override
         public boolean verify(JComponent input){
             JTextField text = (JTextField)input;
-            System.out.println("row Proportion: " + rowProportion + ", and column Proportion: " + colProportion);
+            
             try{
                 double num = Double.parseDouble(text.getText());
                 if((num > 0.99) || (num < 0)){

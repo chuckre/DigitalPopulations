@@ -50,6 +50,8 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         
         //adds the listener for the cell calculations
         jTable_MarkovMatrix.getModel().addTableModelListener(new markovTableModelListener(jTable_MarkovMatrix));
+        //hide error messages until needed
+        jLabel_ErrorMessages.setVisible(false);
     }
 
     private MarkovTableModel populateMarkovTableModel(){
@@ -65,36 +67,37 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         START_EDITABLE_COL = 2;
         END_EDITABLE_ROW = 3;
         END_EDITABLE_COL = 4;
+        int[][] cells = new int[2][Math.max(END_EDITABLE_COL-START_EDITABLE_COL, END_EDITABLE_ROW-START_EDITABLE_ROW)+1];
         
-        //MarkovTableCell(int row, int column, Object value, boolean calculated, boolean error, boolean editable)
-        cellValues[0][0] = new MarkovTableCell(0, 0, "Value", false, false, false);
-        cellValues[4][0] = new MarkovTableCell(4, 0, "Amount Left", false, false, false);
-        cellValues[5][0] = new MarkovTableCell(5, 0, "", false, false, false);
-        cellValues[0][1] = new MarkovTableCell(0, 1, "Proportion", false, false, false);
+        //MarkovTableCell(int row, int column, Object value, boolean calculated, boolean userEntered, boolean error, boolean editable)
+        cellValues[0][0] = new MarkovTableCell(0, 0, "Value", false, false, false, false);
+        cellValues[4][0] = new MarkovTableCell(4, 0, "Amount Left", false, false, false, false);
+        cellValues[5][0] = new MarkovTableCell(5, 0, "", false, false, false, false);
+        cellValues[0][1] = new MarkovTableCell(0, 1, "Proportion", false, false, false, false);
         //non-editable corner cells
-        cellValues[0][5] = new MarkovTableCell(0, 5, "Range Min:    Range Max:", false, false, false);
-        cellValues[0][6] = new MarkovTableCell(0, 6, "", false, false, false);
-        cellValues[4][1] = new MarkovTableCell(4, 1, "Range Min:    Range Max:", false, false, false);
-        cellValues[5][1] = new MarkovTableCell(5, 1, "", false, false, false);
-        cellValues[5][6] = new MarkovTableCell(5, 6, "", false, false, false);
+        cellValues[0][5] = new MarkovTableCell(0, 5, "Range Min:    Range Max:", false, false, false, false);
+        cellValues[0][6] = new MarkovTableCell(0, 6, "", false, false, false, false);
+        cellValues[4][1] = new MarkovTableCell(4, 1, "Range Min:    Range Max:", false, false, false, false);
+        cellValues[5][1] = new MarkovTableCell(5, 1, "", false, false, false, false);
+        cellValues[5][6] = new MarkovTableCell(5, 6, "", false, false, false, false);
               
         //Survey Values
-        cellValues[1][0] = new MarkovTableCell(1, 1, "Yes Electricity", false, false, false);
-        cellValues[2][0] = new MarkovTableCell(2, 1, "No Electricity", false, false, false);
-        cellValues[3][0] = new MarkovTableCell(3, 1, "N/A", false, false, false);
+        cellValues[1][0] = new MarkovTableCell(1, 1, "Yes Electricity", false, false, false, false);
+        cellValues[2][0] = new MarkovTableCell(2, 1, "No Electricity", false, false, false, false);
+        cellValues[3][0] = new MarkovTableCell(3, 1, "N/A", false, false, false, false);
         
         //load proportions
         //census - proportion min/max start the same
-        cellValues[0][2] = new MarkovTableCell(0, 2, 0.69, 0.69, 0.69, false, false, false);
-        cellValues[0][3] = new MarkovTableCell(0, 3, 0.30, 0.30, 0.30, false, false, false);
-        cellValues[0][4] = new MarkovTableCell(0, 4, 0.0, 0.0, 0.0, false, false, false);
+        cellValues[0][2] = new MarkovTableCell(0, 2, 0.59, 0.59, 0.59, false, false, false, false);
+        cellValues[0][3] = new MarkovTableCell(0, 3, 0.30, 0.30, 0.30, false, false, false, false);
+        cellValues[0][4] = new MarkovTableCell(0, 4, 0.10, 0.10, 0.10, false, false, false, false);
         //survey
-        cellValues[1][1] = new MarkovTableCell(1, 1, 0.60, 0.60, 0.60, false, false, false);
-        cellValues[2][1] = new MarkovTableCell(2, 1, 0.39, 0.39, 0.39, false, false, false);
-        cellValues[3][1] = new MarkovTableCell(3, 1, 0.0, 0.0, 0.0, false, false, false);
+        cellValues[1][1] = new MarkovTableCell(1, 1, 0.40, 0.40, 0.40, false, false, false, false);
+        cellValues[2][1] = new MarkovTableCell(2, 1, 0.39, 0.39, 0.39, false, false, false, false);
+        cellValues[3][1] = new MarkovTableCell(3, 1, 0.20, 0.20, 0.20, false, false, false, false);
         
         //create table with custom MarkovTableModel
-        MarkovTableModel mtmTable = new MarkovTableModel(columnNames, cellValues);
+        MarkovTableModel mtmTable = new MarkovTableModel(columnNames, cellValues,cells);
         
         return mtmTable;
     }
