@@ -116,6 +116,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         jButton_Cancel = new javax.swing.JButton();
         jButton_Save = new javax.swing.JButton();
         jButton_Clear = new javax.swing.JButton();
+        jLabel_ErrorMessages = new javax.swing.JLabel();
         jMenuBar_FileMenu = new javax.swing.JMenuBar();
         jMenu_FileTab = new javax.swing.JMenu();
         jMenu_EditTab = new javax.swing.JMenu();
@@ -177,6 +178,9 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
             }
         });
 
+        jLabel_ErrorMessages.setForeground(java.awt.Color.red);
+        jLabel_ErrorMessages.setText("jLabel1");
+
         jMenuBar_FileMenu.setName("Markov Chain Matrix"); // NOI18N
 
         jMenu_FileTab.setText("File");
@@ -210,7 +214,10 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
                                 .addComponent(jButton_Cancel)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton_Save))
-                            .addComponent(jButton_Clear))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton_Clear)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel_ErrorMessages)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -222,7 +229,9 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
                     .addComponent(jTextField_MarkovName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel_MarkovName))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_Clear)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton_Clear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel_ErrorMessages, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -321,6 +330,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     private javax.swing.JButton jButton_Cancel;
     private javax.swing.JButton jButton_Clear;
     private javax.swing.JButton jButton_Save;
+    private javax.swing.JLabel jLabel_ErrorMessages;
     private javax.swing.JLabel jLabel_MarkovName;
     private javax.swing.JMenuBar jMenuBar_FileMenu;
     private javax.swing.JMenu jMenu_EditTab;

@@ -27,6 +27,8 @@ import javax.swing.table.TableCellEditor;
  */
 public class customTableCellEditor extends DefaultCellEditor implements TableCellEditor {
     private JLabel validationLabel;
+    private double rowProportion;
+    private double colProportion;
     
     /**
      * Creates a new customTableCellEditor
@@ -109,6 +111,17 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
     @Override
     public Component getTableCellEditorComponent(JTable jtable, Object o, boolean bln, int i, int i1) {
         String cellValue = "";
+        
+        //get column Proportion for validation errors
+        if((jtable.getValueAt(0, i1) != null) && (jtable.getValueAt(0, i1).getClass() == Double.class)){
+            colProportion = (double)jtable.getValueAt(0, i1);
+        } 
+        
+        //get row Proportion for validation errors
+        if((jtable.getValueAt(i, 1) != null) && (jtable.getValueAt(i, 1).getClass() == Double.class)){
+            rowProportion = (double)(jtable.getValueAt(i, 1));
+        }
+        
         if(o.getClass() == String.class){
             cellValue = setupDialog(o.toString());
         }
@@ -147,10 +160,14 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
         @Override
         public boolean verify(JComponent input){
             JTextField text = (JTextField)input;
+            System.out.println("row Proportion: " + rowProportion + ", and column Proportion: " + colProportion);
             try{
                 double num = Double.parseDouble(text.getText());
                 if((num > 0.99) || (num < 0)){
                     validationLabel.setText("Values must be between 0 and 0.99");
+                    return false;
+                } else if ((num > rowProportion) || (num > colProportion)){
+                    validationLabel.setText("<html>Values must be less than or equal to the proportion<br> for the row/column.</html>");
                     return false;
                 }
                 validationLabel.setText("");

@@ -203,6 +203,9 @@ public class MarkovTableModel extends AbstractTableModel {
         return total;
     }
         
+    /**
+     * Runs the calculate function, to update the total rows
+     */
     public void calculateAmountLeft(){
         //uses model to recalculate
         //calculated "Amount Left" columns are the 2nd to last row and column
