@@ -9,6 +9,7 @@ import cerl.gui.standard.utilities.HelpFile;
 import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.Result;
 import cerl.gui.utilities.DigPopGUIInformation;
+import cerl.gui.utilities.DigPopGUIUtilityClass;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -63,6 +64,11 @@ public class FileUtilityJUnitTest {
 //        assertEquals(2, screens.size());
         //  Result result = FileUtility.getFileExtension("Testerhjhjkh.hjkhk", '.');
         //   System.out.println(result.getValue());
+    }
+    
+    @Test
+    public void tester(){
+        DigPopGUIUtilityClass.convertCSVFileToCensusEnumerationsObject("P:\\CERL\\md_sample-data\\md_census_enumerations.csv", ",");
     }
 
     @Test
