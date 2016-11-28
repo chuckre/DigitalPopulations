@@ -66,8 +66,7 @@ public class DigPopGUIUtilityClass {
     
     
     public static CensusEnumerations convertCSVFileToCensusEnumerationsObject(
-            String filePath,
-            String cvsSplitBy){
+            String filePath){
         
         CensusEnumerations returnObject = new CensusEnumerations();
         
@@ -117,6 +116,69 @@ public class DigPopGUIUtilityClass {
                     }
                     
                     returnObject.addCensusEnumerations(newLine);
+                }
+                
+                lineCount++;
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        return returnObject;
+    }
+    
+    public static SurveyMicroDataHouseHolds convertCSVFileToSurveyMicroDataHouseHoldsObject(
+            String filePath){
+        
+        SurveyMicroDataHouseHolds returnObject = new SurveyMicroDataHouseHolds();
+        
+        String line = "";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            
+            int lineCount = 1;
+            String[] classes = null;
+
+            while ((line = br.readLine()) != null) {
+                
+                // use comma as separator
+                String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                
+                if(lineCount == 1){
+                    /**
+                     * Need to read in the first row to get the class names. 
+                     */
+                    
+                    classes = new String[lineInfo.length];
+                    
+                    for(int count = 8; count < lineInfo.length; count++){
+                        classes[count] = lineInfo[count];
+                    }
+                
+                }
+                else {
+
+                    SurveyMicroDataHouseHold newLine = new SurveyMicroDataHouseHold();
+                    newLine.setInsp(lineInfo[0]);
+                    newLine.setRT(lineInfo[1]);
+                    newLine.setSERIALNO(lineInfo[2]);
+                    newLine.setDIVISION(lineInfo[3]);
+                    newLine.setPUMA00(lineInfo[4]);
+                    newLine.setPUMA10(lineInfo[5]);
+                    newLine.setREGION(lineInfo[6]);
+                    newLine.setST(lineInfo[7]);
+                    
+                    for(int count = 8; count < lineInfo.length; count++){
+                        SurveyMicroDataHouseHoldClass surveyMicroDataHouseHoldClass = new SurveyMicroDataHouseHoldClass();
+                        surveyMicroDataHouseHoldClass.setClassName(classes[count]);
+                        surveyMicroDataHouseHoldClass.setValue(lineInfo[count]);
+                        
+                        newLine.addSurveyMicroDataHouseHoldClass(surveyMicroDataHouseHoldClass);
+                    }
+                    
+                    returnObject.addSurveyMicroDataHouseHolds(newLine);
                 }
                 
                 lineCount++;

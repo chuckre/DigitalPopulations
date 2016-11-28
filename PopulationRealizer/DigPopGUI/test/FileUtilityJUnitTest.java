@@ -11,6 +11,7 @@ import cerl.gui.standard.utilities.Result;
 import cerl.gui.utilities.CensusEnumerations;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.SurveyMicroDataHouseHolds;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -69,7 +70,14 @@ public class FileUtilityJUnitTest {
     
     @Test
     public void tester(){
-        CensusEnumerations tester = DigPopGUIUtilityClass.convertCSVFileToCensusEnumerationsObject("P:\\CERL\\md_sample-data\\md_census_enumerations.csv", ",");
+        CensusEnumerations tester = DigPopGUIUtilityClass.convertCSVFileToCensusEnumerationsObject("P:\\CERL\\md_sample-data\\md_census_enumerations.csv");
+        
+        System.out.println(tester);
+    }
+    
+    @Test
+    public void convertCSVFileToSurveyMicroDataHouseHoldsObjectTester(){
+        SurveyMicroDataHouseHolds tester = DigPopGUIUtilityClass.convertCSVFileToSurveyMicroDataHouseHoldsObject("P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv");
         
         System.out.println(tester);
     }
