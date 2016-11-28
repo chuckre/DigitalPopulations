@@ -57,8 +57,6 @@ public class HelpFile {
         return foundScreen;
     }
 
-    
-
     @Override
     public String toString() {
         return name + " Help Information";

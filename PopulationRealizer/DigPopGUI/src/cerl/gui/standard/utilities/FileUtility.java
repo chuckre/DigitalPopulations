@@ -5,12 +5,20 @@
  */
 package cerl.gui.standard.utilities;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 /**
@@ -204,4 +212,66 @@ public class FileUtility {
 
         return result;
     }
+    
+    public static Result ParseObjectToXML(
+            Object objectToParseIntoXML, 
+            String filePath,
+            Class classType){
+        Result result = new Result();
+        
+        try {
+            File file = new File(filePath);
+            
+            JAXBContext jaxbContext = JAXBContext.newInstance(classType);
+            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            
+            jaxbMarshaller.marshal(objectToParseIntoXML, file);
+            jaxbMarshaller.marshal(objectToParseIntoXML, System.out);
+            
+            result.setSuccess(true);
+            
+        } catch (JAXBException ex) {
+            result.setErrorMessage(
+                    "ParseObjectToXML",
+                    ex.getMessage());
+            result.setSuccess(false);
+        }
+        
+        return result;
+    }
+    
+    public static String createNewFileName(Boolean addCurrentDateTime, String starterName, FileType type){
+        String result = "";
+        
+        if(addCurrentDateTime){
+            String dateString = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+            result = String.format(
+                    "%s_%s.%s", 
+                    dateString,
+                    starterName,
+                    type.toString());
+        }
+        
+        return result;
+    }
+    
+    public static String createNewValidCopyOfFileName(File file){
+        String newPath = null;
+        
+        boolean newValidFound = false;
+        
+        int counter = 0;
+        
+        while(!newValidFound){
+            newPath = String.format("%s\\%s", file.getParent(), file.getName());
+            File newTestFile = new File(newPath);
+            if(newTestFile.exists()){
+                
+            }
+        }
+        
+        return newPath;
+    }
+    
 }

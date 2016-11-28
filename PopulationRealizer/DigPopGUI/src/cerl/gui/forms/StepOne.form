@@ -13,6 +13,11 @@
             <Property name="text" type="java.lang.String" value="File"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemSave">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Save"/>
+              </Properties>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemExitApplication">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Exit Application"/>
@@ -55,20 +60,23 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanelStepOne" max="32767" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="354" max="-2" attributes="0"/>
+              <Component id="lblErrorMessages" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanelStepOne" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="btnNextStep" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="354" max="-2" attributes="0"/>
-              <Component id="lblErrorMessages" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -77,10 +85,10 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="lblErrorMessages" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanelStepOne" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jPanelStepOne" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="btnNextStep" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -118,13 +126,13 @@
                   <Component id="jPanelLandUseHouseholdMap" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jPanelRegionMapCensusEnum" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                   <Component id="jPanelConstraintMap" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jPanelPopulationMicroData" min="-2" pref="46" max="-2" attributes="0"/>
+                  <Component id="jPanelPopulationMicroData" min="-2" pref="58" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jPanelHouseholdMicroData" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jPanelHouseholdMicroData" pref="57" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -143,20 +151,26 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="rbtnLandUseMap" pref="96" max="32767" attributes="0"/>
+                              <Component id="rbtnLandUseMap" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="rbtnHouseholdDensityMap" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="rbtnHouseholdDensityMap" pref="140" max="32767" attributes="0"/>
-                              <EmptySpace min="-2" pref="373" max="-2" attributes="0"/>
+                              <Component id="landUseHouseholdDensityMapInfoIcon" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="618" max="-2" attributes="0"/>
                               <Component id="btnLandMapHouseholdMap" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="txtLandUseHouseholdMap" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblLandUseHouseholdDensityMapErrorMessage" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -170,10 +184,12 @@
                               <Component id="rbtnHouseholdDensityMap" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="rbtnLandUseMap" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="landUseHouseholdDensityMapInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="txtLandUseHouseholdMap" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="lblLandUseHouseholdDensityMapErrorMessage" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -209,6 +225,7 @@
             <Component class="javax.swing.JButton" name="btnLandMapHouseholdMap">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Select ASC File"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLandMapHouseholdMapActionPerformed"/>
@@ -233,6 +250,28 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JLabel" name="landUseHouseholdDensityMapInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="landUseHouseholdDensityMapInfoIconMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblLandUseHouseholdDensityMapErrorMessage">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="cc" type="rgb"/>
+                </Property>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanelRegionMapCensusEnum">
@@ -250,18 +289,34 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblRegionMap" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="regionMapInfoIcon" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="lblRegionMapErrorMessage" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="txtRegionMap" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="lblCensusEnumerations" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtCensusEnumerations" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="lblRegionMap" min="-2" max="-2" attributes="0"/>
+                              <Component id="censusEnumerationsInfoIcon" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtRegionMap" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="lblCensusEnumerationsErrorMessage" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="txtCensusEnumerations" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnRegionMap" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="btnCensusEnumerations" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -274,17 +329,29 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtRegionMap" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnRegionMap" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblRegionMap" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txtRegionMap" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnRegionMap" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                              <Component id="lblRegionMap" min="-2" max="-2" attributes="0"/>
+                              <Component id="regionMapInfoIcon" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtCensusEnumerations" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnCensusEnumerations" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblCensusEnumerations" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblRegionMapErrorMessage" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txtCensusEnumerations" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnCensusEnumerations" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="censusEnumerationsInfoIcon" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCensusEnumerations" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblCensusEnumerationsErrorMessage" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -327,6 +394,50 @@
                 <Property name="text" type="java.lang.String" value="Census Enumerations:"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JLabel" name="censusEnumerationsInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="censusEnumerationsInfoIconMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="regionMapInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIconMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblRegionMapErrorMessage">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="cc" type="rgb"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblCensusEnumerationsErrorMessage">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="cc" type="rgb"/>
+                </Property>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanelConstraintMap">
@@ -344,12 +455,16 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane2" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="lblConstraintMap" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="constraintMapsInfoIcon" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lblConstraintMapsErrorMessage" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnConstaintMap" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -362,12 +477,16 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnConstaintMap" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblConstraintMap" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="btnConstaintMap" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblConstraintMap" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="constraintMapsInfoIcon" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblConstraintMapsErrorMessage" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" pref="87" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" pref="102" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -408,6 +527,28 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JLabel" name="constraintMapsInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="constraintMapsInfoIconMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblConstraintMapsErrorMessage">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="cc" type="rgb"/>
+                </Property>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanelHouseholdMicroData">
@@ -429,9 +570,19 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblHouseholdMicroData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtHouseholdMicroData" max="32767" attributes="0"/>
+                      <Component id="householdMicroDataInfoIcon" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnHouseholdMicroData" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="lblHouseholdMicroDataErrorMessage" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="txtHouseholdMicroData" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnHouseholdMicroData" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -440,11 +591,16 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtHouseholdMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnHouseholdMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblHouseholdMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="householdMicroDataInfoIcon" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txtHouseholdMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnHouseholdMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblHouseholdMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblHouseholdMicroDataErrorMessage" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -469,6 +625,28 @@
                 <Property name="text" type="java.lang.String" value="Household Micro-data:"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JLabel" name="householdMicroDataInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="householdMicroDataInfoIconMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblHouseholdMicroDataErrorMessage">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="cc" type="rgb"/>
+                </Property>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanelPopulationMicroData">
@@ -490,22 +668,37 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblPopulationMicroData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtPopulationMicroData" max="32767" attributes="0"/>
+                      <Component id="populationMicroDataInfoIcon" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnPopulationMicroData" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="lblPopulationMicroDataErrorMessage" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="txtPopulationMicroData" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnPopulationMicroData" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtPopulationMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnPopulationMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblPopulationMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="populationMicroDataInfoIcon" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txtPopulationMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnPopulationMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblPopulationMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblPopulationMicroDataErrorMessage" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -528,6 +721,28 @@
             <Component class="javax.swing.JLabel" name="lblPopulationMicroData">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Population Micro-data (Optional):"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="populationMicroDataInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="populationMicroDataInfoIconMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblPopulationMicroDataErrorMessage">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="12" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="cc" type="rgb"/>
+                </Property>
               </Properties>
             </Component>
           </SubComponents>

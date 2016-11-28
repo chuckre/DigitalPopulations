@@ -3,22 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cerl.gui;
+package cerl.gui.utilities;
 
-import cerl.gui.utilities.RunFile;
+import java.util.ArrayList;
+
 /**
  *
  * @author ajohnson
  */
-public class CERLGUI {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-       
-        
-       
-    }
+public class SurveyMicroDataHouseHolds {
+    
     
 }

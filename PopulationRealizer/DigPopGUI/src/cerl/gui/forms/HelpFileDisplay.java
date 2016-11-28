@@ -8,7 +8,10 @@ package cerl.gui.forms;
 import cerl.gui.standard.utilities.HelpFile;
 import cerl.gui.standard.utilities.Instruction;
 import cerl.gui.standard.utilities.Screen;
+import java.awt.print.PrinterException;
 import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
@@ -38,6 +41,14 @@ public class HelpFileDisplay extends javax.swing.JFrame {
         }
         
         setSelected(defaultSelected);
+        
+        /**
+         * This makes sure we are always seeing the top of 
+         * the text box when the form is opened. 
+         */
+        txtDisplay.setCaretPosition(0);
+        
+        this.setAlwaysOnTop(true);
     }
     
     /**
@@ -50,15 +61,19 @@ public class HelpFileDisplay extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPaneHelpFileDisplay = new javax.swing.JScrollPane();
-        txtDisplay = new javax.swing.JTextPane();
+        txtDisplay = new javax.swing.JEditorPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         treeHelpFileSelect = new javax.swing.JTree();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        txtDisplay.setEditable(false);
+        txtDisplay.setContentType("text/html"); // NOI18N
         jScrollPaneHelpFileDisplay.setViewportView(txtDisplay);
 
         treeHelpFileSelect.setMaximumSize(new java.awt.Dimension(100, 2147483647));
@@ -70,10 +85,19 @@ public class HelpFileDisplay extends javax.swing.JFrame {
         jScrollPane2.setViewportView(treeHelpFileSelect);
 
         jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        jMenuItem2.setText("Print");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem1.setText("Exit");
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
 
@@ -83,9 +107,9 @@ public class HelpFileDisplay extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPaneHelpFileDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPaneHelpFileDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -94,9 +118,7 @@ public class HelpFileDisplay extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPaneHelpFileDisplay, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -130,45 +152,13 @@ public class HelpFileDisplay extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_treeHelpFileSelectValueChanged
 
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(HelpFileDisplay.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(HelpFileDisplay.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(HelpFileDisplay.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(HelpFileDisplay.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                
-//                HelpFile newHelpFile = DigPopGUIUtilityClass.getDefaultHelpFile();
-//                
-//                new HelpFileDisplay(newHelpFile.getScreen().get(5), newHelpFile).setVisible(true);
-//            }
-//        });
-//        
-//        
-//    }
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        try {
+            txtDisplay.print();
+        } catch (PrinterException ex) {
+            Logger.getLogger(HelpFileDisplay.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
     
     private void LoadTree()
     {
@@ -196,11 +186,12 @@ public class HelpFileDisplay extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPaneHelpFileDisplay;
     private javax.swing.JTree treeHelpFileSelect;
-    private javax.swing.JTextPane txtDisplay;
+    private javax.swing.JEditorPane txtDisplay;
     // End of variables declaration//GEN-END:variables
 }
