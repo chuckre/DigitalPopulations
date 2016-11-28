@@ -53,6 +53,13 @@ public class MarkovTableModel extends AbstractTableModel {
         populateEmptyCells();
     }
 
+    /**
+     * Populates the empty cell array, to be used for calculating remaining cells
+     * emptyCells[0] tracks the empty cells per row 
+     *      (e.g. emptyCells[0][5] is the number of empty cells in row 5)
+     * emptyCells[1] tracks the empty cells per column 
+     *      (e.g. emptyCells[1][7] is the number of empty cells in the 7th column)
+     */
     private void populateEmptyCells(){
         int numRows = emptyCells[0].length;
         int numCols = emptyCells[1].length;
@@ -78,9 +85,11 @@ public class MarkovTableModel extends AbstractTableModel {
         for (int r = startRow; r <= endRow; r++) {
             for (int c = startCol; c <= endCol; c++) {
                 this.setValueAt("", r, c);
-                this.fireTableCellUpdated(r, c);
+                ((MarkovTableCell) (markovTable[r][c])).setCalculated(false);
+                ((MarkovTableCell) (markovTable[r][c])).setUserEntered(false);
             }
         }
+        populateEmptyCells();
     }
 
     /**
@@ -93,8 +102,16 @@ public class MarkovTableModel extends AbstractTableModel {
         for (int c = 0; c < markovTable[row].length; c++) {
             if (isCellEditable(row, c)) {
                 this.setValueAt("", row, c);
-                this.fireTableCellUpdated(row, c);
+                ((MarkovTableCell) (markovTable[row][c])).setCalculated(false);
+                ((MarkovTableCell) (markovTable[row][c])).setUserEntered(false);
             }
+        }
+        
+        int numRows = emptyCells[0].length;
+        int numCols = emptyCells[1].length;
+        
+        for(int r=0; r<numRows; r++){
+            emptyCells[0][r] = numCols; //in a row, there are numCols cells
         }
     }
 
@@ -108,8 +125,16 @@ public class MarkovTableModel extends AbstractTableModel {
         for (int r = 0; r < markovTable.length; r++) {
             if (isCellEditable(r, column)) {
                 this.setValueAt("", r, column);
-                this.fireTableCellUpdated(r, column);
+                ((MarkovTableCell) (markovTable[r][column])).setCalculated(false);
+                ((MarkovTableCell) (markovTable[r][column])).setUserEntered(false);
             }
+        }
+        
+        int numRows = emptyCells[0].length;
+        int numCols = emptyCells[1].length;
+        
+        for(int c=0; c<numCols; c++){
+            emptyCells[1][c] = numRows; //in a column, there are numRows cells
         }
     }
 
@@ -524,21 +549,26 @@ public class MarkovTableModel extends AbstractTableModel {
                 minVal = Double.parseDouble(thisCell.substring(0, minValLocation));
                 maxVal = Double.parseDouble(thisCell.substring(minValLocation+3));
             }
-        }
+            
+            if(value != ""){
+                System.out.println("Updated empty cells");
+                emptyCells[0][row-PROPORTION_ROW-1] = emptyCells[0][row-PROPORTION_ROW-1] - 1;
+                emptyCells[1][col-PROPORTION_COLUMN-1] = emptyCells[1][col-PROPORTION_COLUMN-1] - 1;
+            }
+        } 
         
         if (markovTable[row][col] == null) {
             markovTable[row][col] = new MarkovTableCell(row, col, maxVal, minVal, value, false, false, false, true); 
-            //markovTable[row][col] = new MarkovTableCell(row, col, value, false, false, true);
         } else if (markovTable[row][col].getClass().equals(MarkovTableCell.class)) {
             ((MarkovTableCell) (markovTable[row][col])).setMin(minVal);
             ((MarkovTableCell) (markovTable[row][col])).setMax(maxVal);
             ((MarkovTableCell) (markovTable[row][col])).setValue(value);
             ((MarkovTableCell) (markovTable[row][col])).setUserEntered(true);
+            ((MarkovTableCell) (markovTable[row][col])).setCalculated(false);
         } else {
             markovTable[row][col] = value;
         }
-        emptyCells[0][row-PROPORTION_ROW-1] = emptyCells[0][row-PROPORTION_ROW-1] - 1;
-        emptyCells[1][col-PROPORTION_COLUMN-1] = emptyCells[1][col-PROPORTION_COLUMN-1] - 1;
+        
         this.calculateMarkov(row, col);
         this.fireTableCellUpdated(row, col);
     }
