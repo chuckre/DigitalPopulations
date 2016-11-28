@@ -12,6 +12,7 @@ import cerl.gui.utilities.CensusEnumerations;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.SurveyMicroDataHouseHolds;
+import cerl.gui.utilities.SurveyMicroDataPeoples;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -81,7 +82,29 @@ public class FileUtilityJUnitTest {
         
         System.out.println(tester);
     }
-
+    
+    @Test
+    public void convertCSVFileToSurveyMicroDataPeoplesObjectTester(){
+        
+        System.out.println(Integer.MAX_VALUE);
+        
+        
+        long tStart = System.currentTimeMillis();
+        System.out.println(tStart);
+        SurveyMicroDataPeoples tester = DigPopGUIUtilityClass.convertCSVFileToSurveyMicroDataPeoplesObject("P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv");
+        
+        System.out.println("Here");//tester);
+        
+        
+        
+        long tEnd = System.currentTimeMillis();
+        System.out.println(tEnd);
+        long tDelta = tEnd - tStart;
+        double elapsedSeconds = tDelta / 1000.0;
+        System.out.println(elapsedSeconds);
+    }
+    
+ 
     @Test
     public void createTextFileFromString() throws IOException {
         File temp = File.createTempFile("temp-file-name", ".txt");
