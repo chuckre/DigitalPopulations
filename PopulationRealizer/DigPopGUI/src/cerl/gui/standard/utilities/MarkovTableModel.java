@@ -152,7 +152,7 @@ public class MarkovTableModel extends AbstractTableModel {
         }
         
         //looks at all rows
-        for(int r = 0; r<emptyCells[0].length; r++){
+        /*for(int r = 0; r<emptyCells[0].length; r++){
             if(emptyCells[0][r] == 1){ //if the row only has one cell left to fill
                 //can be calculated
                 int rowWithEmptyCell = r+PROPORTION_ROW+1;
@@ -169,7 +169,7 @@ public class MarkovTableModel extends AbstractTableModel {
                     }
                 }
             }
-        }
+        }*/
         
         //look at all columns
         for(int c = 0; c<emptyCells[1].length; c++){ 
@@ -265,14 +265,51 @@ public class MarkovTableModel extends AbstractTableModel {
      * @return total amount left, total-sum(all values in row starting at start column)
      */
     private double sumRow(double total, int row, int startCol, int sumCol, Object[][] thisTable, String minOrMax){
+        int rowWithEmptyCell = 0;
+        int colWithEmptyCell = 0;
+        
+        //looks at all rows
+        for(int r = 0; r<emptyCells[0].length; r++){
+            if(emptyCells[0][r] == 1){ //if the row only has one cell left to fill
+                //can be calculated
+                rowWithEmptyCell = r+PROPORTION_ROW+1;
+                System.out.println("Can update row:" + rowWithEmptyCell);
+                break;
+            }
+        }
+        
         for(int c=startCol;c<sumCol;c++){
             if(thisTable[row][c] != null){
                 MarkovTableCell currentCell = (MarkovTableCell)thisTable[row][c];
                 
                 total = getTotalByClass(currentCell, total, minOrMax);
             }
+            
+            //check columns in this row for the empty cell
+            if(!((MarkovTableCell)(markovTable[rowWithEmptyCell][c])).isUserEntered() && (rowWithEmptyCell > PROPORTION_ROW)){
+                System.out.println("Updated cell:" + c + ", Row: " + rowWithEmptyCell + " proportion: " + PROPORTION_ROW);
+                ((MarkovTableCell) (markovTable[rowWithEmptyCell][c])).setCalculated(true);
+                emptyCells[0][rowWithEmptyCell-1-PROPORTION_ROW] = emptyCells[0][rowWithEmptyCell-1-PROPORTION_ROW] - 1;
+                colWithEmptyCell = c;
+                //break;
+            }
         }
         
+        System.out.println(minOrMax + " Column with empty cell: " + colWithEmptyCell + ", total: " + total);
+        if((colWithEmptyCell > 0) && (minOrMax != null)){
+            if(minOrMax == "Min"){
+                System.out.println("Updated Min for row: " + rowWithEmptyCell + " col: " + colWithEmptyCell + " to: " + total);
+                ((MarkovTableCell) (markovTable[rowWithEmptyCell][colWithEmptyCell])).setMin(total);
+            } else if(minOrMax == "Max"){
+                System.out.println("Updated Max for row: " + rowWithEmptyCell + " col: " + colWithEmptyCell + " to: " + total);
+                ((MarkovTableCell) (markovTable[rowWithEmptyCell][colWithEmptyCell])).setMax(total);
+            } else{
+                System.out.println("Updated Value for row: " + rowWithEmptyCell + " col: " + colWithEmptyCell + " to: " + total);
+                ((MarkovTableCell) (markovTable[rowWithEmptyCell][colWithEmptyCell])).setValue(total);
+            }
+            this.setOrClearErrors(rowWithEmptyCell,colWithEmptyCell);
+            total = 0;
+        }
         return total;
     }
     
@@ -428,7 +465,7 @@ public class MarkovTableModel extends AbstractTableModel {
                 MarkovTableCell thisCell = (MarkovTableCell)markovTable[row][column];
                 
                 if(thisCell.isEditable()){
-                    return thisCell.getMin() + " - " + thisCell.getMax();
+                    return DECIMAL_FORMAT.format(thisCell.getMin()) + " - " + DECIMAL_FORMAT.format(thisCell.getMax());
                 }else{
                     return thisCell.getValue();
                 }
@@ -557,6 +594,7 @@ public class MarkovTableModel extends AbstractTableModel {
             }
         } 
         
+        
         if (markovTable[row][col] == null) {
             markovTable[row][col] = new MarkovTableCell(row, col, maxVal, minVal, value, false, false, false, true); 
         } else if (markovTable[row][col].getClass().equals(MarkovTableCell.class)) {
@@ -569,7 +607,22 @@ public class MarkovTableModel extends AbstractTableModel {
             markovTable[row][col] = value;
         }
         
+        this.setOrClearErrors(row,col);
         this.calculateMarkov(row, col);
         this.fireTableCellUpdated(row, col);
+    }
+    
+    /**
+     * Sets or clears the errors for a given cell
+     * @param row - The row of the cell to check for errors
+     * @param col - The column of the cell to check for errors
+     */
+    private void setOrClearErrors(int row, int col){
+        //Set or clear errors
+        if((((MarkovTableCell) (markovTable[row][col])).getMin() < 0) || (((MarkovTableCell) (markovTable[row][col])).getMax() <0)){
+            ((MarkovTableCell) (markovTable[row][col])).setError(true);
+        } else{
+            ((MarkovTableCell) (markovTable[row][col])).setError(false);
+        }
     }
 }

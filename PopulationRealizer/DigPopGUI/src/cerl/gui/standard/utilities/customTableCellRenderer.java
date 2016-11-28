@@ -42,10 +42,10 @@ public class customTableCellRenderer extends DefaultTableCellRenderer {
         MarkovTableModel tableModel = (MarkovTableModel) table.getModel();
         
         //set the cell colors based on it's status
-        if(tableModel.isCellCalculated(row,column)){ //calculated
-            c.setBackground(Color.ORANGE);
-        } else if(tableModel.isErrorInCell(row, row)){ //errors
+        if(tableModel.isErrorInCell(row, column)){ //errors
             c.setBackground(Color.RED);
+        } else if(tableModel.isCellCalculated(row,column)){ //calculated
+            c.setBackground(Color.ORANGE);
         } else if(!tableModel.isCellEditable(row,column)){ //editable
             c.setBackground(Color.LIGHT_GRAY);
         } else{ //normal
