@@ -203,6 +203,9 @@ public class MarkovTableModel extends AbstractTableModel {
         return total;
     }
         
+    /**
+     * Runs the calculate function, to update the total rows
+     */
     public void calculateAmountLeft(){
         //uses model to recalculate
         //calculated "Amount Left" columns are the 2nd to last row and column
@@ -454,8 +457,8 @@ public class MarkovTableModel extends AbstractTableModel {
                 minVal = Double.parseDouble(thisCell.substring(0, minValLocation));
                 maxVal = Double.parseDouble(thisCell.substring(minValLocation+3));
 
-                System.out.println("minVal: " + minVal);
-                System.out.println("maxVal: " + maxVal);
+                System.out.println("minVal: " + minVal + ", " + DECIMAL_FORMAT.format(minVal));
+                System.out.println("maxVal: " + maxVal + ", " + DECIMAL_FORMAT.format(maxVal));
             }
         }
         
