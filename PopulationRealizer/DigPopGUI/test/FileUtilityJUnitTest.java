@@ -8,6 +8,7 @@ import cerl.gui.standard.utilities.Screen;
 import cerl.gui.standard.utilities.HelpFile;
 import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.Result;
+import cerl.gui.utilities.CensusEnumerations;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import org.junit.After;
@@ -68,7 +69,9 @@ public class FileUtilityJUnitTest {
     
     @Test
     public void tester(){
-        DigPopGUIUtilityClass.convertCSVFileToCensusEnumerationsObject("P:\\CERL\\md_sample-data\\md_census_enumerations.csv", ",");
+        CensusEnumerations tester = DigPopGUIUtilityClass.convertCSVFileToCensusEnumerationsObject("P:\\CERL\\md_sample-data\\md_census_enumerations.csv", ",");
+        
+        System.out.println(tester);
     }
 
     @Test
