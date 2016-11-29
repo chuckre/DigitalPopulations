@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
 <<<<<<< Updated upstream
             <file>file:/C:/Projects/CERL%20GIT%20FOLDER/DigitalPopulations/PopulationRealizer/DigPopGUI/test/FileUtilityJUnitTest.java</file>
 =======
@@ -12,6 +13,13 @@
             <file>file:/C:/Projects/CERL_BCS_GUI/DigitalPopulations/PopulationRealizer/DigPopGUI/src/cerl/gui/forms/MarkovChainMatrix.java</file>
             <file>file:/C:/Projects/CERL_BCS_GUI/DigitalPopulations/PopulationRealizer/DigPopGUI/src/cerl/gui/utilities/MarkovTableCell.java</file>
 >>>>>>> Stashed changes
+=======
+            <file>file:/C:/Projects/CERL%20GIT%20FOLDER/DigitalPopulations/PopulationRealizer/DigPopGUI/src/cerl/gui/utilities/SurveyMicroDataPeoples.java</file>
+            <file>file:/C:/Projects/CERL%20GIT%20FOLDER/DigitalPopulations/PopulationRealizer/DigPopGUI/src/cerl/gui/utilities/DigPopGUIUtilityClass.java</file>
+            <file>file:/C:/Projects/CERL%20GIT%20FOLDER/DigitalPopulations/PopulationRealizer/DigPopGUI/test/FileUtilityJUnitTest.java</file>
+            <file>file:/C:/Projects/CERL%20GIT%20FOLDER/DigitalPopulations/PopulationRealizer/DigPopGUI/src/cerl/gui/utilities/SurveyMicroDataPeopleClass.java</file>
+            <file>file:/C:/Projects/CERL%20GIT%20FOLDER/DigitalPopulations/PopulationRealizer/DigPopGUI/src/cerl/gui/utilities/SurveyMicroDataPeople.java</file>
+>>>>>>> bcsDev
         </group>
     </open-files>
 </project-private>

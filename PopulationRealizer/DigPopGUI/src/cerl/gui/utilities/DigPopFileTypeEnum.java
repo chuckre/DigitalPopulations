@@ -5,13 +5,16 @@
  */
 package cerl.gui.utilities;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author ajohnson
  */
-public class SurveyMicroDataHouseHolds {
-    
-    
+public enum DigPopFileTypeEnum {
+    Land_Use_Map,
+    Household_Density_Map,
+    Region_Map,
+    Census_Enumerations,
+    Constraint_Map,
+    Population_Micro_Data,
+    Household_Micro_Data
 }
