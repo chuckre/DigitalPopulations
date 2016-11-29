@@ -8,11 +8,11 @@ import cerl.gui.standard.utilities.Screen;
 import cerl.gui.standard.utilities.HelpFile;
 import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.Result;
-import cerl.gui.utilities.CensusEnumerations;
+import static cerl.gui.utilities.DigPopFileTypeEnum.Census_Enumerations;
+import static cerl.gui.utilities.DigPopFileTypeEnum.Household_Micro_Data;
+import static cerl.gui.utilities.DigPopFileTypeEnum.Population_Micro_Data;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
-import cerl.gui.utilities.SurveyMicroDataHouseHolds;
-import cerl.gui.utilities.SurveyMicroDataPeoples;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -70,32 +70,42 @@ public class FileUtilityJUnitTest {
     }
     
     @Test
-    public void tester(){
-        CensusEnumerations tester = DigPopGUIUtilityClass.convertCSVFileToCensusEnumerationsObject("P:\\CERL\\md_sample-data\\md_census_enumerations.csv");
-        
-        System.out.println(tester);
-    }
-    
-    @Test
-    public void convertCSVFileToSurveyMicroDataHouseHoldsObjectTester(){
-        SurveyMicroDataHouseHolds tester = DigPopGUIUtilityClass.convertCSVFileToSurveyMicroDataHouseHoldsObject("P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv");
-        
-        System.out.println(tester);
-    }
-    
-    @Test
-    public void convertCSVFileToSurveyMicroDataPeoplesObjectTester(){
-        
-        System.out.println(Integer.MAX_VALUE);
-        
+    public void getClassNamesFromCSVFileCensus_EnumerationsTest(){
         
         long tStart = System.currentTimeMillis();
         System.out.println(tStart);
-        SurveyMicroDataPeoples tester = DigPopGUIUtilityClass.convertCSVFileToSurveyMicroDataPeoplesObject("P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv");
         
-        System.out.println("Here");//tester);
+        Result result = DigPopGUIUtilityClass.getClassNamesFromCSVFile("P:\\CERL\\md_sample-data\\md_census_enumerations.csv", Census_Enumerations);
         
+        long tEnd = System.currentTimeMillis();
+        System.out.println(tEnd);
+        long tDelta = tEnd - tStart;
+        double elapsedSeconds = tDelta / 1000.0;
+        System.out.println(elapsedSeconds);
+    }
+    
+    @Test
+    public void getClassNamesFromCSVFileHousehold_Micro_DataTest(){
         
+        long tStart = System.currentTimeMillis();
+        System.out.println(tStart);
+        
+        Result result = DigPopGUIUtilityClass.getClassNamesFromCSVFile("P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv", Household_Micro_Data);
+        
+        long tEnd = System.currentTimeMillis();
+        System.out.println(tEnd);
+        long tDelta = tEnd - tStart;
+        double elapsedSeconds = tDelta / 1000.0;
+        System.out.println(elapsedSeconds);
+    }
+    
+    @Test
+    public void getClassNamesFromCSVFilePopulation_Micro_DataTest(){
+        
+        long tStart = System.currentTimeMillis();
+        System.out.println(tStart);
+        
+        Result result = DigPopGUIUtilityClass.getClassNamesFromCSVFile("P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv", Population_Micro_Data);
         
         long tEnd = System.currentTimeMillis();
         System.out.println(tEnd);

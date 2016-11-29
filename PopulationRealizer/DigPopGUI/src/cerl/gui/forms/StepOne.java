@@ -6,12 +6,12 @@
 package cerl.gui.forms;
 
 import cerl.gui.standard.utilities.Result;
+import cerl.gui.utilities.DigPopFileTypeEnum;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.StepOneInstructionNames;
 import cerl.gui.utilities.StepOneUtilityClass;
-import cerl.gui.utilities.StepOneUtilityClass.DigPopFileTypeEnum;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;

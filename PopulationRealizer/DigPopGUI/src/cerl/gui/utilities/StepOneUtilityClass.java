@@ -58,16 +58,6 @@ public class StepOneUtilityClass {
     private final static int INVALID_IMAGE_ICON_WIDTH = 25;
     private final static int INVALID_IMAGE_ICON_HEIGHT = 25;
     
-    public enum DigPopFileTypeEnum {
-        Land_Use_Map,
-        Household_Density_Map,
-        Region_Map,
-        Census_Enumerations,
-        Constraint_Map,
-        Population_Micro_Data,
-        Household_Micro_Data
-    }
-    
     public static ImageIcon GetValidImageIcon(){
         ImageIcon newImageIcon = ImageUtility.CreateSizedImageIconScaledSmooth(
                 VALID_IMAGE_ICON_FILEPATH,

@@ -73,203 +73,277 @@ public class DigPopGUIUtilityClass {
         return result;
     }
 
-    public static CensusEnumerations convertCSVFileToCensusEnumerationsObject(
-            String filePath) {
-
-        CensusEnumerations returnObject = new CensusEnumerations();
-
-        String line = "";
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-
-            int lineCount = 1;
-            String[] classes = null;
-
-            while ((line = br.readLine()) != null) {
-
-                // use comma as separator
-                String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-
-                if (lineCount == 1) {
-                    /**
-                     * Need to read in the first row to get the class names.
-                     */
-
-                    classes = new String[lineInfo.length];
-
-                    for (int count = 9; count < lineInfo.length; count++) {
-                        classes[count] = lineInfo[count];
-                    }
-
-                } else {
-
-                    CensusEnumeration newLine = new CensusEnumeration();
-                    newLine.setGISJOIN(lineInfo[0]);
-                    newLine.setUNIQUE_ID(lineInfo[1]);
-                    newLine.setYEAR(lineInfo[2]);
-                    newLine.setSTATEA(lineInfo[3]);
-                    newLine.setCOUNTY(lineInfo[4]);
-                    newLine.setCOUNTYA(lineInfo[5]);
-                    newLine.setTRACTA(lineInfo[6]);
-                    newLine.setBLKGRPA(lineInfo[7]);
-                    newLine.setNAME_E(lineInfo[8]);
-
-                    for (int count = 9; count < lineInfo.length; count++) {
-                        CensusEnumerationClass censusEnumerationClass = new CensusEnumerationClass();
-                        censusEnumerationClass.setClassName(classes[count]);
-                        censusEnumerationClass.setValue(lineInfo[count]);
-
-                        newLine.addCensusEnumerationClass(censusEnumerationClass);
-                    }
-
-                    returnObject.addCensusEnumerations(newLine);
-                }
-
-                lineCount++;
-
-            }
-
-            br.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return returnObject;
-    }
-
-    public static SurveyMicroDataHouseHolds convertCSVFileToSurveyMicroDataHouseHoldsObject(
-            String filePath) {
-
-        SurveyMicroDataHouseHolds returnObject = new SurveyMicroDataHouseHolds();
-
-        String line = "";
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-
-            int lineCount = 1;
-            String[] classes = null;
-
-            while ((line = br.readLine()) != null) {
-
-                // use comma as separator
-                String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-
-                if (lineCount == 1) {
-                    /**
-                     * Need to read in the first row to get the class names.
-                     */
-
-                    classes = new String[lineInfo.length];
-
-                    for (int count = 8; count < lineInfo.length; count++) {
-                        classes[count] = lineInfo[count];
-                    }
-
-                } else {
-
-                    SurveyMicroDataHouseHold newLine = new SurveyMicroDataHouseHold();
-                    newLine.setInsp(lineInfo[0]);
-                    newLine.setRT(lineInfo[1]);
-                    newLine.setSERIALNO(lineInfo[2]);
-                    newLine.setDIVISION(lineInfo[3]);
-                    newLine.setPUMA00(lineInfo[4]);
-                    newLine.setPUMA10(lineInfo[5]);
-                    newLine.setREGION(lineInfo[6]);
-                    newLine.setST(lineInfo[7]);
-
-                    for (int count = 8; count < lineInfo.length; count++) {
-                        SurveyMicroDataHouseHoldClass surveyMicroDataHouseHoldClass = new SurveyMicroDataHouseHoldClass();
-                        surveyMicroDataHouseHoldClass.setClassName(classes[count]);
-                        surveyMicroDataHouseHoldClass.setValue(lineInfo[count]);
-
-                        newLine.addSurveyMicroDataHouseHoldClass(surveyMicroDataHouseHoldClass);
-                    }
-
-                    returnObject.addSurveyMicroDataHouseHolds(newLine);
-                }
-
-                lineCount++;
-
-            }
-
-            br.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return returnObject;
-    }
-
-    public static SurveyMicroDataPeoples convertCSVFileToSurveyMicroDataPeoplesObject(
-            String filePath) {
-
-        SurveyMicroDataPeoples returnObject = new SurveyMicroDataPeoples();
+    public static Result getClassNamesFromCSVFile(
+            String filePath,
+            DigPopFileTypeEnum digPopFileType) {
         
-        List<Object> list = new ArrayList<>();
+        Result result = new Result();
+        
+        CensusSurveyClasses returnObject = new CensusSurveyClasses();
 
-        String line = "";
-        String encoding = "UTF-8";
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), encoding))) {
-
-            int lineCount = 1;
-            String[] classes = null;
-
-            List<Object> testList = new ArrayList<Object>();
-
-            int testerCounter = 0;
-
-            while ((line = br.readLine()) != null) {
-
-//                // use comma as separator
-                String[] lineInfo = line.split(",");//(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-//                
-                if (lineCount == 1) {
-                    /**
-                     * Need to read in the first row to get the class names.
-                     */
-
-                    classes = Arrays.copyOfRange(lineInfo, 6, lineInfo.length);
-
-                } else {
-
-                    ArrayList<SurveyMicroDataPeopleClass> arrayList = new ArrayList<SurveyMicroDataPeopleClass>();
-
-                    for (int count = 6; count < lineInfo.length; count++) {
-                        arrayList.add(new SurveyMicroDataPeopleClass(
-                                classes[count - 6],
-                                lineInfo[count]));
-                    }
-
-                    list.add(new SurveyMicroDataPeople(
-                            lineInfo[0],
-                            lineInfo[1],
-                            lineInfo[2],
-                            lineInfo[3],
-                            lineInfo[4],
-                            lineInfo[5],
-                            arrayList));
-
-                    //    testArrayListAdd.add(newLine);
-                    //test.add(newLine);
-                    // returnObject.addSurveyMicroDataPeople(newLine);
+        switch(digPopFileType){
+            case Census_Enumerations:
+                result = readClassNamesFromFirstLine(filePath,9);
+                
+                if(result.isSuccess()){
+                    returnObject.setCensusClasses((ArrayList<Class>)result.getValue());
                 }
+                
+                break;
+            case Population_Micro_Data:
+                result = readClassNamesFromFirstLine(filePath,6); 
+                
+                if(result.isSuccess()){
+                    returnObject.setPopulationMicroDataClasses((ArrayList<Class>)result.getValue());
+                }
+                
+                break;
+            case Household_Micro_Data:
+                result = readClassNamesFromFirstLine(filePath,8);
+                
+                if(result.isSuccess()){
+                    returnObject.setHouseholdMicroDataClasses((ArrayList<Class>)result.getValue());
+                }
+                
+                break;
+        }
+        
+        result.setValue(returnObject);
 
-                lineCount++;
+        return result;
+    }
+    
+    private static Result readClassNamesFromFirstLine(String filePath, int columnIndent){
+        Result result = new Result();
+        
+        ArrayList<Class> foundClasses = new ArrayList<Class>();
+        
+        String line = "";
 
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+
+            if((line = br.readLine()) != null) {
+
+                // use comma as separator
+                String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+
+                    for (int count = columnIndent; count < lineInfo.length; count++) {
+                        Class newClass = new Class(lineInfo[count],count,false);
+                        foundClasses.add(newClass);
+                    }
             }
 
-            System.out.println(lineCount);
-
             br.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            result.setSuccess(true);
+        } catch (IOException ex) {
+            result.setErrorMessage(
+                    "getCensusClassesFromCSVFile",
+                    ex.getMessage());
+            result.setSuccess(false);
         }
-
-        return returnObject;
+        
+        result.setValue(foundClasses);
+        
+        return result;
     }
+            
+//    public static CensusEnumerations convertCSVFileToCensusEnumerationsObject(
+//            String filePath) {
+//
+//        CensusEnumerations returnObject = new CensusEnumerations();
+//
+//        String line = "";
+//
+//        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+//
+//            int lineCount = 1;
+//            String[] classes = null;
+//
+//            while ((line = br.readLine()) != null) {
+//
+//                // use comma as separator
+//                String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+//
+//                if (lineCount == 1) {
+//                    /**
+//                     * Need to read in the first row to get the class names.
+//                     */
+//
+//                    classes = new String[lineInfo.length];
+//
+//                    for (int count = 9; count < lineInfo.length; count++) {
+//                        classes[count] = lineInfo[count];
+//                    }
+//
+//                } else {
+//
+//                    CensusEnumeration newLine = new CensusEnumeration();
+//                    newLine.setGISJOIN(lineInfo[0]);
+//                    newLine.setUNIQUE_ID(lineInfo[1]);
+//                    newLine.setYEAR(lineInfo[2]);
+//                    newLine.setSTATEA(lineInfo[3]);
+//                    newLine.setCOUNTY(lineInfo[4]);
+//                    newLine.setCOUNTYA(lineInfo[5]);
+//                    newLine.setTRACTA(lineInfo[6]);
+//                    newLine.setBLKGRPA(lineInfo[7]);
+//                    newLine.setNAME_E(lineInfo[8]);
+//
+//                    for (int count = 9; count < lineInfo.length; count++) {
+//                        CensusEnumerationClass censusEnumerationClass = new CensusEnumerationClass();
+//                        censusEnumerationClass.setClassName(classes[count]);
+//                        censusEnumerationClass.setValue(lineInfo[count]);
+//
+//                        newLine.addCensusEnumerationClass(censusEnumerationClass);
+//                    }
+//
+//                    returnObject.addCensusEnumerations(newLine);
+//                }
+//
+//                lineCount++;
+//
+//            }
+//
+//            br.close();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return returnObject;
+//    }
+//
+//    public static SurveyMicroDataHouseHolds convertCSVFileToSurveyMicroDataHouseHoldsObject(
+//            String filePath) {
+//
+//        SurveyMicroDataHouseHolds returnObject = new SurveyMicroDataHouseHolds();
+//
+//        String line = "";
+//
+//        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+//
+//            int lineCount = 1;
+//            String[] classes = null;
+//
+//            while ((line = br.readLine()) != null) {
+//
+//                // use comma as separator
+//                String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+//
+//                if (lineCount == 1) {
+//                    /**
+//                     * Need to read in the first row to get the class names.
+//                     */
+//
+//                    classes = new String[lineInfo.length];
+//
+//                    for (int count = 8; count < lineInfo.length; count++) {
+//                        classes[count] = lineInfo[count];
+//                    }
+//
+//                } else {
+//
+//                    SurveyMicroDataHouseHold newLine = new SurveyMicroDataHouseHold();
+//                    newLine.setInsp(lineInfo[0]);
+//                    newLine.setRT(lineInfo[1]);
+//                    newLine.setSERIALNO(lineInfo[2]);
+//                    newLine.setDIVISION(lineInfo[3]);
+//                    newLine.setPUMA00(lineInfo[4]);
+//                    newLine.setPUMA10(lineInfo[5]);
+//                    newLine.setREGION(lineInfo[6]);
+//                    newLine.setST(lineInfo[7]);
+//
+//                    for (int count = 8; count < lineInfo.length; count++) {
+//                        SurveyMicroDataHouseHoldClass surveyMicroDataHouseHoldClass = new SurveyMicroDataHouseHoldClass();
+//                        surveyMicroDataHouseHoldClass.setClassName(classes[count]);
+//                        surveyMicroDataHouseHoldClass.setValue(lineInfo[count]);
+//
+//                        newLine.addSurveyMicroDataHouseHoldClass(surveyMicroDataHouseHoldClass);
+//                    }
+//
+//                    returnObject.addSurveyMicroDataHouseHolds(newLine);
+//                }
+//
+//                lineCount++;
+//
+//            }
+//
+//            br.close();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return returnObject;
+//    }
+//
+//    public static SurveyMicroDataPeoples convertCSVFileToSurveyMicroDataPeoplesObject(
+//            String filePath) {
+//
+//        SurveyMicroDataPeoples returnObject = new SurveyMicroDataPeoples();
+//        
+//        List<Object> list = new ArrayList<>();
+//
+//        String line = "";
+//        String encoding = "UTF-8";
+//        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), encoding))) {
+//
+//            int lineCount = 1;
+//            String[] classes = null;
+//
+//            List<Object> testList = new ArrayList<Object>();
+//
+//            int testerCounter = 0;
+//
+//            while ((line = br.readLine()) != null) {
+//
+////                // use comma as separator
+//                String[] lineInfo = line.split(",");//(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+////                
+//                if (lineCount == 1) {
+//                    /**
+//                     * Need to read in the first row to get the class names.
+//                     */
+//
+//                    classes = Arrays.copyOfRange(lineInfo, 6, lineInfo.length);
+//
+//                } else {
+//
+//                    ArrayList<SurveyMicroDataPeopleClass> arrayList = new ArrayList<SurveyMicroDataPeopleClass>();
+//
+//                    for (int count = 6; count < lineInfo.length; count++) {
+//                        arrayList.add(new SurveyMicroDataPeopleClass(
+//                                classes[count - 6],
+//                                lineInfo[count]));
+//                    }
+//
+//                    list.add(new SurveyMicroDataPeople(
+//                            lineInfo[0],
+//                            lineInfo[1],
+//                            lineInfo[2],
+//                            lineInfo[3],
+//                            lineInfo[4],
+//                            lineInfo[5],
+//                            arrayList));
+//
+//                    //    testArrayListAdd.add(newLine);
+//                    //test.add(newLine);
+//                    // returnObject.addSurveyMicroDataPeople(newLine);
+//                }
+//
+//                lineCount++;
+//
+//            }
+//
+//            System.out.println(lineCount);
+//
+//            br.close();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return returnObject;
+//    }
 
 //    private static SurveyMicroDataPeople dump(String crunchifyCSV, String[] classes) {
 //        SurveyMicroDataPeople returnvalue = null;

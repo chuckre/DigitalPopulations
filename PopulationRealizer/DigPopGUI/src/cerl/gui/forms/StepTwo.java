@@ -6,9 +6,9 @@
 package cerl.gui.forms;
 
 import cerl.gui.standard.utilities.Result;
+import cerl.gui.utilities.DigPopFileTypeEnum;
 //import cerl.gui.utilities.DigPopGUIFiles;
 import cerl.gui.utilities.StepOneUtilityClass;
-import cerl.gui.utilities.StepOneUtilityClass.DigPopFileTypeEnum;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
