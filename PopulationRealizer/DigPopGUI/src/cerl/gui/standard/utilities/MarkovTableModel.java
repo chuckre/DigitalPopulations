@@ -20,8 +20,8 @@ import javax.swing.JButton;
  */
 public class MarkovTableModel extends AbstractTableModel {
 
-    private ArrayList<String> columns;
-    private int[][] emptyCells;
+    private final ArrayList<String> columns;
+    private final int[][] emptyCells;
     private Object[][] markovTable;
     private final int PROPORTION_COLUMN = 1;
     private final int PROPORTION_ROW = 0;
@@ -217,22 +217,20 @@ public class MarkovTableModel extends AbstractTableModel {
         int rowWithEmptyCell = 0;
         int colWithEmptyCell = 0;
         
-        //get Proportion values for the row, by min and max
+        //get Proportion values for this row, by min and max to start
         double rowMinTotal = (double)((MarkovTableCell)markovTable[row][PROPORTION_COLUMN]).getMin();
         double rowMaxTotal = (double)((MarkovTableCell)markovTable[row][PROPORTION_COLUMN]).getMax();
-            
-        //looks at all rows
-        for(int r = 0; r<emptyCells[0].length; r++){
-            if(emptyCells[0][r] == 1){ //if the row only has one cell left to fill
-                //can be calculated
-                rowWithEmptyCell = r+PROPORTION_ROW+1;
-                System.out.println("Can update row:" + rowWithEmptyCell);
-                break;
-            }
+                    
+        //if this row has only one cell left to fill
+        if((emptyCells[0].length > (row-PROPORTION_ROW-1)) && (emptyCells[0][row-PROPORTION_ROW-1] == 1)){
+            //can be calculated - save cell for use once total is obtained
+            rowWithEmptyCell = row; 
         }
         
+        //for each column in this row
         for(int c=startCol;c<sumCol;c++){ 
-            if(markovTable[row][c] != null){
+            if(markovTable[row][c] != null){//if not null
+                //update the current total for the row/column
                 rowMinTotal = getTotalByClass((MarkovTableCell)markovTable[row][c], rowMinTotal, "Min");
                 rowMaxTotal = getTotalByClass((MarkovTableCell)markovTable[row][c], rowMaxTotal, "Max");
             }
@@ -241,20 +239,23 @@ public class MarkovTableModel extends AbstractTableModel {
             if(!((MarkovTableCell)(markovTable[rowWithEmptyCell][c])).isUserEntered() && (rowWithEmptyCell > PROPORTION_ROW)){
                 ((MarkovTableCell) (markovTable[rowWithEmptyCell][c])).setCalculated(true);
                 emptyCells[0][rowWithEmptyCell-1-PROPORTION_ROW] = emptyCells[0][rowWithEmptyCell-1-PROPORTION_ROW] - 1;
+                //remember the empty column - to set after have updated total
                 colWithEmptyCell = c;
             }
         }
-        //System.out.println("Call setCalculatedField, from sumRow, " + minOrMax);
-        double amountLeftRowMin = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Min", rowMinTotal);
-        double amountLeftRowMax = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Max", rowMaxTotal);
-                                    
-        String newRowValue = "0 - " + DECIMAL_FORMAT.format(amountLeftRowMin) + "   0 - " + DECIMAL_FORMAT.format(amountLeftRowMax);
-                
+
+        //Set values for the empty cell
+        rowMinTotal = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Min", rowMinTotal);
+        rowMaxTotal = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Max", rowMaxTotal);
+        
+        //update sum column for this row
+        String newRowValue = "0 - " + DECIMAL_FORMAT.format(rowMinTotal) + "   0 - " + DECIMAL_FORMAT.format(rowMaxTotal);
+        
         if(markovTable[row][sumCol] == null){
-            markovTable[row][sumCol] = new MarkovTableCell(row, sumCol, amountLeftRowMax, amountLeftRowMin, newRowValue, true, false, false, false);
+            markovTable[row][sumCol] = new MarkovTableCell(row, sumCol, rowMaxTotal, rowMinTotal, newRowValue, true, false, false, false);
         } else{
-            ((MarkovTableCell)markovTable[row][sumCol]).setMin(amountLeftRowMin);
-            ((MarkovTableCell)markovTable[row][sumCol]).setMax(amountLeftRowMax);
+            ((MarkovTableCell)markovTable[row][sumCol]).setMin(rowMinTotal);
+            ((MarkovTableCell)markovTable[row][sumCol]).setMax(rowMaxTotal);
             ((MarkovTableCell)markovTable[row][sumCol]).setValue(newRowValue);
         }
 
@@ -276,42 +277,40 @@ public class MarkovTableModel extends AbstractTableModel {
         double colMinTotal = (double)((MarkovTableCell)markovTable[PROPORTION_ROW][col]).getMin();
         double colMaxTotal = (double)((MarkovTableCell)markovTable[PROPORTION_ROW][col]).getMax();            
         
-        //look at all columns
-        for(int c = 0; c<emptyCells[1].length; c++){ 
-            if(emptyCells[1][c] == 1){ //if the column has only one cell left to fill
-                //can be calculated
-                colWithEmptyCell = c+PROPORTION_COLUMN+1;
-                System.out.println("Can update column: " + colWithEmptyCell);
-            }
+        //if this column has only one cell left to fill
+        if((emptyCells[1].length > (col-PROPORTION_COLUMN-1)) && (emptyCells[1][col-PROPORTION_COLUMN-1] == 1)){
+            //can be calculated - save cell fo ruse once total is obtained
+            colWithEmptyCell = col;
         }
         
+        //for each row in this column
         for(int r=startRow;r<sumRow;r++){
             if(markovTable[r][col] != null){
+                //update the curent total for the row/column
                 colMinTotal = getTotalByClass((MarkovTableCell)markovTable[r][col], colMinTotal, "Min");
                 colMaxTotal = getTotalByClass((MarkovTableCell)markovTable[r][col], colMaxTotal, "Max");
             }
             
             //check rows in this column for the empty cell
             if(!((MarkovTableCell)(markovTable[r][colWithEmptyCell])).isUserEntered() && (colWithEmptyCell > PROPORTION_COLUMN)){
-                System.out.println("Updated cell, row:" + r);
                 ((MarkovTableCell) (markovTable[r][colWithEmptyCell])).setCalculated(true);
                 emptyCells[1][colWithEmptyCell-1-PROPORTION_COLUMN] = emptyCells[1][colWithEmptyCell-1-PROPORTION_COLUMN] - 1;
                 rowWithEmptyCell = r;
             }
         }
 
-        //total = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, minOrMax, total);
-        double amountLeftColMin = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Min", colMinTotal);
-        double amountLeftColMax = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Max", colMaxTotal);
+        //Set values for the empty cell
+        colMinTotal = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Min", colMinTotal);
+        colMaxTotal = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Max", colMaxTotal);
 
-        String newColValue = "0 - " + DECIMAL_FORMAT.format(amountLeftColMin) + "   0 - " + DECIMAL_FORMAT.format(amountLeftColMax);
+        String newColValue = "0 - " + DECIMAL_FORMAT.format(colMinTotal) + "   0 - " + DECIMAL_FORMAT.format(colMaxTotal);
             
         //set column total
         if(markovTable[sumRow][col] == null){
-            markovTable[sumRow][col] = new MarkovTableCell(sumRow, col, amountLeftColMax, amountLeftColMin, newColValue, true, false, false, false);
+            markovTable[sumRow][col] = new MarkovTableCell(sumRow, col, colMaxTotal, colMinTotal, newColValue, true, false, false, false);
         } else{
-            ((MarkovTableCell)markovTable[sumRow][col]).setMin(amountLeftColMin);
-            ((MarkovTableCell)markovTable[sumRow][col]).setMax(amountLeftColMax);
+            ((MarkovTableCell)markovTable[sumRow][col]).setMin(colMinTotal);
+            ((MarkovTableCell)markovTable[sumRow][col]).setMax(colMaxTotal);
             ((MarkovTableCell)markovTable[sumRow][col]).setValue(newColValue);
         }
         
@@ -320,16 +319,13 @@ public class MarkovTableModel extends AbstractTableModel {
     
     private double setCalculatedField(int rowWithEmptyCell, int colWithEmptyCell, String minOrMax, double total){
         synchronized(markovTable){
-        System.out.println("setCalculatedField, Row: " + rowWithEmptyCell + " Col: " + colWithEmptyCell + ", minMax: " + minOrMax + " To: " + total);
+
         if((colWithEmptyCell > 0) && (rowWithEmptyCell > 0) && (minOrMax != null)){
             if(minOrMax == "Min"){
-                System.out.println("Updated Min");
                 ((MarkovTableCell) (markovTable[rowWithEmptyCell][colWithEmptyCell])).setMin(total);
             } else if(minOrMax == "Max"){
-                System.out.println("Updated Max");
                 ((MarkovTableCell) (markovTable[rowWithEmptyCell][colWithEmptyCell])).setMax(total);
             } else{
-                System.out.println("Updated Value");
                 ((MarkovTableCell) (markovTable[rowWithEmptyCell][colWithEmptyCell])).setValue(total);
             }
             this.setOrClearErrors(rowWithEmptyCell,colWithEmptyCell);
