@@ -9,7 +9,6 @@ import cerl.gui.utilities.MarkovTableCell;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
-import javax.swing.table.AbstractTableModel;
 import java.util.*;
 import javax.swing.JButton;
 
@@ -18,7 +17,7 @@ import javax.swing.JButton;
  *
  * @author mrivera
  */
-public class MarkovTableModel extends AbstractTableModel {
+public class MarkovTableModel extends customTableModel {
 
     private final ArrayList<String> columns;
     private final int[][] emptyCells;
@@ -44,9 +43,10 @@ public class MarkovTableModel extends AbstractTableModel {
      *
      * @param columnNames The names of the columns
      * @param cellValues The 2D matrix of cell values
+     * @param cells The array for tracking the number of empty cells in each row/column
      */
     public MarkovTableModel(ArrayList<String> columnNames, Object[][] cellValues, int[][] cells) {
-        super();
+        super(columnNames, cellValues);
         columns = columnNames;
         markovTable = cellValues;
         emptyCells = cells;
@@ -318,7 +318,7 @@ public class MarkovTableModel extends AbstractTableModel {
     }
     
     private double setCalculatedField(int rowWithEmptyCell, int colWithEmptyCell, String minOrMax, double total){
-        synchronized(markovTable){
+        //synchronized(markovTable){
 
         if((colWithEmptyCell > 0) && (rowWithEmptyCell > 0) && (minOrMax != null)){
             if(minOrMax == "Min"){
@@ -333,7 +333,7 @@ public class MarkovTableModel extends AbstractTableModel {
         }
         
         return total;
-        }
+        //}
     }
     
     /**
@@ -373,40 +373,6 @@ public class MarkovTableModel extends AbstractTableModel {
         }
         
         return markovTable;
-    }
-
-
-    /**
-     * *
-     * Gets the number of rows in the Markov matrix
-     *
-     * @return
-     */
-    @Override
-    public int getRowCount() {
-        return markovTable.length;
-    }
-
-    /**
-     * *
-     * gets the number of columns in the Markov matrix
-     *
-     * @return
-     */
-    @Override
-    public int getColumnCount() {
-        return columns.size();
-    }
-
-    /**
-     * Gets the column header name for a specified column index.
-     *
-     * @param col The index of the column to retrieve the header name
-     * @return
-     */
-    @Override
-    public String getColumnName(int col) {
-        return columns.get(col);
     }
     
     /**

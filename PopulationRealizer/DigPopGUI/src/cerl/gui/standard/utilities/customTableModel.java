@@ -92,4 +92,12 @@ public class customTableModel  extends AbstractTableModel {
             return true; 
         }
     }
+
+    public ArrayList<String> getColumns() {
+        return columns;
+    }
+
+    public Object[][] getTableCells() {
+        return tableCells;
+    }
 }
