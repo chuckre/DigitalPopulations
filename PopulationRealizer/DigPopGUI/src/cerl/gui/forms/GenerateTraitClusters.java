@@ -9,6 +9,7 @@ import cerl.gui.standard.utilities.customTableCell;
 import cerl.gui.standard.utilities.customTableCellEditor;
 import cerl.gui.standard.utilities.customTableCellRenderer;
 import cerl.gui.standard.utilities.customTableModel;
+import cerl.gui.standard.utilities.customTableModelListener;
 import cerl.gui.standard.utilities.jTableButtonMouseListener;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,13 +31,13 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         initComponents();
         
         //sets up columns with new renderer, and clear buttons for the rows/columns
-        /*for(int i=0; i<myTable.getColumnCount(); i++){
+        for(int i=0; i<myTable.getColumnCount(); i++){
             TableColumn tableCol = jTable_TraitInformation.getColumnModel().getColumn(i);
             tableCol.setCellRenderer(new customTableCellRenderer());
-            tableCol.setCellEditor(new customTableCellEditor());
         }
-        //adds the mouse listener for the buttons to work in the jTable
-        jTable_TraitInformation.addMouseListener(new jTableButtonMouseListener(jTable_TraitInformation));*/
+        
+        //adds the listener for the cell calculations/validations
+        jTable_TraitInformation.getModel().addTableModelListener(new customTableModelListener(jTable_TraitInformation));
     }
 
     private customTableModel populateTableModel(){
@@ -48,19 +49,19 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         Object[][] cellValues = new Object[10][10];
         
         //Trait ID's
-        cellValues[0][0] = new customTableCell("123", false);
-        cellValues[1][0] = new customTableCell("131", false);
-        cellValues[2][0] = new customTableCell("136", false);
+        cellValues[0][0] = new customTableCell("123", false, "Integer", false);
+        cellValues[1][0] = new customTableCell("131", false, "Integer", false);
+        cellValues[2][0] = new customTableCell("136", false, "Integer", false);
         
         //Reduction
-        cellValues[0][1] = new customTableCell("", true);
-        cellValues[1][1] = new customTableCell("", true);
-        cellValues[2][1] = new customTableCell("", true);
+        cellValues[0][1] = new customTableCell("", true, "Integer", false);
+        cellValues[1][1] = new customTableCell("", true, "Integer", false);
+        cellValues[2][1] = new customTableCell("", true, "Integer", false);
         
         //Distance
-        cellValues[0][2] = new customTableCell("", true);
-        cellValues[1][2] = new customTableCell("", true);
-        cellValues[2][2] = new customTableCell("", true);
+        cellValues[0][2] = new customTableCell("", true, "Integer", false);
+        cellValues[1][2] = new customTableCell("", true, "Integer", false);
+        cellValues[2][2] = new customTableCell("", true, "Integer", false);
         
         //create table with custom MarkovTableModel
         customTableModel myTableModel = new customTableModel(columnNames, cellValues);

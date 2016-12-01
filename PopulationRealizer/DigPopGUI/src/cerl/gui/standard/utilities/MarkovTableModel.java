@@ -337,9 +337,13 @@ public class MarkovTableModel extends customTableModel {
     }
     
     /**
+     * Called from the customTableModelListener when the table is changed
      * Runs the calculate function, to update the total rows
+     * @param row - The row that was updated
+     * @param column - The column that was updated
      */
-    public void calculateAmountLeft(){
+    @Override
+    public void handleTableChange(int row, int column){
         //uses model to recalculate
         //calculated "Amount Left" columns are the 2nd to last row and column
         markovTable = calculateAmountLeft(this.getRowCount()-2,columns.size()-2);
@@ -495,6 +499,7 @@ public class MarkovTableModel extends customTableModel {
      * @param col
      * @return
      */
+    @Override
     public boolean isErrorInCell(int row, int col) {
         if (markovTable[row][col] == null) {
             return false;

@@ -39,12 +39,13 @@ public class customTableCellRenderer extends DefaultTableCellRenderer {
         }
 
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        MarkovTableModel tableModel = (MarkovTableModel) table.getModel();
+        customTableModel tableModel = (customTableModel) table.getModel();
         
         //set the cell colors based on it's status
         if(tableModel.isErrorInCell(row, column)){ //errors
             c.setBackground(Color.RED);
-        } else if(tableModel.isCellCalculated(row,column)){ //calculated
+        } //calculated only applies to Markov, but needs to be in this order to display properly
+        else if(((table.getModel()).getClass() == MarkovTableModel.class) && (((MarkovTableModel)tableModel).isCellCalculated(row,column))){ 
             c.setBackground(Color.ORANGE);
         } else if(!tableModel.isCellEditable(row,column)){ //editable
             c.setBackground(Color.LIGHT_GRAY);

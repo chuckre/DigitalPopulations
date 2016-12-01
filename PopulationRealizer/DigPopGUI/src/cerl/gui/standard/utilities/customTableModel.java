@@ -63,7 +63,7 @@ public class customTableModel  extends AbstractTableModel {
     @Override
     public void setValueAt(Object value, int row, int col) {
         if (tableCells[row][col] == null) {
-            tableCells[row][col] = new customTableCell(value, true); 
+            tableCells[row][col] = new customTableCell(value, true, "java.lang.String", false); 
         } else if (tableCells[row][col].getClass().equals(customTableCell.class)) {
             ((customTableCell) (tableCells[row][col])).setValue(value);
         } else {
@@ -92,6 +92,22 @@ public class customTableModel  extends AbstractTableModel {
             return true; 
         }
     }
+    
+    /**
+     * Specific to the custom table Cell, Checks if a cell has an error
+     * @param row
+     * @param col
+     * @return
+     */
+    public boolean isErrorInCell(int row, int col) {
+        if (tableCells[row][col] == null) {
+            return false;
+        } else if (tableCells[row][col].getClass().equals(customTableCell.class)) {
+            return ((customTableCell) (tableCells[row][col])).isError();
+        } else {
+            return false;
+        }
+    }
 
     public ArrayList<String> getColumns() {
         return columns;
@@ -99,5 +115,35 @@ public class customTableModel  extends AbstractTableModel {
 
     public Object[][] getTableCells() {
         return tableCells;
+    }
+
+    /**
+     * Called from the customTableModelListener when the table is changed
+     * @param row - The first row that was changed
+     * @param col - The column that changed
+     */
+    public void handleTableChange(int row, int col) {
+        //validate data types
+        if (tableCells[row][col].getClass().equals(customTableCell.class)) {
+            Object value  = ((customTableCell) (tableCells[row][col])).getValue();
+            String allowedType =  ((customTableCell) (tableCells[row][col])).getAllowedDataType();
+            
+            if((value.getClass().toString() != null) && (allowedType != null) && (!value.getClass().toString().equals(allowedType))){
+                if(allowedType.contains("Double")){
+                    try{
+                        double d = Double.parseDouble(value.toString());
+                    } catch(NumberFormatException e){
+                        ((customTableCell) (tableCells[row][col])).setError(true);
+                    }
+                }
+                else if(allowedType.contains("Integer")){
+                    try{
+                        int i = Integer.parseInt(value.toString());
+                    } catch(NumberFormatException e){
+                        ((customTableCell) (tableCells[row][col])).setError(true);
+                    }
+                }
+            }   
+        }            
     }
 }

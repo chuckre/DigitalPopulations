@@ -13,11 +13,11 @@ import javax.swing.event.TableModelListener;
  *
  * @author mrivera
  */
-public class markovTableModelListener implements TableModelListener {
-    private final JTable markovTable;
+public class customTableModelListener implements TableModelListener {
+    private final JTable table;
     
-    public markovTableModelListener(JTable table){
-        this.markovTable = table;
+    public customTableModelListener(JTable table){
+        this.table = table;
     }
     
     /**
@@ -28,11 +28,11 @@ public class markovTableModelListener implements TableModelListener {
     public void tableChanged(TableModelEvent e){
         int row = e.getFirstRow();
         int column = e.getColumn();
-        MarkovTableModel model = (MarkovTableModel)e.getSource();
-        String columnName = model.getColumnName(column);
-        Object data = model.getValueAt(row, column);
+        customTableModel model = (customTableModel)e.getSource();
+        //String columnName = model.getColumnName(column);
+        //Object data = model.getValueAt(row, column);
         
         //handle data
-        model.calculateAmountLeft();
+        model.handleTableChange(row, column);
     }
 }

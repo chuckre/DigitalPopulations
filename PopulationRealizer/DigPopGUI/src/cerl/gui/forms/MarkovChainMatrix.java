@@ -10,7 +10,7 @@ import cerl.gui.standard.utilities.MarkovTableModel;
 import cerl.gui.standard.utilities.customTableCellEditor;
 import cerl.gui.standard.utilities.customTableCellRenderer;
 import cerl.gui.standard.utilities.jTableButtonMouseListener;
-import cerl.gui.standard.utilities.markovTableModelListener;
+import cerl.gui.standard.utilities.customTableModelListener;
 import cerl.gui.utilities.MarkovTableCell;
 import javax.swing.table.TableColumn;
 
@@ -35,7 +35,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     public MarkovChainMatrix() {
         //load table
         myTable = populateMarkovTableModel();
-        myTable.calculateAmountLeft();
+        myTable.handleTableChange(-1,-1); //calculate the amount left
         
         initComponents();
         
@@ -49,7 +49,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         jTable_MarkovMatrix.addMouseListener(new jTableButtonMouseListener(jTable_MarkovMatrix));
         
         //adds the listener for the cell calculations
-        jTable_MarkovMatrix.getModel().addTableModelListener(new markovTableModelListener(jTable_MarkovMatrix));
+        jTable_MarkovMatrix.getModel().addTableModelListener(new customTableModelListener(jTable_MarkovMatrix));
         //hide error messages until needed
         jLabel_ErrorMessages.setVisible(false);
     }

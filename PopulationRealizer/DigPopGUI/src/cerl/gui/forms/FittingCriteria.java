@@ -7,8 +7,11 @@ package cerl.gui.forms;
 
 import cerl.gui.standard.utilities.customTableModel;
 import cerl.gui.standard.utilities.customTableCell;
+import cerl.gui.standard.utilities.customTableCellRenderer;
+import cerl.gui.standard.utilities.customTableModelListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -24,6 +27,14 @@ public class FittingCriteria extends javax.swing.JFrame {
         //load table
         myTable = populateTableModel();
         initComponents();
+                
+        //sets up columns with new renderer, and clear buttons for the rows/columns
+        for(int i=0; i<myTable.getColumnCount(); i++){
+            TableColumn tableCol = jTable_TraitInformation.getColumnModel().getColumn(i);
+            tableCol.setCellRenderer(new customTableCellRenderer());
+        }
+        //adds the listener for the cell calculations/validations
+        jTable_TraitInformation.getModel().addTableModelListener(new customTableModelListener(jTable_TraitInformation));
     }
 
     private customTableModel populateTableModel(){
@@ -39,54 +50,54 @@ public class FittingCriteria extends javax.swing.JFrame {
         Object[][] cellValues = new Object[10][10];
         
         //ID's
-        cellValues[0][0] = new customTableCell("1", false);
-        cellValues[1][0] = new customTableCell("2", false);
-        cellValues[2][0] = new customTableCell("3", false);
+        cellValues[0][0] = new customTableCell("1", false, "Integer", false);
+        cellValues[1][0] = new customTableCell("2", false, "Integer", false);
+        cellValues[2][0] = new customTableCell("3", false, "Integer", false);
         
         //Census Region Traits
-        cellValues[0][1] = new customTableCell("ABA2E006", false);
-        cellValues[1][1] = new customTableCell("ABA2E006", false);
-        cellValues[2][1] = new customTableCell("ABA2E006", false);
+        cellValues[0][1] = new customTableCell("ABA2E006", false, "String", false);
+        cellValues[1][1] = new customTableCell("ABA2E006", false, "String", false);
+        cellValues[2][1] = new customTableCell("ABA2E006", false, "String", false);
         
         //Census Region Total
-        cellValues[0][2] = new customTableCell("Toilet - MC - Total", false);
-        cellValues[1][2] = new customTableCell("Toilet - MC - Total", false);
-        cellValues[2][2] = new customTableCell("Toilet - MC - Total", false);
+        cellValues[0][2] = new customTableCell("Toilet - MC - Total", false, "String", false);
+        cellValues[1][2] = new customTableCell("Toilet - MC - Total", false, "String", false);
+        cellValues[2][2] = new customTableCell("Toilet - MC - Total", false, "String", false);
         
         //Survey Trait Table
-        cellValues[0][3] = new customTableCell("HOUSEHOLDS", false);
-        cellValues[1][3] = new customTableCell("HOUSEHOLDS", false);
-        cellValues[2][3] = new customTableCell("HOUSEHOLDS", false);
+        cellValues[0][3] = new customTableCell("HOUSEHOLDS", false, "String", false);
+        cellValues[1][3] = new customTableCell("HOUSEHOLDS", false, "String", false);
+        cellValues[2][3] = new customTableCell("HOUSEHOLDS", false, "String", false);
         
         //Survey Trait Select
-        cellValues[0][4] = new customTableCell("0", false);
-        cellValues[1][4] = new customTableCell("1", false);
-        cellValues[2][4] = new customTableCell("2", false);
+        cellValues[0][4] = new customTableCell("0", false, "Integer", false);
+        cellValues[1][4] = new customTableCell("1", false, "Integer", false);
+        cellValues[2][4] = new customTableCell("2", false, "Integer", false);
                 
         //Survey Trait Field
-        cellValues[0][5] = new customTableCell("JWMNP", false);
-        cellValues[1][5] = new customTableCell("JWMNP", false);
-        cellValues[2][5] = new customTableCell("JWMNP", false);
+        cellValues[0][5] = new customTableCell("JWMNP", false, "String", false);
+        cellValues[1][5] = new customTableCell("JWMNP", false, "String", false);
+        cellValues[2][5] = new customTableCell("JWMNP", false, "String", false);
 
         //Survey Total Table
-        cellValues[0][6] = new customTableCell("HOUSEHOLDS", false);
-        cellValues[1][6] = new customTableCell("HOUSEHOLDS", false);
-        cellValues[2][6] = new customTableCell("HOUSEHOLDS", false);
+        cellValues[0][6] = new customTableCell("HOUSEHOLDS", false, "String", false);
+        cellValues[1][6] = new customTableCell("HOUSEHOLDS", false, "String", false);
+        cellValues[2][6] = new customTableCell("HOUSEHOLDS", false, "String", false);
 
         //Survey Total Field
-        cellValues[0][7] = new customTableCell("1", false);
-        cellValues[1][7] = new customTableCell("1", false);
-        cellValues[2][7] = new customTableCell("1", false);
+        cellValues[0][7] = new customTableCell("1", false, "Integer", false);
+        cellValues[1][7] = new customTableCell("1", false, "Integer", false);
+        cellValues[2][7] = new customTableCell("1", false, "Integer", false);
 
         //User Entered Description
-        cellValues[0][8] = new customTableCell("Flush to piped sewer", false);
-        cellValues[1][8] = new customTableCell("Flush to septic tank", false);
-        cellValues[2][8] = new customTableCell("Flush to pit latrine", false);
+        cellValues[0][8] = new customTableCell("Flush to piped sewer", false, "String", false);
+        cellValues[1][8] = new customTableCell("Flush to septic tank", false, "String", false);
+        cellValues[2][8] = new customTableCell("Flush to pit latrine", false, "String", false);
 
         //Trait Weight
-        cellValues[0][9] = new customTableCell("", true);
-        cellValues[1][9] = new customTableCell("", true);
-        cellValues[2][9] = new customTableCell("", true);
+        cellValues[0][9] = new customTableCell("", true, "Double", false);
+        cellValues[1][9] = new customTableCell("", true, "Double", false);
+        cellValues[2][9] = new customTableCell("", true, "Double", false);
 
         //create table with custom MarkovTableModel
         customTableModel myTableModel = new customTableModel(columnNames, cellValues);
