@@ -132,6 +132,7 @@ public class customTableModel  extends AbstractTableModel {
                 if(allowedType.contains("Double")){
                     try{
                         double d = Double.parseDouble(value.toString());
+                        ((customTableCell) (tableCells[row][col])).setError(false);
                     } catch(NumberFormatException e){
                         ((customTableCell) (tableCells[row][col])).setError(true);
                     }
@@ -139,6 +140,7 @@ public class customTableModel  extends AbstractTableModel {
                 else if(allowedType.contains("Integer")){
                     try{
                         int i = Integer.parseInt(value.toString());
+                        ((customTableCell) (tableCells[row][col])).setError(false);
                     } catch(NumberFormatException e){
                         ((customTableCell) (tableCells[row][col])).setError(true);
                     }
