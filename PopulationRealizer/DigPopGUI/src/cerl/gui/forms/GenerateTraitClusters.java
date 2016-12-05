@@ -6,13 +6,17 @@
 package cerl.gui.forms;
 
 import cerl.gui.standard.utilities.customTableCell;
-import cerl.gui.standard.utilities.customTableCellEditor;
 import cerl.gui.standard.utilities.customTableCellRenderer;
 import cerl.gui.standard.utilities.customTableModel;
 import cerl.gui.standard.utilities.customTableModelListener;
-import cerl.gui.standard.utilities.jTableButtonMouseListener;
+import java.awt.Dimension;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.TableColumn;
 
 /**
@@ -46,24 +50,31 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         columnNames.addAll(Arrays.asList("Trait ID","Reduction","Distance"));
 
         //columns must be rows+1 because the header row is the -1th row.
-        Object[][] cellValues = new Object[10][10];
+        ArrayList<ArrayList<Object>> cellValues = new ArrayList<>();
+        //Vector<ArrayList<Object>> cellValues = new Vector(3,3);
         
-        //Trait ID's
-        cellValues[0][0] = new customTableCell("123", false, "Integer", false);
-        cellValues[1][0] = new customTableCell("131", false, "Integer", false);
-        cellValues[2][0] = new customTableCell("136", false, "Integer", false);
+        //Add rows
+        cellValues.add(0,new ArrayList<>());
+        cellValues.add(1,new ArrayList<>());
+        cellValues.add(2,new ArrayList<>());
+        
+        //Add Column - Trait ID's
+        //cellValues[0][0] = new customTableCell("123", false, "Integer", false);
+        cellValues.get(0).add(0, new customTableCell("123", false, "Integer", false));
+        cellValues.get(1).add(0, new customTableCell("131", false, "Integer", false));
+        cellValues.get(2).add(0, new customTableCell("136", false, "Integer", false));
         
         //Reduction
-        cellValues[0][1] = new customTableCell("", true, "Integer", false);
-        cellValues[1][1] = new customTableCell("", true, "Integer", false);
-        cellValues[2][1] = new customTableCell("", true, "Integer", false);
+        cellValues.get(0).add(1, new customTableCell("", true, "Integer", false));
+        cellValues.get(1).add(1, new customTableCell("", true, "Integer", false));
+        cellValues.get(2).add(1, new customTableCell("", true, "Integer", false));
         
         //Distance
-        cellValues[0][2] = new customTableCell("", true, "Integer", false);
-        cellValues[1][2] = new customTableCell("", true, "Integer", false);
-        cellValues[2][2] = new customTableCell("", true, "Integer", false);
+        cellValues.get(0).add(2, new customTableCell("", true, "Integer", false));
+        cellValues.get(1).add(2, new customTableCell("", true, "Integer", false));
+        cellValues.get(2).add(2, new customTableCell("", true, "Integer", false));
         
-        //create table with custom MarkovTableModel
+        //create table with customTableModel
         customTableModel myTableModel = new customTableModel(columnNames, cellValues);
         
         return myTableModel;
@@ -101,6 +112,11 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable_TraitInformation);
 
         jButton_NewCluster.setText("Add New Cluster");
+        jButton_NewCluster.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_NewClusterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,6 +149,68 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton_NewClusterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_NewClusterActionPerformed
+        //Open a new dialog, to have users provide the trait cluster information
+        String returnVal = "";
+        JPanel myPanel = new JPanel();
+        //this.validationLabel = new JLabel();
+        
+        //Set up custom int formatter for the reduction/distance textboxes
+        NumberFormat intFormat = NumberFormat.getNumberInstance();
+        intFormat.setGroupingUsed(false);
+        intFormat.setMaximumFractionDigits(0);
+        
+        //create the dropdown selector for Trait ID
+        //Trait ID (List with descriptions)
+        JFormattedTextField trait = new JFormattedTextField(intFormat);
+        //create the reduction/distance textboxes
+        JFormattedTextField reduction = new JFormattedTextField(intFormat);
+        JFormattedTextField distance = new JFormattedTextField(intFormat);
+        
+        //set the dimensions for the min/max textboxes
+        Dimension d = new Dimension();
+        d.height=30;
+        d.width=80;
+        trait.setPreferredSize(d);
+        reduction.setPreferredSize(d);
+        distance.setPreferredSize(d);
+        
+        //setup validator for values entered 
+        //StrictInputVerifier verifyDoubles = new StrictInputVerifier("Integer");
+        //validate data entered into both the min and max textboxes
+        //reduction.setInputVerifier(verifyDoubles);
+        //distance.setInputVerifier(verifyDoubles);
+        
+        //Add textboxes and labels to the panel
+        myPanel.add(new JLabel("Trait:"));
+        myPanel.add(trait);
+        myPanel.add(new JLabel("Reduction:"));
+        myPanel.add(reduction);
+        myPanel.add(new JLabel("Distance:"));
+        myPanel.add(distance);
+        //myPanel.add(validationLabel);
+        myPanel.setPreferredSize(new Dimension(300,75));
+        
+        //create the popup
+        int result = JOptionPane.showConfirmDialog(null, myPanel, "Please enter min and max values", JOptionPane.OK_CANCEL_OPTION);
+        if(result == JOptionPane.OK_OPTION){
+            //add to table
+            ArrayList<Object> cellValues = new ArrayList<>();
+            //populateRow
+            cellValues.add(0, new customTableCell(trait.getText(), false, "Integer", false));
+            cellValues.add(1, new customTableCell(reduction.getText(), true, "Integer", false));
+            cellValues.add(2, new customTableCell(distance.getText(), true, "Integer", false));
+            
+            myTable.addRow(cellValues);            
+        } else if(result == JOptionPane.CANCEL_OPTION){
+            //do nothing
+            //return null;
+        }
+                
+        //save new trait cluster information back to the main jTable.
+        //return returnVal;
+    }//GEN-LAST:event_jButton_NewClusterActionPerformed
 
     /**
      * @param args the command line arguments

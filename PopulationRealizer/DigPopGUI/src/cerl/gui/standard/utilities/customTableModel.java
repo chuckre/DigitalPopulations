@@ -14,16 +14,15 @@ import javax.swing.table.AbstractTableModel;
  */
 public class customTableModel  extends AbstractTableModel {
     private final ArrayList<String> columns;
-    private final Object[][] tableCells;
+    private final ArrayList<ArrayList<Object>> tableCells;
     
     public customTableModel() {
         super();
         columns = new ArrayList<>();
-        //default 2 x 2 table.
-        tableCells = new Object[2][2];
+        tableCells = new ArrayList<>();
     }
     
-    public customTableModel(ArrayList<String> columnNames, Object[][] cellValues) {
+    public customTableModel(ArrayList<String> columnNames, ArrayList<ArrayList<Object>> cellValues) {
         super();
         columns = columnNames;
         tableCells = cellValues;
@@ -31,7 +30,7 @@ public class customTableModel  extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return tableCells.length;
+        return tableCells.size();
     }
 
     @Override
@@ -53,24 +52,42 @@ public class customTableModel  extends AbstractTableModel {
     @Override
     public Object getValueAt(int row, int column) {
         try{
-            return tableCells[row][column];
+            return tableCells.get(row).get(column);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.err.println("Caught ArrayIndexOutOfBoundsException" + e.getMessage());
             return null;
         }
     } 
     
+    public void addRow(ArrayList<Object> values){
+        tableCells.add(values);
+        this.fireTableDataChanged();
+    }
+    
     @Override
     public void setValueAt(Object value, int row, int col) {
-        if (tableCells[row][col] == null) {
-            tableCells[row][col] = new customTableCell(value, true, "java.lang.String", false); 
-        } else if (tableCells[row][col].getClass().equals(customTableCell.class)) {
-            ((customTableCell) (tableCells[row][col])).setValue(value);
-        } else {
-            tableCells[row][col] = value;
+        boolean updateWholeTable = false;
+        while(tableCells.size() <= row) { //|| (tableCells.get(row)==null))
+            tableCells.add(new ArrayList<>());
+            updateWholeTable = true;
         }
         
-        this.fireTableCellUpdated(row, col);
+        while (tableCells.get(row).size() <= col) { // ||  (tableCells.get(row).get(col) == null)) {
+            tableCells.get(row).add(new customTableCell(value, true, "java.lang.String", false));
+            updateWholeTable = true;
+        } 
+            
+        if (tableCells.get(row).get(col).getClass().equals(customTableCell.class)) {
+            ((customTableCell)tableCells.get(row).get(col)).setValue(value);
+        } else {
+            tableCells.get(row).set(col, value); 
+        }
+        
+        if(updateWholeTable){
+            this.fireTableDataChanged();
+        } else{
+            this.fireTableCellUpdated(row, col);
+        }
     }
     
     /**
@@ -84,10 +101,12 @@ public class customTableModel  extends AbstractTableModel {
      */
     @Override
     public boolean isCellEditable(int row, int col) {
-        if (tableCells[row][col] == null) {
+        if(tableCells.get(row) == null){
+            return false;
+        } else if(tableCells.get(row).get(col) == null){
             return true;
-        } else if (tableCells[row][col].getClass().equals(customTableCell.class)) {
-            return ((customTableCell) (tableCells[row][col])).isEditable();
+        } else if (tableCells.get(row).get(col).getClass().equals(customTableCell.class)) {
+            return ((customTableCell) (tableCells.get(row).get(col))).isEditable();
         } else {
             return true; 
         }
@@ -100,10 +119,12 @@ public class customTableModel  extends AbstractTableModel {
      * @return
      */
     public boolean isErrorInCell(int row, int col) {
-        if (tableCells[row][col] == null) {
+        if(tableCells.get(row) == null){
             return false;
-        } else if (tableCells[row][col].getClass().equals(customTableCell.class)) {
-            return ((customTableCell) (tableCells[row][col])).isError();
+        } else if(tableCells.get(row).get(col) == null){
+            return false;
+        } else if (tableCells.get(row).get(col).getClass().equals(customTableCell.class)) {
+            return ((customTableCell) (tableCells.get(row).get(col))).isError();
         } else {
             return false;
         }
@@ -113,7 +134,7 @@ public class customTableModel  extends AbstractTableModel {
         return columns;
     }
 
-    public Object[][] getTableCells() {
+    public ArrayList<ArrayList<Object>> getTableCells() {
         return tableCells;
     }
 
@@ -123,26 +144,35 @@ public class customTableModel  extends AbstractTableModel {
      * @param col - The column that changed
      */
     public void handleTableChange(int row, int col) {
+        //System.out.println("Handling table change for row:" + row + "col: " + col + " size: " + tableCells.size());
+        
         //validate data types
-        if (tableCells[row][col].getClass().equals(customTableCell.class)) {
-            Object value  = ((customTableCell) (tableCells[row][col])).getValue();
-            String allowedType =  ((customTableCell) (tableCells[row][col])).getAllowedDataType();
+        if((tableCells.size() <= row) || (row < 0)){
+            System.out.println("Row is too big:" + row);
+            return;
+        } else if((tableCells.get(row).size() <= col) || (col < 0)){
+            System.out.println("Col is too big:" + col);
+            return;
+        }
+        if (tableCells.get(row).get(col).getClass().equals(customTableCell.class)) {
+            Object value  = ((customTableCell) (tableCells.get(row).get(col))).getValue();
+            String allowedType =  ((customTableCell) (tableCells.get(row).get(col))).getAllowedDataType();
             
             if((value.getClass().toString() != null) && (allowedType != null) && (!value.getClass().toString().equals(allowedType))){
                 if(allowedType.contains("Double")){
                     try{
                         double d = Double.parseDouble(value.toString());
-                        ((customTableCell) (tableCells[row][col])).setError(false);
+                        ((customTableCell) (tableCells.get(row).get(col))).setError(false);
                     } catch(NumberFormatException e){
-                        ((customTableCell) (tableCells[row][col])).setError(true);
+                        ((customTableCell) (tableCells.get(row).get(col))).setError(true);
                     }
                 }
                 else if(allowedType.contains("Integer")){
                     try{
                         int i = Integer.parseInt(value.toString());
-                        ((customTableCell) (tableCells[row][col])).setError(false);
+                        ((customTableCell) (tableCells.get(row).get(col))).setError(false);
                     } catch(NumberFormatException e){
-                        ((customTableCell) (tableCells[row][col])).setError(true);
+                        ((customTableCell) (tableCells.get(row).get(col))).setError(true);
                     }
                 }
             }   
