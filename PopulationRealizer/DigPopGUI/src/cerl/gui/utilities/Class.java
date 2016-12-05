@@ -12,7 +12,7 @@ package cerl.gui.utilities;
 public class Class {
     private String className; 
     private long classTotal;
-    private long columnNumber;
+    private int columnNumber;
     private boolean selected;
 
     public Class() {
@@ -22,14 +22,14 @@ public class Class {
         this.selected = false;
     }
 
-    public Class(String className, long columnNumber, boolean selected) {
+    public Class(String className, int columnNumber, boolean selected) {
         this.className = className;
         this.classTotal = 0;
         this.columnNumber = columnNumber;
         this.selected = selected;
     }
 
-    public Class(String className, long classTotal, long columnNumber, boolean selected) {
+    public Class(String className, long classTotal, int columnNumber, boolean selected) {
         this.className = className;
         this.classTotal = classTotal;
         this.columnNumber = columnNumber;
@@ -52,11 +52,11 @@ public class Class {
         this.classTotal = classTotal;
     }
 
-    public long getColumnNumber() {
+    public int getColumnNumber() {
         return columnNumber;
     }
 
-    public void setColumnNumber(long columnNumber) {
+    public void setColumnNumber(int columnNumber) {
         this.columnNumber = columnNumber;
     }
 
@@ -69,6 +69,11 @@ public class Class {
     }
     
     public void addToClassTotal(long addValue){
-        this.classTotal = this.classTotal + addValue;
+        this.classTotal += addValue;
+    }
+
+    @Override
+    public String toString() {
+        return className;
     }
 }

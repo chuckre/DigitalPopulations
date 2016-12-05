@@ -8,6 +8,7 @@ import cerl.gui.standard.utilities.Screen;
 import cerl.gui.standard.utilities.HelpFile;
 import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.Result;
+import cerl.gui.utilities.CensusSurveyClasses;
 import static cerl.gui.utilities.DigPopFileTypeEnum.Census_Enumerations;
 import static cerl.gui.utilities.DigPopFileTypeEnum.Household_Micro_Data;
 import static cerl.gui.utilities.DigPopFileTypeEnum.Population_Micro_Data;
@@ -112,6 +113,23 @@ public class FileUtilityJUnitTest {
         long tDelta = tEnd - tStart;
         double elapsedSeconds = tDelta / 1000.0;
         System.out.println(elapsedSeconds);
+    }
+    
+    @Test
+    public void readInClassTotalsHousehold_Micro_DataTest(){
+        
+        CensusSurveyClasses returnObject = new CensusSurveyClasses();
+        
+        Result result = DigPopGUIUtilityClass.getClassNamesFromCSVFile("P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv", Household_Micro_Data);
+        returnObject = (CensusSurveyClasses)result.getValue();
+        
+        returnObject.getHouseholdMicroDataClasses().get(0).setSelected(true);
+        returnObject.getHouseholdMicroDataClasses().get(4).setSelected(true);
+        returnObject.getHouseholdMicroDataClasses().get(10).setSelected(true);
+        
+        result = DigPopGUIUtilityClass.readInClassTotals("P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv",returnObject.getHouseholdMicroDataClasses());
+        
+        System.out.print(result.getValue());
     }
     
  
