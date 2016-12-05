@@ -18,8 +18,11 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu_EditTab">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Edit"/>
+            <Property name="text" type="java.lang.String" value="Help"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenu_EditTabMouseClicked"/>
+          </Events>
         </Menu>
       </SubComponents>
     </Menu>
