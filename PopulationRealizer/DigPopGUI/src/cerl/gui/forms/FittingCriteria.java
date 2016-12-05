@@ -9,6 +9,8 @@ import cerl.gui.standard.utilities.customTableModel;
 import cerl.gui.standard.utilities.customTableCell;
 import cerl.gui.standard.utilities.customTableCellRenderer;
 import cerl.gui.standard.utilities.customTableModelListener;
+import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.HelpFileScreenNames;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.table.TableColumn;
@@ -19,6 +21,7 @@ import javax.swing.table.TableColumn;
  */
 public class FittingCriteria extends javax.swing.JFrame {
     private final customTableModel myTable;
+    private final String SCREEN_NAME = HelpFileScreenNames.STEP_FIVE_HELP_FILE_NAME.toString();
     
     /**
      * Creates new form FittingCriteria
@@ -127,6 +130,9 @@ public class FittingCriteria extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_TraitInformation = new javax.swing.JTable();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu_FileHelpMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1000, 300));
@@ -143,6 +149,19 @@ public class FittingCriteria extends javax.swing.JFrame {
         jTable_TraitInformation.setMinimumSize(new java.awt.Dimension(100, 300));
         jTable_TraitInformation.setName("Trait Information"); // NOI18N
         jScrollPane1.setViewportView(jTable_TraitInformation);
+
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenu_FileHelpMenu.setText("Help");
+        jMenu_FileHelpMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu_FileHelpMenuMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu_FileHelpMenu);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -165,7 +184,7 @@ public class FittingCriteria extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jLabel_Header.getAccessibleContext().setAccessibleName("Header");
@@ -173,6 +192,10 @@ public class FittingCriteria extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenu_FileHelpMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_FileHelpMenuMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
+    }//GEN-LAST:event_jMenu_FileHelpMenuMouseClicked
 
     /**
      * @param args the command line arguments
@@ -212,6 +235,9 @@ public class FittingCriteria extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel_Header;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenu_FileHelpMenu;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_TraitInformation;
     // End of variables declaration//GEN-END:variables

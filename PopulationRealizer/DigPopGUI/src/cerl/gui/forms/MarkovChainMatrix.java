@@ -11,6 +11,8 @@ import cerl.gui.standard.utilities.customTableCellEditor;
 import cerl.gui.standard.utilities.customTableCellRenderer;
 import cerl.gui.standard.utilities.jTableButtonMouseListener;
 import cerl.gui.standard.utilities.customTableModelListener;
+import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.MarkovTableCell;
 import javax.swing.table.TableColumn;
 
@@ -26,6 +28,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     private int START_EDITABLE_COL;
     private int END_EDITABLE_ROW;
     private int END_EDITABLE_COL;
+    private final String SCREEN_NAME = HelpFileScreenNames.STEP_FOUR_HELP_FILE_NAME.toString();
             
     /**
      * Creates new form MarkovChainMatrix
@@ -197,7 +200,12 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         jMenu_FileTab.setText("File");
         jMenuBar_FileMenu.add(jMenu_FileTab);
 
-        jMenu_EditTab.setText("Edit");
+        jMenu_EditTab.setText("Help");
+        jMenu_EditTab.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu_EditTabMouseClicked(evt);
+            }
+        });
         jMenuBar_FileMenu.add(jMenu_EditTab);
 
         setJMenuBar(jMenuBar_FileMenu);
@@ -300,6 +308,10 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         // TODO add your handling code here:
         // TODO: save markovName to XML with full populated table object.
     }//GEN-LAST:event_jButton_SaveActionPerformed
+
+    private void jMenu_EditTabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_EditTabMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
+    }//GEN-LAST:event_jMenu_EditTabMouseClicked
 
     /**
      * @param args the command line arguments
