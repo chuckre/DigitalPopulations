@@ -21,7 +21,8 @@ public class MarkovTableModel extends customTableModel {
 
     private final ArrayList<String> columns;
     private final int[][] emptyCells;
-    private Object[][] markovTable;
+    private ArrayList<ArrayList<Object>> markovTable;
+    //private Object[][] markovTable;
     private final int PROPORTION_COLUMN = 1;
     private final int PROPORTION_ROW = 0;
     private final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.00");
@@ -35,7 +36,7 @@ public class MarkovTableModel extends customTableModel {
         columns = new ArrayList<>();
         emptyCells = new int[2][Math.max(PROPORTION_ROW, PROPORTION_COLUMN)+1];
         //columns must be rows+1 because the header row is the -1th row.
-        markovTable = new Object[PROPORTION_ROW+1][PROPORTION_COLUMN+1];
+        markovTable = new ArrayList<>();
     }
 
     /**
@@ -45,7 +46,7 @@ public class MarkovTableModel extends customTableModel {
      * @param cellValues The 2D matrix of cell values
      * @param cells The array for tracking the number of empty cells in each row/column
      */
-    public MarkovTableModel(ArrayList<String> columnNames, Object[][] cellValues, int[][] cells) {
+    public MarkovTableModel(ArrayList<String> columnNames, ArrayList<ArrayList<Object>> cellValues, int[][] cells) {
         super(columnNames, cellValues);
         columns = columnNames;
         markovTable = cellValues;
@@ -74,8 +75,8 @@ public class MarkovTableModel extends customTableModel {
     
     private void clearCell(int row, int col){
         this.setValueAt("", row, col);
-        ((MarkovTableCell) (markovTable[row][col])).setCalculated(false);
-        ((MarkovTableCell) (markovTable[row][col])).setUserEntered(false);
+        ((MarkovTableCell) (markovTable.get(row).get(col))).setCalculated(false);
+        ((MarkovTableCell) (markovTable.get(row).get(col))).setUserEntered(false);
     }
     
     /**
@@ -103,7 +104,7 @@ public class MarkovTableModel extends customTableModel {
      */
     public void clearRow(int row) {
         //Removes all data entered into the specified row
-        for (int c = 0; c < markovTable[row].length; c++) {
+        for (int c = 0; c < markovTable.get(row).size(); c++) {
             if (isCellEditable(row, c)) {
                 clearCell(row, c);
             }
@@ -124,7 +125,7 @@ public class MarkovTableModel extends customTableModel {
      */
     public void clearColumn(int column) {
         //Removes all data entered into the grid so far
-        for (int r = 0; r < markovTable.length; r++) {
+        for (int r = 0; r < markovTable.size(); r++) {
             if (isCellEditable(r, column)) {
                 clearCell(r, column);
             }
@@ -145,7 +146,7 @@ public class MarkovTableModel extends customTableModel {
      * @param col - The column of the cell that was just edited
      * @return
      */
-    public Object[][] calculateMarkov(int row, int col) {
+    public ArrayList<ArrayList<Object>> calculateMarkov(int row, int col) {
         System.out.println("Calculate Markov Called for row:" + row + ", col: " + col);
         if((row <= PROPORTION_ROW) || (col <= PROPORTION_COLUMN)){
             return markovTable; //invalid cells for this purpose
@@ -218,8 +219,8 @@ public class MarkovTableModel extends customTableModel {
         int colWithEmptyCell = 0;
         
         //get Proportion values for this row, by min and max to start
-        double rowMinTotal = (double)((MarkovTableCell)markovTable[row][PROPORTION_COLUMN]).getMin();
-        double rowMaxTotal = (double)((MarkovTableCell)markovTable[row][PROPORTION_COLUMN]).getMax();
+        double rowMinTotal = (double)((MarkovTableCell)markovTable.get(row).get(PROPORTION_COLUMN)).getMin();
+        double rowMaxTotal = (double)((MarkovTableCell)markovTable.get(row).get(PROPORTION_COLUMN)).getMax();
                     
         //if this row has only one cell left to fill
         if((emptyCells[0].length > (row-PROPORTION_ROW-1)) && (emptyCells[0][row-PROPORTION_ROW-1] == 1)){
@@ -229,15 +230,15 @@ public class MarkovTableModel extends customTableModel {
         
         //for each column in this row
         for(int c=startCol;c<sumCol;c++){ 
-            if(markovTable[row][c] != null){//if not null
+            if(markovTable.get(row).get(c) != null){//if not null
                 //update the current total for the row/column
-                rowMinTotal = getTotalByClass((MarkovTableCell)markovTable[row][c], rowMinTotal, "Min");
-                rowMaxTotal = getTotalByClass((MarkovTableCell)markovTable[row][c], rowMaxTotal, "Max");
+                rowMinTotal = getTotalByClass((MarkovTableCell)markovTable.get(row).get(c), rowMinTotal, "Min");
+                rowMaxTotal = getTotalByClass((MarkovTableCell)markovTable.get(row).get(c), rowMaxTotal, "Max");
             }
             
             //check columns in this row for the empty cell
-            if(!((MarkovTableCell)(markovTable[rowWithEmptyCell][c])).isUserEntered() && (rowWithEmptyCell > PROPORTION_ROW)){
-                ((MarkovTableCell) (markovTable[rowWithEmptyCell][c])).setCalculated(true);
+            if(!((MarkovTableCell)(markovTable.get(rowWithEmptyCell).get(c))).isUserEntered() && (rowWithEmptyCell > PROPORTION_ROW)){
+                ((MarkovTableCell) (markovTable.get(rowWithEmptyCell).get(c))).setCalculated(true);
                 emptyCells[0][rowWithEmptyCell-1-PROPORTION_ROW] = emptyCells[0][rowWithEmptyCell-1-PROPORTION_ROW] - 1;
                 //remember the empty column - to set after have updated total
                 colWithEmptyCell = c;
@@ -251,12 +252,14 @@ public class MarkovTableModel extends customTableModel {
         //update sum column for this row
         String newRowValue = "0 - " + DECIMAL_FORMAT.format(rowMinTotal) + "   0 - " + DECIMAL_FORMAT.format(rowMaxTotal);
         
-        if(markovTable[row][sumCol] == null){
-            markovTable[row][sumCol] = new MarkovTableCell(row, sumCol, rowMaxTotal, rowMinTotal, newRowValue, true, false, false, false);
+        if(markovTable.get(row).get(sumCol) == null){
+            markovTable.get(row).set(sumCol, new MarkovTableCell(row, sumCol, rowMaxTotal, rowMinTotal, newRowValue, true, false, false, false));
         } else{
-            ((MarkovTableCell)markovTable[row][sumCol]).setMin(rowMinTotal);
-            ((MarkovTableCell)markovTable[row][sumCol]).setMax(rowMaxTotal);
-            ((MarkovTableCell)markovTable[row][sumCol]).setValue(newRowValue);
+            ((MarkovTableCell)markovTable.get(row).get(sumCol)).setMin(rowMinTotal);
+            ((MarkovTableCell)markovTable.get(row).get(sumCol)).setMax(rowMaxTotal);
+            ((MarkovTableCell)markovTable.get(row).get(sumCol)).setValue(newRowValue);
+            ((MarkovTableCell)markovTable.get(row).get(sumCol)).setEditable(false);
+            ((MarkovTableCell)markovTable.get(row).get(sumCol)).setCalculated(true);
         }
 
         return newRowValue;
@@ -274,8 +277,8 @@ public class MarkovTableModel extends customTableModel {
         int colWithEmptyCell = 0;
         
         //get Proportion values for the column, by min and max
-        double colMinTotal = (double)((MarkovTableCell)markovTable[PROPORTION_ROW][col]).getMin();
-        double colMaxTotal = (double)((MarkovTableCell)markovTable[PROPORTION_ROW][col]).getMax();            
+        double colMinTotal = (double)((MarkovTableCell)markovTable.get(PROPORTION_ROW).get(col)).getMin();
+        double colMaxTotal = (double)((MarkovTableCell)markovTable.get(PROPORTION_ROW).get(col)).getMax();            
         
         //if this column has only one cell left to fill
         if((emptyCells[1].length > (col-PROPORTION_COLUMN-1)) && (emptyCells[1][col-PROPORTION_COLUMN-1] == 1)){
@@ -285,15 +288,15 @@ public class MarkovTableModel extends customTableModel {
         
         //for each row in this column
         for(int r=startRow;r<sumRow;r++){
-            if(markovTable[r][col] != null){
+            if(markovTable.get(r).get(col) != null){
                 //update the curent total for the row/column
-                colMinTotal = getTotalByClass((MarkovTableCell)markovTable[r][col], colMinTotal, "Min");
-                colMaxTotal = getTotalByClass((MarkovTableCell)markovTable[r][col], colMaxTotal, "Max");
+                colMinTotal = getTotalByClass((MarkovTableCell)(markovTable.get(r).get(col)), colMinTotal, "Min");
+                colMaxTotal = getTotalByClass((MarkovTableCell)(markovTable.get(r).get(col)), colMaxTotal, "Max");
             }
             
             //check rows in this column for the empty cell
-            if(!((MarkovTableCell)(markovTable[r][colWithEmptyCell])).isUserEntered() && (colWithEmptyCell > PROPORTION_COLUMN)){
-                ((MarkovTableCell) (markovTable[r][colWithEmptyCell])).setCalculated(true);
+            if(!((MarkovTableCell)(markovTable.get(r).get(colWithEmptyCell))).isUserEntered() && (colWithEmptyCell > PROPORTION_COLUMN)){
+                ((MarkovTableCell) (markovTable.get(r).get(colWithEmptyCell))).setCalculated(true);
                 emptyCells[1][colWithEmptyCell-1-PROPORTION_COLUMN] = emptyCells[1][colWithEmptyCell-1-PROPORTION_COLUMN] - 1;
                 rowWithEmptyCell = r;
             }
@@ -306,12 +309,14 @@ public class MarkovTableModel extends customTableModel {
         String newColValue = "0 - " + DECIMAL_FORMAT.format(colMinTotal) + "   0 - " + DECIMAL_FORMAT.format(colMaxTotal);
             
         //set column total
-        if(markovTable[sumRow][col] == null){
-            markovTable[sumRow][col] = new MarkovTableCell(sumRow, col, colMaxTotal, colMinTotal, newColValue, true, false, false, false);
+        if(markovTable.get(sumRow).get(col) == null){
+            markovTable.get(sumRow).set(col, new MarkovTableCell(sumRow, col, colMaxTotal, colMinTotal, newColValue, true, false, false, false));
         } else{
-            ((MarkovTableCell)markovTable[sumRow][col]).setMin(colMinTotal);
-            ((MarkovTableCell)markovTable[sumRow][col]).setMax(colMaxTotal);
-            ((MarkovTableCell)markovTable[sumRow][col]).setValue(newColValue);
+            ((MarkovTableCell)markovTable.get(sumRow).get(col)).setMin(colMinTotal);
+            ((MarkovTableCell)markovTable.get(sumRow).get(col)).setMax(colMaxTotal);
+            ((MarkovTableCell)markovTable.get(sumRow).get(col)).setValue(newColValue);
+            ((MarkovTableCell)markovTable.get(sumRow).get(col)).setEditable(false);
+            ((MarkovTableCell)markovTable.get(sumRow).get(col)).setCalculated(true);
         }
         
         return newColValue;
@@ -322,11 +327,11 @@ public class MarkovTableModel extends customTableModel {
 
         if((colWithEmptyCell > 0) && (rowWithEmptyCell > 0) && (minOrMax != null)){
             if(minOrMax == "Min"){
-                ((MarkovTableCell) (markovTable[rowWithEmptyCell][colWithEmptyCell])).setMin(total);
+                ((MarkovTableCell) (markovTable.get(rowWithEmptyCell).get(colWithEmptyCell))).setMin(total);
             } else if(minOrMax == "Max"){
-                ((MarkovTableCell) (markovTable[rowWithEmptyCell][colWithEmptyCell])).setMax(total);
+                ((MarkovTableCell) (markovTable.get(rowWithEmptyCell).get(colWithEmptyCell))).setMax(total);
             } else{
-                ((MarkovTableCell) (markovTable[rowWithEmptyCell][colWithEmptyCell])).setValue(total);
+                ((MarkovTableCell) (markovTable.get(rowWithEmptyCell).get(colWithEmptyCell))).setValue(total);
             }
             this.setOrClearErrors(rowWithEmptyCell,colWithEmptyCell);
             total = 0;
@@ -355,11 +360,11 @@ public class MarkovTableModel extends customTableModel {
      * @param sumCol - the column containing the final summations for it's row
      * @return 
      */
-    public Object[][] calculateAmountLeft(int sumRow, int sumCol){
+    public ArrayList<ArrayList<Object>> calculateAmountLeft(int sumRow, int sumCol){
         //calculate all columns
         for(int c=PROPORTION_COLUMN+1; c<sumCol; c++){
-            if(markovTable[PROPORTION_ROW][c]==null){
-                markovTable[PROPORTION_ROW][c] = new MarkovTableCell(PROPORTION_ROW, c, 0.0, true, false, false, false);
+            if(markovTable.get(PROPORTION_ROW).get(c)==null){
+                markovTable.get(PROPORTION_ROW).set(c, new MarkovTableCell(PROPORTION_ROW, c, 0.0, true, false, false, false));
             }
             
             //set column total
@@ -368,8 +373,8 @@ public class MarkovTableModel extends customTableModel {
         
         //calculate all rows
         for(int r=PROPORTION_ROW+1; r<sumRow; r++){
-            if(markovTable[r][PROPORTION_COLUMN] == null){
-                markovTable[r][PROPORTION_COLUMN] = new MarkovTableCell(r, PROPORTION_COLUMN, 0.0, true, false, false, false);
+            if(markovTable.get(r).get(PROPORTION_COLUMN) == null){
+                markovTable.get(r).set(PROPORTION_COLUMN, new MarkovTableCell(r, PROPORTION_COLUMN, 0.0, true, false, false, false));
             }
             
             //calculate the amount left for the row, by min and max
@@ -391,28 +396,28 @@ public class MarkovTableModel extends customTableModel {
     public Object getValueAt(int row, int column) {
         try {
             //if the cell does not exist yet, create it as a new editable cell
-            if (markovTable[row][column] == null) {
-                markovTable[row][column] = new MarkovTableCell(row, column, "", false, false, false, true);
+            if (markovTable.get(row).get(column) == null) {
+                markovTable.get(row).set(column, new MarkovTableCell(row, column, "", false, false, false, true));
             }
 
             //Add a button to the last row/column of the grid to allow clearing
             //with the exception of the non-editable rows/columns
-            if ((row == markovTable.length - 1) && (column > 1) && (column != columns.size() - 1)) {
+            if ((row == markovTable.size() - 1) && (column > 1) && (column != columns.size() - 1)) {
                 //clear the column that button is in
                 JButton colClear = createColumnClearButton(column);
                 return colClear;
-            } else if ((column == columns.size() - 1) && (row > 0) && (row != markovTable.length - 1)) {
+            } else if ((column == columns.size() - 1) && (row > 0) && (row != markovTable.size() - 1)) {
                 //clear the row that button is in
                 JButton rowClear = createRowClearButton(row);
                 return rowClear;
-            } else if (markovTable[row][column].getClass().equals(MarkovTableCell.class)) {
-                if(((MarkovTableCell)markovTable[row][column]).isEditable()){
-                    return DECIMAL_FORMAT.format(((MarkovTableCell)markovTable[row][column]).getMin()) + " - " + DECIMAL_FORMAT.format(((MarkovTableCell)markovTable[row][column]).getMax());
+            } else if (markovTable.get(row).get(column).getClass().equals(MarkovTableCell.class)) {
+                if(((MarkovTableCell)markovTable.get(row).get(column)).isEditable()){
+                    return DECIMAL_FORMAT.format(((MarkovTableCell)markovTable.get(row).get(column)).getMin()) + " - " + DECIMAL_FORMAT.format(((MarkovTableCell)markovTable.get(row).get(column)).getMax());
                 }else{
-                    return ((MarkovTableCell)markovTable[row][column]).getValue();
+                    return ((MarkovTableCell)markovTable.get(row).get(column)).getValue();
                 }
             }
-            return markovTable[row][column];
+            return markovTable.get(row).get(column);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.err.println("Caught ArrayIndexOutOfBoundsException" + e.getMessage());
             return null;
@@ -464,12 +469,12 @@ public class MarkovTableModel extends customTableModel {
      */
     @Override
     public boolean isCellEditable(int row, int col) {
-        if (markovTable[row][col] == null) {
+        if (markovTable.get(row).get(col) == null) {
             return true;
-        } else if (markovTable[row][col].getClass().equals(MarkovTableCell.class)) {
-            return ((MarkovTableCell) (markovTable[row][col])).isEditable();
+        } else if (markovTable.get(row).get(col).getClass().equals(MarkovTableCell.class)) {
+            return ((MarkovTableCell) (markovTable.get(row).get(col))).isEditable();
         } else {
-            return true; //(!(col==0)) && (!(col==1)) && (!(row==0));
+            return true; 
         }
     }
 
@@ -482,10 +487,10 @@ public class MarkovTableModel extends customTableModel {
      * @return
      */
     public boolean isCellCalculated(int row, int col) {
-        if (markovTable[row][col] == null) {
+        if (markovTable.get(row).get(col) == null) {
             return false;
-        } else if (markovTable[row][col].getClass().equals(MarkovTableCell.class)) {
-            return ((MarkovTableCell) (markovTable[row][col])).isCalculated();
+        } else if (markovTable.get(row).get(col).getClass().equals(MarkovTableCell.class)) {
+            return ((MarkovTableCell) (markovTable.get(row).get(col))).isCalculated();
         } else {
             return false;  //if not the Markov calculated cells - leave alone
         }
@@ -501,10 +506,10 @@ public class MarkovTableModel extends customTableModel {
      */
     @Override
     public boolean isErrorInCell(int row, int col) {
-        if (markovTable[row][col] == null) {
+        if (markovTable.get(row).get(col) == null) {
             return false;
-        } else if (markovTable[row][col].getClass().equals(MarkovTableCell.class)) {
-            return ((MarkovTableCell) (markovTable[row][col])).isError();
+        } else if (markovTable.get(row).get(col).getClass().equals(MarkovTableCell.class)) {
+            return ((MarkovTableCell) (markovTable.get(row).get(col))).isError();
         } else {
             return false;  //if not the Markov cells - leave alone
         }
@@ -538,16 +543,16 @@ public class MarkovTableModel extends customTableModel {
         } 
         
         
-        if (markovTable[row][col] == null) {
-            markovTable[row][col] = new MarkovTableCell(row, col, maxVal, minVal, value, false, false, false, true); 
-        } else if (markovTable[row][col].getClass().equals(MarkovTableCell.class)) {
-            ((MarkovTableCell) (markovTable[row][col])).setMin(minVal);
-            ((MarkovTableCell) (markovTable[row][col])).setMax(maxVal);
-            ((MarkovTableCell) (markovTable[row][col])).setValue(value);
-            ((MarkovTableCell) (markovTable[row][col])).setUserEntered(true);
-            ((MarkovTableCell) (markovTable[row][col])).setCalculated(false);
+        if (markovTable.get(row).get(col) == null) {
+            markovTable.get(row).set(col, new MarkovTableCell(row, col, maxVal, minVal, value, false, false, false, true)); 
+        } else if (markovTable.get(row).get(col).getClass().equals(MarkovTableCell.class)) {
+            ((MarkovTableCell) (markovTable.get(row).get(col))).setMin(minVal);
+            ((MarkovTableCell) (markovTable.get(row).get(col))).setMax(maxVal);
+            ((MarkovTableCell) (markovTable.get(row).get(col))).setValue(value);
+            ((MarkovTableCell) (markovTable.get(row).get(col))).setUserEntered(true);
+            ((MarkovTableCell) (markovTable.get(row).get(col))).setCalculated(false);
         } else {
-            markovTable[row][col] = value;
+            markovTable.get(row).set(col, value);
         }
         
         this.setOrClearErrors(row,col);
@@ -566,15 +571,15 @@ public class MarkovTableModel extends customTableModel {
      */
     private void setOrClearErrors(int row, int col){
         //Set or clear errors
-        if((((MarkovTableCell) (markovTable[row][col])).getMin() < 0) 
-                || (((MarkovTableCell) (markovTable[row][col])).getMax() <0) 
-                || (((MarkovTableCell) (markovTable[row][col])).getMin() > ((MarkovTableCell) (markovTable[PROPORTION_ROW][col])).getMin())
-                || (((MarkovTableCell) (markovTable[row][col])).getMin() > ((MarkovTableCell) (markovTable[row][PROPORTION_COLUMN])).getMin())
-                || (((MarkovTableCell) (markovTable[row][col])).getMax() > ((MarkovTableCell) (markovTable[PROPORTION_ROW][col])).getMax())
-                || (((MarkovTableCell) (markovTable[row][col])).getMax() > ((MarkovTableCell) (markovTable[row][PROPORTION_COLUMN])).getMax())){
-            ((MarkovTableCell) (markovTable[row][col])).setError(true);
+        if((((MarkovTableCell) (markovTable.get(row).get(col))).getMin() < 0) 
+                || (((MarkovTableCell) (markovTable.get(row).get(col))).getMax() <0) 
+                || (((MarkovTableCell) (markovTable.get(row).get(col))).getMin() > ((MarkovTableCell) (markovTable.get(PROPORTION_ROW).get(col))).getMin())
+                || (((MarkovTableCell) (markovTable.get(row).get(col))).getMin() > ((MarkovTableCell) (markovTable.get(row).get(PROPORTION_COLUMN))).getMin())
+                || (((MarkovTableCell) (markovTable.get(row).get(col))).getMax() > ((MarkovTableCell) (markovTable.get(PROPORTION_ROW).get(col))).getMax())
+                || (((MarkovTableCell) (markovTable.get(row).get(col))).getMax() > ((MarkovTableCell) (markovTable.get(row).get(PROPORTION_COLUMN))).getMax())){
+            ((MarkovTableCell) (markovTable.get(row).get(col))).setError(true);
         } else{
-            ((MarkovTableCell) (markovTable[row][col])).setError(false);
+            ((MarkovTableCell) (markovTable.get(row).get(col))).setError(false);
         }
     }
 }

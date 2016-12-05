@@ -95,6 +95,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Add New Cluster"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_NewClusterActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -47,57 +47,66 @@ public class FittingCriteria extends javax.swing.JFrame {
                 , "User Entered Description", "Trait Weight"));
 
         //columns must be rows+1 because the header row is the -1th row.
-        Object[][] cellValues = new Object[10][10];
+        ArrayList<ArrayList<Object>> cellValues = new ArrayList<>();
+        //Object[][] cellValues = new Object[10][10];
+        
+        //Set up rows and columns
+        for(int r = 0; r<10; r++){
+            cellValues.add(r, new ArrayList<>());
+            for(int c=0;c<10;c++){
+                cellValues.get(r).add(c, new customTableCell("", false, "String", false));
+            }
+        }
         
         //ID's
-        cellValues[0][0] = new customTableCell("1", false, "Integer", false);
-        cellValues[1][0] = new customTableCell("2", false, "Integer", false);
-        cellValues[2][0] = new customTableCell("3", false, "Integer", false);
+        cellValues.get(0).add(0, new customTableCell("1", false, "Integer", false));
+        cellValues.get(1).add(0, new customTableCell("2", false, "Integer", false));
+        cellValues.get(2).add(0, new customTableCell("3", false, "Integer", false));
         
         //Census Region Traits
-        cellValues[0][1] = new customTableCell("ABA2E006", false, "String", false);
-        cellValues[1][1] = new customTableCell("ABA2E006", false, "String", false);
-        cellValues[2][1] = new customTableCell("ABA2E006", false, "String", false);
+        cellValues.get(0).add(1, new customTableCell("ABA2E006", false, "String", false));
+        cellValues.get(1).add(1, new customTableCell("ABA2E006", false, "String", false));
+        cellValues.get(2).add(1, new customTableCell("ABA2E006", false, "String", false));
         
         //Census Region Total
-        cellValues[0][2] = new customTableCell("Toilet - MC - Total", false, "String", false);
-        cellValues[1][2] = new customTableCell("Toilet - MC - Total", false, "String", false);
-        cellValues[2][2] = new customTableCell("Toilet - MC - Total", false, "String", false);
+        cellValues.get(0).add(2, new customTableCell("Toilet - MC - Total", false, "String", false));
+        cellValues.get(1).add(2, new customTableCell("Toilet - MC - Total", false, "String", false));
+        cellValues.get(2).add(2, new customTableCell("Toilet - MC - Total", false, "String", false));
         
         //Survey Trait Table
-        cellValues[0][3] = new customTableCell("HOUSEHOLDS", false, "String", false);
-        cellValues[1][3] = new customTableCell("HOUSEHOLDS", false, "String", false);
-        cellValues[2][3] = new customTableCell("HOUSEHOLDS", false, "String", false);
+        cellValues.get(0).add(3, new customTableCell("HOUSEHOLDS", false, "String", false));
+        cellValues.get(1).add(3, new customTableCell("HOUSEHOLDS", false, "String", false));
+        cellValues.get(2).add(3, new customTableCell("HOUSEHOLDS", false, "String", false));
         
         //Survey Trait Select
-        cellValues[0][4] = new customTableCell("0", false, "Integer", false);
-        cellValues[1][4] = new customTableCell("1", false, "Integer", false);
-        cellValues[2][4] = new customTableCell("2", false, "Integer", false);
+        cellValues.get(0).add(4, new customTableCell("0", false, "Integer", false));
+        cellValues.get(1).add(4, new customTableCell("1", false, "Integer", false));
+        cellValues.get(2).add(4, new customTableCell("2", false, "Integer", false));
                 
         //Survey Trait Field
-        cellValues[0][5] = new customTableCell("JWMNP", false, "String", false);
-        cellValues[1][5] = new customTableCell("JWMNP", false, "String", false);
-        cellValues[2][5] = new customTableCell("JWMNP", false, "String", false);
+        cellValues.get(0).add(5, new customTableCell("JWMNP", false, "String", false));
+        cellValues.get(1).add(5, new customTableCell("JWMNP", false, "String", false));
+        cellValues.get(2).add(5, new customTableCell("JWMNP", false, "String", false));
 
         //Survey Total Table
-        cellValues[0][6] = new customTableCell("HOUSEHOLDS", false, "String", false);
-        cellValues[1][6] = new customTableCell("HOUSEHOLDS", false, "String", false);
-        cellValues[2][6] = new customTableCell("HOUSEHOLDS", false, "String", false);
+        cellValues.get(0).add(6, new customTableCell("HOUSEHOLDS", false, "String", false));
+        cellValues.get(1).add(6, new customTableCell("HOUSEHOLDS", false, "String", false));
+        cellValues.get(2).add(6, new customTableCell("HOUSEHOLDS", false, "String", false));
 
         //Survey Total Field
-        cellValues[0][7] = new customTableCell("1", false, "Integer", false);
-        cellValues[1][7] = new customTableCell("1", false, "Integer", false);
-        cellValues[2][7] = new customTableCell("1", false, "Integer", false);
+        cellValues.get(0).add(7, new customTableCell("1", false, "Integer", false));
+        cellValues.get(1).add(7, new customTableCell("1", false, "Integer", false));
+        cellValues.get(2).add(7, new customTableCell("1", false, "Integer", false));
 
         //User Entered Description
-        cellValues[0][8] = new customTableCell("Flush to piped sewer", false, "String", false);
-        cellValues[1][8] = new customTableCell("Flush to septic tank", false, "String", false);
-        cellValues[2][8] = new customTableCell("Flush to pit latrine", false, "String", false);
+        cellValues.get(0).add(8, new customTableCell("Flush to piped sewer", false, "String", false));
+        cellValues.get(1).add(8, new customTableCell("Flush to septic tank", false, "String", false));
+        cellValues.get(2).add(8, new customTableCell("Flush to pit latrine", false, "String", false));
 
         //Trait Weight
-        cellValues[0][9] = new customTableCell("", true, "Double", false);
-        cellValues[1][9] = new customTableCell("", true, "Double", false);
-        cellValues[2][9] = new customTableCell("", true, "Double", false);
+        cellValues.get(0).add(9, new customTableCell("", true, "Double", false));
+        cellValues.get(1).add(9, new customTableCell("", true, "Double", false));
+        cellValues.get(2).add(9, new customTableCell("", true, "Double", false));
 
         //create table with custom MarkovTableModel
         customTableModel myTableModel = new customTableModel(columnNames, cellValues);
