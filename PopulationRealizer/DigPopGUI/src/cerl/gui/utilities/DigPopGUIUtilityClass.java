@@ -10,6 +10,9 @@ import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.HelpFile;
 import cerl.gui.standard.utilities.Instruction;
 import cerl.gui.standard.utilities.Result;
+import static cerl.gui.utilities.DigPopFileTypeEnum.Census_Enumerations;
+import static cerl.gui.utilities.DigPopFileTypeEnum.Household_Micro_Data;
+import static cerl.gui.utilities.DigPopFileTypeEnum.Population_Micro_Data;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -72,6 +75,46 @@ public class DigPopGUIUtilityClass {
 
         return result;
     }
+    
+     public static Result getLoadedCensusSurveyClasses(
+             String censusEnumerationsFilePath,
+             String populationMicroDataFilePath,
+             String householdMicroDataFilePath){
+        Result result = new Result();
+        
+        CensusSurveyClasses returnObject = new CensusSurveyClasses();
+        
+        if(censusEnumerationsFilePath != null && !censusEnumerationsFilePath.equals("")){
+            result = DigPopGUIUtilityClass.getClassNamesFromCSVFile(censusEnumerationsFilePath, Census_Enumerations);
+            
+            if(result.isSuccess()){
+                CensusSurveyClasses results = (CensusSurveyClasses) result.getValue();
+                returnObject.setCensusClasses(results.getCensusClasses());
+            }
+        }
+        
+        if(populationMicroDataFilePath != null && !populationMicroDataFilePath.equals("")){
+            result = DigPopGUIUtilityClass.getClassNamesFromCSVFile(populationMicroDataFilePath, Population_Micro_Data);
+            
+            if(result.isSuccess()){
+                CensusSurveyClasses results = (CensusSurveyClasses) result.getValue();
+                returnObject.setPopulationMicroDataClasses(results.getPopulationMicroDataClasses());
+            }
+        }
+        
+        if(householdMicroDataFilePath != null && !householdMicroDataFilePath.equals("")){
+            result = DigPopGUIUtilityClass.getClassNamesFromCSVFile(householdMicroDataFilePath, Household_Micro_Data);
+            
+            if(result.isSuccess()){
+                CensusSurveyClasses results = (CensusSurveyClasses) result.getValue();
+                returnObject.setHouseholdMicroDataClasses(results.getHouseholdMicroDataClasses());
+            }
+        }
+        
+        result.setValue(returnObject);
+         
+        return result;
+     }
 
     public static Result getClassNamesFromCSVFile(
             String filePath,
@@ -121,6 +164,8 @@ public class DigPopGUIUtilityClass {
         String line = "";
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            
+            int classIDCounter = 1;
 
             if((line = br.readLine()) != null) {
 
@@ -128,8 +173,9 @@ public class DigPopGUIUtilityClass {
                 String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
 
                     for (int count = columnIndent; count < lineInfo.length; count++) {
-                        Class newClass = new Class(lineInfo[count],count,false);
+                        Class newClass = new Class(lineInfo[count],count,false, classIDCounter);
                         foundClasses.add(newClass);
+                        classIDCounter++;
                     }
             }
 

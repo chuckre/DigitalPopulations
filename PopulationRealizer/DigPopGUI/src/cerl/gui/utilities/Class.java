@@ -14,6 +14,8 @@ public class Class {
     private long classTotal;
     private int columnNumber;
     private boolean selected;
+    private int idForFinding;
+    private String userDefinedDescription;
 
     public Class() {
         this.className = null;
@@ -22,18 +24,38 @@ public class Class {
         this.selected = false;
     }
 
-    public Class(String className, int columnNumber, boolean selected) {
+    public Class(String className, int columnNumber, boolean selected, int idForFinding) {
         this.className = className;
         this.classTotal = 0;
         this.columnNumber = columnNumber;
         this.selected = selected;
+        this.idForFinding = idForFinding;
+        this.userDefinedDescription = "";
     }
 
-    public Class(String className, long classTotal, int columnNumber, boolean selected) {
+    public Class(String className, long classTotal, int columnNumber, boolean selected, int idForFinding, String userDefinedDescription) {
         this.className = className;
         this.classTotal = classTotal;
         this.columnNumber = columnNumber;
         this.selected = selected;
+        this.idForFinding = idForFinding;
+        this.userDefinedDescription = userDefinedDescription;
+    }
+
+    public String getUserDefinedDescription() {
+        return userDefinedDescription;
+    }
+
+    public void setUserDefinedDescription(String userDefinedDescription) {
+        this.userDefinedDescription = userDefinedDescription;
+    }
+    
+    public int getIdForFinding() {
+        return idForFinding;
+    }
+
+    public void setIdForFinding(int idForFinding) {
+        this.idForFinding = idForFinding;
     }
 
     public String getClassName() {
@@ -74,6 +96,12 @@ public class Class {
 
     @Override
     public String toString() {
-        return className;
+        if(this.userDefinedDescription != null && !this.userDefinedDescription.equals(""))
+        {
+            return this.className + " - " + this.userDefinedDescription;
+        }
+        else {
+            return this.className;
+        }
     }
 }
