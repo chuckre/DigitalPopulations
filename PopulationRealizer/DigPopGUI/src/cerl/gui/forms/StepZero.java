@@ -9,6 +9,8 @@ import cerl.gui.standard.utilities.FileType;
 import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.Result;
 import cerl.gui.utilities.DigPopGUIInformation;
+import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.StepZeroUtilityClass;
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +30,7 @@ public class StepZero extends javax.swing.JFrame {
     private final String NEW_TAB_NAME = "New";
     private final String OPEN_TAB_NAME = "Open";
     private final String DUPLICATE_TAB_NAME = "Duplicate";
+    private final String SCREEN_NAME = HelpFileScreenNames.STEP_ONE_HELP_FILE_NAME.toString();
     
     private final FileNameExtensionFilter XML_FILTER = 
             new FileNameExtensionFilter(
@@ -93,7 +96,8 @@ public class StepZero extends javax.swing.JFrame {
         btnNext = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        jMenu_Help = new javax.swing.JMenu();
+        jMenu_About = new javax.swing.JMenu();
 
         fileLocationChooser.setCurrentDirectory(new java.io.File("C:\\"));
             fileLocationChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
@@ -352,8 +356,21 @@ public class StepZero extends javax.swing.JFrame {
             jMenu1.setText("File");
             jMenuBar1.add(jMenu1);
 
-            jMenu2.setText("Edit");
-            jMenuBar1.add(jMenu2);
+            jMenu_Help.setText("Help");
+            jMenu_Help.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    jMenu_HelpMouseClicked(evt);
+                }
+            });
+            jMenuBar1.add(jMenu_Help);
+
+            jMenu_About.setText("About");
+            jMenu_About.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    jMenu_AboutMouseClicked(evt);
+                }
+            });
+            jMenuBar1.add(jMenu_About);
 
             setJMenuBar(jMenuBar1);
 
@@ -515,6 +532,14 @@ public class StepZero extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSelectDuplicateFileLocationActionPerformed
 
+    private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
+        new About().setVisible(true);
+    }//GEN-LAST:event_jMenu_AboutMouseClicked
+
+    private void jMenu_HelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_HelpMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
+    }//GEN-LAST:event_jMenu_HelpMouseClicked
+
     
     
     /**
@@ -661,8 +686,9 @@ public class StepZero extends javax.swing.JFrame {
     private javax.swing.JFileChooser fileLocationChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenu_About;
+    private javax.swing.JMenu jMenu_Help;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

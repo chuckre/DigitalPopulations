@@ -101,8 +101,10 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
+        jMenu_About = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Step Six");
 
         jLabel_Header.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel_Header.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -134,6 +136,14 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
             }
         });
         jMenuBar1.add(jMenu2);
+
+        jMenu_About.setText("About");
+        jMenu_About.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu_AboutMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu_About);
 
         setJMenuBar(jMenuBar1);
 
@@ -235,6 +245,10 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
     }//GEN-LAST:event_jMenu2MouseClicked
 
+    private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
+        new About().setVisible(true);
+    }//GEN-LAST:event_jMenu_AboutMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -277,6 +291,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenu_About;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_TraitInformation;
     // End of variables declaration//GEN-END:variables

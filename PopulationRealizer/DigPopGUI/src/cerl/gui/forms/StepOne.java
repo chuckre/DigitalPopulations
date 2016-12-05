@@ -130,6 +130,7 @@ public class StepOne extends javax.swing.JFrame {
         menuItemSave = new javax.swing.JMenuItem();
         menuItemExitApplication = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
+        jMenu_About = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Step One");
@@ -593,6 +594,14 @@ public class StepOne extends javax.swing.JFrame {
         });
         jMenuBar.add(menuHelp);
 
+        jMenu_About.setText("About");
+        jMenu_About.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu_AboutMouseClicked(evt);
+            }
+        });
+        jMenuBar.add(jMenu_About);
+
         setJMenuBar(jMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -709,6 +718,10 @@ public class StepOne extends javax.swing.JFrame {
 
         getAndVerifyFile(DigPopFileTypeEnum.Region_Map);
     }//GEN-LAST:event_btnRegionMapActionPerformed
+
+    private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
+        new About().setVisible(true);
+    }//GEN-LAST:event_jMenu_AboutMouseClicked
   
     private void enableLandUseHouseholdDensityButton(){
         if(rbtnLandUseMap.isSelected() || rbtnHouseholdDensityMap.isSelected()){
@@ -943,6 +956,7 @@ public class StepOne extends javax.swing.JFrame {
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JLabel householdMicroDataInfoIcon;
     private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JMenu jMenu_About;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelConstraintMap;
     private javax.swing.JPanel jPanelHouseholdMicroData;

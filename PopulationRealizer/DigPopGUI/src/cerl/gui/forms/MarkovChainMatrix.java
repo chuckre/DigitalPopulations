@@ -134,8 +134,10 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         jMenuBar_FileMenu = new javax.swing.JMenuBar();
         jMenu_FileTab = new javax.swing.JMenu();
         jMenu_EditTab = new javax.swing.JMenu();
+        jMenu_About = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Step Four");
         setPreferredSize(new java.awt.Dimension(840, 500));
 
         jTextField_MarkovName.setToolTipText("Please enter the name of the Markov Chain for saving and reuse later.");
@@ -207,6 +209,14 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
             }
         });
         jMenuBar_FileMenu.add(jMenu_EditTab);
+
+        jMenu_About.setText("About");
+        jMenu_About.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu_AboutMouseClicked(evt);
+            }
+        });
+        jMenuBar_FileMenu.add(jMenu_About);
 
         setJMenuBar(jMenuBar_FileMenu);
         jMenuBar_FileMenu.getAccessibleContext().setAccessibleName("Markov Chain Matrix");
@@ -313,6 +323,10 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
     }//GEN-LAST:event_jMenu_EditTabMouseClicked
 
+    private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
+        new About().setVisible(true);
+    }//GEN-LAST:event_jMenu_AboutMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -356,6 +370,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_ErrorMessages;
     private javax.swing.JLabel jLabel_MarkovName;
     private javax.swing.JMenuBar jMenuBar_FileMenu;
+    private javax.swing.JMenu jMenu_About;
     private javax.swing.JMenu jMenu_EditTab;
     private javax.swing.JMenu jMenu_FileTab;
     private javax.swing.JScrollPane jScrollPane1;
