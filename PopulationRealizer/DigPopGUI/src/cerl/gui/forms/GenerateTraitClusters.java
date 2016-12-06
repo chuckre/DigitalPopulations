@@ -5,16 +5,20 @@
  */
 package cerl.gui.forms;
 
+import cerl.gui.standard.utilities.customInputVerifier;
 import cerl.gui.standard.utilities.customTableCell;
 import cerl.gui.standard.utilities.customTableCellRenderer;
 import cerl.gui.standard.utilities.customTableModel;
 import cerl.gui.standard.utilities.customTableModelListener;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -179,11 +183,13 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Creates the pop up window for creating a new trait cluster
+     * @param evt 
+     */
     private void jButton_NewClusterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_NewClusterActionPerformed
         //Open a new dialog, to have users provide the trait cluster information
-        String returnVal = "";
         JPanel myPanel = new JPanel();
-        //this.validationLabel = new JLabel();
         
         //Set up custom int formatter for the reduction/distance textboxes
         NumberFormat intFormat = NumberFormat.getNumberInstance();
@@ -192,11 +198,22 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         
         //create the dropdown selector for Trait ID
         //Trait ID (List with descriptions)
-        JFormattedTextField trait = new JFormattedTextField(intFormat);
+        JComboBox trait = new JComboBox();
+        String[] traitList = {"123", "456", "789"};
+        for(int i = 0; i<traitList.length; i++){
+            trait.addItem(traitList[i]);
+        }
+        
         //create the reduction/distance textboxes
         JFormattedTextField reduction = new JFormattedTextField(intFormat);
         JFormattedTextField distance = new JFormattedTextField(intFormat);
-        
+        JLabel errorLabel = new JLabel();
+        JLabel traitLabel = new JLabel("Trait:");
+        JLabel reductionLabel = new JLabel("Reduction:");
+        JLabel distanceLabel = new JLabel("Distance:");
+        errorLabel.setText(" ");
+        errorLabel.setSize(new Dimension(30,100));
+                
         //set the dimensions for the min/max textboxes
         Dimension d = new Dimension();
         d.height=30;
@@ -206,28 +223,39 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         distance.setPreferredSize(d);
         
         //setup validator for values entered 
-        //StrictInputVerifier verifyDoubles = new StrictInputVerifier("Integer");
+        customInputVerifier verifyReduction = new customInputVerifier("Integer", errorLabel);
+        customInputVerifier verifyDistance = new customInputVerifier("Integer", errorLabel);
         //validate data entered into both the min and max textboxes
-        //reduction.setInputVerifier(verifyDoubles);
-        //distance.setInputVerifier(verifyDoubles);
+        verifyReduction.setMinimum(1);
+        verifyDistance.setMinimum(0);
+        //set input verifiers to validate data entry
+        reduction.setInputVerifier(verifyReduction);
+        distance.setInputVerifier(verifyDistance);
+        
+        //set layout and alignment
+        myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
+        errorLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        trait.setAlignmentX(Component.LEFT_ALIGNMENT);
+        reduction.setAlignmentX(Component.LEFT_ALIGNMENT);
+        distance.setAlignmentX(Component.LEFT_ALIGNMENT);
         
         //Add textboxes and labels to the panel
-        myPanel.add(new JLabel("Trait:"));
+        myPanel.add(errorLabel);
+        myPanel.add(traitLabel);
         myPanel.add(trait);
-        myPanel.add(new JLabel("Reduction:"));
+        myPanel.add(reductionLabel);
         myPanel.add(reduction);
-        myPanel.add(new JLabel("Distance:"));
+        myPanel.add(distanceLabel);
         myPanel.add(distance);
-        //myPanel.add(validationLabel);
-        myPanel.setPreferredSize(new Dimension(300,75));
+        myPanel.setPreferredSize(new Dimension(350,150));
         
         //create the popup
-        int result = JOptionPane.showConfirmDialog(null, myPanel, "Please enter min and max values", JOptionPane.OK_CANCEL_OPTION);
+        int result = JOptionPane.showConfirmDialog(null, myPanel, "Add new Trait Cluster", JOptionPane.OK_CANCEL_OPTION);
         if(result == JOptionPane.OK_OPTION){
             //add to table
             ArrayList<Object> cellValues = new ArrayList<>();
             //populateRow
-            cellValues.add(0, new customTableCell(trait.getText(), false, "Integer", false));
+            cellValues.add(0, new customTableCell(trait.getSelectedItem().toString(), false, "Integer", false));
             cellValues.add(1, new customTableCell(reduction.getText(), true, "Integer", false));
             cellValues.add(2, new customTableCell(distance.getText(), true, "Integer", false));
             
@@ -236,9 +264,6 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
             //do nothing
             //return null;
         }
-                
-        //save new trait cluster information back to the main jTable.
-        //return returnVal;
     }//GEN-LAST:event_jButton_NewClusterActionPerformed
 
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
