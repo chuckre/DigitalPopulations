@@ -18,34 +18,33 @@ import javax.swing.JList;
  */
 public class StepThree extends javax.swing.JFrame {
 
+    public CensusSurveyClasses censusSurveyClasses = new CensusSurveyClasses();
+
     private DefaultListModel censusAllListModel = new DefaultListModel();
     private JList censusAllList = new JList(censusAllListModel);
-    
+
     private DefaultListModel censusSelectedListModel = new DefaultListModel();
     private JList censusSelectedList = new JList(censusSelectedListModel);
-    
+
     private DefaultListModel surveyAllListModel = new DefaultListModel();
     private JList surveyAllList = new JList(surveyAllListModel);
-    
+
     private DefaultListModel surveySelectedListModel = new DefaultListModel();
     private JList surveySelectedList = new JList(surveySelectedListModel);
-    
-    private CensusSurveyClasses censusSurveyClasses = new CensusSurveyClasses();
 
+    // TableRowSorter<ClassTableItemModel> sorter = new TableRowSorter<ClassTableItemModel>(censusClassDefinitionTableItemModel);
     /**
      * Creates new form StepThree
      */
     public StepThree() {
-
-        initComponents();
-
-        
 
         Result result = DigPopGUIUtilityClass.getLoadedCensusSurveyClasses(
                 "P:\\CERL\\md_sample-data\\md_census_enumerations.csv",
                 "P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv",
                 "P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv");
         censusSurveyClasses = (CensusSurveyClasses) result.getValue();
+
+        initComponents();
 
         for (cerl.gui.utilities.Class c : censusSurveyClasses.getCensusClasses()) {
             censusAllListModel.addElement(c);
@@ -61,7 +60,7 @@ public class StepThree extends javax.swing.JFrame {
         jScrollPaneCensusSelected.setViewportView(censusSelectedList);
         jScrollPaneSurveyAll.setViewportView(surveyAllList);
         jScrollPaneSurveySelected.setViewportView(surveySelectedList);
-        
+
         pack();
     }
 
@@ -74,6 +73,7 @@ public class StepThree extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         surveyJPanel = new javax.swing.JPanel();
         jScrollPaneSurveyAll = new javax.swing.JScrollPane();
         btnAddSurveyClass = new javax.swing.JButton();
@@ -88,13 +88,22 @@ public class StepThree extends javax.swing.JFrame {
         btnRemoveCensusClass = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         surveyJPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        surveyJPanel.setMinimumSize(new java.awt.Dimension(0, 0));
 
         jScrollPaneSurveyAll.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -158,7 +167,7 @@ public class StepThree extends javax.swing.JFrame {
                         .addComponent(btnAddSurveyClass)
                         .addGap(18, 18, 18)
                         .addComponent(btnRemoveSurveyClass)
-                        .addGap(0, 75, Short.MAX_VALUE)))
+                        .addGap(0, 92, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -188,6 +197,13 @@ public class StepThree extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Selected Census Classes:");
 
+        jButton1.setText("Edit Selected Census Data Descriptions");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout censusJPanelLayout = new javax.swing.GroupLayout(censusJPanel);
         censusJPanel.setLayout(censusJPanelLayout);
         censusJPanelLayout.setHorizontalGroup(
@@ -205,8 +221,9 @@ public class StepThree extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(censusJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(jScrollPaneCensusSelected, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPaneCensusSelected, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         censusJPanelLayout.setVerticalGroup(
             censusJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,16 +235,40 @@ public class StepThree extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(censusJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPaneCensusSelected)
-                            .addComponent(jScrollPaneCensusAll)))
+                        .addGroup(censusJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPaneCensusAll)
+                            .addGroup(censusJPanelLayout.createSequentialGroup()
+                                .addComponent(jScrollPaneCensusSelected, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1))))
                     .addGroup(censusJPanelLayout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addComponent(btnAddCensusClass)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRemoveCensusClass)
-                        .addGap(0, 58, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(censusJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(surveyJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(censusJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(surveyJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenu1.setText("File");
@@ -242,79 +283,109 @@ public class StepThree extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(surveyJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(censusJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(230, Short.MAX_VALUE)
-                .addComponent(surveyJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(234, 234, 234))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(21, 21, 21)
-                    .addComponent(censusJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(460, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddSurveyClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSurveyClassActionPerformed
-        
+
         List<cerl.gui.utilities.Class> selected = surveyAllList.getSelectedValuesList();
-        
-        for(cerl.gui.utilities.Class c : selected){
+
+        for (cerl.gui.utilities.Class c : selected) {
             c.setSelected(true);
             surveyAllListModel.removeElement(c);
             surveySelectedListModel.addElement(c);
         }
-        
+
     }//GEN-LAST:event_btnAddSurveyClassActionPerformed
 
     private void btnRemoveSurveyClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveSurveyClassActionPerformed
-        
+
         List<cerl.gui.utilities.Class> selected = surveySelectedList.getSelectedValuesList();
-        
-        for(cerl.gui.utilities.Class c : selected){
+
+        for (cerl.gui.utilities.Class c : selected) {
             c.setSelected(false);
             surveySelectedListModel.removeElement(c);
             surveyAllListModel.addElement(c);
         }
-        
+
     }//GEN-LAST:event_btnRemoveSurveyClassActionPerformed
 
     private void btnAddCensusClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCensusClassActionPerformed
-        
+
         List<cerl.gui.utilities.Class> selected = censusAllList.getSelectedValuesList();
-        
-        for(cerl.gui.utilities.Class c : selected){
+
+        for (cerl.gui.utilities.Class c : selected) {
             c.setSelected(true);
             censusAllListModel.removeElement(c);
             censusSelectedListModel.addElement(c);
         }
-        
+
     }//GEN-LAST:event_btnAddCensusClassActionPerformed
 
     private void btnRemoveCensusClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveCensusClassActionPerformed
-        
+
         List<cerl.gui.utilities.Class> selected = censusSelectedList.getSelectedValuesList();
-        
-        for(cerl.gui.utilities.Class c : selected){
+
+        for (cerl.gui.utilities.Class c : selected) {
             c.setSelected(false);
             censusSelectedListModel.removeElement(c);
             censusAllListModel.addElement(c);
         }
-        
+
     }//GEN-LAST:event_btnRemoveCensusClassActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        CensusClassUserDefinitions censusClassUserDefinitionsForm = new CensusClassUserDefinitions(this.censusSurveyClasses.getCensusClasses(), this);
+
+        censusClassUserDefinitionsForm.setVisible(true);
+
+        censusClassUserDefinitionsForm.setAlwaysOnTop(true);
+
+        this.setVisible(false);
+
+        //  this.censusSurveyClasses.setCensusClasses(censusClassUserDefinitionsForm.classTableItemModel.getClasses());
+        //   jDialogCensusClassDefinitions.setAlwaysOnTop(true);
+//   RowFilter<Object, Object> filter = new RowFilter<Object, Object>() {
+//            public boolean include(RowFilter.Entry entry) {
+//                cerl.gui.utilities.Class selectedClass = (cerl.gui.utilities.Class)entry.getValue(0);
+//                if(selectedClass.isSelected()){
+//                    return true;
+//                }
+//                else{
+//                    return false;
+//                }
+//            }
+//          };
+//        
+//        sorter.setRowFilter(filter);
+//        censusClassDefinitionTable.setRowSorter(sorter);
+//   jDialogCensusClassDefinitions.setSize(400, 400);
+//      jDialogCensusClassDefinitions.setVisible(true);
+//      
+//      
+//        jDialogCensusClassDefinitions.setModal(true);
+//      jDialogCensusClassDefinitions.setAlwaysOnTop(true);
+        int b = 0;
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        int test = 0;
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -357,6 +428,7 @@ public class StepThree extends javax.swing.JFrame {
     private javax.swing.JButton btnRemoveCensusClass;
     private javax.swing.JButton btnRemoveSurveyClass;
     private javax.swing.JPanel censusJPanel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -364,6 +436,7 @@ public class StepThree extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPaneCensusAll;
     private javax.swing.JScrollPane jScrollPaneCensusSelected;
     private javax.swing.JScrollPane jScrollPaneSurveyAll;
