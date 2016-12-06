@@ -68,20 +68,24 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="354" max="-2" attributes="0"/>
-              <Component id="lblErrorMessages" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanelStepOne" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="btnNextStep" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="354" max="-2" attributes="0"/>
+                              <Component id="lblErrorMessages" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jPanelStepOne" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -114,7 +118,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jPanelRegionMapCensusEnum" max="32767" attributes="0"/>
@@ -122,6 +126,7 @@
                       <Component id="jPanelConstraintMap" alignment="0" max="32767" attributes="0"/>
                       <Component id="jPanelPopulationMicroData" max="32767" attributes="0"/>
                       <Component id="jPanelHouseholdMicroData" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -131,16 +136,18 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="jPanelLandUseHouseholdMap" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jPanelRegionMapCensusEnum" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                  <Component id="jPanelConstraintMap" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jPanelPopulationMicroData" min="-2" pref="58" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jPanelHouseholdMicroData" pref="57" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jPanelRegionMapCensusEnum" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <Component id="jPanelConstraintMap" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jPanelPopulationMicroData" min="-2" pref="58" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jPanelHouseholdMicroData" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -407,9 +414,12 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/cerl/gui/resources/info.png"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Census Enumerations"/>
                 <Property name="iconTextGap" type="int" value="0"/>
               </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Help Infomation for Census Enumerations"/>
+              </AccessibilityProperties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="censusEnumerationsInfoIconMouseClicked"/>
               </Events>
@@ -419,9 +429,12 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/cerl/gui/resources/info.png"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Region Map"/>
                 <Property name="iconTextGap" type="int" value="0"/>
               </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Help Infomation for Region Map"/>
+              </AccessibilityProperties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIconMouseClicked"/>
               </Events>
@@ -540,9 +553,12 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/cerl/gui/resources/info.png"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Constraint Maps"/>
                 <Property name="iconTextGap" type="int" value="0"/>
               </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Help Infomation for Constraint Map"/>
+              </AccessibilityProperties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="constraintMapsInfoIconMouseClicked"/>
               </Events>
@@ -632,15 +648,21 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Household Micro-data:"/>
               </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Household Micro-data Required Field"/>
+              </AccessibilityProperties>
             </Component>
             <Component class="javax.swing.JLabel" name="householdMicroDataInfoIcon">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/cerl/gui/resources/info.png"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Micro-data"/>
                 <Property name="iconTextGap" type="int" value="0"/>
               </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Help Infomation for Household Micro-data Map"/>
+              </AccessibilityProperties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="householdMicroDataInfoIconMouseClicked"/>
               </Events>
@@ -736,9 +758,12 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/cerl/gui/resources/info.png"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Population Micro-data"/>
                 <Property name="iconTextGap" type="int" value="0"/>
               </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Help Infomation for Population Micro-data"/>
+              </AccessibilityProperties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="populationMicroDataInfoIconMouseClicked"/>
               </Events>
@@ -751,6 +776,73 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="cc" type="rgb"/>
                 </Property>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel2">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                <EtchetBorder/>
+              </Border>
+            </Property>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel_RequiredFieldsIcon" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="jLabel_HelpIcon" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jLabel_ProvidedFieldsIcon" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_RequiredFieldsIcon" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                          <Component id="jLabel_HelpIcon" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel_ProvidedFieldsIcon" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="jLabel_ProvidedFieldsIcon">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="This icon is displayed next to Fields that have been provided."/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_RequiredFieldsIcon">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="This icon is used for Required Fields that are not yet provided"/>
+              </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Required Fields that are not yet provided are denoted with this icon"/>
+              </AccessibilityProperties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_HelpIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value=" Clicking this icon provides the help text associated with the field."/>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation Icon"/>
+                <Property name="iconTextGap" type="int" value="0"/>
               </Properties>
             </Component>
           </SubComponents>

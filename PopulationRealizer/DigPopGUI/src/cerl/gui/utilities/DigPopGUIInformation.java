@@ -43,6 +43,7 @@ public class DigPopGUIInformation {
     
 
     public DigPopGUIInformation() {
+        this.constraintMapsFilePaths = new ArrayList<>();
     }
 
     public DigPopGUIInformation(
