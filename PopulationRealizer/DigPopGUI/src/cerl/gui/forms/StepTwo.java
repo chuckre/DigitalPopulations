@@ -7,6 +7,8 @@ package cerl.gui.forms;
 
 import cerl.gui.standard.utilities.Result;
 import cerl.gui.utilities.DigPopFileTypeEnum;
+import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.HelpFileScreenNames;
 //import cerl.gui.utilities.DigPopGUIFiles;
 import cerl.gui.utilities.StepOneUtilityClass;
 import java.io.File;
@@ -24,6 +26,7 @@ public class StepTwo extends javax.swing.JFrame {
  //   private DigPopGUIFiles digPopGUIFiles; 
     private DefaultTableModel constraintMapsDataModel;
     private ArrayList<String> errors;
+    private final String SCREEN_NAME = HelpFileScreenNames.STEP_TWO_HELP_FILE_NAME.toString();
 
     /**
      * Creates new form StepOne
@@ -77,9 +80,10 @@ public class StepTwo extends javax.swing.JFrame {
         menuFile = new javax.swing.JMenu();
         menuItemExitApplication = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
+        jMenu_About = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Step One");
+        setTitle("Step Two");
 
         jPanelStepTwo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -369,7 +373,20 @@ public class StepTwo extends javax.swing.JFrame {
         jMenuBar.add(menuFile);
 
         menuHelp.setText("Help");
+        menuHelp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuHelpMouseClicked(evt);
+            }
+        });
         jMenuBar.add(menuHelp);
+
+        jMenu_About.setText("About");
+        jMenu_About.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu_AboutMouseClicked(evt);
+            }
+        });
+        jMenuBar.add(jMenu_About);
 
         setJMenuBar(jMenuBar);
 
@@ -401,6 +418,14 @@ public class StepTwo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
+        new About().setVisible(true);
+    }//GEN-LAST:event_jMenu_AboutMouseClicked
+
+    private void menuHelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuHelpMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
+    }//GEN-LAST:event_menuHelpMouseClicked
 
     /**
      * @param args the command line arguments
@@ -545,10 +570,10 @@ public class StepTwo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JMenu jMenu_About;
     private javax.swing.JPanel jPanelConstraintMap;
     private javax.swing.JPanel jPanelConstraintMap1;
     private javax.swing.JPanel jPanelHouseholdMicroData;
-    private javax.swing.JPanel jPanelHouseholdMicroData1;
     private javax.swing.JPanel jPanelLandUseHouseholdMap;
     private javax.swing.JPanel jPanelPopulationMicroData;
     private javax.swing.JPanel jPanelRegionMapCensusEnum;
@@ -561,7 +586,6 @@ public class StepTwo extends javax.swing.JFrame {
     private javax.swing.JLabel lblConstraintMap1;
     private javax.swing.JLabel lblErrorMessages;
     private javax.swing.JLabel lblHouseholdMicroData;
-    private javax.swing.JLabel lblHouseholdMicroData1;
     private javax.swing.JLabel lblPopulationMicroData;
     private javax.swing.JLabel lblRegionMap;
     private javax.swing.ButtonGroup mapRadioButtonGroup;
@@ -571,7 +595,6 @@ public class StepTwo extends javax.swing.JFrame {
     private javax.swing.JTable tblConstraintMaps1;
     private javax.swing.JTextField txtCensusEnumerations;
     private javax.swing.JTextField txtHouseholdMicroData;
-    private javax.swing.JTextField txtHouseholdMicroData1;
     private javax.swing.JTextField txtLandUseHouseholdMap;
     private javax.swing.JTextField txtLandUseHouseholdMap1;
     private javax.swing.JTextField txtPopulationMicroData;

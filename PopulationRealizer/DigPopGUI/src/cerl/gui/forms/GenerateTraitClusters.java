@@ -9,6 +9,8 @@ import cerl.gui.standard.utilities.customTableCell;
 import cerl.gui.standard.utilities.customTableCellRenderer;
 import cerl.gui.standard.utilities.customTableModel;
 import cerl.gui.standard.utilities.customTableModelListener;
+import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.HelpFileScreenNames;
 import java.awt.Dimension;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import javax.swing.table.TableColumn;
  */
 public class GenerateTraitClusters extends javax.swing.JFrame {
     private final customTableModel myTable;
+    private final String SCREEN_NAME = HelpFileScreenNames.STEP_SIX_HELP_FILE_NAME.toString();
     
     /**
      * Creates new form GenerateTraitClusters
@@ -95,8 +98,13 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_TraitInformation = new javax.swing.JTable();
         jButton_NewCluster = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu_About = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Step Six");
 
         jLabel_Header.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel_Header.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -118,6 +126,27 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
             }
         });
 
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Help");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu2);
+
+        jMenu_About.setText("About");
+        jMenu_About.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu_AboutMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu_About);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -127,7 +156,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel_Header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton_NewCluster)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -144,7 +173,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 .addComponent(jButton_NewCluster)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -212,6 +241,14 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         //return returnVal;
     }//GEN-LAST:event_jButton_NewClusterActionPerformed
 
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
+    }//GEN-LAST:event_jMenu2MouseClicked
+
+    private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
+        new About().setVisible(true);
+    }//GEN-LAST:event_jMenu_AboutMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -251,6 +288,10 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     private javax.swing.JButton jButton_NewCluster;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel_Header;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenu_About;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_TraitInformation;
     // End of variables declaration//GEN-END:variables

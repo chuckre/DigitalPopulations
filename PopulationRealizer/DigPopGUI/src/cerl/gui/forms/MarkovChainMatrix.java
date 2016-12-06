@@ -11,6 +11,8 @@ import cerl.gui.standard.utilities.customTableCellEditor;
 import cerl.gui.standard.utilities.customTableCellRenderer;
 import cerl.gui.standard.utilities.jTableButtonMouseListener;
 import cerl.gui.standard.utilities.customTableModelListener;
+import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.MarkovTableCell;
 import javax.swing.table.TableColumn;
 
@@ -26,6 +28,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     private int START_EDITABLE_COL;
     private int END_EDITABLE_ROW;
     private int END_EDITABLE_COL;
+    private final String SCREEN_NAME = HelpFileScreenNames.STEP_FOUR_HELP_FILE_NAME.toString();
             
     /**
      * Creates new form MarkovChainMatrix
@@ -131,8 +134,10 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         jMenuBar_FileMenu = new javax.swing.JMenuBar();
         jMenu_FileTab = new javax.swing.JMenu();
         jMenu_EditTab = new javax.swing.JMenu();
+        jMenu_About = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Step Four");
         setPreferredSize(new java.awt.Dimension(840, 500));
 
         jTextField_MarkovName.setToolTipText("Please enter the name of the Markov Chain for saving and reuse later.");
@@ -197,8 +202,21 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         jMenu_FileTab.setText("File");
         jMenuBar_FileMenu.add(jMenu_FileTab);
 
-        jMenu_EditTab.setText("Edit");
+        jMenu_EditTab.setText("Help");
+        jMenu_EditTab.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu_EditTabMouseClicked(evt);
+            }
+        });
         jMenuBar_FileMenu.add(jMenu_EditTab);
+
+        jMenu_About.setText("About");
+        jMenu_About.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu_AboutMouseClicked(evt);
+            }
+        });
+        jMenuBar_FileMenu.add(jMenu_About);
 
         setJMenuBar(jMenuBar_FileMenu);
         jMenuBar_FileMenu.getAccessibleContext().setAccessibleName("Markov Chain Matrix");
@@ -301,6 +319,14 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         // TODO: save markovName to XML with full populated table object.
     }//GEN-LAST:event_jButton_SaveActionPerformed
 
+    private void jMenu_EditTabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_EditTabMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
+    }//GEN-LAST:event_jMenu_EditTabMouseClicked
+
+    private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
+        new About().setVisible(true);
+    }//GEN-LAST:event_jMenu_AboutMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -344,6 +370,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_ErrorMessages;
     private javax.swing.JLabel jLabel_MarkovName;
     private javax.swing.JMenuBar jMenuBar_FileMenu;
+    private javax.swing.JMenu jMenu_About;
     private javax.swing.JMenu jMenu_EditTab;
     private javax.swing.JMenu jMenu_FileTab;
     private javax.swing.JScrollPane jScrollPane1;
