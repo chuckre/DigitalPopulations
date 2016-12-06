@@ -15,18 +15,10 @@ import static cerl.gui.utilities.DigPopFileTypeEnum.Household_Micro_Data;
 import static cerl.gui.utilities.DigPopFileTypeEnum.Population_Micro_Data;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Stream;
 
 /**
  *
@@ -242,232 +234,37 @@ public class DigPopGUIUtilityClass {
         result.setValue(resultValues);
         return result;
     }
-            
-//    public static CensusEnumerations convertCSVFileToCensusEnumerationsObject(
-//            String filePath) {
-//
-//        CensusEnumerations returnObject = new CensusEnumerations();
-//
-//        String line = "";
-//
-//        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-//
-//            int lineCount = 1;
-//            String[] classes = null;
-//
-//            while ((line = br.readLine()) != null) {
-//
-//                // use comma as separator
-//                String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-//
-//                if (lineCount == 1) {
-//                    /**
-//                     * Need to read in the first row to get the class names.
-//                     */
-//
-//                    classes = new String[lineInfo.length];
-//
-//                    for (int count = 9; count < lineInfo.length; count++) {
-//                        classes[count] = lineInfo[count];
-//                    }
-//
-//                } else {
-//
-//                    CensusEnumeration newLine = new CensusEnumeration();
-//                    newLine.setGISJOIN(lineInfo[0]);
-//                    newLine.setUNIQUE_ID(lineInfo[1]);
-//                    newLine.setYEAR(lineInfo[2]);
-//                    newLine.setSTATEA(lineInfo[3]);
-//                    newLine.setCOUNTY(lineInfo[4]);
-//                    newLine.setCOUNTYA(lineInfo[5]);
-//                    newLine.setTRACTA(lineInfo[6]);
-//                    newLine.setBLKGRPA(lineInfo[7]);
-//                    newLine.setNAME_E(lineInfo[8]);
-//
-//                    for (int count = 9; count < lineInfo.length; count++) {
-//                        CensusEnumerationClass censusEnumerationClass = new CensusEnumerationClass();
-//                        censusEnumerationClass.setClassName(classes[count]);
-//                        censusEnumerationClass.setValue(lineInfo[count]);
-//
-//                        newLine.addCensusEnumerationClass(censusEnumerationClass);
-//                    }
-//
-//                    returnObject.addCensusEnumerations(newLine);
-//                }
-//
-//                lineCount++;
-//
-//            }
-//
-//            br.close();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return returnObject;
-//    }
-//
-//    public static SurveyMicroDataHouseHolds convertCSVFileToSurveyMicroDataHouseHoldsObject(
-//            String filePath) {
-//
-//        SurveyMicroDataHouseHolds returnObject = new SurveyMicroDataHouseHolds();
-//
-//        String line = "";
-//
-//        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-//
-//            int lineCount = 1;
-//            String[] classes = null;
-//
-//            while ((line = br.readLine()) != null) {
-//
-//                // use comma as separator
-//                String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-//
-//                if (lineCount == 1) {
-//                    /**
-//                     * Need to read in the first row to get the class names.
-//                     */
-//
-//                    classes = new String[lineInfo.length];
-//
-//                    for (int count = 8; count < lineInfo.length; count++) {
-//                        classes[count] = lineInfo[count];
-//                    }
-//
-//                } else {
-//
-//                    SurveyMicroDataHouseHold newLine = new SurveyMicroDataHouseHold();
-//                    newLine.setInsp(lineInfo[0]);
-//                    newLine.setRT(lineInfo[1]);
-//                    newLine.setSERIALNO(lineInfo[2]);
-//                    newLine.setDIVISION(lineInfo[3]);
-//                    newLine.setPUMA00(lineInfo[4]);
-//                    newLine.setPUMA10(lineInfo[5]);
-//                    newLine.setREGION(lineInfo[6]);
-//                    newLine.setST(lineInfo[7]);
-//
-//                    for (int count = 8; count < lineInfo.length; count++) {
-//                        SurveyMicroDataHouseHoldClass surveyMicroDataHouseHoldClass = new SurveyMicroDataHouseHoldClass();
-//                        surveyMicroDataHouseHoldClass.setClassName(classes[count]);
-//                        surveyMicroDataHouseHoldClass.setValue(lineInfo[count]);
-//
-//                        newLine.addSurveyMicroDataHouseHoldClass(surveyMicroDataHouseHoldClass);
-//                    }
-//
-//                    returnObject.addSurveyMicroDataHouseHolds(newLine);
-//                }
-//
-//                lineCount++;
-//
-//            }
-//
-//            br.close();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return returnObject;
-//    }
-//
-//    public static SurveyMicroDataPeoples convertCSVFileToSurveyMicroDataPeoplesObject(
-//            String filePath) {
-//
-//        SurveyMicroDataPeoples returnObject = new SurveyMicroDataPeoples();
-//        
-//        List<Object> list = new ArrayList<>();
-//
-//        String line = "";
-//        String encoding = "UTF-8";
-//        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), encoding))) {
-//
-//            int lineCount = 1;
-//            String[] classes = null;
-//
-//            List<Object> testList = new ArrayList<Object>();
-//
-//            int testerCounter = 0;
-//
-//            while ((line = br.readLine()) != null) {
-//
-////                // use comma as separator
-//                String[] lineInfo = line.split(",");//(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-////                
-//                if (lineCount == 1) {
-//                    /**
-//                     * Need to read in the first row to get the class names.
-//                     */
-//
-//                    classes = Arrays.copyOfRange(lineInfo, 6, lineInfo.length);
-//
-//                } else {
-//
-//                    ArrayList<SurveyMicroDataPeopleClass> arrayList = new ArrayList<SurveyMicroDataPeopleClass>();
-//
-//                    for (int count = 6; count < lineInfo.length; count++) {
-//                        arrayList.add(new SurveyMicroDataPeopleClass(
-//                                classes[count - 6],
-//                                lineInfo[count]));
-//                    }
-//
-//                    list.add(new SurveyMicroDataPeople(
-//                            lineInfo[0],
-//                            lineInfo[1],
-//                            lineInfo[2],
-//                            lineInfo[3],
-//                            lineInfo[4],
-//                            lineInfo[5],
-//                            arrayList));
-//
-//                    //    testArrayListAdd.add(newLine);
-//                    //test.add(newLine);
-//                    // returnObject.addSurveyMicroDataPeople(newLine);
-//                }
-//
-//                lineCount++;
-//
-//            }
-//
-//            System.out.println(lineCount);
-//
-//            br.close();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return returnObject;
-//    }
+    
+    public static Result getSurveyDataColumnValues(String filePath, int columnNumber){
+        Result result = new Result();
+        ArrayList<Integer> columnValues = new ArrayList<>();
+        
+        String line = "";
+        int lineCounter = 0;
 
-//    private static SurveyMicroDataPeople dump(String crunchifyCSV, String[] classes) {
-//        SurveyMicroDataPeople returnvalue = null;
-//
-//        if (crunchifyCSV != null) {
-//            String[] splitData = crunchifyCSV.split("\\s*,\\s*");
-//
-//            ArrayList<SurveyMicroDataPeopleClass> arrayList = new ArrayList<SurveyMicroDataPeopleClass>();
-//
-//            for (int count = 6; count < splitData.length; count++) {
-//                SurveyMicroDataPeopleClass surveyMicroDataPeopleClass = new SurveyMicroDataPeopleClass();
-//                surveyMicroDataPeopleClass.setClassName(classes[count - 6]);//classes needs to start at zero
-//                surveyMicroDataPeopleClass.setValue(splitData[count]);
-//
-//                arrayList.add(surveyMicroDataPeopleClass);
-//            }
-//
-//            returnvalue = new SurveyMicroDataPeople(
-//                    splitData[0],
-//                    splitData[1],
-//                    splitData[2],
-//                    splitData[3],
-//                    splitData[4],
-//                    splitData[5],
-//                    arrayList);
-//        }
-//
-//        return returnvalue;
-//    }
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            while((line = br.readLine()) != null) {
+                if(lineCounter > 1){
+                    // use comma as separator, but allow for commas inside a string
+                    String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                    
+                    columnValues.add(Integer.parseInt(lineInfo[columnNumber]));
+                
+                }
+                
+                lineCounter++;
+            }
+
+            br.close();
+            result.setSuccess(true);
+        } catch (IOException ex) {
+            result.setErrorMessage(
+                    "getCensusClassesFromCSVFile",
+                    ex.getMessage());
+            result.setSuccess(false);
+        }
+        
+        return result;
+    }
 
 }

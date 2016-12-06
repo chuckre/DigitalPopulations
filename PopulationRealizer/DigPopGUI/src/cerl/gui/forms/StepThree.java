@@ -11,6 +11,7 @@ import cerl.gui.utilities.DigPopGUIUtilityClass;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -28,9 +29,6 @@ public class StepThree extends javax.swing.JFrame {
 
     private DefaultListModel surveyAllListModel = new DefaultListModel();
     private JList surveyAllList = new JList(surveyAllListModel);
-
-    private DefaultListModel surveySelectedListModel = new DefaultListModel();
-    private JList surveySelectedList = new JList(surveySelectedListModel);
 
     // TableRowSorter<ClassTableItemModel> sorter = new TableRowSorter<ClassTableItemModel>(censusClassDefinitionTableItemModel);
     /**
@@ -58,8 +56,9 @@ public class StepThree extends javax.swing.JFrame {
 
         jScrollPaneCensusAll.setViewportView(censusAllList);
         jScrollPaneCensusSelected.setViewportView(censusSelectedList);
+        
+        surveyAllList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jScrollPaneSurveyAll.setViewportView(surveyAllList);
-        jScrollPaneSurveySelected.setViewportView(surveySelectedList);
 
         pack();
     }
@@ -76,11 +75,7 @@ public class StepThree extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         surveyJPanel = new javax.swing.JPanel();
         jScrollPaneSurveyAll = new javax.swing.JScrollPane();
-        btnAddSurveyClass = new javax.swing.JButton();
-        jScrollPaneSurveySelected = new javax.swing.JScrollPane();
-        btnRemoveSurveyClass = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         censusJPanel = new javax.swing.JPanel();
         jScrollPaneCensusAll = new javax.swing.JScrollPane();
         btnAddCensusClass = new javax.swing.JButton();
@@ -107,27 +102,8 @@ public class StepThree extends javax.swing.JFrame {
 
         jScrollPaneSurveyAll.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btnAddSurveyClass.setText("Add");
-        btnAddSurveyClass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddSurveyClassActionPerformed(evt);
-            }
-        });
-
-        jScrollPaneSurveySelected.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        btnRemoveSurveyClass.setText("Remove");
-        btnRemoveSurveyClass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRemoveSurveyClassActionPerformed(evt);
-            }
-        });
-
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Available Survey Classes:");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Selected Survey Classes:");
+        jLabel1.setText("Available Survey Data(Select Only One):");
 
         javax.swing.GroupLayout surveyJPanelLayout = new javax.swing.GroupLayout(surveyJPanel);
         surveyJPanel.setLayout(surveyJPanelLayout);
@@ -136,38 +112,17 @@ public class StepThree extends javax.swing.JFrame {
             .addGroup(surveyJPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(surveyJPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPaneSurveyAll, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAddSurveyClass, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRemoveSurveyClass)))
+                    .addComponent(jScrollPaneSurveyAll, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jScrollPaneSurveySelected, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         surveyJPanelLayout.setVerticalGroup(
             surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(surveyJPanelLayout.createSequentialGroup()
-                .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, surveyJPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPaneSurveySelected)
-                            .addComponent(jScrollPaneSurveyAll)))
-                    .addGroup(surveyJPanelLayout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(btnAddSurveyClass)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnRemoveSurveyClass)
-                        .addGap(0, 92, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPaneSurveyAll, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -192,10 +147,10 @@ public class StepThree extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Available Census Classes:");
+        jLabel3.setText("Available Census Data:");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Selected Census Classes:");
+        jLabel4.setText("Selected Census Data:");
 
         jButton1.setText("Edit Selected Census Data Descriptions");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -299,30 +254,6 @@ public class StepThree extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddSurveyClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddSurveyClassActionPerformed
-
-        List<cerl.gui.utilities.Class> selected = surveyAllList.getSelectedValuesList();
-
-        for (cerl.gui.utilities.Class c : selected) {
-            c.setSelected(true);
-            surveyAllListModel.removeElement(c);
-            surveySelectedListModel.addElement(c);
-        }
-
-    }//GEN-LAST:event_btnAddSurveyClassActionPerformed
-
-    private void btnRemoveSurveyClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveSurveyClassActionPerformed
-
-        List<cerl.gui.utilities.Class> selected = surveySelectedList.getSelectedValuesList();
-
-        for (cerl.gui.utilities.Class c : selected) {
-            c.setSelected(false);
-            surveySelectedListModel.removeElement(c);
-            surveyAllListModel.addElement(c);
-        }
-
-    }//GEN-LAST:event_btnRemoveSurveyClassActionPerformed
-
     private void btnAddCensusClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCensusClassActionPerformed
 
         List<cerl.gui.utilities.Class> selected = censusAllList.getSelectedValuesList();
@@ -424,13 +355,10 @@ public class StepThree extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCensusClass;
-    private javax.swing.JButton btnAddSurveyClass;
     private javax.swing.JButton btnRemoveCensusClass;
-    private javax.swing.JButton btnRemoveSurveyClass;
     private javax.swing.JPanel censusJPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
@@ -440,7 +368,6 @@ public class StepThree extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPaneCensusAll;
     private javax.swing.JScrollPane jScrollPaneCensusSelected;
     private javax.swing.JScrollPane jScrollPaneSurveyAll;
-    private javax.swing.JScrollPane jScrollPaneSurveySelected;
     private javax.swing.JPanel surveyJPanel;
     // End of variables declaration//GEN-END:variables
 }

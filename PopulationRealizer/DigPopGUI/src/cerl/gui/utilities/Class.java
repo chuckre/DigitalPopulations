@@ -5,6 +5,8 @@
  */
 package cerl.gui.utilities;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ajohnson
@@ -16,12 +18,14 @@ public class Class {
     private boolean selected;
     private int idForFinding;
     private String userDefinedDescription;
+    private ArrayList<Integer> selectedColumnValues;
 
     public Class() {
         this.className = null;
         this.classTotal = 0;
         this.columnNumber = 0;
         this.selected = false;
+        this.selectedColumnValues = new ArrayList<>();
     }
 
     public Class(String className, int columnNumber, boolean selected, int idForFinding) {
@@ -31,15 +35,25 @@ public class Class {
         this.selected = selected;
         this.idForFinding = idForFinding;
         this.userDefinedDescription = "";
+        this.selectedColumnValues = new ArrayList<>();
     }
 
-    public Class(String className, long classTotal, int columnNumber, boolean selected, int idForFinding, String userDefinedDescription) {
+    public Class(String className, long classTotal, int columnNumber, boolean selected, int idForFinding, String userDefinedDescription, ArrayList<Integer> selectedColumnValues) {
         this.className = className;
         this.classTotal = classTotal;
         this.columnNumber = columnNumber;
         this.selected = selected;
         this.idForFinding = idForFinding;
         this.userDefinedDescription = userDefinedDescription;
+        this.selectedColumnValues = selectedColumnValues;
+    }
+
+    public ArrayList<Integer> getSelectedColumnValues() {
+        return selectedColumnValues;
+    }
+
+    public void setSelectedColumnValues(ArrayList<Integer> selectedColumnValues) {
+        this.selectedColumnValues = selectedColumnValues;
     }
 
     public String getUserDefinedDescription() {

@@ -132,6 +132,11 @@ public class FileUtilityJUnitTest {
         System.out.print(result.getValue());
     }
     
+    @Test 
+    public void testgetSurveyDataColumnValues(){
+        DigPopGUIUtilityClass.getSurveyDataColumnValues("P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv", 11);
+    }
+    
  
     @Test
     public void createTextFileFromString() throws IOException {
