@@ -128,6 +128,7 @@ public class StepOne extends javax.swing.JFrame {
         jLabel_HelpIcon = new javax.swing.JLabel();
         btnNextStep = new javax.swing.JButton();
         lblErrorMessages = new javax.swing.JLabel();
+        btnPreviousStep = new javax.swing.JButton();
         jMenuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuItemSave = new javax.swing.JMenuItem();
@@ -627,6 +628,13 @@ public class StepOne extends javax.swing.JFrame {
         lblErrorMessages.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblErrorMessages.setForeground(new java.awt.Color(255, 0, 0));
 
+        btnPreviousStep.setText("Previous Step");
+        btnPreviousStep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreviousStepActionPerformed(evt);
+            }
+        });
+
         menuFile.setText("File");
 
         menuItemSave.setText("Save");
@@ -664,10 +672,7 @@ public class StepOne extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnNextStep))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -676,7 +681,12 @@ public class StepOne extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jPanelStepOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnPreviousStep)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNextStep)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -686,7 +696,9 @@ public class StepOne extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelStepOne, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnNextStep)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNextStep)
+                    .addComponent(btnPreviousStep))
                 .addContainerGap())
         );
 
@@ -780,6 +792,11 @@ public class StepOne extends javax.swing.JFrame {
         new StepTwo().setVisible(true);
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed
+
+    private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
+        new StepZero().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnPreviousStepActionPerformed
   
     private void enableLandUseHouseholdDensityButton(){
         if(rbtnLandUseMap.isSelected() || rbtnHouseholdDensityMap.isSelected()){
@@ -1019,6 +1036,7 @@ public class StepOne extends javax.swing.JFrame {
     private javax.swing.JButton btnLandMapHouseholdMap;
     private javax.swing.JButton btnNextStep;
     private javax.swing.JButton btnPopulationMicroData;
+    private javax.swing.JButton btnPreviousStep;
     private javax.swing.JButton btnRegionMap;
     private javax.swing.JLabel censusEnumerationsInfoIcon;
     private javax.swing.JLabel constraintMapsInfoIcon;

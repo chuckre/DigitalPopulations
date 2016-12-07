@@ -54,7 +54,7 @@ public class FittingCriteria extends javax.swing.JFrame {
         //Object[][] cellValues = new Object[10][10];
         
         //Set up rows and columns
-        for(int r = 0; r<10; r++){
+        for(int r = 0; r<3; r++){
             cellValues.add(r, new ArrayList<>());
             for(int c=0;c<10;c++){
                 cellValues.get(r).add(c, new customTableCell("", false, "String", false));
@@ -130,6 +130,8 @@ public class FittingCriteria extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_TraitInformation = new javax.swing.JTable();
+        btnNextStep = new javax.swing.JButton();
+        btnPreviousStep = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu_FileHelpMenu = new javax.swing.JMenu();
@@ -151,6 +153,20 @@ public class FittingCriteria extends javax.swing.JFrame {
         jTable_TraitInformation.setMinimumSize(new java.awt.Dimension(100, 300));
         jTable_TraitInformation.setName("Trait Information"); // NOI18N
         jScrollPane1.setViewportView(jTable_TraitInformation);
+
+        btnNextStep.setText("Next Step");
+        btnNextStep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextStepActionPerformed(evt);
+            }
+        });
+
+        btnPreviousStep.setText("Previous Step");
+        btnPreviousStep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreviousStepActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -182,7 +198,11 @@ public class FittingCriteria extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel_Header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnPreviousStep)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNextStep)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -193,8 +213,12 @@ public class FittingCriteria extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNextStep)
+                    .addComponent(btnPreviousStep))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel_Header.getAccessibleContext().setAccessibleName("Header");
@@ -210,6 +234,16 @@ public class FittingCriteria extends javax.swing.JFrame {
     private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
         new About().setVisible(true);
     }//GEN-LAST:event_jMenu_AboutMouseClicked
+
+    private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
+        new GenerateTraitClusters().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnNextStepActionPerformed
+
+    private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
+        new MarkovChainMatrix().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnPreviousStepActionPerformed
 
     /**
      * @param args the command line arguments
@@ -247,6 +281,8 @@ public class FittingCriteria extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNextStep;
+    private javax.swing.JButton btnPreviousStep;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel_Header;
     private javax.swing.JMenu jMenu1;

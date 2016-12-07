@@ -110,6 +110,7 @@ public class StepSeven extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         jComboBox6 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        btnPreviousStep = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu_Help = new javax.swing.JMenu();
@@ -135,10 +136,6 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
-        jTextField15.setText("jTextField1");
-
-        jTextField16.setText("jTextField1");
-
         regionMapInfoIcon15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         regionMapInfoIcon15.setToolTipText("Help Infomation for Household Density Map");
         regionMapInfoIcon15.setIconTextGap(0);
@@ -147,8 +144,6 @@ public class StepSeven extends javax.swing.JFrame {
                 regionMapInfoIcon15MouseClicked(evt);
             }
         });
-
-        jTextField17.setText("jTextField1");
 
         regionMapInfoIcon16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         regionMapInfoIcon16.setToolTipText("Help Infomation for Household Density Map");
@@ -189,7 +184,7 @@ public class StepSeven extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(3, 3, 3)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel15)
                     .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -209,7 +204,7 @@ public class StepSeven extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel25.setText("Create Run File:");
 
@@ -225,8 +220,8 @@ public class StepSeven extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addComponent(jLabel25)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -242,8 +237,6 @@ public class StepSeven extends javax.swing.JFrame {
                 regionMapInfoIconMouseClicked(evt);
             }
         });
-
-        jTextField1.setText("jTextField1");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -261,7 +254,7 @@ public class StepSeven extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(3, 3, 3)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(regionMapInfoIcon)
@@ -434,10 +427,6 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
-        jTextField8.setText("jTextField1");
-
-        jTextField9.setText("jTextField1");
-
         regionMapInfoIcon8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         regionMapInfoIcon8.setToolTipText("Help Infomation for Household Density Map");
         regionMapInfoIcon8.setIconTextGap(0);
@@ -499,8 +488,6 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
-        jTextField10.setText("jTextField1");
-
         regionMapInfoIcon10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         regionMapInfoIcon10.setToolTipText("Help Infomation for Household Density Map");
         regionMapInfoIcon10.setIconTextGap(0);
@@ -522,10 +509,6 @@ public class StepSeven extends javax.swing.JFrame {
                 regionMapInfoIcon11MouseClicked(evt);
             }
         });
-
-        jTextField12.setText("jTextField1");
-
-        jTextField13.setText("jTextField1");
 
         regionMapInfoIcon12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         regionMapInfoIcon12.setToolTipText("Help Infomation for Household Density Map");
@@ -581,7 +564,7 @@ public class StepSeven extends javax.swing.JFrame {
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(2, 2, 2)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(regionMapInfoIcon12)
                     .addGroup(jPanel7Layout.createSequentialGroup()
@@ -623,8 +606,6 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
-        jTextField14.setText("jTextField1");
-
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -641,7 +622,7 @@ public class StepSeven extends javax.swing.JFrame {
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(3, 3, 3)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel14)
                     .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -661,8 +642,6 @@ public class StepSeven extends javax.swing.JFrame {
                 regionMapInfoIcon17MouseClicked(evt);
             }
         });
-
-        jTextField18.setText("jTextField1");
 
         regionMapInfoIcon18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         regionMapInfoIcon18.setToolTipText("Help Infomation for Household Density Map");
@@ -685,8 +664,6 @@ public class StepSeven extends javax.swing.JFrame {
                 regionMapInfoIcon19MouseClicked(evt);
             }
         });
-
-        jTextField21.setText("jTextField1");
 
         regionMapInfoIcon20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         regionMapInfoIcon20.setToolTipText("Help Infomation for Household Density Map");
@@ -749,7 +726,7 @@ public class StepSeven extends javax.swing.JFrame {
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(3, 3, 3)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel19)
                     .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -787,8 +764,6 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
-        jTextField22.setText("jTextField1");
-
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -805,7 +780,7 @@ public class StepSeven extends javax.swing.JFrame {
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(3, 3, 3)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel23)
                     .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -825,8 +800,6 @@ public class StepSeven extends javax.swing.JFrame {
                 regionMapInfoIcon22MouseClicked(evt);
             }
         });
-
-        jTextField24.setText("jTextField1");
 
         regionMapInfoIcon23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         regionMapInfoIcon23.setToolTipText("Help Infomation for Household Density Map");
@@ -890,6 +863,13 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
+        btnPreviousStep.setText("Previous Step");
+        btnPreviousStep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreviousStepActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
 
@@ -930,15 +910,16 @@ public class StepSeven extends javax.swing.JFrame {
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnPreviousStep)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -960,8 +941,10 @@ public class StepSeven extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(btnPreviousStep))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -1099,6 +1082,11 @@ public class StepSeven extends javax.swing.JFrame {
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
     }//GEN-LAST:event_jMenu_HelpMouseClicked
 
+    private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
+        new GenerateTraitClusters().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnPreviousStepActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1135,6 +1123,7 @@ public class StepSeven extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnPreviousStep;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;

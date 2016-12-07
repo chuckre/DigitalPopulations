@@ -74,8 +74,9 @@ public class StepTwo extends javax.swing.JFrame {
         lblConstraintMap1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblConstraintMaps1 = new javax.swing.JTable();
-        btnNextStep = new javax.swing.JButton();
+        btnPreviousStep = new javax.swing.JButton();
         lblErrorMessages = new javax.swing.JLabel();
+        btnNextStep = new javax.swing.JButton();
         jMenuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuItemExitApplication = new javax.swing.JMenuItem();
@@ -360,15 +361,22 @@ public class StepTwo extends javax.swing.JFrame {
                     .addGap(1, 1, 1)))
         );
 
+        btnPreviousStep.setText("Previous Step");
+        btnPreviousStep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreviousStepActionPerformed(evt);
+            }
+        });
+
+        lblErrorMessages.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblErrorMessages.setForeground(new java.awt.Color(255, 0, 0));
+
         btnNextStep.setText("Next Step");
         btnNextStep.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNextStepActionPerformed(evt);
             }
         });
-
-        lblErrorMessages.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblErrorMessages.setForeground(new java.awt.Color(255, 0, 0));
 
         menuFile.setText("File");
 
@@ -402,10 +410,11 @@ public class StepTwo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelStepTwo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnNextStep)))
+                        .addComponent(btnPreviousStep)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNextStep))
+                    .addComponent(jPanelStepTwo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblErrorMessages)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -415,10 +424,11 @@ public class StepTwo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanelStepTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnNextStep)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPreviousStep)
+                    .addComponent(btnNextStep))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblErrorMessages)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lblErrorMessages))
         );
 
         pack();
@@ -431,6 +441,11 @@ public class StepTwo extends javax.swing.JFrame {
     private void menuHelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuHelpMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
     }//GEN-LAST:event_menuHelpMouseClicked
+
+    private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
+        new StepOne().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnPreviousStepActionPerformed
 
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
         new StepThree().setVisible(true);
@@ -575,6 +590,7 @@ public class StepTwo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNextStep;
+    private javax.swing.JButton btnPreviousStep;
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

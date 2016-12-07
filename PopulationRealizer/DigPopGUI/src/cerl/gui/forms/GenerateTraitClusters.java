@@ -102,6 +102,8 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_TraitInformation = new javax.swing.JTable();
         jButton_NewCluster = new javax.swing.JButton();
+        btnNextStep = new javax.swing.JButton();
+        btnPreviousStep = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -127,6 +129,20 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         jButton_NewCluster.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_NewClusterActionPerformed(evt);
+            }
+        });
+
+        btnNextStep.setText("Next Step");
+        btnNextStep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextStepActionPerformed(evt);
+            }
+        });
+
+        btnPreviousStep.setText("Previous Step");
+        btnPreviousStep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreviousStepActionPerformed(evt);
             }
         });
 
@@ -163,7 +179,11 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton_NewCluster)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnPreviousStep)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNextStep)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -176,7 +196,11 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_NewCluster)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNextStep)
+                    .addComponent(btnPreviousStep))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -274,6 +298,16 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         new About().setVisible(true);
     }//GEN-LAST:event_jMenu_AboutMouseClicked
 
+    private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
+        new StepSeven().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnNextStepActionPerformed
+
+    private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
+        new FittingCriteria().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnPreviousStepActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -310,6 +344,8 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNextStep;
+    private javax.swing.JButton btnPreviousStep;
     private javax.swing.JButton jButton_NewCluster;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel_Header;
