@@ -10,8 +10,6 @@ import java.awt.Dimension;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import javax.swing.DefaultCellEditor;
-import javax.swing.InputVerifier;
-import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -66,7 +64,10 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
         min.setPreferredSize(d);
         
         //setup validator for values entered 
-        StrictInputVerifier verifyDoubles = new StrictInputVerifier("Double");
+        customInputVerifier verifyDoubles = new customInputVerifier("Double", validationLabel);
+        verifyDoubles.setMaximum(Math.min(rowProportion, colProportion));
+        verifyDoubles.setMinimum(0);
+        
         //validate data entered into both the min and max textboxes
         min.setInputVerifier(verifyDoubles);
         max.setInputVerifier(verifyDoubles);
@@ -131,55 +132,5 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
         }
         
         return cellEditor;
-    }
-
-    /**
-     * Creates a custom input verifier for the min and max values
-     */
-    private class StrictInputVerifier extends InputVerifier{
-        private final String typeNeeded;
-        
-        /**
-         * Creates a new verifier for the supplied data type
-         * TO DO: Handle more than just doubles
-         * @param type 
-         */
-        public StrictInputVerifier(String type){
-            this.typeNeeded = type;
-        }
-        
-        /***
-         * Sets up the validation for the custom table cell popup
-         * Rules - both min and max must be provided
-         *       - Values must be between 0 and 0.99
-         *       - Values must be valid doubles
-         * @param input
-         * @return 
-         */
-        @Override
-        public boolean verify(JComponent input){
-            JTextField text = (JTextField)input;
-            
-            try{
-                double num = Double.parseDouble(text.getText());
-                if((num > 0.99) || (num < 0)){
-                    validationLabel.setText("Values must be between 0 and 0.99");
-                    return false;
-                } else if ((num > rowProportion) || (num > colProportion)){
-                    validationLabel.setText("<html>Values must be less than or equal to the proportion<br> for the row/column.</html>");
-                    return false;
-                }
-                validationLabel.setText("");
-                return true;
-            }
-            catch(NullPointerException n){
-                validationLabel.setText("Both values must be provided.");
-                return false;
-            }
-            catch(NumberFormatException e){
-                validationLabel.setText("Values must be numeric.");
-                return false;
-            }
-        }
     }
 }
