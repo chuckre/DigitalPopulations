@@ -7,6 +7,7 @@ package cerl.gui.forms;
 
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
+import cerl.gui.utilities.StepSevenInstructionNames;
 
 /**
  *
@@ -31,182 +32,183 @@ public class StepSeven extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        regionMapInfoIcon14 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
-        jTextField16 = new javax.swing.JTextField();
-        regionMapInfoIcon15 = new javax.swing.JLabel();
-        jTextField17 = new javax.swing.JTextField();
-        regionMapInfoIcon16 = new javax.swing.JLabel();
+        jPanel_Phase2 = new javax.swing.JPanel();
+        jLabel_Phase2RandomPlacement = new javax.swing.JLabel();
+        jLabel_Phase2SkipTracts = new javax.swing.JLabel();
+        jLabel_Phase2SkippedTracts = new javax.swing.JLabel();
+        Phase2RandomPercentInfoIcon = new javax.swing.JLabel();
+        jTextField_Phase2RandomPlacement = new javax.swing.JTextField();
+        jTextField_Phase2SkipTracts = new javax.swing.JTextField();
+        Phase2SkipTractsInfoIcon = new javax.swing.JLabel();
+        jTextField_Phase2SkippedTracts = new javax.swing.JTextField();
+        Phase2SkippedProbabilityInfoIcon = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel25 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        regionMapInfoIcon = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPanel4 = new javax.swing.JPanel();
-        regionMapInfoIcon4 = new javax.swing.JLabel();
-        regionMapInfoIcon3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        regionMapInfoIcon5 = new javax.swing.JLabel();
-        regionMapInfoIcon6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jComboBox4 = new javax.swing.JComboBox<>();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        regionMapInfoIcon7 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        regionMapInfoIcon8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        regionMapInfoIcon9 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
-        regionMapInfoIcon10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        regionMapInfoIcon11 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
-        jTextField13 = new javax.swing.JTextField();
-        regionMapInfoIcon12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jComboBox5 = new javax.swing.JComboBox<>();
-        jPanel8 = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
-        regionMapInfoIcon13 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel19 = new javax.swing.JLabel();
-        regionMapInfoIcon17 = new javax.swing.JLabel();
-        jTextField18 = new javax.swing.JTextField();
-        regionMapInfoIcon18 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        regionMapInfoIcon19 = new javax.swing.JLabel();
-        jTextField21 = new javax.swing.JTextField();
-        regionMapInfoIcon20 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jComboBox7 = new javax.swing.JComboBox<>();
-        jComboBox8 = new javax.swing.JComboBox<>();
-        jPanel10 = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
-        regionMapInfoIcon21 = new javax.swing.JLabel();
-        jTextField22 = new javax.swing.JTextField();
-        jPanel11 = new javax.swing.JPanel();
-        jLabel24 = new javax.swing.JLabel();
-        regionMapInfoIcon22 = new javax.swing.JLabel();
-        jTextField24 = new javax.swing.JTextField();
-        regionMapInfoIcon23 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jComboBox6 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        jLabel_CreateRunFile = new javax.swing.JLabel();
+        jPanel_Run = new javax.swing.JPanel();
+        jLabel_NameOfRun = new javax.swing.JLabel();
+        nameOfRunInfoIcon = new javax.swing.JLabel();
+        jTextField_NameOfRun = new javax.swing.JTextField();
+        jPanel_LogResults = new javax.swing.JPanel();
+        LogQualityInfoIcon = new javax.swing.JLabel();
+        Phase1ResultsLogInfoIcon = new javax.swing.JLabel();
+        jLabel_LogPhase1Results = new javax.swing.JLabel();
+        jLabel_LogQualityEval = new javax.swing.JLabel();
+        jComboBox_LogPhase1Results = new javax.swing.JComboBox<>();
+        jComboBox_LogQualityEval = new javax.swing.JComboBox<>();
+        jPanel_Archetype = new javax.swing.JPanel();
+        jLabel_HouseholdArchetype = new javax.swing.JLabel();
+        HouseholdArchetypeInfoIcon = new javax.swing.JLabel();
+        PopulationAchetypeInfoIcon = new javax.swing.JLabel();
+        jLabel_PopulationArchetype = new javax.swing.JLabel();
+        jComboBox_HouseholdArchetype = new javax.swing.JComboBox<>();
+        jComboBox_PopulationArchetype = new javax.swing.JComboBox<>();
+        jPanel_RealizationIndex = new javax.swing.JPanel();
+        jLabel_FirstRealizationIndex = new javax.swing.JLabel();
+        FirstRealizationIndexInfoIcon = new javax.swing.JLabel();
+        jTextField_FirstRealizationIndex = new javax.swing.JTextField();
+        jTextField_FinalRealizationIndex = new javax.swing.JTextField();
+        FinalRealizationIndexInfoIcon = new javax.swing.JLabel();
+        jLabel_FinalRealizationIndex = new javax.swing.JLabel();
+        jPanel_Seeds = new javax.swing.JPanel();
+        jLabel_RandomNumberSeed = new javax.swing.JLabel();
+        randomNumberSeedInfoIcon = new javax.swing.JLabel();
+        jTextField_RandomNumberSeed = new javax.swing.JTextField();
+        FirstCensusTractInfoIcon = new javax.swing.JLabel();
+        jLabel_FirstCensusTract = new javax.swing.JLabel();
+        jLabel_OutputDirectory = new javax.swing.JLabel();
+        OutputDirectoryInfoIcon = new javax.swing.JLabel();
+        jTextField_OutputDirectory = new javax.swing.JTextField();
+        jTextField_ParallelThreads = new javax.swing.JTextField();
+        ParallelThreadsInfoIcon = new javax.swing.JLabel();
+        jLabel_ParallelThreads = new javax.swing.JLabel();
+        jComboBox_FirstCensusTract = new javax.swing.JComboBox<>();
+        jPanel_Phase1 = new javax.swing.JPanel();
+        jLabel_Phase1TimeLimit = new javax.swing.JLabel();
+        Phase1TimeLimitInfoIcon = new javax.swing.JLabel();
+        jTextField_Phase1TimeLimit = new javax.swing.JTextField();
+        jPanel_Phase4 = new javax.swing.JPanel();
+        jLabel_Phase4_Lags = new javax.swing.JLabel();
+        phase4LagsInfoIcon = new javax.swing.JLabel();
+        jTextField_Phase4_Lags = new javax.swing.JTextField();
+        Phase4SaveInfoIcon = new javax.swing.JLabel();
+        jLabel_Phase4Save = new javax.swing.JLabel();
+        jLabel_Phase4Skip = new javax.swing.JLabel();
+        SkipPhase4InfoIcon = new javax.swing.JLabel();
+        jTextField_Phase4TimeLimit = new javax.swing.JTextField();
+        Phase4TimeLimitInfoIcon = new javax.swing.JLabel();
+        jLabel_Phase4_TimeLimit = new javax.swing.JLabel();
+        jComboBox_Phase4Save = new javax.swing.JComboBox<>();
+        jComboBox_Phase4Skip = new javax.swing.JComboBox<>();
+        jPanel_Phase3and4 = new javax.swing.JPanel();
+        jLabel_Phase34SaveInterval = new javax.swing.JLabel();
+        Phase34SaveInfoIcon = new javax.swing.JLabel();
+        jTextField_Phase34SaveInterval = new javax.swing.JTextField();
+        jPanel_Phase3 = new javax.swing.JPanel();
+        jLabel_Phase3Skip = new javax.swing.JLabel();
+        SkipPhase3InfoIcon = new javax.swing.JLabel();
+        jTextField_Phase2TimeLimit = new javax.swing.JTextField();
+        phase3TimeLimitInfoIcon = new javax.swing.JLabel();
+        jLabel_Phase3TimeLimit = new javax.swing.JLabel();
+        jComboBox_Phase3Skip = new javax.swing.JComboBox<>();
+        btn_Next = new javax.swing.JButton();
         btnPreviousStep = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        jMenuBar = new javax.swing.JMenuBar();
+        jMenu_File = new javax.swing.JMenu();
         jMenu_Help = new javax.swing.JMenu();
         jMenu_About = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Step Seven");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel_Phase2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel15.setText("Phase 2 - Random Placement Percentage");
+        jLabel_Phase2RandomPlacement.setText("Phase 2 - Random Placement Percentage");
 
-        jLabel16.setText("Phase 2 - Skip Tracts Probability");
+        jLabel_Phase2SkipTracts.setText("Phase 2 - Skip Tracts Probability");
 
-        jLabel17.setText("Phase 2 - Skipped Tracts Probability Delta");
+        jLabel_Phase2SkippedTracts.setText("Phase 2 - Skipped Tracts Probability Delta");
 
-        regionMapInfoIcon14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon14.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon14.setIconTextGap(0);
-        regionMapInfoIcon14.addMouseListener(new java.awt.event.MouseAdapter() {
+        Phase2RandomPercentInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        Phase2RandomPercentInfoIcon.setToolTipText("Help Infomation for Phase 2 Random Placement Percentage");
+        Phase2RandomPercentInfoIcon.setIconTextGap(0);
+        Phase2RandomPercentInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon14MouseClicked(evt);
+                Phase2RandomPercentInfoIconMouseClicked(evt);
             }
         });
 
-        regionMapInfoIcon15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon15.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon15.setIconTextGap(0);
-        regionMapInfoIcon15.addMouseListener(new java.awt.event.MouseAdapter() {
+        Phase2SkipTractsInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        Phase2SkipTractsInfoIcon.setToolTipText("Help Infomation for Phase 2 Skip Tracts Probability");
+        Phase2SkipTractsInfoIcon.setIconTextGap(0);
+        Phase2SkipTractsInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon15MouseClicked(evt);
+                Phase2SkipTractsInfoIconMouseClicked(evt);
             }
         });
 
-        regionMapInfoIcon16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon16.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon16.setIconTextGap(0);
-        regionMapInfoIcon16.addMouseListener(new java.awt.event.MouseAdapter() {
+        Phase2SkippedProbabilityInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        Phase2SkippedProbabilityInfoIcon.setToolTipText("Help Infomation for Phase 2 Skipped Tracts Probability Delta");
+        Phase2SkippedProbabilityInfoIcon.setIconTextGap(0);
+        Phase2SkippedProbabilityInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon16MouseClicked(evt);
+                Phase2SkippedProbabilityInfoIconMouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel_Phase2Layout = new javax.swing.GroupLayout(jPanel_Phase2);
+        jPanel_Phase2.setLayout(jPanel_Phase2Layout);
+        jPanel_Phase2Layout.setHorizontalGroup(
+            jPanel_Phase2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_Phase2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
+                .addGroup(jPanel_Phase2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel_Phase2Layout.createSequentialGroup()
+                        .addComponent(jLabel_Phase2RandomPlacement)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon14)
+                        .addComponent(Phase2RandomPercentInfoIcon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField15))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel16)
+                        .addComponent(jTextField_Phase2RandomPlacement, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_Phase2Layout.createSequentialGroup()
+                        .addComponent(jLabel_Phase2SkipTracts)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon15)
+                        .addComponent(Phase2SkipTractsInfoIcon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField16))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField17, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)))
+                        .addComponent(jTextField_Phase2SkipTracts)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel_Phase2SkippedTracts)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Phase2SkippedProbabilityInfoIcon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField_Phase2SkippedTracts)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(3, 3, 3)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel15)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(regionMapInfoIcon14))
+        jPanel_Phase2Layout.setVerticalGroup(
+            jPanel_Phase2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_Phase2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_Phase2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Phase2SkippedProbabilityInfoIcon)
+                    .addGroup(jPanel_Phase2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField_Phase2RandomPlacement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel_Phase2SkippedTracts))
+                    .addComponent(jTextField_Phase2SkippedTracts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel_Phase2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(Phase2RandomPercentInfoIcon)
+                        .addComponent(jLabel_Phase2RandomPlacement)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(regionMapInfoIcon15)
-                    .addComponent(jLabel16))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel17)
-                    .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(regionMapInfoIcon16))
+                .addGroup(jPanel_Phase2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField_Phase2SkipTracts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel_Phase2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(Phase2SkipTractsInfoIcon)
+                        .addComponent(jLabel_Phase2SkipTracts)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel25.setText("Create Run File:");
+        jLabel_CreateRunFile.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel_CreateRunFile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_CreateRunFile.setText("Create Run File");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -214,652 +216,670 @@ public class StepSeven extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel_CreateRunFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(3, 3, 3)
-                .addComponent(jLabel25)
+                .addComponent(jLabel_CreateRunFile)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel_Run.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setText("Name of Run");
+        jLabel_NameOfRun.setText("Name of Run");
 
-        regionMapInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon.setIconTextGap(0);
-        regionMapInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+        nameOfRunInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        nameOfRunInfoIcon.setToolTipText("Help Infomation for the Name of the Run");
+        nameOfRunInfoIcon.setIconTextGap(0);
+        nameOfRunInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIconMouseClicked(evt);
+                nameOfRunInfoIconMouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel_RunLayout = new javax.swing.GroupLayout(jPanel_Run);
+        jPanel_Run.setLayout(jPanel_RunLayout);
+        jPanel_RunLayout.setHorizontalGroup(
+            jPanel_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_RunLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLabel_NameOfRun)
                 .addGap(4, 4, 4)
-                .addComponent(regionMapInfoIcon)
+                .addComponent(nameOfRunInfoIcon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1)
-                .addGap(14, 14, 14))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(3, 3, 3)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(regionMapInfoIcon)
-                    .addComponent(jLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        regionMapInfoIcon4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon4.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon4.setIconTextGap(0);
-        regionMapInfoIcon4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon4MouseClicked(evt);
-            }
-        });
-
-        regionMapInfoIcon3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon3.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon3.setIconTextGap(0);
-        regionMapInfoIcon3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon3MouseClicked(evt);
-            }
-        });
-
-        jLabel4.setText("Log the results of phase 1?");
-
-        jLabel5.setText("Log the quality evaluation reports between phases?");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jTextField_NameOfRun)
                 .addContainerGap())
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        jPanel_RunLayout.setVerticalGroup(
+            jPanel_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_RunLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(regionMapInfoIcon3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(regionMapInfoIcon4))
+                .addGroup(jPanel_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField_NameOfRun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel_RunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(nameOfRunInfoIcon)
+                        .addComponent(jLabel_NameOfRun)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel_LogResults.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel6.setText("Does each Household record contain a full copy of the archetype record?");
-
-        regionMapInfoIcon5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon5.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon5.setIconTextGap(0);
-        regionMapInfoIcon5.addMouseListener(new java.awt.event.MouseAdapter() {
+        LogQualityInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        LogQualityInfoIcon.setToolTipText("Help Infomation for logging the quality evaluation reports");
+        LogQualityInfoIcon.setIconTextGap(0);
+        LogQualityInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon5MouseClicked(evt);
+                LogQualityInfoIconMouseClicked(evt);
             }
         });
 
-        regionMapInfoIcon6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon6.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon6.setIconTextGap(0);
-        regionMapInfoIcon6.addMouseListener(new java.awt.event.MouseAdapter() {
+        Phase1ResultsLogInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        Phase1ResultsLogInfoIcon.setToolTipText("Help Infomation for Logging the results of Phase 1");
+        Phase1ResultsLogInfoIcon.setIconTextGap(0);
+        Phase1ResultsLogInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon6MouseClicked(evt);
+                Phase1ResultsLogInfoIconMouseClicked(evt);
             }
         });
 
-        jLabel7.setText("Does each Population record contain a full copy of the archetype record?");
+        jLabel_LogPhase1Results.setText("Log the results of phase 1?");
+        jLabel_LogPhase1Results.setPreferredSize(new java.awt.Dimension(250, 14));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
-        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+        jLabel_LogQualityEval.setText("Log the quality evaluation reports between phases?");
+        jLabel_LogQualityEval.setPreferredSize(new java.awt.Dimension(250, 14));
+
+        jComboBox_LogPhase1Results.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_LogPhase1Results.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox3ActionPerformed(evt);
+                jComboBox_LogPhase1ResultsActionPerformed(evt);
             }
         });
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
-        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+        jComboBox_LogQualityEval.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_LogQualityEval.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox4ActionPerformed(evt);
+                jComboBox_LogQualityEvalActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel_LogResultsLayout = new javax.swing.GroupLayout(jPanel_LogResults);
+        jPanel_LogResults.setLayout(jPanel_LogResultsLayout);
+        jPanel_LogResultsLayout.setHorizontalGroup(
+            jPanel_LogResultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_LogResultsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(regionMapInfoIcon5, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(jPanel_LogResultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel_LogQualityEval, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel_LogResultsLayout.createSequentialGroup()
+                        .addComponent(jLabel_LogPhase1Results, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel7)
-                    .addComponent(regionMapInfoIcon6)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabel8.setText("First Realization Index");
-
-        regionMapInfoIcon7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon7.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon7.setIconTextGap(0);
-        regionMapInfoIcon7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon7MouseClicked(evt);
-            }
-        });
-
-        regionMapInfoIcon8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon8.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon8.setIconTextGap(0);
-        regionMapInfoIcon8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon8MouseClicked(evt);
-            }
-        });
-
-        jLabel9.setText("Final Realization Index");
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField8))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(5, 5, 5)
-                        .addComponent(regionMapInfoIcon8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField9)))
-                .addContainerGap())
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(regionMapInfoIcon7, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(regionMapInfoIcon8, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabel10.setText("Random Number seed");
-
-        regionMapInfoIcon9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon9.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon9.setIconTextGap(0);
-        regionMapInfoIcon9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon9MouseClicked(evt);
-            }
-        });
-
-        regionMapInfoIcon10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon10.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon10.setIconTextGap(0);
-        regionMapInfoIcon10.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon10MouseClicked(evt);
-            }
-        });
-
-        jLabel11.setText("Use only the first census tract?");
-
-        jLabel12.setText("Output Directory");
-
-        regionMapInfoIcon11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon11.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon11.setIconTextGap(0);
-        regionMapInfoIcon11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon11MouseClicked(evt);
-            }
-        });
-
-        regionMapInfoIcon12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon12.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon12.setIconTextGap(0);
-        regionMapInfoIcon12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon12MouseClicked(evt);
-            }
-        });
-
-        jLabel13.setText("Number of parallel threads");
-
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
-        jComboBox5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox5ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField10))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField12))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField13, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(2, 2, 2)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(regionMapInfoIcon12)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel10)
-                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(regionMapInfoIcon9))
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel11))
-                            .addComponent(regionMapInfoIcon10)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(regionMapInfoIcon11))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel13))
-                            .addComponent(jTextField13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabel14.setText("Phase 1 Time limit");
-
-        regionMapInfoIcon13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon13.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon13.setIconTextGap(0);
-        regionMapInfoIcon13.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon13MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(regionMapInfoIcon13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField14)
-                .addContainerGap())
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(3, 3, 3)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel14)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(regionMapInfoIcon13))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabel19.setText("Phase 4 - Number of Lags");
-
-        regionMapInfoIcon17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon17.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon17.setIconTextGap(0);
-        regionMapInfoIcon17.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon17MouseClicked(evt);
-            }
-        });
-
-        regionMapInfoIcon18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon18.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon18.setIconTextGap(0);
-        regionMapInfoIcon18.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon18MouseClicked(evt);
-            }
-        });
-
-        jLabel20.setText("Phase 4 - Save both ends?");
-
-        jLabel21.setText("Skip Phase 4?");
-
-        regionMapInfoIcon19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon19.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon19.setIconTextGap(0);
-        regionMapInfoIcon19.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon19MouseClicked(evt);
-            }
-        });
-
-        regionMapInfoIcon20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon20.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon20.setIconTextGap(0);
-        regionMapInfoIcon20.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon20MouseClicked(evt);
-            }
-        });
-
-        jLabel22.setText("Phase 4 Time Limit");
-
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
-        jComboBox7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox7ActionPerformed(evt);
-            }
-        });
-
-        jComboBox8.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
-        jComboBox8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox8ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel19)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField18, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel22)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon20)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField21))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel21)
+                .addGroup(jPanel_LogResultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_LogResultsLayout.createSequentialGroup()
+                        .addComponent(LogQualityInfoIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox_LogQualityEval, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel_LogResultsLayout.createSequentialGroup()
+                        .addComponent(Phase1ResultsLogInfoIcon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(regionMapInfoIcon19)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox8, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel20)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox7, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jComboBox_LogPhase1Results, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(3, 3, 3)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel19)
-                    .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(regionMapInfoIcon17))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(regionMapInfoIcon18, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel20)
-                        .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(regionMapInfoIcon19)
-                    .addComponent(jLabel21)
-                    .addComponent(jComboBox8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(regionMapInfoIcon20)
-                        .addComponent(jLabel22))
-                    .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabel23.setText("Phase 3 and 4 Intermediate Save Interval");
-
-        regionMapInfoIcon21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon21.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon21.setIconTextGap(0);
-        regionMapInfoIcon21.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon21MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+        jPanel_LogResultsLayout.setVerticalGroup(
+            jPanel_LogResultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_LogResultsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel23)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(regionMapInfoIcon21)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField22)
-                .addContainerGap())
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(3, 3, 3)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel23)
-                    .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(regionMapInfoIcon21))
+                .addGroup(jPanel_LogResultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Phase1ResultsLogInfoIcon)
+                    .addComponent(jComboBox_LogPhase1Results, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_LogPhase1Results, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel_LogResultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel_LogQualityEval, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel_LogResultsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jComboBox_LogQualityEval, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(LogQualityInfoIcon, javax.swing.GroupLayout.Alignment.TRAILING)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel_Archetype.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel24.setText("Skip Phase 3?");
+        jLabel_HouseholdArchetype.setText("Does each Household record contain a full copy of the archetype record?");
 
-        regionMapInfoIcon22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon22.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon22.setIconTextGap(0);
-        regionMapInfoIcon22.addMouseListener(new java.awt.event.MouseAdapter() {
+        HouseholdArchetypeInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        HouseholdArchetypeInfoIcon.setToolTipText("Help Infomation for Household archetype record");
+        HouseholdArchetypeInfoIcon.setIconTextGap(0);
+        HouseholdArchetypeInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon22MouseClicked(evt);
+                HouseholdArchetypeInfoIconMouseClicked(evt);
             }
         });
 
-        regionMapInfoIcon23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        regionMapInfoIcon23.setToolTipText("Help Infomation for Household Density Map");
-        regionMapInfoIcon23.setIconTextGap(0);
-        regionMapInfoIcon23.addMouseListener(new java.awt.event.MouseAdapter() {
+        PopulationAchetypeInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        PopulationAchetypeInfoIcon.setToolTipText("Help Infomation for the Population archetype");
+        PopulationAchetypeInfoIcon.setIconTextGap(0);
+        PopulationAchetypeInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regionMapInfoIcon23MouseClicked(evt);
+                PopulationAchetypeInfoIconMouseClicked(evt);
             }
         });
 
-        jLabel26.setText("Phase 3 Time limit");
+        jLabel_PopulationArchetype.setText("Does each Population record contain a full copy of the archetype record?");
 
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
-        jComboBox6.addActionListener(new java.awt.event.ActionListener() {
+        jComboBox_HouseholdArchetype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_HouseholdArchetype.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox6ActionPerformed(evt);
+                jComboBox_HouseholdArchetypeActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(jLabel24)
+        jComboBox_PopulationArchetype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_PopulationArchetype.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_PopulationArchetypeActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel_ArchetypeLayout = new javax.swing.GroupLayout(jPanel_Archetype);
+        jPanel_Archetype.setLayout(jPanel_ArchetypeLayout);
+        jPanel_ArchetypeLayout.setHorizontalGroup(
+            jPanel_ArchetypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_ArchetypeLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel_ArchetypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_ArchetypeLayout.createSequentialGroup()
+                        .addComponent(jLabel_PopulationArchetype)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addComponent(PopulationAchetypeInfoIcon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon22)
+                        .addComponent(jComboBox_PopulationArchetype, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_ArchetypeLayout.createSequentialGroup()
+                        .addComponent(jLabel_HouseholdArchetype)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(HouseholdArchetypeInfoIcon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox6, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(jLabel26)
-                        .addGap(5, 5, 5)
-                        .addComponent(regionMapInfoIcon23)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField24, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)))
+                        .addComponent(jComboBox_HouseholdArchetype, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
+        jPanel_ArchetypeLayout.setVerticalGroup(
+            jPanel_ArchetypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_ArchetypeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel24)
-                    .addComponent(regionMapInfoIcon22)
-                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel26, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField24, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(regionMapInfoIcon23, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(jPanel_ArchetypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBox_HouseholdArchetype, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(HouseholdArchetypeInfoIcon, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel_HouseholdArchetype))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel_ArchetypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_ArchetypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(PopulationAchetypeInfoIcon)
+                        .addComponent(jComboBox_PopulationArchetype, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel_PopulationArchetype))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Next");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jPanel_RealizationIndex.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel_FirstRealizationIndex.setText("First Realization Index");
+        jLabel_FirstRealizationIndex.setPreferredSize(new java.awt.Dimension(127, 14));
+
+        FirstRealizationIndexInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        FirstRealizationIndexInfoIcon.setToolTipText("Help Infomation for First Realization Index");
+        FirstRealizationIndexInfoIcon.setIconTextGap(0);
+        FirstRealizationIndexInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FirstRealizationIndexInfoIconMouseClicked(evt);
+            }
+        });
+
+        FinalRealizationIndexInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        FinalRealizationIndexInfoIcon.setToolTipText("Help Infomation for Final Realization Index");
+        FinalRealizationIndexInfoIcon.setIconTextGap(0);
+        FinalRealizationIndexInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FinalRealizationIndexInfoIconMouseClicked(evt);
+            }
+        });
+
+        jLabel_FinalRealizationIndex.setText("Final Realization Index");
+
+        javax.swing.GroupLayout jPanel_RealizationIndexLayout = new javax.swing.GroupLayout(jPanel_RealizationIndex);
+        jPanel_RealizationIndex.setLayout(jPanel_RealizationIndexLayout);
+        jPanel_RealizationIndexLayout.setHorizontalGroup(
+            jPanel_RealizationIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_RealizationIndexLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel_FirstRealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(FirstRealizationIndexInfoIcon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField_FirstRealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel_FinalRealizationIndex)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(FinalRealizationIndexInfoIcon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField_FinalRealizationIndex)
+                .addContainerGap())
+        );
+        jPanel_RealizationIndexLayout.setVerticalGroup(
+            jPanel_RealizationIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_RealizationIndexLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_RealizationIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(FirstRealizationIndexInfoIcon)
+                    .addGroup(jPanel_RealizationIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel_FinalRealizationIndex)
+                        .addComponent(jTextField_FirstRealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField_FinalRealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FinalRealizationIndexInfoIcon)
+                    .addGroup(jPanel_RealizationIndexLayout.createSequentialGroup()
+                        .addComponent(jLabel_FirstRealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel_Seeds.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel_RandomNumberSeed.setText("Random Number seed");
+        jLabel_RandomNumberSeed.setPreferredSize(new java.awt.Dimension(127, 14));
+
+        randomNumberSeedInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        randomNumberSeedInfoIcon.setToolTipText("Help Infomation for Random Number Seed");
+        randomNumberSeedInfoIcon.setIconTextGap(0);
+        randomNumberSeedInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                randomNumberSeedInfoIconMouseClicked(evt);
+            }
+        });
+
+        FirstCensusTractInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        FirstCensusTractInfoIcon.setToolTipText("Help Infomation for First Census Tract");
+        FirstCensusTractInfoIcon.setIconTextGap(0);
+        FirstCensusTractInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FirstCensusTractInfoIconMouseClicked(evt);
+            }
+        });
+
+        jLabel_FirstCensusTract.setText("Use only the first census tract?");
+
+        jLabel_OutputDirectory.setText("Output Directory");
+        jLabel_OutputDirectory.setPreferredSize(new java.awt.Dimension(127, 14));
+
+        OutputDirectoryInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        OutputDirectoryInfoIcon.setToolTipText("Help Infomation for Output Directory");
+        OutputDirectoryInfoIcon.setIconTextGap(0);
+        OutputDirectoryInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                OutputDirectoryInfoIconMouseClicked(evt);
+            }
+        });
+
+        ParallelThreadsInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        ParallelThreadsInfoIcon.setToolTipText("Help Infomation for Parallel Threads");
+        ParallelThreadsInfoIcon.setIconTextGap(0);
+        ParallelThreadsInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ParallelThreadsInfoIconMouseClicked(evt);
+            }
+        });
+
+        jLabel_ParallelThreads.setText("Number of parallel threads");
+
+        jComboBox_FirstCensusTract.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_FirstCensusTract.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jComboBox_FirstCensusTractActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel_SeedsLayout = new javax.swing.GroupLayout(jPanel_Seeds);
+        jPanel_Seeds.setLayout(jPanel_SeedsLayout);
+        jPanel_SeedsLayout.setHorizontalGroup(
+            jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_SeedsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_SeedsLayout.createSequentialGroup()
+                        .addComponent(jLabel_RandomNumberSeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(randomNumberSeedInfoIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField_RandomNumberSeed, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel_FirstCensusTract)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(FirstCensusTractInfoIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox_FirstCensusTract, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_SeedsLayout.createSequentialGroup()
+                        .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel_SeedsLayout.createSequentialGroup()
+                                .addComponent(jLabel_ParallelThreads)
+                                .addGap(18, 18, 18)
+                                .addComponent(ParallelThreadsInfoIcon))
+                            .addGroup(jPanel_SeedsLayout.createSequentialGroup()
+                                .addComponent(jLabel_OutputDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(OutputDirectoryInfoIcon)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField_OutputDirectory)
+                            .addComponent(jTextField_ParallelThreads))))
+                .addContainerGap())
+        );
+        jPanel_SeedsLayout.setVerticalGroup(
+            jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_SeedsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jComboBox_FirstCensusTract, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel_SeedsLayout.createSequentialGroup()
+                        .addComponent(jLabel_RandomNumberSeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6))
+                    .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(FirstCensusTractInfoIcon)
+                        .addComponent(jLabel_FirstCensusTract))
+                    .addComponent(jTextField_RandomNumberSeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(randomNumberSeedInfoIcon))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel_SeedsLayout.createSequentialGroup()
+                        .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextField_OutputDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel_SeedsLayout.createSequentialGroup()
+                                .addComponent(jLabel_OutputDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6))
+                            .addComponent(OutputDirectoryInfoIcon))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel_ParallelThreads)
+                            .addComponent(ParallelThreadsInfoIcon, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(jTextField_ParallelThreads, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel_Phase1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel_Phase1TimeLimit.setText("Phase 1 Time limit");
+        jLabel_Phase1TimeLimit.setPreferredSize(new java.awt.Dimension(127, 14));
+
+        Phase1TimeLimitInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        Phase1TimeLimitInfoIcon.setToolTipText("Help Infomation for Phase 1 Time Limit");
+        Phase1TimeLimitInfoIcon.setIconTextGap(0);
+        Phase1TimeLimitInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Phase1TimeLimitInfoIconMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel_Phase1Layout = new javax.swing.GroupLayout(jPanel_Phase1);
+        jPanel_Phase1.setLayout(jPanel_Phase1Layout);
+        jPanel_Phase1Layout.setHorizontalGroup(
+            jPanel_Phase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_Phase1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel_Phase1TimeLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Phase1TimeLimitInfoIcon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField_Phase1TimeLimit)
+                .addContainerGap())
+        );
+        jPanel_Phase1Layout.setVerticalGroup(
+            jPanel_Phase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_Phase1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_Phase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField_Phase1TimeLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel_Phase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(Phase1TimeLimitInfoIcon)
+                        .addComponent(jLabel_Phase1TimeLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel_Phase4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel_Phase4_Lags.setText("Phase 4 - Number of Lags");
+
+        phase4LagsInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        phase4LagsInfoIcon.setToolTipText("Help Infomation for Phase 4 Number of Lags");
+        phase4LagsInfoIcon.setIconTextGap(0);
+        phase4LagsInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                phase4LagsInfoIconMouseClicked(evt);
+            }
+        });
+
+        Phase4SaveInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        Phase4SaveInfoIcon.setToolTipText("Help Infomation for Phase 4 Save Both Ends");
+        Phase4SaveInfoIcon.setIconTextGap(0);
+        Phase4SaveInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Phase4SaveInfoIconMouseClicked(evt);
+            }
+        });
+
+        jLabel_Phase4Save.setText("Phase 4 - Save both ends?");
+
+        jLabel_Phase4Skip.setText("Skip Phase 4?");
+
+        SkipPhase4InfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        SkipPhase4InfoIcon.setToolTipText("Help Infomation for Skip Phase 4");
+        SkipPhase4InfoIcon.setIconTextGap(0);
+        SkipPhase4InfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SkipPhase4InfoIconMouseClicked(evt);
+            }
+        });
+
+        Phase4TimeLimitInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        Phase4TimeLimitInfoIcon.setToolTipText("Help Infomation for Phase 4 Time Limit");
+        Phase4TimeLimitInfoIcon.setIconTextGap(0);
+        Phase4TimeLimitInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Phase4TimeLimitInfoIconMouseClicked(evt);
+            }
+        });
+
+        jLabel_Phase4_TimeLimit.setText("Phase 4 Time Limit");
+
+        jComboBox_Phase4Save.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_Phase4Save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_Phase4SaveActionPerformed(evt);
+            }
+        });
+
+        jComboBox_Phase4Skip.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_Phase4Skip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_Phase4SkipActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel_Phase4Layout = new javax.swing.GroupLayout(jPanel_Phase4);
+        jPanel_Phase4.setLayout(jPanel_Phase4Layout);
+        jPanel_Phase4Layout.setHorizontalGroup(
+            jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_Phase4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel_Phase4Layout.createSequentialGroup()
+                        .addComponent(jLabel_Phase4Save)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Phase4SaveInfoIcon))
+                    .addGroup(jPanel_Phase4Layout.createSequentialGroup()
+                        .addComponent(jLabel_Phase4_Lags)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(phase4LagsInfoIcon)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jTextField_Phase4_Lags)
+                    .addComponent(jComboBox_Phase4Save, 0, 75, Short.MAX_VALUE))
+                .addGap(155, 155, 155)
+                .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel_Phase4Layout.createSequentialGroup()
+                        .addComponent(jLabel_Phase4_TimeLimit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Phase4TimeLimitInfoIcon))
+                    .addGroup(jPanel_Phase4Layout.createSequentialGroup()
+                        .addComponent(jLabel_Phase4Skip)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(SkipPhase4InfoIcon)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_Phase4Layout.createSequentialGroup()
+                        .addComponent(jComboBox_Phase4Skip, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jTextField_Phase4TimeLimit, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+        );
+        jPanel_Phase4Layout.setVerticalGroup(
+            jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_Phase4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField_Phase4_Lags, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTextField_Phase4TimeLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel_Phase4Layout.createSequentialGroup()
+                            .addGap(0, 0, 0)
+                            .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(Phase4TimeLimitInfoIcon)
+                                .addComponent(jLabel_Phase4_TimeLimit))))
+                    .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(phase4LagsInfoIcon)
+                        .addComponent(jLabel_Phase4_Lags)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Phase4SaveInfoIcon)
+                    .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel_Phase4Save)
+                        .addComponent(jComboBox_Phase4Save, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox_Phase4Skip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(SkipPhase4InfoIcon)
+                        .addComponent(jLabel_Phase4Skip)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel_Phase3and4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel_Phase34SaveInterval.setText("Phase 3 and 4 Intermediate Save Interval");
+
+        Phase34SaveInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        Phase34SaveInfoIcon.setToolTipText("Help Infomation for Phase 3 and 4 Intermediate Save Interval");
+        Phase34SaveInfoIcon.setIconTextGap(0);
+        Phase34SaveInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Phase34SaveInfoIconMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel_Phase3and4Layout = new javax.swing.GroupLayout(jPanel_Phase3and4);
+        jPanel_Phase3and4.setLayout(jPanel_Phase3and4Layout);
+        jPanel_Phase3and4Layout.setHorizontalGroup(
+            jPanel_Phase3and4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_Phase3and4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel_Phase34SaveInterval)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Phase34SaveInfoIcon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField_Phase34SaveInterval)
+                .addContainerGap())
+        );
+        jPanel_Phase3and4Layout.setVerticalGroup(
+            jPanel_Phase3and4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_Phase3and4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_Phase3and4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField_Phase34SaveInterval, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel_Phase3and4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(Phase34SaveInfoIcon)
+                        .addComponent(jLabel_Phase34SaveInterval)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel_Phase3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel_Phase3Skip.setText("Skip Phase 3?");
+        jLabel_Phase3Skip.setMaximumSize(new java.awt.Dimension(123, 14));
+        jLabel_Phase3Skip.setMinimumSize(new java.awt.Dimension(123, 14));
+        jLabel_Phase3Skip.setPreferredSize(new java.awt.Dimension(127, 14));
+
+        SkipPhase3InfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        SkipPhase3InfoIcon.setToolTipText("Help Infomation for Skip Phase 3");
+        SkipPhase3InfoIcon.setIconTextGap(0);
+        SkipPhase3InfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SkipPhase3InfoIconMouseClicked(evt);
+            }
+        });
+
+        phase3TimeLimitInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        phase3TimeLimitInfoIcon.setToolTipText("Help Infomation for Phase 3 Time Limit");
+        phase3TimeLimitInfoIcon.setIconTextGap(0);
+        phase3TimeLimitInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                phase3TimeLimitInfoIconMouseClicked(evt);
+            }
+        });
+
+        jLabel_Phase3TimeLimit.setText("Phase 3 Time limit");
+
+        jComboBox_Phase3Skip.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_Phase3Skip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_Phase3SkipActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel_Phase3Layout = new javax.swing.GroupLayout(jPanel_Phase3);
+        jPanel_Phase3.setLayout(jPanel_Phase3Layout);
+        jPanel_Phase3Layout.setHorizontalGroup(
+            jPanel_Phase3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Phase3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel_Phase3Skip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SkipPhase3InfoIcon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox_Phase3Skip, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(331, 331, 331)
+                .addComponent(jLabel_Phase3TimeLimit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(phase3TimeLimitInfoIcon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField_Phase2TimeLimit)
+                .addContainerGap())
+        );
+        jPanel_Phase3Layout.setVerticalGroup(
+            jPanel_Phase3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_Phase3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_Phase3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField_Phase2TimeLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox_Phase3Skip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel_Phase3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(SkipPhase3InfoIcon)
+                        .addComponent(jLabel_Phase3Skip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_Phase3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(phase3TimeLimitInfoIcon)
+                        .addComponent(jLabel_Phase3TimeLimit)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        btn_Next.setText("Next");
+        btn_Next.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_NextActionPerformed(evt);
             }
         });
 
@@ -870,8 +890,8 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        jMenu_File.setText("File");
+        jMenuBar.add(jMenu_File);
 
         jMenu_Help.setText("Help");
         jMenu_Help.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -879,7 +899,7 @@ public class StepSeven extends javax.swing.JFrame {
                 jMenu_HelpMouseClicked(evt);
             }
         });
-        jMenuBar1.add(jMenu_Help);
+        jMenuBar.add(jMenu_Help);
 
         jMenu_About.setText("About");
         jMenu_About.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -887,9 +907,9 @@ public class StepSeven extends javax.swing.JFrame {
                 jMenu_AboutMouseClicked(evt);
             }
         });
-        jMenuBar1.add(jMenu_About);
+        jMenuBar.add(jMenu_About);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -897,182 +917,184 @@ public class StepSeven extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btnPreviousStep)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
-                .addContainerGap())
+                        .addComponent(btn_Next))
+                    .addComponent(jPanel_Phase4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_Phase3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_Run, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_Phase3and4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_Phase2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_Phase1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_RealizationIndex, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel_LogResults, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel_Archetype, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel_Seeds, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(2, 2, 2)
+                .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel_Run, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel_LogResults, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_Archetype, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel_RealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel_Seeds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel_Phase1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel_Phase2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel_Phase3and4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel_Phase3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel_Phase4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btn_Next)
                     .addComponent(btnPreviousStep))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void regionMapInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIconMouseClicked
-     //   DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepOneInstructionNames.Census_Enumerations.toString());
-    }//GEN-LAST:event_regionMapInfoIconMouseClicked
+    private void nameOfRunInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nameOfRunInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Name_Of_Run.toString());
+    }//GEN-LAST:event_nameOfRunInfoIconMouseClicked
 
-    private void regionMapInfoIcon3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon3MouseClicked
+    private void Phase1ResultsLogInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phase1ResultsLogInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase1_Log_Results.toString());
+    }//GEN-LAST:event_Phase1ResultsLogInfoIconMouseClicked
 
-    private void regionMapInfoIcon4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon4MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon4MouseClicked
+    private void LogQualityInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogQualityInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Log_Quality_Evaluation.toString());
+    }//GEN-LAST:event_LogQualityInfoIconMouseClicked
 
-    private void regionMapInfoIcon15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon15MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon15MouseClicked
+    private void Phase2SkipTractsInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phase2SkipTractsInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase2_Skip_Tracts.toString());
+    }//GEN-LAST:event_Phase2SkipTractsInfoIconMouseClicked
 
-    private void regionMapInfoIcon14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon14MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon14MouseClicked
+    private void Phase2RandomPercentInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phase2RandomPercentInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase2_Random_Placement.toString());
+    }//GEN-LAST:event_Phase2RandomPercentInfoIconMouseClicked
 
-    private void regionMapInfoIcon13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon13MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon13MouseClicked
+    private void Phase1TimeLimitInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phase1TimeLimitInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase1_Time_Limit.toString());
+    }//GEN-LAST:event_Phase1TimeLimitInfoIconMouseClicked
 
-    private void regionMapInfoIcon12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon12MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon12MouseClicked
+    private void ParallelThreadsInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ParallelThreadsInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Parallel_Threads.toString());
+    }//GEN-LAST:event_ParallelThreadsInfoIconMouseClicked
 
-    private void regionMapInfoIcon11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon11MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon11MouseClicked
+    private void OutputDirectoryInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OutputDirectoryInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Output_Directory.toString());
+    }//GEN-LAST:event_OutputDirectoryInfoIconMouseClicked
 
-    private void regionMapInfoIcon10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon10MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon10MouseClicked
+    private void FirstCensusTractInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FirstCensusTractInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.First_Census_Tract.toString());
+    }//GEN-LAST:event_FirstCensusTractInfoIconMouseClicked
 
-    private void regionMapInfoIcon9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon9MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon9MouseClicked
+    private void randomNumberSeedInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_randomNumberSeedInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Random_Number_Seed.toString());
+    }//GEN-LAST:event_randomNumberSeedInfoIconMouseClicked
 
-    private void regionMapInfoIcon8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon8MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon8MouseClicked
+    private void FinalRealizationIndexInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FinalRealizationIndexInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Final_Realization_Index.toString());
+    }//GEN-LAST:event_FinalRealizationIndexInfoIconMouseClicked
 
-    private void regionMapInfoIcon7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon7MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon7MouseClicked
+    private void FirstRealizationIndexInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FirstRealizationIndexInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.First_Realization_Index.toString());
+    }//GEN-LAST:event_FirstRealizationIndexInfoIconMouseClicked
 
-    private void regionMapInfoIcon6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon6MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon6MouseClicked
+    private void PopulationAchetypeInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PopulationAchetypeInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Population_archetype.toString());
+    }//GEN-LAST:event_PopulationAchetypeInfoIconMouseClicked
 
-    private void regionMapInfoIcon5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon5MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon5MouseClicked
+    private void HouseholdArchetypeInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HouseholdArchetypeInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Household_archetype.toString());
+    }//GEN-LAST:event_HouseholdArchetypeInfoIconMouseClicked
 
-    private void regionMapInfoIcon16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon16MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon16MouseClicked
+    private void Phase2SkippedProbabilityInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phase2SkippedProbabilityInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase2_Skip_Tracts_Probability.toString());
+    }//GEN-LAST:event_Phase2SkippedProbabilityInfoIconMouseClicked
 
-    private void regionMapInfoIcon17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon17MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon17MouseClicked
+    private void phase4LagsInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_phase4LagsInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase4_Lags.toString());
+    }//GEN-LAST:event_phase4LagsInfoIconMouseClicked
 
-    private void regionMapInfoIcon18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon18MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon18MouseClicked
+    private void Phase4SaveInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phase4SaveInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase4_Save.toString());
+    }//GEN-LAST:event_Phase4SaveInfoIconMouseClicked
 
-    private void regionMapInfoIcon19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon19MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon19MouseClicked
+    private void SkipPhase4InfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SkipPhase4InfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase4_Skip.toString());
+    }//GEN-LAST:event_SkipPhase4InfoIconMouseClicked
 
-    private void regionMapInfoIcon20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon20MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon20MouseClicked
+    private void Phase4TimeLimitInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phase4TimeLimitInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase4_Time_Limit.toString());
+    }//GEN-LAST:event_Phase4TimeLimitInfoIconMouseClicked
 
-    private void regionMapInfoIcon21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon21MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon21MouseClicked
+    private void Phase34SaveInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phase34SaveInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase34_Save_Interval.toString());
+    }//GEN-LAST:event_Phase34SaveInfoIconMouseClicked
 
-    private void regionMapInfoIcon22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon22MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon22MouseClicked
+    private void SkipPhase3InfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SkipPhase3InfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase3_Skip.toString());
+    }//GEN-LAST:event_SkipPhase3InfoIconMouseClicked
 
-    private void regionMapInfoIcon23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIcon23MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_regionMapInfoIcon23MouseClicked
+    private void phase3TimeLimitInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_phase3TimeLimitInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase3_Time_Limit.toString());
+    }//GEN-LAST:event_phase3TimeLimitInfoIconMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NextActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_NextActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jComboBox_LogPhase1ResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_LogPhase1ResultsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jComboBox_LogPhase1ResultsActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void jComboBox_LogQualityEvalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_LogQualityEvalActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_jComboBox_LogQualityEvalActionPerformed
 
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+    private void jComboBox_HouseholdArchetypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_HouseholdArchetypeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox3ActionPerformed
+    }//GEN-LAST:event_jComboBox_HouseholdArchetypeActionPerformed
 
-    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+    private void jComboBox_PopulationArchetypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_PopulationArchetypeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox4ActionPerformed
+    }//GEN-LAST:event_jComboBox_PopulationArchetypeActionPerformed
 
-    private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
+    private void jComboBox_FirstCensusTractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_FirstCensusTractActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox5ActionPerformed
+    }//GEN-LAST:event_jComboBox_FirstCensusTractActionPerformed
 
-    private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
+    private void jComboBox_Phase3SkipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Phase3SkipActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox6ActionPerformed
+    }//GEN-LAST:event_jComboBox_Phase3SkipActionPerformed
 
-    private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
+    private void jComboBox_Phase4SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Phase4SaveActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox7ActionPerformed
+    }//GEN-LAST:event_jComboBox_Phase4SaveActionPerformed
 
-    private void jComboBox8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox8ActionPerformed
+    private void jComboBox_Phase4SkipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Phase4SkipActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox8ActionPerformed
+    }//GEN-LAST:event_jComboBox_Phase4SkipActionPerformed
 
     private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
         new About().setVisible(true);
@@ -1123,89 +1145,89 @@ public class StepSeven extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel FinalRealizationIndexInfoIcon;
+    private javax.swing.JLabel FirstCensusTractInfoIcon;
+    private javax.swing.JLabel FirstRealizationIndexInfoIcon;
+    private javax.swing.JLabel HouseholdArchetypeInfoIcon;
+    private javax.swing.JLabel LogQualityInfoIcon;
+    private javax.swing.JLabel OutputDirectoryInfoIcon;
+    private javax.swing.JLabel ParallelThreadsInfoIcon;
+    private javax.swing.JLabel Phase1ResultsLogInfoIcon;
+    private javax.swing.JLabel Phase1TimeLimitInfoIcon;
+    private javax.swing.JLabel Phase2RandomPercentInfoIcon;
+    private javax.swing.JLabel Phase2SkipTractsInfoIcon;
+    private javax.swing.JLabel Phase2SkippedProbabilityInfoIcon;
+    private javax.swing.JLabel Phase34SaveInfoIcon;
+    private javax.swing.JLabel Phase4SaveInfoIcon;
+    private javax.swing.JLabel Phase4TimeLimitInfoIcon;
+    private javax.swing.JLabel PopulationAchetypeInfoIcon;
+    private javax.swing.JLabel SkipPhase3InfoIcon;
+    private javax.swing.JLabel SkipPhase4InfoIcon;
     private javax.swing.JButton btnPreviousStep;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
-    private javax.swing.JComboBox<String> jComboBox6;
-    private javax.swing.JComboBox<String> jComboBox7;
-    private javax.swing.JComboBox<String> jComboBox8;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JButton btn_Next;
+    private javax.swing.JComboBox<String> jComboBox_FirstCensusTract;
+    private javax.swing.JComboBox<String> jComboBox_HouseholdArchetype;
+    private javax.swing.JComboBox<String> jComboBox_LogPhase1Results;
+    private javax.swing.JComboBox<String> jComboBox_LogQualityEval;
+    private javax.swing.JComboBox<String> jComboBox_Phase3Skip;
+    private javax.swing.JComboBox<String> jComboBox_Phase4Save;
+    private javax.swing.JComboBox<String> jComboBox_Phase4Skip;
+    private javax.swing.JComboBox<String> jComboBox_PopulationArchetype;
+    private javax.swing.JLabel jLabel_CreateRunFile;
+    private javax.swing.JLabel jLabel_FinalRealizationIndex;
+    private javax.swing.JLabel jLabel_FirstCensusTract;
+    private javax.swing.JLabel jLabel_FirstRealizationIndex;
+    private javax.swing.JLabel jLabel_HouseholdArchetype;
+    private javax.swing.JLabel jLabel_LogPhase1Results;
+    private javax.swing.JLabel jLabel_LogQualityEval;
+    private javax.swing.JLabel jLabel_NameOfRun;
+    private javax.swing.JLabel jLabel_OutputDirectory;
+    private javax.swing.JLabel jLabel_ParallelThreads;
+    private javax.swing.JLabel jLabel_Phase1TimeLimit;
+    private javax.swing.JLabel jLabel_Phase2RandomPlacement;
+    private javax.swing.JLabel jLabel_Phase2SkipTracts;
+    private javax.swing.JLabel jLabel_Phase2SkippedTracts;
+    private javax.swing.JLabel jLabel_Phase34SaveInterval;
+    private javax.swing.JLabel jLabel_Phase3Skip;
+    private javax.swing.JLabel jLabel_Phase3TimeLimit;
+    private javax.swing.JLabel jLabel_Phase4Save;
+    private javax.swing.JLabel jLabel_Phase4Skip;
+    private javax.swing.JLabel jLabel_Phase4_Lags;
+    private javax.swing.JLabel jLabel_Phase4_TimeLimit;
+    private javax.swing.JLabel jLabel_PopulationArchetype;
+    private javax.swing.JLabel jLabel_RandomNumberSeed;
+    private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenu_About;
+    private javax.swing.JMenu jMenu_File;
     private javax.swing.JMenu jMenu_Help;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField21;
-    private javax.swing.JTextField jTextField22;
-    private javax.swing.JTextField jTextField24;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
-    private javax.swing.JLabel regionMapInfoIcon;
-    private javax.swing.JLabel regionMapInfoIcon10;
-    private javax.swing.JLabel regionMapInfoIcon11;
-    private javax.swing.JLabel regionMapInfoIcon12;
-    private javax.swing.JLabel regionMapInfoIcon13;
-    private javax.swing.JLabel regionMapInfoIcon14;
-    private javax.swing.JLabel regionMapInfoIcon15;
-    private javax.swing.JLabel regionMapInfoIcon16;
-    private javax.swing.JLabel regionMapInfoIcon17;
-    private javax.swing.JLabel regionMapInfoIcon18;
-    private javax.swing.JLabel regionMapInfoIcon19;
-    private javax.swing.JLabel regionMapInfoIcon20;
-    private javax.swing.JLabel regionMapInfoIcon21;
-    private javax.swing.JLabel regionMapInfoIcon22;
-    private javax.swing.JLabel regionMapInfoIcon23;
-    private javax.swing.JLabel regionMapInfoIcon3;
-    private javax.swing.JLabel regionMapInfoIcon4;
-    private javax.swing.JLabel regionMapInfoIcon5;
-    private javax.swing.JLabel regionMapInfoIcon6;
-    private javax.swing.JLabel regionMapInfoIcon7;
-    private javax.swing.JLabel regionMapInfoIcon8;
-    private javax.swing.JLabel regionMapInfoIcon9;
+    private javax.swing.JPanel jPanel_Archetype;
+    private javax.swing.JPanel jPanel_LogResults;
+    private javax.swing.JPanel jPanel_Phase1;
+    private javax.swing.JPanel jPanel_Phase2;
+    private javax.swing.JPanel jPanel_Phase3;
+    private javax.swing.JPanel jPanel_Phase3and4;
+    private javax.swing.JPanel jPanel_Phase4;
+    private javax.swing.JPanel jPanel_RealizationIndex;
+    private javax.swing.JPanel jPanel_Run;
+    private javax.swing.JPanel jPanel_Seeds;
+    private javax.swing.JTextField jTextField_FinalRealizationIndex;
+    private javax.swing.JTextField jTextField_FirstRealizationIndex;
+    private javax.swing.JTextField jTextField_NameOfRun;
+    private javax.swing.JTextField jTextField_OutputDirectory;
+    private javax.swing.JTextField jTextField_ParallelThreads;
+    private javax.swing.JTextField jTextField_Phase1TimeLimit;
+    private javax.swing.JTextField jTextField_Phase2RandomPlacement;
+    private javax.swing.JTextField jTextField_Phase2SkipTracts;
+    private javax.swing.JTextField jTextField_Phase2SkippedTracts;
+    private javax.swing.JTextField jTextField_Phase2TimeLimit;
+    private javax.swing.JTextField jTextField_Phase34SaveInterval;
+    private javax.swing.JTextField jTextField_Phase4TimeLimit;
+    private javax.swing.JTextField jTextField_Phase4_Lags;
+    private javax.swing.JTextField jTextField_RandomNumberSeed;
+    private javax.swing.JLabel nameOfRunInfoIcon;
+    private javax.swing.JLabel phase3TimeLimitInfoIcon;
+    private javax.swing.JLabel phase4LagsInfoIcon;
+    private javax.swing.JLabel randomNumberSeedInfoIcon;
     // End of variables declaration//GEN-END:variables
 }
