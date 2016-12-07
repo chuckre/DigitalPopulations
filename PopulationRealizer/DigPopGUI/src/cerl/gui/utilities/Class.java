@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  *
  * @author ajohnson
  */
-public class Class {
+public class Class implements Cloneable {
     private String className; 
     private long classTotal;
     private int columnNumber;
@@ -145,5 +145,13 @@ public class Class {
         else {
             return this.className;
         }
+    }
+    
+  
+    public Class clone() throws CloneNotSupportedException 
+    {
+        Class clonedClass = (Class) super.clone();
+ 
+        return clonedClass;
     }
 }

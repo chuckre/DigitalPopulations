@@ -7,6 +7,8 @@ package cerl.gui.forms;
 
 import cerl.gui.utilities.ClassTableItemModel;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 
@@ -17,15 +19,31 @@ import javax.swing.table.TableRowSorter;
 public class CensusClassUserDefinitions extends javax.swing.JFrame {
 
     private ClassTableItemModel classTableItemModel;
-    //  TableRowSorter<ClassTableItemModel> sorter = new TableRowSorter<ClassTableItemModel>(classTableItemModel);
     private StepThree parentStep;
+    
+    private ArrayList<cerl.gui.utilities.Class> nonEditedClasses = new ArrayList<>();
 
     /**
      * Creates new form CensusClassUserDefinitions
+     * @param classes
+     * @param parentStep
      */
-    public CensusClassUserDefinitions(ArrayList<cerl.gui.utilities.Class> classes, StepThree parentStep) {
+    public CensusClassUserDefinitions(StepThree parentStep) {
         this.parentStep = parentStep;
-        classTableItemModel = new ClassTableItemModel(classes);
+        
+        /**
+         * Creates a clean deep clone of the census classes. 
+         * This will be used for when the user hits cancel.
+         */
+        parentStep.censusSurveyClasses.getCensusClasses().stream().forEach((c) -> {
+            try {
+                this.nonEditedClasses.add(c.clone());
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(CensusClassUserDefinitions.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+
+        this.classTableItemModel = new ClassTableItemModel(parentStep.censusSurveyClasses.getCensusClasses());
 
         initComponents();
 
@@ -42,15 +60,8 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
 
         TableRowSorter<ClassTableItemModel> sorter = new TableRowSorter<ClassTableItemModel>(classTableItemModel);
         sorter.setRowFilter(filter);
-        jTable1.setRowSorter(sorter);
-
-//                jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-//    @Override
-//    public void mouseClicked(java.awt.event.MouseEvent evt) {
-//        int row = jTable1.rowAtPoint(evt.getPoint());
-//        int col = jTable1.columnAtPoint(evt.getPoint());
-//    }
-//});
+        this.jTable1.setRowSorter(sorter);
+        this.jTable1.setModel(classTableItemModel);
     }
 
     /**
@@ -65,6 +76,9 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        btnSave = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -78,8 +92,25 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTable1.setModel(classTableItemModel);
         jScrollPane1.setViewportView(jTable1);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Enter User Defined Description for Each Class");
+
+        btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -87,15 +118,27 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnCancel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSave)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(15, 15, 15)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSave)
+                    .addComponent(btnCancel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenu1.setText("File");
@@ -128,55 +171,33 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
 
-        this.parentStep.censusSurveyClasses.setCensusClasses(classTableItemModel.getClasses());
+        this.parentStep.censusSurveyClasses.setCensusClasses(this.nonEditedClasses);
         this.parentStep.setVisible(true);
         this.parentStep.setAlwaysOnTop(true);
+        this.dispose();
 
     }//GEN-LAST:event_formWindowClosing
 
-    /**
-     * @param args the command line arguments //
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(CensusClassUserDefinitions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(CensusClassUserDefinitions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(CensusClassUserDefinitions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(CensusClassUserDefinitions.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//
-//                Result result = DigPopGUIUtilityClass.getLoadedCensusSurveyClasses(
-//                        "P:\\CERL\\md_sample-data\\md_census_enumerations.csv",
-//                        "P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv",
-//                        "P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv");
-//                CensusSurveyClasses censusSurveyClasses = (CensusSurveyClasses) result.getValue();
-//
-//             //   new CensusClassUserDefinitions(censusSurveyClasses.getCensusClasses()).setVisible(true);
-//            }
-//        });
-//    }
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        this.parentStep.setVisible(true);
+        this.parentStep.setAlwaysOnTop(true);
+        this.dispose();
+    }//GEN-LAST:event_btnSaveActionPerformed
 
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        
+        this.parentStep.censusSurveyClasses.setCensusClasses(this.nonEditedClasses);
+        this.parentStep.setVisible(true);
+        this.parentStep.setAlwaysOnTop(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

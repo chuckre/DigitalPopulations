@@ -9,7 +9,7 @@ package cerl.gui.utilities;
  *
  * @author ajohnson
  */
-public class SurveyColumnValue {
+public class SurveyColumnValue  implements Cloneable {
     private int rowId;
     private int value;
     private boolean used;
@@ -51,5 +51,12 @@ public class SurveyColumnValue {
     @Override
     public String toString() {
         return "Row ID: " + rowId + " Value: " + value;
+    }
+    
+    public SurveyColumnValue clone() throws CloneNotSupportedException 
+    {
+        SurveyColumnValue clonedSurveyColumnValue = (SurveyColumnValue) super.clone();
+ 
+        return clonedSurveyColumnValue;
     }
 }

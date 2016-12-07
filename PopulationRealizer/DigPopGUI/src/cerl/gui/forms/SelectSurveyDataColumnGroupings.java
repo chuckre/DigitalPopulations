@@ -5,16 +5,13 @@
  */
 package cerl.gui.forms;
 
-import cerl.gui.standard.utilities.Result;
-import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.SurveyColumnGroupsTableItemModel;
 import cerl.gui.utilities.SurveyColumnValue;
 import cerl.gui.utilities.SurveyColumnValuesGrouping;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import javax.swing.DefaultListModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JList;
 
 /**
@@ -25,24 +22,48 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
     
     private cerl.gui.utilities.Class selectSurveyClass;
     
- //   private DefaultListModel allSurveyClassesListModel = new DefaultListModel();
-    private JList allSurveyClassesList;// = new JList(allSurveyClassesListModel);
+    private JList allSurveyClassesList;
     
     private SurveyColumnGroupsTableItemModel surveyColumnGroupsTableItemModel;
+    
+    private StepThree parentStep;
+    
+    private ArrayList<SurveyColumnValuesGrouping> nonEditedSurveyColumnValuesGroupings = new ArrayList<>();
+    private ArrayList<SurveyColumnValue> nonEditedSurveyColumnValues = new ArrayList<>();
 
     /**
      * Creates new form SelectSurveyDataColumnGroupings
      */
-    public SelectSurveyDataColumnGroupings(cerl.gui.utilities.Class selectSurveyClass) {
+    public SelectSurveyDataColumnGroupings(cerl.gui.utilities.Class selectSurveyClass, StepThree parentStep) {
+        this.parentStep = parentStep;
+        
+        /**
+         * Creates a clean deep clone of the census classes. 
+         * This will be used for when the user hits cancel.
+         */
+        parentStep.selectSurveyClass.getSurveyColumnValuesGroupings().stream().forEach((c) -> {
+            try {
+                this.nonEditedSurveyColumnValuesGroupings.add(c.clone());
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(CensusClassUserDefinitions.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        parentStep.selectSurveyClass.getAllSurveyColumnValuesNotUsed().stream().forEach((c) -> {
+            try {
+                this.nonEditedSurveyColumnValues.add(c.clone());
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(CensusClassUserDefinitions.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        
+        
+        
         this.selectSurveyClass = selectSurveyClass;
         
         this.surveyColumnGroupsTableItemModel = new SurveyColumnGroupsTableItemModel(this.selectSurveyClass.getSurveyColumnValuesGroupings());
         
         initComponents();
-        allSurveyClassesList = new JList(selectSurveyClass.getAllSurveyColumnValuesNotUsed().toArray());
-//        for (SurveyColumnValue c : this.selectSurveyClass.getAllSurveyColumnValues()) {
-//            allSurveyClassesListModel.addElement(c);
-//        };
+        allSurveyClassesList = new JList(this.selectSurveyClass.getAllSurveyColumnValuesNotUsed().toArray());
         
         jScrollPaneAllSurveyData.setViewportView(allSurveyClassesList);
         
@@ -73,11 +94,18 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtSelectedSurveyDataClass = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        btnSave = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -198,6 +226,20 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Group Survey Data Columns:");
 
+        btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -208,7 +250,11 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnCancel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSave)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -222,7 +268,11 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSave)
+                    .addComponent(btnCancel))
+                .addGap(12, 12, 12))
         );
 
         jMenu1.setText("File");
@@ -263,7 +313,6 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
                         txtGroupingUserDefinedDescription.getText(),
                         selected);
         
-        
         this.selectSurveyClass.addSurveyGrouping(newSurveyColumnValuesGrouping);
         selected.stream().forEach((c) -> {c.setUsed(true);});
 
@@ -273,49 +322,50 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddNewCustomGroupingActionPerformed
 
     private void btnAddRestToNewGroupsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRestToNewGroupsActionPerformed
-       /*
-        TO DO
-        */
+        List<SurveyColumnValue> selected = selectSurveyClass.getAllSurveyColumnValuesNotUsed();
+        
+        selected.stream().forEach((c) -> {
+            c.setUsed(true); 
+            SurveyColumnValuesGrouping newSurveyColumnValuesGrouping = new SurveyColumnValuesGrouping();
+            newSurveyColumnValuesGrouping.addToSurveyColumnValues(c);
+            this.selectSurveyClass.addSurveyGrouping(newSurveyColumnValuesGrouping);
+        });
+        
+        allSurveyClassesList = new JList(selectSurveyClass.getAllSurveyColumnValuesNotUsed().toArray());
+        jScrollPaneAllSurveyData.setViewportView(allSurveyClassesList);
+        this.surveyColumnGroupsTableItemModel.fireTableDataChanged();
     }//GEN-LAST:event_btnAddRestToNewGroupsActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SelectSurveyDataColumnGroupings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SelectSurveyDataColumnGroupings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SelectSurveyDataColumnGroupings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SelectSurveyDataColumnGroupings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        this.parentStep.updateSurveyGroupsListModel();
+        this.parentStep.setVisible(true);
+        this.parentStep.setAlwaysOnTop(true);
+        this.dispose();
+    }//GEN-LAST:event_btnSaveActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SelectSurveyDataColumnGroupings(null).setVisible(true);
-            }
-        });
-    }
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        this.parentStep.selectSurveyClass.setSurveyColumnValuesGroupings(this.nonEditedSurveyColumnValuesGroupings);
+        this.parentStep.selectSurveyClass.setAllSurveyColumnValues(this.nonEditedSurveyColumnValues);
+        this.parentStep.setVisible(true);
+        this.parentStep.setAlwaysOnTop(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.parentStep.selectSurveyClass.setSurveyColumnValuesGroupings(this.nonEditedSurveyColumnValuesGroupings);
+        this.parentStep.selectSurveyClass.setAllSurveyColumnValues(this.nonEditedSurveyColumnValues);
+        this.parentStep.setVisible(true);
+        this.parentStep.setAlwaysOnTop(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
+
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddNewCustomGrouping;
     private javax.swing.JButton btnAddRestToNewGroups;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnSave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -11,12 +11,13 @@ import java.util.ArrayList;
  *
  * @author ajohnson
  */
-public class SurveyColumnValuesGrouping {
+public class SurveyColumnValuesGrouping implements Cloneable {
     
     private String userDefinedDescription;
     private ArrayList<SurveyColumnValue> surveyColumnValues;
 
     public SurveyColumnValuesGrouping() {
+        this.surveyColumnValues = new ArrayList<SurveyColumnValue>();
     }
 
     public SurveyColumnValuesGrouping(String userDefinedDescription, ArrayList<SurveyColumnValue> surveyColumnValues) {
@@ -40,9 +41,24 @@ public class SurveyColumnValuesGrouping {
         this.surveyColumnValues = surveyColumnValues;
     }
     
+    public void addToSurveyColumnValues(SurveyColumnValue surveyColumnValue) {
+        this.surveyColumnValues.add(surveyColumnValue);
+    }
+    
     
     public String getAllRowIdsAsString(){
         return surveyColumnValues.toString();
     }
     
+    public SurveyColumnValuesGrouping clone() throws CloneNotSupportedException 
+    {
+        SurveyColumnValuesGrouping clonedSurveyColumnValuesGrouping = (SurveyColumnValuesGrouping) super.clone();
+ 
+        return clonedSurveyColumnValuesGrouping;
+    }
+
+    @Override
+    public String toString() {
+        return userDefinedDescription;
+    }
 }
