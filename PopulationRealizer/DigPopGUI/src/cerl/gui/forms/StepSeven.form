@@ -130,21 +130,21 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon14" min="-2" max="-2" attributes="0"/>
+                          <Component id="Phase2RandomPercentInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jTextField15" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon15" min="-2" max="-2" attributes="0"/>
+                          <Component id="Phase2SkipTractsInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jTextField16" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon16" min="-2" max="-2" attributes="0"/>
+                          <Component id="Phase2SkippedProbabilityInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jTextField17" pref="457" max="32767" attributes="0"/>
                       </Group>
@@ -160,19 +160,19 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jLabel15" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextField15" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="regionMapInfoIcon14" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="Phase2RandomPercentInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jTextField16" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="regionMapInfoIcon15" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="Phase2SkipTractsInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jLabel17" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextField17" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="regionMapInfoIcon16" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="Phase2SkippedProbabilityInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -195,46 +195,46 @@
             <Property name="text" type="java.lang.String" value="Phase 2 - Skipped Tracts Probability Delta"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon14">
+        <Component class="javax.swing.JLabel" name="Phase2RandomPercentInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Phase 2 Random Placement Percentage"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon14MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Phase2RandomPercentInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField15">
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField16">
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon15">
+        <Component class="javax.swing.JLabel" name="Phase2SkipTractsInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Phase 2 Skip Tracts Probability"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon15MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Phase2SkipTractsInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField17">
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon16">
+        <Component class="javax.swing.JLabel" name="Phase2SkippedProbabilityInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Phase 2 Skipped Tracts Probability Delta"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon16MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Phase2SkippedProbabilityInfoIconMouseClicked"/>
           </Events>
         </Component>
       </SubComponents>
@@ -296,7 +296,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                  <Component id="regionMapInfoIcon" min="-2" max="-2" attributes="0"/>
+                  <Component id="nameOfRunInfoIcon" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jTextField1" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
@@ -309,7 +309,7 @@
                   <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jTextField1" min="-2" max="-2" attributes="0"/>
-                      <Component id="regionMapInfoIcon" min="-2" max="-2" attributes="0"/>
+                      <Component id="nameOfRunInfoIcon" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -323,16 +323,16 @@
             <Property name="text" type="java.lang.String" value="Name of Run"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon">
+        <Component class="javax.swing.JLabel" name="nameOfRunInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for the Name of the Run"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIconMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="nameOfRunInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField1">
@@ -357,14 +357,14 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon3" min="-2" max="-2" attributes="0"/>
+                          <Component id="Phase1ResultsLogInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jComboBox1" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon4" min="-2" max="-2" attributes="0"/>
+                          <Component id="LogQualityInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jComboBox2" max="32767" attributes="0"/>
                       </Group>
@@ -379,7 +379,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      <Component id="regionMapInfoIcon3" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="Phase1ResultsLogInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -388,7 +388,7 @@
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="regionMapInfoIcon4" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="LogQualityInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -396,28 +396,28 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon4">
+        <Component class="javax.swing.JLabel" name="LogQualityInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for logging the quality evaluation reports"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon4MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="LogQualityInfoIconMouseClicked"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon3">
+        <Component class="javax.swing.JLabel" name="Phase1ResultsLogInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Logging the results of Phase 1"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon3MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Phase1ResultsLogInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
@@ -482,14 +482,14 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon6" min="-2" max="-2" attributes="0"/>
+                          <Component id="PopulationAchetypeInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jComboBox4" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon5" min="-2" max="-2" attributes="0"/>
+                          <Component id="HouseholdArchetypeInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jComboBox3" max="32767" attributes="0"/>
                       </Group>
@@ -507,12 +507,12 @@
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jComboBox3" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="regionMapInfoIcon5" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="HouseholdArchetypeInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="regionMapInfoIcon6" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="PopulationAchetypeInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jComboBox4" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -526,28 +526,28 @@
             <Property name="text" type="java.lang.String" value="Does each Household record contain a full copy of the archetype record?"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon5">
+        <Component class="javax.swing.JLabel" name="HouseholdArchetypeInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household archetype record"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon5MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="HouseholdArchetypeInfoIconMouseClicked"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon6">
+        <Component class="javax.swing.JLabel" name="PopulationAchetypeInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for the Population archetype"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon6MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="PopulationAchetypeInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
@@ -607,14 +607,14 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon7" min="-2" max="-2" attributes="0"/>
+                          <Component id="FirstRealizationIndexInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jTextField8" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon8" min="-2" max="-2" attributes="0"/>
+                          <Component id="FinalRealizationIndexInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jTextField9" max="32767" attributes="0"/>
                       </Group>
@@ -630,13 +630,13 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel8" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextField8" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="regionMapInfoIcon7" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="FirstRealizationIndexInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel9" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextField9" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="regionMapInfoIcon8" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="FinalRealizationIndexInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -649,32 +649,32 @@
             <Property name="text" type="java.lang.String" value="First Realization Index"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon7">
+        <Component class="javax.swing.JLabel" name="FirstRealizationIndexInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for First Realization Index"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon7MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="FirstRealizationIndexInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField8">
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField9">
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon8">
+        <Component class="javax.swing.JLabel" name="FinalRealizationIndexInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Final Realization Index"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon8MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="FinalRealizationIndexInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel9">
@@ -702,28 +702,28 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon9" min="-2" max="-2" attributes="0"/>
+                          <Component id="randomNumberSeedInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jTextField10" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon10" min="-2" max="-2" attributes="0"/>
+                          <Component id="FirstCensusTractInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jComboBox5" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon11" min="-2" max="-2" attributes="0"/>
+                          <Component id="OutputDirectoryInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jTextField12" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon12" min="-2" max="-2" attributes="0"/>
+                          <Component id="ParallelThreadsInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jTextField13" pref="529" max="32767" attributes="0"/>
                       </Group>
@@ -737,19 +737,19 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="regionMapInfoIcon12" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="ParallelThreadsInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                               <Component id="jTextField10" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="regionMapInfoIcon9" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="randomNumberSeedInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                                   <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="regionMapInfoIcon10" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="FirstCensusTractInfoIcon" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jComboBox5" min="-2" max="-2" attributes="0"/>
@@ -761,7 +761,7 @@
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                                       <Component id="jTextField12" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="regionMapInfoIcon11" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="OutputDirectoryInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
@@ -781,30 +781,30 @@
             <Property name="text" type="java.lang.String" value="Random Number seed"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon9">
+        <Component class="javax.swing.JLabel" name="randomNumberSeedInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Random Number Seed"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon9MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="randomNumberSeedInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField10">
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon10">
+        <Component class="javax.swing.JLabel" name="FirstCensusTractInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for First Census Tract"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon10MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="FirstCensusTractInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel11">
@@ -817,32 +817,32 @@
             <Property name="text" type="java.lang.String" value="Output Directory"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon11">
+        <Component class="javax.swing.JLabel" name="OutputDirectoryInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Output Directory"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon11MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="OutputDirectoryInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField12">
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField13">
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon12">
+        <Component class="javax.swing.JLabel" name="ParallelThreadsInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Parallel Threads"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon12MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ParallelThreadsInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel13">
@@ -884,7 +884,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="regionMapInfoIcon13" min="-2" max="-2" attributes="0"/>
+                  <Component id="Phase1TimeLimitInfoIcon" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jTextField14" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -898,7 +898,7 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextField14" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="regionMapInfoIcon13" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="Phase1TimeLimitInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -911,16 +911,16 @@
             <Property name="text" type="java.lang.String" value="Phase 1 Time limit"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon13">
+        <Component class="javax.swing.JLabel" name="Phase1TimeLimitInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Phase 1 Time Limit"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon13MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Phase1TimeLimitInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField14">
@@ -945,28 +945,28 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon17" min="-2" max="-2" attributes="0"/>
+                          <Component id="phase4LagsInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jTextField18" pref="533" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon20" min="-2" max="-2" attributes="0"/>
+                          <Component id="Phase4TimeLimitInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jTextField21" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon19" min="-2" max="-2" attributes="0"/>
+                          <Component id="SkipPhase4InfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jComboBox8" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon18" min="-2" max="-2" attributes="0"/>
+                          <Component id="Phase4SaveInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jComboBox7" max="32767" attributes="0"/>
                       </Group>
@@ -982,11 +982,11 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jLabel19" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextField18" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="regionMapInfoIcon17" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="phase4LagsInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="regionMapInfoIcon18" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="Phase4SaveInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                           <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jComboBox7" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -994,14 +994,14 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="regionMapInfoIcon19" min="-2" max="-2" attributes="0"/>
+                      <Component id="SkipPhase4InfoIcon" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
                       <Component id="jComboBox8" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="regionMapInfoIcon20" min="-2" max="-2" attributes="0"/>
+                          <Component id="Phase4TimeLimitInfoIcon" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel22" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jTextField21" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -1017,30 +1017,30 @@
             <Property name="text" type="java.lang.String" value="Phase 4 - Number of Lags"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon17">
+        <Component class="javax.swing.JLabel" name="phase4LagsInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Phase 4 Number of Lags"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon17MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="phase4LagsInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField18">
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon18">
+        <Component class="javax.swing.JLabel" name="Phase4SaveInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Phase 4 Save Both Ends"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon18MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Phase4SaveInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel20">
@@ -1053,30 +1053,30 @@
             <Property name="text" type="java.lang.String" value="Skip Phase 4?"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon19">
+        <Component class="javax.swing.JLabel" name="SkipPhase4InfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Skip Phase 4"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon19MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="SkipPhase4InfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField21">
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon20">
+        <Component class="javax.swing.JLabel" name="Phase4TimeLimitInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Phase 4 Time Limit"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon20MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Phase4TimeLimitInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel22">
@@ -1134,7 +1134,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="regionMapInfoIcon21" min="-2" max="-2" attributes="0"/>
+                  <Component id="Phase34SaveInfoIcon" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jTextField22" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -1148,7 +1148,7 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jLabel23" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextField22" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="regionMapInfoIcon21" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="Phase34SaveInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -1161,16 +1161,16 @@
             <Property name="text" type="java.lang.String" value="Phase 3 and 4 Intermediate Save Interval"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon21">
+        <Component class="javax.swing.JLabel" name="Phase34SaveInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Phase 3 and 4 Intermediate Save Interval"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon21MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Phase34SaveInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField22">
@@ -1195,14 +1195,14 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon22" min="-2" max="-2" attributes="0"/>
+                          <Component id="SkipPhase3InfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jComboBox6" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                          <Component id="regionMapInfoIcon23" min="-2" max="-2" attributes="0"/>
+                          <Component id="phase3TimeLimitInfoIcon" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jTextField24" pref="573" max="32767" attributes="0"/>
                       </Group>
@@ -1217,14 +1217,14 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jLabel24" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="regionMapInfoIcon22" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="SkipPhase3InfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jComboBox6" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel26" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextField24" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="regionMapInfoIcon23" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="phase3TimeLimitInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -1237,30 +1237,30 @@
             <Property name="text" type="java.lang.String" value="Skip Phase 3?"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon22">
+        <Component class="javax.swing.JLabel" name="SkipPhase3InfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Skip Phase 3"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon22MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="SkipPhase3InfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField24">
         </Component>
-        <Component class="javax.swing.JLabel" name="regionMapInfoIcon23">
+        <Component class="javax.swing.JLabel" name="phase3TimeLimitInfoIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/cerl/gui/resources/info.png"/>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Household Density Map"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Phase 3 Time Limit"/>
             <Property name="iconTextGap" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIcon23MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="phase3TimeLimitInfoIconMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel26">
