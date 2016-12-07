@@ -8,6 +8,8 @@ package cerl.gui.forms;
 import cerl.gui.standard.utilities.Result;
 import cerl.gui.utilities.CensusSurveyClasses;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.SurveyColumnValue;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -29,6 +31,10 @@ public class StepThree extends javax.swing.JFrame {
 
     private DefaultListModel surveyAllListModel = new DefaultListModel();
     private JList surveyAllList = new JList(surveyAllListModel);
+    
+    private String FILE_PATH_CENSUS = "P:\\CERL\\md_sample-data\\md_census_enumerations.csv";
+    private String FILE_PATH_POPULATION = "P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv";
+    private String FILE_PATH_HOUSEHOLD = "P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv";
 
     // TableRowSorter<ClassTableItemModel> sorter = new TableRowSorter<ClassTableItemModel>(censusClassDefinitionTableItemModel);
     /**
@@ -37,9 +43,9 @@ public class StepThree extends javax.swing.JFrame {
     public StepThree() {
 
         Result result = DigPopGUIUtilityClass.getLoadedCensusSurveyClasses(
-                "P:\\CERL\\md_sample-data\\md_census_enumerations.csv",
-                "P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv",
-                "P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv");
+                FILE_PATH_CENSUS,
+                FILE_PATH_POPULATION,
+                FILE_PATH_HOUSEHOLD);
         censusSurveyClasses = (CensusSurveyClasses) result.getValue();
 
         initComponents();
@@ -76,6 +82,7 @@ public class StepThree extends javax.swing.JFrame {
         surveyJPanel = new javax.swing.JPanel();
         jScrollPaneSurveyAll = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         censusJPanel = new javax.swing.JPanel();
         jScrollPaneCensusAll = new javax.swing.JScrollPane();
         btnAddCensusClass = new javax.swing.JButton();
@@ -105,6 +112,13 @@ public class StepThree extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Available Survey Data(Select Only One):");
 
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout surveyJPanelLayout = new javax.swing.GroupLayout(surveyJPanel);
         surveyJPanel.setLayout(surveyJPanelLayout);
         surveyJPanelLayout.setHorizontalGroup(
@@ -112,18 +126,27 @@ public class StepThree extends javax.swing.JFrame {
             .addGroup(surveyJPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneSurveyAll, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(surveyJPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPaneSurveyAll, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(114, 114, 114)
+                        .addComponent(jButton2))
                     .addComponent(jLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(257, Short.MAX_VALUE))
         );
         surveyJPanelLayout.setVerticalGroup(
             surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(surveyJPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPaneSurveyAll, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(surveyJPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPaneSurveyAll, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(surveyJPanelLayout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addComponent(jButton2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         censusJPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -318,6 +341,22 @@ public class StepThree extends javax.swing.JFrame {
         int test = 0;
     }//GEN-LAST:event_formWindowOpened
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        cerl.gui.utilities.Class selected = (cerl.gui.utilities.Class)surveyAllList.getSelectedValue();
+        
+        Result result = DigPopGUIUtilityClass.getSurveyDataColumnValues(FILE_PATH_HOUSEHOLD, selected.getColumnNumber());
+        
+        ArrayList<SurveyColumnValue> columnValues = (ArrayList<SurveyColumnValue>)result.getValue();
+        
+        selected.setAllSurveyColumnValues(columnValues);
+        
+        SelectSurveyDataColumnGroupings selectSurveyDataColumnGroupings = new SelectSurveyDataColumnGroupings(selected);
+        selectSurveyDataColumnGroupings.setVisible(true);
+        selectSurveyDataColumnGroupings.setAlwaysOnTop(true);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -358,6 +397,7 @@ public class StepThree extends javax.swing.JFrame {
     private javax.swing.JButton btnRemoveCensusClass;
     private javax.swing.JPanel censusJPanel;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

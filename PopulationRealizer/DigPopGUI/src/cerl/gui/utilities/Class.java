@@ -6,6 +6,9 @@
 package cerl.gui.utilities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -18,14 +21,16 @@ public class Class {
     private boolean selected;
     private int idForFinding;
     private String userDefinedDescription;
-    private ArrayList<Integer> selectedColumnValues;
+    private List<SurveyColumnValue> allSurveyColumnValues;
+    private List<SurveyColumnValuesGrouping> surveyColumnValuesGroupings;
 
     public Class() {
         this.className = null;
         this.classTotal = 0;
         this.columnNumber = 0;
         this.selected = false;
-        this.selectedColumnValues = new ArrayList<>();
+        this.allSurveyColumnValues = new ArrayList<SurveyColumnValue>();
+        this.surveyColumnValuesGroupings = new ArrayList<SurveyColumnValuesGrouping>();
     }
 
     public Class(String className, int columnNumber, boolean selected, int idForFinding) {
@@ -35,25 +40,44 @@ public class Class {
         this.selected = selected;
         this.idForFinding = idForFinding;
         this.userDefinedDescription = "";
-        this.selectedColumnValues = new ArrayList<>();
+        this.allSurveyColumnValues = new ArrayList<SurveyColumnValue>();
+        this.surveyColumnValuesGroupings = new ArrayList<SurveyColumnValuesGrouping>();
     }
 
-    public Class(String className, long classTotal, int columnNumber, boolean selected, int idForFinding, String userDefinedDescription, ArrayList<Integer> selectedColumnValues) {
+    public Class(String className, long classTotal, int columnNumber, boolean selected, int idForFinding, String userDefinedDescription, ArrayList<SurveyColumnValue> allSurveyColumnValues, ArrayList<SurveyColumnValuesGrouping> surveyColumnValuesGroupings) {
         this.className = className;
         this.classTotal = classTotal;
         this.columnNumber = columnNumber;
         this.selected = selected;
         this.idForFinding = idForFinding;
         this.userDefinedDescription = userDefinedDescription;
-        this.selectedColumnValues = selectedColumnValues;
+        this.allSurveyColumnValues = allSurveyColumnValues;
+        this.surveyColumnValuesGroupings = surveyColumnValuesGroupings;
     }
 
-    public ArrayList<Integer> getSelectedColumnValues() {
-        return selectedColumnValues;
+    public List<SurveyColumnValuesGrouping> getSurveyColumnValuesGroupings() {
+        return surveyColumnValuesGroupings;
     }
 
-    public void setSelectedColumnValues(ArrayList<Integer> selectedColumnValues) {
-        this.selectedColumnValues = selectedColumnValues;
+    public void setSurveyColumnValuesGroupings(ArrayList<SurveyColumnValuesGrouping> surveyColumnValuesGroupings) {
+        this.surveyColumnValuesGroupings = surveyColumnValuesGroupings;
+    }
+
+    public List<SurveyColumnValue> getAllSurveyColumnValues() {
+        return allSurveyColumnValues;
+    }
+    
+    public List<SurveyColumnValue> getAllSurveyColumnValuesNotUsed() {
+        
+        return allSurveyColumnValues.stream().filter(c-> !c.isUsed()).collect(Collectors.toList());
+    }
+
+    public void setAllSurveyColumnValues(ArrayList<SurveyColumnValue> allSurveyColumnValues) {
+        this.allSurveyColumnValues = allSurveyColumnValues;
+    }
+    
+    public void removeFromAllSurveyColumnValues(ArrayList<SurveyColumnValue> allSurveyColumnValues) {
+        this.allSurveyColumnValues.remove(allSurveyColumnValues);
     }
 
     public String getUserDefinedDescription() {
@@ -106,6 +130,10 @@ public class Class {
     
     public void addToClassTotal(long addValue){
         this.classTotal += addValue;
+    }
+    
+    public void addSurveyGrouping(SurveyColumnValuesGrouping surveyColumnValuesGrouping){
+        this.surveyColumnValuesGroupings.add(surveyColumnValuesGrouping);
     }
 
     @Override

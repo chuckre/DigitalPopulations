@@ -237,7 +237,7 @@ public class DigPopGUIUtilityClass {
     
     public static Result getSurveyDataColumnValues(String filePath, int columnNumber){
         Result result = new Result();
-        ArrayList<Integer> columnValues = new ArrayList<>();
+        ArrayList<SurveyColumnValue> columnValues = new ArrayList<>();
         
         String line = "";
         int lineCounter = 0;
@@ -248,8 +248,7 @@ public class DigPopGUIUtilityClass {
                     // use comma as separator, but allow for commas inside a string
                     String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
                     
-                    columnValues.add(Integer.parseInt(lineInfo[columnNumber]));
-                
+                    columnValues.add(new SurveyColumnValue(lineCounter,Integer.parseInt(lineInfo[columnNumber]), false));
                 }
                 
                 lineCounter++;
@@ -264,6 +263,7 @@ public class DigPopGUIUtilityClass {
             result.setSuccess(false);
         }
         
+        result.setValue(columnValues);
         return result;
     }
 
