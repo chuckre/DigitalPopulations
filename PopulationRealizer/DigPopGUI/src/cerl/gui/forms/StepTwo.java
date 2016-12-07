@@ -361,6 +361,11 @@ public class StepTwo extends javax.swing.JFrame {
         );
 
         btnNextStep.setText("Next Step");
+        btnNextStep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextStepActionPerformed(evt);
+            }
+        });
 
         lblErrorMessages.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblErrorMessages.setForeground(new java.awt.Color(255, 0, 0));
@@ -426,6 +431,11 @@ public class StepTwo extends javax.swing.JFrame {
     private void menuHelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuHelpMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
     }//GEN-LAST:event_menuHelpMouseClicked
+
+    private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
+        new StepThree().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnNextStepActionPerformed
 
     /**
      * @param args the command line arguments

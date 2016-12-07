@@ -336,9 +336,6 @@ public class StepOne extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        censusEnumerationsInfoIcon.getAccessibleContext().setAccessibleDescription("Help Infomation for Census Enumerations");
-        regionMapInfoIcon.getAccessibleContext().setAccessibleDescription("Help Infomation for Region Map");
-
         jPanelConstraintMap.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanelConstraintMap.setMinimumSize(new java.awt.Dimension(100, 100));
 
@@ -548,8 +545,6 @@ public class StepOne extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        populationMicroDataInfoIcon.getAccessibleContext().setAccessibleDescription("Help Infomation for Population Micro-data");
-
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel_ProvidedFieldsIcon.setText("This icon is displayed next to Fields that have been provided.");
@@ -623,6 +618,11 @@ public class StepOne extends javax.swing.JFrame {
         );
 
         btnNextStep.setText("Next Step");
+        btnNextStep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextStepActionPerformed(evt);
+            }
+        });
 
         lblErrorMessages.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblErrorMessages.setForeground(new java.awt.Color(255, 0, 0));
@@ -775,6 +775,11 @@ public class StepOne extends javax.swing.JFrame {
         enableLandUseHouseholdDensityButton();
 
     }//GEN-LAST:event_rbtnLandUseMapActionPerformed
+
+    private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
+        new StepTwo().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnNextStepActionPerformed
   
     private void enableLandUseHouseholdDensityButton(){
         if(rbtnLandUseMap.isSelected() || rbtnHouseholdDensityMap.isSelected()){

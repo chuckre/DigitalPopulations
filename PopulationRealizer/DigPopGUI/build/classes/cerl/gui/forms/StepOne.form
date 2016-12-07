@@ -417,9 +417,6 @@
                 <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Census Enumerations"/>
                 <Property name="iconTextGap" type="int" value="0"/>
               </Properties>
-              <AccessibilityProperties>
-                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Help Infomation for Census Enumerations"/>
-              </AccessibilityProperties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="censusEnumerationsInfoIconMouseClicked"/>
               </Events>
@@ -432,9 +429,6 @@
                 <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Region Map"/>
                 <Property name="iconTextGap" type="int" value="0"/>
               </Properties>
-              <AccessibilityProperties>
-                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Help Infomation for Region Map"/>
-              </AccessibilityProperties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIconMouseClicked"/>
               </Events>
@@ -761,9 +755,6 @@
                 <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Population Micro-data"/>
                 <Property name="iconTextGap" type="int" value="0"/>
               </Properties>
-              <AccessibilityProperties>
-                <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Help Infomation for Population Micro-data"/>
-              </AccessibilityProperties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="populationMicroDataInfoIconMouseClicked"/>
               </Events>
@@ -853,6 +844,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Next Step"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNextStepActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblErrorMessages">
       <Properties>
