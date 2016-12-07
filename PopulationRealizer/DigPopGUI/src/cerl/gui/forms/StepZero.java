@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.stage.WindowEvent;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -96,6 +97,7 @@ public class StepZero extends javax.swing.JFrame {
         btnNext = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenu_ExitMenu = new javax.swing.JMenuItem();
         jMenu_Help = new javax.swing.JMenu();
         jMenu_About = new javax.swing.JMenu();
 
@@ -103,6 +105,7 @@ public class StepZero extends javax.swing.JFrame {
             fileLocationChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+            setTitle("DigiPop GUI");
 
             jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -354,6 +357,16 @@ public class StepZero extends javax.swing.JFrame {
             );
 
             jMenu1.setText("File");
+
+            jMenu_ExitMenu.setText("Exit");
+            jMenu_ExitMenu.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenu_ExitMenuActionPerformed(evt);
+                }
+            });
+            jMenu1.add(jMenu_ExitMenu);
+            jMenu_ExitMenu.getAccessibleContext().setAccessibleDescription("Exit Step");
+
             jMenuBar1.add(jMenu1);
 
             jMenu_Help.setText("Help");
@@ -454,6 +467,7 @@ public class StepZero extends javax.swing.JFrame {
                         if(result.isSuccess()){
                             this.digPopGUIInformation = (DigPopGUIInformation)result.getValue();
                             //Now I need to move too step 2
+                            goToNextStep(evt);
 
                         }else {
                             lblErrorMessages.setText(result.getErrorMessage());
@@ -472,6 +486,7 @@ public class StepZero extends javax.swing.JFrame {
                 if(result.isSuccess()){
                     this.digPopGUIInformation = (DigPopGUIInformation)result.getValue();
                         //Now I need to move too step 2
+                        goToNextStep(evt);
                 }else {
                     lblErrorMessages.setText(result.getErrorMessage());
                 }
@@ -481,6 +496,15 @@ public class StepZero extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnNextActionPerformed
 
+    /**
+     * Opens the next step, step one when click next.
+     * @param evt 
+     */
+    private void goToNextStep(java.awt.event.ActionEvent evt){
+        new StepOne().setVisible(true);
+        dispose();
+    }
+    
     private void btnSelectDuplicateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectDuplicateFileActionPerformed
         File file = getFileFromFileChooser();
 
@@ -539,6 +563,10 @@ public class StepZero extends javax.swing.JFrame {
     private void jMenu_HelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_HelpMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
     }//GEN-LAST:event_jMenu_HelpMouseClicked
+
+    private void jMenu_ExitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_ExitMenuActionPerformed
+        dispose();
+    }//GEN-LAST:event_jMenu_ExitMenuActionPerformed
 
     
     
@@ -688,6 +716,7 @@ public class StepZero extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenu_About;
+    private javax.swing.JMenuItem jMenu_ExitMenu;
     private javax.swing.JMenu jMenu_Help;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
