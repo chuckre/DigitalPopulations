@@ -9,6 +9,7 @@ import cerl.gui.standard.utilities.customTableModel;
 import cerl.gui.standard.utilities.customTableCell;
 import cerl.gui.standard.utilities.customTableCellRenderer;
 import cerl.gui.standard.utilities.customTableModelListener;
+import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
 import java.util.ArrayList;
@@ -16,28 +17,35 @@ import java.util.Arrays;
 import javax.swing.table.TableColumn;
 
 /**
- *
+ * Step 5 in the DigPop GUI
  * @author mrivera
  */
 public class FittingCriteria extends javax.swing.JFrame {
     private final customTableModel myTable;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_FIVE_HELP_FILE_NAME.toString();
+    private final DigPopGUIInformation digPopGUIInformation;
     
     /**
-     * Creates new form FittingCriteria
+     * Creates new Step 5 form FittingCriteria
      */
     public FittingCriteria() {
+        this.digPopGUIInformation = new DigPopGUIInformation();
         //load table
         myTable = populateTableModel();
         initComponents();
-                
-        //sets up columns with new renderer, and clear buttons for the rows/columns
-        for(int i=0; i<myTable.getColumnCount(); i++){
-            TableColumn tableCol = jTable_TraitInformation.getColumnModel().getColumn(i);
-            tableCol.setCellRenderer(new customTableCellRenderer());
-        }
-        //adds the listener for the cell calculations/validations
-        jTable_TraitInformation.getModel().addTableModelListener(new customTableModelListener(jTable_TraitInformation));
+        
+        setupCustomTable();
+    }
+    /**
+     * Creates new Step 5 form FittingCriteria with existing data
+     * @param digPopGUIInformation - the saved log file
+     */
+    public FittingCriteria(DigPopGUIInformation digPopGUIInformation) {
+        this.digPopGUIInformation = new DigPopGUIInformation();
+        //load table
+        myTable = populateTableModel();
+        initComponents();
+        setupCustomTable();
     }
 
     private customTableModel populateTableModel(){
@@ -51,66 +59,67 @@ public class FittingCriteria extends javax.swing.JFrame {
 
         //columns must be rows+1 because the header row is the -1th row.
         ArrayList<ArrayList<Object>> cellValues = new ArrayList<>();
-        //Object[][] cellValues = new Object[10][10];
         
-        //Set up rows and columns
-        for(int r = 0; r<3; r++){
-            cellValues.add(r, new ArrayList<>());
-            for(int c=0;c<10;c++){
-                cellValues.get(r).add(c, new customTableCell("", false, "String", false));
+        if(this.digPopGUIInformation.getCensusEnumerationsFilePath() == null){
+            //Set up rows and columns
+            for(int r = 0; r<3; r++){
+                cellValues.add(r, new ArrayList<>());
+                for(int c=0;c<10;c++){
+                    cellValues.get(r).add(c, new customTableCell("", false, "String", false));
+                }
             }
+
+            //ID's
+            cellValues.get(0).add(0, new customTableCell("1", false, "Integer", false));
+            cellValues.get(1).add(0, new customTableCell("2", false, "Integer", false));
+            cellValues.get(2).add(0, new customTableCell("3", false, "Integer", false));
+
+            //Census Region Traits
+            cellValues.get(0).add(1, new customTableCell("ABA2E006", false, "String", false));
+            cellValues.get(1).add(1, new customTableCell("ABA2E006", false, "String", false));
+            cellValues.get(2).add(1, new customTableCell("ABA2E006", false, "String", false));
+
+            //Census Region Total
+            cellValues.get(0).add(2, new customTableCell("Toilet - MC - Total", false, "String", false));
+            cellValues.get(1).add(2, new customTableCell("Toilet - MC - Total", false, "String", false));
+            cellValues.get(2).add(2, new customTableCell("Toilet - MC - Total", false, "String", false));
+
+            //Survey Trait Table
+            cellValues.get(0).add(3, new customTableCell("HOUSEHOLDS", false, "String", false));
+            cellValues.get(1).add(3, new customTableCell("HOUSEHOLDS", false, "String", false));
+            cellValues.get(2).add(3, new customTableCell("HOUSEHOLDS", false, "String", false));
+
+            //Survey Trait Select
+            cellValues.get(0).add(4, new customTableCell("0", false, "Integer", false));
+            cellValues.get(1).add(4, new customTableCell("1", false, "Integer", false));
+            cellValues.get(2).add(4, new customTableCell("2", false, "Integer", false));
+
+            //Survey Trait Field
+            cellValues.get(0).add(5, new customTableCell("JWMNP", false, "String", false));
+            cellValues.get(1).add(5, new customTableCell("JWMNP", false, "String", false));
+            cellValues.get(2).add(5, new customTableCell("JWMNP", false, "String", false));
+
+            //Survey Total Table
+            cellValues.get(0).add(6, new customTableCell("HOUSEHOLDS", false, "String", false));
+            cellValues.get(1).add(6, new customTableCell("HOUSEHOLDS", false, "String", false));
+            cellValues.get(2).add(6, new customTableCell("HOUSEHOLDS", false, "String", false));
+
+            //Survey Total Field
+            cellValues.get(0).add(7, new customTableCell("1", false, "Integer", false));
+            cellValues.get(1).add(7, new customTableCell("1", false, "Integer", false));
+            cellValues.get(2).add(7, new customTableCell("1", false, "Integer", false));
+
+            //User Entered Description
+            cellValues.get(0).add(8, new customTableCell("Flush to piped sewer", false, "String", false));
+            cellValues.get(1).add(8, new customTableCell("Flush to septic tank", false, "String", false));
+            cellValues.get(2).add(8, new customTableCell("Flush to pit latrine", false, "String", false));
+
+            //Trait Weight
+            cellValues.get(0).add(9, new customTableCell("", true, "Double", false));
+            cellValues.get(1).add(9, new customTableCell("", true, "Double", false));
+            cellValues.get(2).add(9, new customTableCell("", true, "Double", false));
+
         }
-        
-        //ID's
-        cellValues.get(0).add(0, new customTableCell("1", false, "Integer", false));
-        cellValues.get(1).add(0, new customTableCell("2", false, "Integer", false));
-        cellValues.get(2).add(0, new customTableCell("3", false, "Integer", false));
-        
-        //Census Region Traits
-        cellValues.get(0).add(1, new customTableCell("ABA2E006", false, "String", false));
-        cellValues.get(1).add(1, new customTableCell("ABA2E006", false, "String", false));
-        cellValues.get(2).add(1, new customTableCell("ABA2E006", false, "String", false));
-        
-        //Census Region Total
-        cellValues.get(0).add(2, new customTableCell("Toilet - MC - Total", false, "String", false));
-        cellValues.get(1).add(2, new customTableCell("Toilet - MC - Total", false, "String", false));
-        cellValues.get(2).add(2, new customTableCell("Toilet - MC - Total", false, "String", false));
-        
-        //Survey Trait Table
-        cellValues.get(0).add(3, new customTableCell("HOUSEHOLDS", false, "String", false));
-        cellValues.get(1).add(3, new customTableCell("HOUSEHOLDS", false, "String", false));
-        cellValues.get(2).add(3, new customTableCell("HOUSEHOLDS", false, "String", false));
-        
-        //Survey Trait Select
-        cellValues.get(0).add(4, new customTableCell("0", false, "Integer", false));
-        cellValues.get(1).add(4, new customTableCell("1", false, "Integer", false));
-        cellValues.get(2).add(4, new customTableCell("2", false, "Integer", false));
-                
-        //Survey Trait Field
-        cellValues.get(0).add(5, new customTableCell("JWMNP", false, "String", false));
-        cellValues.get(1).add(5, new customTableCell("JWMNP", false, "String", false));
-        cellValues.get(2).add(5, new customTableCell("JWMNP", false, "String", false));
-
-        //Survey Total Table
-        cellValues.get(0).add(6, new customTableCell("HOUSEHOLDS", false, "String", false));
-        cellValues.get(1).add(6, new customTableCell("HOUSEHOLDS", false, "String", false));
-        cellValues.get(2).add(6, new customTableCell("HOUSEHOLDS", false, "String", false));
-
-        //Survey Total Field
-        cellValues.get(0).add(7, new customTableCell("1", false, "Integer", false));
-        cellValues.get(1).add(7, new customTableCell("1", false, "Integer", false));
-        cellValues.get(2).add(7, new customTableCell("1", false, "Integer", false));
-
-        //User Entered Description
-        cellValues.get(0).add(8, new customTableCell("Flush to piped sewer", false, "String", false));
-        cellValues.get(1).add(8, new customTableCell("Flush to septic tank", false, "String", false));
-        cellValues.get(2).add(8, new customTableCell("Flush to pit latrine", false, "String", false));
-
-        //Trait Weight
-        cellValues.get(0).add(9, new customTableCell("", true, "Double", false));
-        cellValues.get(1).add(9, new customTableCell("", true, "Double", false));
-        cellValues.get(2).add(9, new customTableCell("", true, "Double", false));
-
         //create table with custom MarkovTableModel
         customTableModel myTableModel = new customTableModel(columnNames, cellValues);
         
@@ -236,7 +245,7 @@ public class FittingCriteria extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu_AboutMouseClicked
 
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
-        new GenerateTraitClusters().setVisible(true);
+        new GenerateTraitClusters(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed
 
@@ -292,4 +301,14 @@ public class FittingCriteria extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_TraitInformation;
     // End of variables declaration//GEN-END:variables
+
+    private void setupCustomTable() {
+        //sets up columns with new renderer, and clear buttons for the rows/columns
+        for(int i=0; i<myTable.getColumnCount(); i++){
+            TableColumn tableCol = jTable_TraitInformation.getColumnModel().getColumn(i);
+            tableCol.setCellRenderer(new customTableCellRenderer());
+        }
+        //adds the listener for the cell calculations/validations
+        jTable_TraitInformation.getModel().addTableModelListener(new customTableModelListener(jTable_TraitInformation));
+    }
 }

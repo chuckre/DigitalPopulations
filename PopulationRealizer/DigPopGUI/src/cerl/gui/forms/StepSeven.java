@@ -5,6 +5,7 @@
  */
 package cerl.gui.forms;
 
+import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.StepSevenInstructionNames;
@@ -15,12 +16,23 @@ import cerl.gui.utilities.StepSevenInstructionNames;
  */
 public class StepSeven extends javax.swing.JFrame {
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_SEVEN_HELP_FILE_NAME.toString();
+    private final DigPopGUIInformation digPopGUIInformation;
     
     /**
-     * Creates new form StepSeven
+     * Creates new form Step 7 - Run File form
      */
     public StepSeven() {
         initComponents();
+        this.digPopGUIInformation = new DigPopGUIInformation();
+    }
+    
+    /**
+     * Creates new Step 7 - Run file form with existing data
+     * @param digPopGUIInformation - The digPop Log
+     */
+    public StepSeven(DigPopGUIInformation digPopGUIInformation) {
+        initComponents();
+        this.digPopGUIInformation = digPopGUIInformation;
     }
 
     /**
@@ -1108,7 +1120,7 @@ public class StepSeven extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu_HelpMouseClicked
 
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
-        new GenerateTraitClusters().setVisible(true);
+        new GenerateTraitClusters(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 

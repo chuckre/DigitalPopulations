@@ -10,6 +10,7 @@ import cerl.gui.standard.utilities.customTableCell;
 import cerl.gui.standard.utilities.customTableCellRenderer;
 import cerl.gui.standard.utilities.customTableModel;
 import cerl.gui.standard.utilities.customTableModelListener;
+import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
 import java.awt.Component;
@@ -26,29 +27,36 @@ import javax.swing.JPanel;
 import javax.swing.table.TableColumn;
 
 /**
- *
+ * The 6th Step in the DigPop GUI
  * @author mrivera
  */
 public class GenerateTraitClusters extends javax.swing.JFrame {
     private final customTableModel myTable;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_SIX_HELP_FILE_NAME.toString();
+    private final DigPopGUIInformation digPopGUIInformation;
     
     /**
-     * Creates new form GenerateTraitClusters
+     * Creates new Step 6 form GenerateTraitClusters
      */
     public GenerateTraitClusters() {
+        this.digPopGUIInformation = new DigPopGUIInformation();
         //load table
         myTable = populateTableModel();
         initComponents();
         
-        //sets up columns with new renderer, and clear buttons for the rows/columns
-        for(int i=0; i<myTable.getColumnCount(); i++){
-            TableColumn tableCol = jTable_TraitInformation.getColumnModel().getColumn(i);
-            tableCol.setCellRenderer(new customTableCellRenderer());
-        }
+        setupCustomTable();
+    }
+    
+    /**
+     * Creates new Step 6 form GenerateTraitClusters with exsting data
+     */
+    public GenerateTraitClusters(DigPopGUIInformation digPopGUIInformation) {
+        this.digPopGUIInformation = digPopGUIInformation;
+        //load table
+        myTable = populateTableModel();
+        initComponents();
         
-        //adds the listener for the cell calculations/validations
-        jTable_TraitInformation.getModel().addTableModelListener(new customTableModelListener(jTable_TraitInformation));
+        setupCustomTable();
     }
 
     private customTableModel populateTableModel(){
@@ -60,27 +68,28 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         ArrayList<ArrayList<Object>> cellValues = new ArrayList<>();
         //Vector<ArrayList<Object>> cellValues = new Vector(3,3);
         
-        //Add rows
-        cellValues.add(0,new ArrayList<>());
-        cellValues.add(1,new ArrayList<>());
-        cellValues.add(2,new ArrayList<>());
-        
-        //Add Column - Trait ID's
-        //cellValues[0][0] = new customTableCell("123", false, "Integer", false);
-        cellValues.get(0).add(0, new customTableCell("123", false, "Integer", false));
-        cellValues.get(1).add(0, new customTableCell("131", false, "Integer", false));
-        cellValues.get(2).add(0, new customTableCell("136", false, "Integer", false));
-        
-        //Reduction
-        cellValues.get(0).add(1, new customTableCell("", true, "Integer", false));
-        cellValues.get(1).add(1, new customTableCell("", true, "Integer", false));
-        cellValues.get(2).add(1, new customTableCell("", true, "Integer", false));
-        
-        //Distance
-        cellValues.get(0).add(2, new customTableCell("", true, "Integer", false));
-        cellValues.get(1).add(2, new customTableCell("", true, "Integer", false));
-        cellValues.get(2).add(2, new customTableCell("", true, "Integer", false));
-        
+        if(this.digPopGUIInformation.getCensusEnumerationsFilePath() == null){
+            //Add rows
+            cellValues.add(0,new ArrayList<>());
+            cellValues.add(1,new ArrayList<>());
+            cellValues.add(2,new ArrayList<>());
+
+            //Add Column - Trait ID's
+            //cellValues[0][0] = new customTableCell("123", false, "Integer", false);
+            cellValues.get(0).add(0, new customTableCell("123", false, "Integer", false));
+            cellValues.get(1).add(0, new customTableCell("131", false, "Integer", false));
+            cellValues.get(2).add(0, new customTableCell("136", false, "Integer", false));
+
+            //Reduction
+            cellValues.get(0).add(1, new customTableCell("", true, "Integer", false));
+            cellValues.get(1).add(1, new customTableCell("", true, "Integer", false));
+            cellValues.get(2).add(1, new customTableCell("", true, "Integer", false));
+
+            //Distance
+            cellValues.get(0).add(2, new customTableCell("", true, "Integer", false));
+            cellValues.get(1).add(2, new customTableCell("", true, "Integer", false));
+            cellValues.get(2).add(2, new customTableCell("", true, "Integer", false));
+        }
         //create table with customTableModel
         customTableModel myTableModel = new customTableModel(columnNames, cellValues);
         
@@ -304,7 +313,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNextStepActionPerformed
 
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
-        new FittingCriteria().setVisible(true);
+        new FittingCriteria(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 
@@ -356,4 +365,15 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_TraitInformation;
     // End of variables declaration//GEN-END:variables
+
+    private void setupCustomTable() {
+        //sets up columns with new renderer, and clear buttons for the rows/columns
+        for(int i=0; i<myTable.getColumnCount(); i++){
+            TableColumn tableCol = jTable_TraitInformation.getColumnModel().getColumn(i);
+            tableCol.setCellRenderer(new customTableCellRenderer());
+        }
+        
+        //adds the listener for the cell calculations/validations
+        jTable_TraitInformation.getModel().addTableModelListener(new customTableModelListener(jTable_TraitInformation));
+    }
 }
