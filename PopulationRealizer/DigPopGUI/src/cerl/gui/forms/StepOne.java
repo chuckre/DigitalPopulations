@@ -810,7 +810,7 @@ public class StepOne extends javax.swing.JFrame {
                 this.digPopGUIInformation.getFilePath());
         
         
-        new StepTwo().setVisible(true);
+        new StepTwo(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed
 

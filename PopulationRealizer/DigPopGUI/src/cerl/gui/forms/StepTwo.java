@@ -7,6 +7,7 @@ package cerl.gui.forms;
 
 import cerl.gui.standard.utilities.Result;
 import cerl.gui.utilities.DigPopFileTypeEnum;
+import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
 //import cerl.gui.utilities.DigPopGUIFiles;
@@ -27,14 +28,25 @@ public class StepTwo extends javax.swing.JFrame {
     private DefaultTableModel constraintMapsDataModel;
     private ArrayList<String> errors;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_TWO_HELP_FILE_NAME.toString();
+    private final DigPopGUIInformation digPopGUIInformation;
 
     /**
      * Creates new form StepOne
      */
     public StepTwo() {
         initComponents();
-   //     digPopGUIFiles = new DigPopGUIFiles();
+        this.digPopGUIInformation = new DigPopGUIInformation();
         errors = new ArrayList<String>();
+    }
+    
+    /**
+     * Creates new form StepOne
+     */
+    public StepTwo(DigPopGUIInformation digPopGUIInformation) {
+        this.digPopGUIInformation = digPopGUIInformation;
+        initComponents();
+        errors = new ArrayList<String>();
+        populateDataFieldsFromFile();
     }
 
     /**
@@ -67,9 +79,9 @@ public class StepTwo extends javax.swing.JFrame {
         lblConstraintMap = new javax.swing.JLabel();
         txtLandUseHouseholdMap1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtVacantClasses = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtVacantClassDescription = new javax.swing.JTextField();
         jPanelConstraintMap1 = new javax.swing.JPanel();
         lblConstraintMap1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -221,11 +233,7 @@ public class StepTwo extends javax.swing.JFrame {
 
         jLabel2.setText("Vacent Classes: ");
 
-        jTextField1.setText("jTextField1");
-
         jLabel3.setText("Vacent Class Description: ");
-
-        jTextField2.setText("jTextField1");
 
         javax.swing.GroupLayout jPanelConstraintMapLayout = new javax.swing.GroupLayout(jPanelConstraintMap);
         jPanelConstraintMap.setLayout(jPanelConstraintMapLayout);
@@ -241,13 +249,13 @@ public class StepTwo extends javax.swing.JFrame {
                             .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1))
+                                .addComponent(txtVacantClasses))
                             .addComponent(txtLandUseHouseholdMap1)))
                     .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
                         .addGap(121, 121, 121)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)))
+                        .addComponent(txtVacantClassDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelConstraintMapLayout.setVerticalGroup(
@@ -260,11 +268,11 @@ public class StepTwo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtVacantClasses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtVacantClassDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(114, Short.MAX_VALUE))
         );
 
@@ -443,7 +451,7 @@ public class StepTwo extends javax.swing.JFrame {
     }//GEN-LAST:event_menuHelpMouseClicked
 
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
-        new StepOne().setVisible(true);
+        new StepOne(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 
@@ -562,9 +570,9 @@ public class StepTwo extends javax.swing.JFrame {
     }
     
     private void AddItemToConstaintMapTable(String value){
-//        DefaultTableModel model = (DefaultTableModel)tblConstraintMaps.getModel();
-//        Object[] obj = {value};
-//        model.addRow(obj);
+        DefaultTableModel model = (DefaultTableModel)tblConstraintMaps1.getModel();
+        Object[] obj = {value};
+        model.addRow(obj);
     }
     
     private void setErrorMessage()
@@ -587,6 +595,37 @@ public class StepTwo extends javax.swing.JFrame {
         lblErrorMessages.setText(errorMessageText);
         ((JFrame)lblErrorMessages.getTopLevelAncestor()).pack();
     }
+    
+    /**
+     * Populates the text fields from an existing save file
+     */
+    private void populateDataFieldsFromFile(){
+        if(this.digPopGUIInformation == null){
+            return;
+        }
+        
+        if((this.digPopGUIInformation.getLandUseMapFilePath() != null) && !this.digPopGUIInformation.getLandUseMapFilePath().equals("")){
+            txtLandUseHouseholdMap.setText(this.digPopGUIInformation.getLandUseMapFilePath());
+        } else{
+            txtLandUseHouseholdMap1.setText(this.digPopGUIInformation.getHouseholdDensityMapFilePath());
+        }
+        
+        //TO DO - Handle vacant classes
+        //txtVacantClassDescription.setText(this.digPopGUIInformation.getVacantClassDescriotion());
+        //txtVacantClasses.setText(this.digPopGUIInformation.getVacantClasses());
+        
+        txtRegionMap.setText(this.digPopGUIInformation.getRegionMapFilePath());
+        txtCensusEnumerations.setText(this.digPopGUIInformation.getCensusEnumerationsFilePath());
+        
+        if(this.digPopGUIInformation.getConstraintMapsFilePaths() != null){
+            for(int i = 0; i<this.digPopGUIInformation.getConstraintMapsFilePaths().size(); i++){
+                AddItemToConstaintMapTable(this.digPopGUIInformation.getConstraintMapsFilePaths().get(i));
+            }
+        }
+
+        txtPopulationMicroData.setText(this.digPopGUIInformation.getPopulationMicroDataFilePath());
+        txtHouseholdMicroData.setText(this.digPopGUIInformation.getHouseholdMicroDataFilePath());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNextStep;
@@ -605,8 +644,6 @@ public class StepTwo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelRegionMapCensusEnum;
     private javax.swing.JPanel jPanelStepTwo;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblCensusEnumerations;
     private javax.swing.JLabel lblConstraintMap;
     private javax.swing.JLabel lblConstraintMap1;
@@ -625,5 +662,7 @@ public class StepTwo extends javax.swing.JFrame {
     private javax.swing.JTextField txtLandUseHouseholdMap1;
     private javax.swing.JTextField txtPopulationMicroData;
     private javax.swing.JTextField txtRegionMap;
+    private javax.swing.JTextField txtVacantClassDescription;
+    private javax.swing.JTextField txtVacantClasses;
     // End of variables declaration//GEN-END:variables
 }
