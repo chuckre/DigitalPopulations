@@ -63,29 +63,22 @@ public class StepSeven extends javax.swing.JFrame {
         jComboBox_HouseholdArchetype = new javax.swing.JComboBox<>();
         jComboBox_PopulationArchetype = new javax.swing.JComboBox<>();
         jPanel_RealizationIndex = new javax.swing.JPanel();
-        jLabel_FirstRealizationIndex = new javax.swing.JLabel();
-        FirstRealizationIndexInfoIcon = new javax.swing.JLabel();
-        jTextField_FirstRealizationIndex = new javax.swing.JTextField();
         jTextField_FinalRealizationIndex = new javax.swing.JTextField();
         FinalRealizationIndexInfoIcon = new javax.swing.JLabel();
         jLabel_FinalRealizationIndex = new javax.swing.JLabel();
-        jPanel_Seeds = new javax.swing.JPanel();
-        jLabel_RandomNumberSeed = new javax.swing.JLabel();
-        randomNumberSeedInfoIcon = new javax.swing.JLabel();
-        jTextField_RandomNumberSeed = new javax.swing.JTextField();
+        jComboBox_FirstCensusTract = new javax.swing.JComboBox<>();
         FirstCensusTractInfoIcon = new javax.swing.JLabel();
         jLabel_FirstCensusTract = new javax.swing.JLabel();
+        jPanel_Seeds = new javax.swing.JPanel();
         jLabel_OutputDirectory = new javax.swing.JLabel();
         OutputDirectoryInfoIcon = new javax.swing.JLabel();
         jTextField_OutputDirectory = new javax.swing.JTextField();
         jTextField_ParallelThreads = new javax.swing.JTextField();
         ParallelThreadsInfoIcon = new javax.swing.JLabel();
         jLabel_ParallelThreads = new javax.swing.JLabel();
-        jComboBox_FirstCensusTract = new javax.swing.JComboBox<>();
-        jPanel_Phase1 = new javax.swing.JPanel();
-        jLabel_Phase1TimeLimit = new javax.swing.JLabel();
-        Phase1TimeLimitInfoIcon = new javax.swing.JLabel();
         jTextField_Phase1TimeLimit = new javax.swing.JTextField();
+        Phase1TimeLimitInfoIcon = new javax.swing.JLabel();
+        jLabel_Phase1TimeLimit = new javax.swing.JLabel();
         jPanel_Phase4 = new javax.swing.JPanel();
         jLabel_Phase4_Lags = new javax.swing.JLabel();
         phase4LagsInfoIcon = new javax.swing.JLabel();
@@ -112,6 +105,13 @@ public class StepSeven extends javax.swing.JFrame {
         jComboBox_Phase3Skip = new javax.swing.JComboBox<>();
         btn_Next = new javax.swing.JButton();
         btnPreviousStep = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel_FirstRealizationIndex = new javax.swing.JLabel();
+        FirstRealizationIndexInfoIcon = new javax.swing.JLabel();
+        jTextField_FirstRealizationIndex = new javax.swing.JTextField();
+        jTextField_RandomNumberSeed = new javax.swing.JTextField();
+        randomNumberSeedInfoIcon = new javax.swing.JLabel();
+        jLabel_RandomNumberSeed = new javax.swing.JLabel();
         jMenuBar = new javax.swing.JMenuBar();
         jMenu_File = new javax.swing.JMenu();
         jMenu_Help = new javax.swing.JMenu();
@@ -203,8 +203,6 @@ public class StepSeven extends javax.swing.JFrame {
                         .addComponent(jLabel_Phase2SkipTracts)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel_CreateRunFile.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel_CreateRunFile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -393,13 +391,13 @@ public class StepSeven extends javax.swing.JFrame {
                 .addGroup(jPanel_ArchetypeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_ArchetypeLayout.createSequentialGroup()
                         .addComponent(jLabel_PopulationArchetype)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addGap(18, 18, Short.MAX_VALUE)
                         .addComponent(PopulationAchetypeInfoIcon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox_PopulationArchetype, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_ArchetypeLayout.createSequentialGroup()
                         .addComponent(jLabel_HouseholdArchetype)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, Short.MAX_VALUE)
                         .addComponent(HouseholdArchetypeInfoIcon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox_HouseholdArchetype, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -424,18 +422,6 @@ public class StepSeven extends javax.swing.JFrame {
 
         jPanel_RealizationIndex.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel_FirstRealizationIndex.setText("First Realization Index");
-        jLabel_FirstRealizationIndex.setPreferredSize(new java.awt.Dimension(127, 14));
-
-        FirstRealizationIndexInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        FirstRealizationIndexInfoIcon.setToolTipText("Help Infomation for First Realization Index");
-        FirstRealizationIndexInfoIcon.setIconTextGap(0);
-        FirstRealizationIndexInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                FirstRealizationIndexInfoIconMouseClicked(evt);
-            }
-        });
-
         FinalRealizationIndexInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         FinalRealizationIndexInfoIcon.setToolTipText("Help Infomation for Final Realization Index");
         FinalRealizationIndexInfoIcon.setIconTextGap(0);
@@ -447,53 +433,10 @@ public class StepSeven extends javax.swing.JFrame {
 
         jLabel_FinalRealizationIndex.setText("Final Realization Index");
 
-        javax.swing.GroupLayout jPanel_RealizationIndexLayout = new javax.swing.GroupLayout(jPanel_RealizationIndex);
-        jPanel_RealizationIndex.setLayout(jPanel_RealizationIndexLayout);
-        jPanel_RealizationIndexLayout.setHorizontalGroup(
-            jPanel_RealizationIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_RealizationIndexLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel_FirstRealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(FirstRealizationIndexInfoIcon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField_FirstRealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel_FinalRealizationIndex)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(FinalRealizationIndexInfoIcon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField_FinalRealizationIndex)
-                .addContainerGap())
-        );
-        jPanel_RealizationIndexLayout.setVerticalGroup(
-            jPanel_RealizationIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_RealizationIndexLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_RealizationIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(FirstRealizationIndexInfoIcon)
-                    .addGroup(jPanel_RealizationIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel_FinalRealizationIndex)
-                        .addComponent(jTextField_FirstRealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField_FinalRealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FinalRealizationIndexInfoIcon)
-                    .addGroup(jPanel_RealizationIndexLayout.createSequentialGroup()
-                        .addComponent(jLabel_FirstRealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel_Seeds.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabel_RandomNumberSeed.setText("Random Number seed");
-        jLabel_RandomNumberSeed.setPreferredSize(new java.awt.Dimension(127, 14));
-
-        randomNumberSeedInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
-        randomNumberSeedInfoIcon.setToolTipText("Help Infomation for Random Number Seed");
-        randomNumberSeedInfoIcon.setIconTextGap(0);
-        randomNumberSeedInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                randomNumberSeedInfoIconMouseClicked(evt);
+        jComboBox_FirstCensusTract.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_FirstCensusTract.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_FirstCensusTractActionPerformed(evt);
             }
         });
 
@@ -507,6 +450,45 @@ public class StepSeven extends javax.swing.JFrame {
         });
 
         jLabel_FirstCensusTract.setText("Use only the first census tract?");
+
+        javax.swing.GroupLayout jPanel_RealizationIndexLayout = new javax.swing.GroupLayout(jPanel_RealizationIndex);
+        jPanel_RealizationIndex.setLayout(jPanel_RealizationIndexLayout);
+        jPanel_RealizationIndexLayout.setHorizontalGroup(
+            jPanel_RealizationIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_RealizationIndexLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_RealizationIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_RealizationIndexLayout.createSequentialGroup()
+                        .addComponent(jLabel_FirstCensusTract)
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(FirstCensusTractInfoIcon))
+                    .addGroup(jPanel_RealizationIndexLayout.createSequentialGroup()
+                        .addComponent(jLabel_FinalRealizationIndex)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(FinalRealizationIndexInfoIcon)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_RealizationIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField_FinalRealizationIndex)
+                    .addComponent(jComboBox_FirstCensusTract, 0, 75, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel_RealizationIndexLayout.setVerticalGroup(
+            jPanel_RealizationIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_RealizationIndexLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_RealizationIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField_FinalRealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FinalRealizationIndexInfoIcon)
+                    .addComponent(jLabel_FinalRealizationIndex, javax.swing.GroupLayout.Alignment.LEADING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_RealizationIndexLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBox_FirstCensusTract, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FirstCensusTractInfoIcon)
+                    .addComponent(jLabel_FirstCensusTract))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel_Seeds.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel_OutputDirectory.setText("Output Directory");
         jLabel_OutputDirectory.setPreferredSize(new java.awt.Dimension(127, 14));
@@ -531,83 +513,11 @@ public class StepSeven extends javax.swing.JFrame {
 
         jLabel_ParallelThreads.setText("Number of parallel threads");
 
-        jComboBox_FirstCensusTract.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
-        jComboBox_FirstCensusTract.addActionListener(new java.awt.event.ActionListener() {
+        jTextField_Phase1TimeLimit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_FirstCensusTractActionPerformed(evt);
+                jTextField_Phase1TimeLimitActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel_SeedsLayout = new javax.swing.GroupLayout(jPanel_Seeds);
-        jPanel_Seeds.setLayout(jPanel_SeedsLayout);
-        jPanel_SeedsLayout.setHorizontalGroup(
-            jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_SeedsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_SeedsLayout.createSequentialGroup()
-                        .addComponent(jLabel_RandomNumberSeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(randomNumberSeedInfoIcon)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField_RandomNumberSeed, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel_FirstCensusTract)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(FirstCensusTractInfoIcon)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox_FirstCensusTract, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel_SeedsLayout.createSequentialGroup()
-                        .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel_SeedsLayout.createSequentialGroup()
-                                .addComponent(jLabel_ParallelThreads)
-                                .addGap(18, 18, 18)
-                                .addComponent(ParallelThreadsInfoIcon))
-                            .addGroup(jPanel_SeedsLayout.createSequentialGroup()
-                                .addComponent(jLabel_OutputDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(OutputDirectoryInfoIcon)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField_OutputDirectory)
-                            .addComponent(jTextField_ParallelThreads))))
-                .addContainerGap())
-        );
-        jPanel_SeedsLayout.setVerticalGroup(
-            jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_SeedsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jComboBox_FirstCensusTract, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel_SeedsLayout.createSequentialGroup()
-                        .addComponent(jLabel_RandomNumberSeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6))
-                    .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(FirstCensusTractInfoIcon)
-                        .addComponent(jLabel_FirstCensusTract))
-                    .addComponent(jTextField_RandomNumberSeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(randomNumberSeedInfoIcon))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel_SeedsLayout.createSequentialGroup()
-                        .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField_OutputDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel_SeedsLayout.createSequentialGroup()
-                                .addComponent(jLabel_OutputDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6))
-                            .addComponent(OutputDirectoryInfoIcon))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel_ParallelThreads)
-                            .addComponent(ParallelThreadsInfoIcon, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addComponent(jTextField_ParallelThreads, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel_Phase1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabel_Phase1TimeLimit.setText("Phase 1 Time limit");
-        jLabel_Phase1TimeLimit.setPreferredSize(new java.awt.Dimension(127, 14));
 
         Phase1TimeLimitInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         Phase1TimeLimitInfoIcon.setToolTipText("Help Infomation for Phase 1 Time Limit");
@@ -618,28 +528,57 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel_Phase1Layout = new javax.swing.GroupLayout(jPanel_Phase1);
-        jPanel_Phase1.setLayout(jPanel_Phase1Layout);
-        jPanel_Phase1Layout.setHorizontalGroup(
-            jPanel_Phase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_Phase1Layout.createSequentialGroup()
+        jLabel_Phase1TimeLimit.setText("Phase 1 Time limit");
+        jLabel_Phase1TimeLimit.setPreferredSize(new java.awt.Dimension(127, 14));
+
+        javax.swing.GroupLayout jPanel_SeedsLayout = new javax.swing.GroupLayout(jPanel_Seeds);
+        jPanel_Seeds.setLayout(jPanel_SeedsLayout);
+        jPanel_SeedsLayout.setHorizontalGroup(
+            jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_SeedsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel_Phase1TimeLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_SeedsLayout.createSequentialGroup()
+                        .addComponent(jLabel_ParallelThreads)
+                        .addGap(18, 18, 18)
+                        .addComponent(ParallelThreadsInfoIcon))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_SeedsLayout.createSequentialGroup()
+                        .addComponent(jLabel_OutputDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(OutputDirectoryInfoIcon))
+                    .addGroup(jPanel_SeedsLayout.createSequentialGroup()
+                        .addComponent(jLabel_Phase1TimeLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Phase1TimeLimitInfoIcon)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Phase1TimeLimitInfoIcon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField_Phase1TimeLimit)
+                .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField_Phase1TimeLimit)
+                    .addComponent(jTextField_OutputDirectory)
+                    .addComponent(jTextField_ParallelThreads))
                 .addContainerGap())
         );
-        jPanel_Phase1Layout.setVerticalGroup(
-            jPanel_Phase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_Phase1Layout.createSequentialGroup()
+        jPanel_SeedsLayout.setVerticalGroup(
+            jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_SeedsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel_Phase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField_Phase1TimeLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel_Phase1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(Phase1TimeLimitInfoIcon)
-                        .addComponent(jLabel_Phase1TimeLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel_SeedsLayout.createSequentialGroup()
+                        .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextField_OutputDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel_SeedsLayout.createSequentialGroup()
+                                .addComponent(jLabel_OutputDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6))
+                            .addComponent(OutputDirectoryInfoIcon))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel_ParallelThreads)
+                            .addComponent(ParallelThreadsInfoIcon, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(jTextField_ParallelThreads, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Phase1TimeLimitInfoIcon)
+                    .addComponent(jLabel_Phase1TimeLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_Phase1TimeLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -748,11 +687,8 @@ public class StepSeven extends javax.swing.JFrame {
                     .addComponent(jTextField_Phase4_Lags, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jTextField_Phase4TimeLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel_Phase4Layout.createSequentialGroup()
-                            .addGap(0, 0, 0)
-                            .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(Phase4TimeLimitInfoIcon)
-                                .addComponent(jLabel_Phase4_TimeLimit))))
+                        .addComponent(Phase4TimeLimitInfoIcon)
+                        .addComponent(jLabel_Phase4_TimeLimit))
                     .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(phase4LagsInfoIcon)
                         .addComponent(jLabel_Phase4_Lags)))
@@ -810,8 +746,8 @@ public class StepSeven extends javax.swing.JFrame {
         jPanel_Phase3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel_Phase3Skip.setText("Skip Phase 3?");
-        jLabel_Phase3Skip.setMaximumSize(new java.awt.Dimension(123, 14));
-        jLabel_Phase3Skip.setMinimumSize(new java.awt.Dimension(123, 14));
+        jLabel_Phase3Skip.setMaximumSize(new java.awt.Dimension(128, 14));
+        jLabel_Phase3Skip.setMinimumSize(new java.awt.Dimension(128, 14));
         jLabel_Phase3Skip.setPreferredSize(new java.awt.Dimension(127, 14));
 
         SkipPhase3InfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
@@ -890,6 +826,71 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel_FirstRealizationIndex.setText("First Realization Index");
+        jLabel_FirstRealizationIndex.setPreferredSize(new java.awt.Dimension(127, 14));
+
+        FirstRealizationIndexInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        FirstRealizationIndexInfoIcon.setToolTipText("Help Infomation for First Realization Index");
+        FirstRealizationIndexInfoIcon.setIconTextGap(0);
+        FirstRealizationIndexInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FirstRealizationIndexInfoIconMouseClicked(evt);
+            }
+        });
+
+        randomNumberSeedInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        randomNumberSeedInfoIcon.setToolTipText("Help Infomation for Random Number Seed");
+        randomNumberSeedInfoIcon.setIconTextGap(0);
+        randomNumberSeedInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                randomNumberSeedInfoIconMouseClicked(evt);
+            }
+        });
+
+        jLabel_RandomNumberSeed.setText("Random Number seed");
+        jLabel_RandomNumberSeed.setPreferredSize(new java.awt.Dimension(127, 14));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel_FirstRealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(FirstRealizationIndexInfoIcon))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel_RandomNumberSeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(randomNumberSeedInfoIcon)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField_RandomNumberSeed)
+                    .addComponent(jTextField_FirstRealizationIndex))
+                .addGap(8, 8, 8))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(FirstRealizationIndexInfoIcon)
+                    .addComponent(jTextField_FirstRealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel_FirstRealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField_RandomNumberSeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(randomNumberSeedInfoIcon)
+                    .addComponent(jLabel_RandomNumberSeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         jMenu_File.setText("File");
         jMenuBar.add(jMenu_File);
 
@@ -928,12 +929,14 @@ public class StepSeven extends javax.swing.JFrame {
                     .addComponent(jPanel_Run, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel_Phase3and4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel_Phase2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel_Phase1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel_RealizationIndex, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel_LogResults, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel_Archetype, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel_LogResults, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(8, 8, 8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel_Archetype, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel_RealizationIndex, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jPanel_Seeds, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 10, Short.MAX_VALUE))
         );
@@ -949,11 +952,11 @@ public class StepSeven extends javax.swing.JFrame {
                     .addComponent(jPanel_LogResults, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel_Archetype, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel_RealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel_RealizationIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel_Seeds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel_Phase1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel_Phase2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1109,6 +1112,10 @@ public class StepSeven extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 
+    private void jTextField_Phase1TimeLimitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Phase1TimeLimitActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_Phase1TimeLimitActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1200,10 +1207,10 @@ public class StepSeven extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu_About;
     private javax.swing.JMenu jMenu_File;
     private javax.swing.JMenu jMenu_Help;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel_Archetype;
     private javax.swing.JPanel jPanel_LogResults;
-    private javax.swing.JPanel jPanel_Phase1;
     private javax.swing.JPanel jPanel_Phase2;
     private javax.swing.JPanel jPanel_Phase3;
     private javax.swing.JPanel jPanel_Phase3and4;

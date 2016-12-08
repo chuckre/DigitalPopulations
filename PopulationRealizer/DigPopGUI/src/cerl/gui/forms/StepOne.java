@@ -70,6 +70,17 @@ public class StepOne extends javax.swing.JFrame {
         setIntialWarningIcons();
         digPopGUIInformation = new DigPopGUIInformation();
     }
+    
+    /**
+     * Creates new form StepOne from information already provided in Step 0
+     * @param digPopGUIInfo - the log file object
+     */
+    public StepOne(DigPopGUIInformation digPopGUIInfo) {
+        this.digPopGUIInformation = digPopGUIInfo;
+        initComponents();
+        setIntialWarningIcons();
+        populateDataFieldsFromFile();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -769,10 +780,14 @@ public class StepOne extends javax.swing.JFrame {
         if(rbtnLandUseMap.isSelected())
         {
             getAndVerifyFile(DigPopFileTypeEnum.Land_Use_Map);
+            //null out the other map that is not used
+            this.digPopGUIInformation.setHouseholdDensityMapFilePath("");
         }
         else
         {
             getAndVerifyFile(DigPopFileTypeEnum.Household_Density_Map);
+            //null out the other map that is not used
+            this.digPopGUIInformation.setLandUseMapFilePath("");
         }
     }//GEN-LAST:event_btnLandMapHouseholdMapActionPerformed
 
@@ -789,6 +804,12 @@ public class StepOne extends javax.swing.JFrame {
     }//GEN-LAST:event_rbtnLandUseMapActionPerformed
 
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
+        //Save to file
+        Result result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(
+                    this.digPopGUIInformation,
+                this.digPopGUIInformation.getFilePath());
+        
+        
         new StepTwo().setVisible(true);
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed
@@ -814,10 +835,58 @@ public class StepOne extends javax.swing.JFrame {
         jLabel_ProvidedFieldsIcon.setIcon(StepOneUtilityClass.GetValidImageIcon());
         jLabel_RequiredFieldsIcon.setIcon(StepOneUtilityClass.GetInValidImageIcon());
         
-        setIconImage(DigPopFileTypeEnum.Census_Enumerations, false);
-        setIconImage(DigPopFileTypeEnum.Household_Micro_Data, false);
-        setIconImage(DigPopFileTypeEnum.Land_Use_Map, false);
-        setIconImage(DigPopFileTypeEnum.Region_Map, false);
+        if(this.digPopGUIInformation.getValidCensusEnumerationsFilePath() != null){
+            setIconImage(DigPopFileTypeEnum.Census_Enumerations, this.digPopGUIInformation.getValidCensusEnumerationsFilePath());
+        } else{
+            setIconImage(DigPopFileTypeEnum.Census_Enumerations, false);
+        }
+        
+        if(this.digPopGUIInformation.getValidHouseholdMicroDataFilePath() != null){
+            setIconImage(DigPopFileTypeEnum.Household_Micro_Data, this.digPopGUIInformation.getValidHouseholdMicroDataFilePath());
+        } else{
+            setIconImage(DigPopFileTypeEnum.Household_Micro_Data, false);
+        }
+        
+        if(this.digPopGUIInformation.getValidLandUseMapFilePath() != null){
+            setIconImage(DigPopFileTypeEnum.Land_Use_Map, this.digPopGUIInformation.getValidLandUseMapFilePath());
+        } else{
+            setIconImage(DigPopFileTypeEnum.Land_Use_Map, false);
+        }
+        
+        if(this.digPopGUIInformation.getValidRegionMapFilePath() != null){
+            setIconImage(DigPopFileTypeEnum.Region_Map, this.digPopGUIInformation.getValidRegionMapFilePath());
+        } else {
+            setIconImage(DigPopFileTypeEnum.Region_Map, false);
+        }
+    }
+    
+    /**
+     * Populates the data fields on the GUI from the digPopGUIInfo object
+     */
+    private void populateDataFieldsFromFile(){
+        if(this.digPopGUIInformation == null){
+            return;
+        }
+        
+        if((this.digPopGUIInformation.getLandUseMapFilePath() != null) && !this.digPopGUIInformation.getLandUseMapFilePath().equals("")){
+            rbtnLandUseMap.setSelected(true);
+            txtLandUseHouseholdMap.setText(this.digPopGUIInformation.getLandUseMapFilePath());
+        } else{
+            rbtnHouseholdDensityMap.setSelected(true);
+            txtLandUseHouseholdMap.setText(this.digPopGUIInformation.getHouseholdDensityMapFilePath());
+        }
+        
+        txtRegionMap.setText(this.digPopGUIInformation.getRegionMapFilePath());
+        txtCensusEnumerations.setText(this.digPopGUIInformation.getCensusEnumerationsFilePath());
+        
+        if(this.digPopGUIInformation.getConstraintMapsFilePaths() != null){
+            for(int i = 0; i<this.digPopGUIInformation.getConstraintMapsFilePaths().size(); i++){
+                AddItemToConstaintMapTable(this.digPopGUIInformation.getConstraintMapsFilePaths().get(i));
+            }
+        }
+        
+        txtPopulationMicroData.setText(this.digPopGUIInformation.getPopulationMicroDataFilePath());
+        txtHouseholdMicroData.setText(this.digPopGUIInformation.getHouseholdMicroDataFilePath());
     }
 
     private void getAndVerifyFile(DigPopFileTypeEnum fileType) {

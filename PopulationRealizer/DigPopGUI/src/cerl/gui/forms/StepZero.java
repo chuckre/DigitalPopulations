@@ -501,7 +501,7 @@ public class StepZero extends javax.swing.JFrame {
      * @param evt 
      */
     private void goToNextStep(java.awt.event.ActionEvent evt){
-        new StepOne().setVisible(true);
+        new StepOne(this.digPopGUIInformation).setVisible(true);
         dispose();
     }
     
