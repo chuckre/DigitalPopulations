@@ -16,17 +16,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.stage.WindowEvent;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- *
+ * The initial step to create the setup/save file
  * @author ajohnson
  */
 public class StepZero extends javax.swing.JFrame {
-    
-    private final String DEFAULT_NEW_FILE_NAME = "DigiPop_Run";
+    //Variables
+    private final String DEFAULT_NEW_FILE_NAME = "DigPop_GUI";
     private final FileType DEFAULT_NEW_FILE_TYPE = FileType.XML;
     private final String NEW_TAB_NAME = "New";
     private final String OPEN_TAB_NAME = "Open";
@@ -39,6 +38,10 @@ public class StepZero extends javax.swing.JFrame {
     
     private DigPopGUIInformation digPopGUIInformation;
 
+    /**
+     * gets the current DigPopGUIInformation
+     * @return DigPopGUIInformation object
+     */
     public DigPopGUIInformation getDigPopGUIInformation() {
         return digPopGUIInformation;
     }
@@ -77,11 +80,11 @@ public class StepZero extends javax.swing.JFrame {
         btnSelectNewFileLocation = new javax.swing.JButton();
         txtNewFileName = new javax.swing.JTextField();
         txtNewFileLocation = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
+        tabbedPanel_Open = new javax.swing.JPanel();
         lblOpenFile = new javax.swing.JLabel();
         txtOpenFile = new javax.swing.JTextField();
         btnSelectOpenFile = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
+        tabbedPanel_Duplicate = new javax.swing.JPanel();
         lblDuplicateFile = new javax.swing.JLabel();
         txtDuplicateFile = new javax.swing.JTextField();
         btnSelectDuplicateFile = new javax.swing.JButton();
@@ -105,13 +108,13 @@ public class StepZero extends javax.swing.JFrame {
             fileLocationChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
             setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-            setTitle("DigiPop GUI");
+            setTitle("DigPop GUI");
 
             jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
             jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
             jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            jLabel1.setText("Welcome to the DigiPop GUI");
+            jLabel1.setText("Welcome to the DigPop GUI");
 
             jTabbedPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -166,7 +169,7 @@ public class StepZero extends javax.swing.JFrame {
 
             jTabbedPanel.addTab("New", tabbedPanelNew);
 
-            jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+            tabbedPanel_Open.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
             lblOpenFile.setText("File:");
 
@@ -179,11 +182,11 @@ public class StepZero extends javax.swing.JFrame {
                 }
             });
 
-            javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-            jPanel3.setLayout(jPanel3Layout);
-            jPanel3Layout.setHorizontalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            javax.swing.GroupLayout tabbedPanel_OpenLayout = new javax.swing.GroupLayout(tabbedPanel_Open);
+            tabbedPanel_Open.setLayout(tabbedPanel_OpenLayout);
+            tabbedPanel_OpenLayout.setHorizontalGroup(
+                tabbedPanel_OpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabbedPanel_OpenLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(lblOpenFile)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -192,20 +195,20 @@ public class StepZero extends javax.swing.JFrame {
                     .addComponent(btnSelectOpenFile)
                     .addContainerGap())
             );
-            jPanel3Layout.setVerticalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
+            tabbedPanel_OpenLayout.setVerticalGroup(
+                tabbedPanel_OpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(tabbedPanel_OpenLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(tabbedPanel_OpenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnSelectOpenFile)
                         .addComponent(txtOpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblOpenFile))
                     .addContainerGap(97, Short.MAX_VALUE))
             );
 
-            jTabbedPanel.addTab("Open", jPanel3);
+            jTabbedPanel.addTab("Open", tabbedPanel_Open);
 
-            jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+            tabbedPanel_Duplicate.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
             lblDuplicateFile.setText("Old File:");
 
@@ -231,24 +234,24 @@ public class StepZero extends javax.swing.JFrame {
 
             lblDuplicateFileLocation.setText("New File Location:");
 
-            javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-            jPanel4.setLayout(jPanel4Layout);
-            jPanel4Layout.setHorizontalGroup(
-                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel4Layout.createSequentialGroup()
+            javax.swing.GroupLayout tabbedPanel_DuplicateLayout = new javax.swing.GroupLayout(tabbedPanel_Duplicate);
+            tabbedPanel_Duplicate.setLayout(tabbedPanel_DuplicateLayout);
+            tabbedPanel_DuplicateLayout.setHorizontalGroup(
+                tabbedPanel_DuplicateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(tabbedPanel_DuplicateLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                    .addGroup(tabbedPanel_DuplicateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabbedPanel_DuplicateLayout.createSequentialGroup()
                             .addComponent(lblDuplicateFile)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(txtDuplicateFile, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(btnSelectDuplicateFile))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabbedPanel_DuplicateLayout.createSequentialGroup()
                             .addComponent(lblDuplicateNewFileName)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(txtDuplicateNewFileName))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabbedPanel_DuplicateLayout.createSequentialGroup()
                             .addComponent(lblDuplicateFileLocation)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(txtDuplicateFileLocation, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
@@ -256,27 +259,27 @@ public class StepZero extends javax.swing.JFrame {
                             .addComponent(btnSelectDuplicateFileLocation)))
                     .addContainerGap())
             );
-            jPanel4Layout.setVerticalGroup(
-                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel4Layout.createSequentialGroup()
+            tabbedPanel_DuplicateLayout.setVerticalGroup(
+                tabbedPanel_DuplicateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(tabbedPanel_DuplicateLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(tabbedPanel_DuplicateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnSelectDuplicateFile)
                         .addComponent(txtDuplicateFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblDuplicateFile))
                     .addGap(18, 18, 18)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(tabbedPanel_DuplicateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblDuplicateNewFileName)
                         .addComponent(txtDuplicateNewFileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(tabbedPanel_DuplicateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblDuplicateFileLocation)
                         .addComponent(btnSelectDuplicateFileLocation)
                         .addComponent(txtDuplicateFileLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(18, Short.MAX_VALUE))
             );
 
-            jTabbedPanel.addTab("Duplicate", jPanel4);
+            jTabbedPanel.addTab("Duplicate", tabbedPanel_Duplicate);
 
             buttonGroupSelectRun.add(btnNew);
             btnNew.setText("New");
@@ -407,6 +410,10 @@ public class StepZero extends javax.swing.JFrame {
             pack();
         }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Handles the event for selecting the Duplicate option, opens the tab
+     * @param evt 
+     */
     private void btnDuplicateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDuplicateActionPerformed
         if(btnDuplicate.isSelected())
         {
@@ -416,6 +423,10 @@ public class StepZero extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDuplicateActionPerformed
 
+    /**
+     * Handles the event for selecting the Open option, opens the tab
+     * @param evt 
+     */
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
         if(btnOpen.isSelected())
         {
@@ -425,6 +436,10 @@ public class StepZero extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnOpenActionPerformed
 
+    /**
+     * Handles the event for selecting the New option, opens the tab
+     * @param evt 
+     */
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         if(btnNew.isSelected())
         {
@@ -440,12 +455,16 @@ public class StepZero extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnNewActionPerformed
 
+    /**
+     * Handles the Next button click, saves or creates the new file
+     * @param evt 
+     */
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
 
         Result result = new Result();
         
         switch(jTabbedPanel.getSelectedIndex()){
-            case 0:
+            case 0: //New File
                 String directory = txtNewFileLocation.getText();
                 String fileName = txtNewFileName.getText();
 
@@ -457,13 +476,10 @@ public class StepZero extends javax.swing.JFrame {
                     && (Boolean)result.getValue()
                     && !file.exists()){
                     try {
-                        //Need to create the file
-                        //Make it an empty version of the object
-                        //Move object around
-                        //next step
-
+                        //Need to create the file as empty version of the object
                         result = StepZeroUtilityClass.CreateNewEmptySaveFile(file);
-
+                        
+                        //If successully created object - go to Next Step
                         if(result.isSuccess()){
                             this.digPopGUIInformation = (DigPopGUIInformation)result.getValue();
                             //Now I need to move too step 2
@@ -478,7 +494,7 @@ public class StepZero extends javax.swing.JFrame {
                     }
                 }
                 break;
-            case 1: 
+            case 1: //Open Existing File
                 File openFile = new File(txtOpenFile.getText());
                 
                 result = StepZeroUtilityClass.verifyXMLFile(openFile);
@@ -489,6 +505,46 @@ public class StepZero extends javax.swing.JFrame {
                         goToNextStep(evt);
                 }else {
                     lblErrorMessages.setText(result.getErrorMessage());
+                }
+                break;
+            case 2: //Duplicate Existing File
+                String dupDirectory = txtDuplicateFileLocation.getText();
+                String dupFileName = txtDuplicateNewFileName.getText();
+                
+                //setup new copied file
+                File newDupFile = new File(String.format("%s\\%s", dupDirectory,dupFileName));
+                result = FileUtility.VerifyFileType(DEFAULT_NEW_FILE_TYPE, newDupFile);
+
+                if(result.isSuccess()
+                    && (Boolean)result.getValue()
+                    && !newDupFile.exists()){
+                    try {
+                        //Need to create the file as empty version of the object
+                        result = StepZeroUtilityClass.CreateNewEmptySaveFile(newDupFile);
+                        
+                        //If successully created object - go to Next Step
+                        if(result.isSuccess()){
+                            //pull existing file
+                            File existingFile = new File(this.txtDuplicateFile.getText());
+                            Result origResult = StepZeroUtilityClass.verifyXMLFile(existingFile);
+                            DigPopGUIInformation origObj = (DigPopGUIInformation)origResult.getValue();
+                            
+                            DigPopGUIInformation newObj = (DigPopGUIInformation)result.getValue();
+                            origObj.setFilePath(newObj.getFilePath());
+                            
+                            //populate object
+                            this.digPopGUIInformation = origObj;
+                            
+                            //Now I need to move too step 2
+                            goToNextStep(evt);
+
+                        }else {
+                            lblErrorMessages.setText(result.getErrorMessage());
+                        }
+
+                    } catch (IOException ex) {
+                        Logger.getLogger(StepZero.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 break;
             default: 
@@ -505,6 +561,10 @@ public class StepZero extends javax.swing.JFrame {
         dispose();
     }
     
+    /**
+     * Handles the selection of Duplicating an existing file
+     * @param evt 
+     */
     private void btnSelectDuplicateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectDuplicateFileActionPerformed
         File file = getFileFromFileChooser();
 
@@ -523,6 +583,10 @@ public class StepZero extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSelectDuplicateFileActionPerformed
 
+    /**
+     * Handles the button event for selecting to open a file
+     * @param evt 
+     */
     private void btnSelectOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectOpenFileActionPerformed
         File file = getFileFromFileChooser();
 
@@ -534,6 +598,10 @@ public class StepZero extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSelectOpenFileActionPerformed
 
+    /**
+     * Handles the button event for selecting a new file location
+     * @param evt 
+     */
     private void btnSelectNewFileLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectNewFileLocationActionPerformed
 
         File file = getDirectoryFromFileChooser();
@@ -547,6 +615,10 @@ public class StepZero extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnSelectNewFileLocationActionPerformed
 
+    /**
+     * Handles the button event for duplicating a file
+     * @param evt 
+     */
     private void btnSelectDuplicateFileLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectDuplicateFileLocationActionPerformed
         File file = getDirectoryFromFileChooser();
 
@@ -556,14 +628,26 @@ public class StepZero extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSelectDuplicateFileLocationActionPerformed
 
+    /**
+     * Handles the About menu item selection
+     * @param evt 
+     */
     private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
         new About().setVisible(true);
     }//GEN-LAST:event_jMenu_AboutMouseClicked
 
+    /**
+     * Handles the Help menu item selection
+     * @param evt 
+     */
     private void jMenu_HelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_HelpMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
     }//GEN-LAST:event_jMenu_HelpMouseClicked
 
+    /**
+     * Handles the Exit menu item
+     * @param evt 
+     */
     private void jMenu_ExitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_ExitMenuActionPerformed
         dispose();
     }//GEN-LAST:event_jMenu_ExitMenuActionPerformed
@@ -605,6 +689,10 @@ public class StepZero extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Shows or hides the new file tab
+     * @param enable - true if the New tab should display, false to hide
+     */
     private void enableNewFileTab(Boolean enable){
         txtNewFileName.setEnabled(enable);
         txtNewFileLocation.setEnabled(enable);
@@ -624,9 +712,11 @@ public class StepZero extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Shows or hides the Open existing tab
+     * @param enable - true to display the Open tab, false to hide
+     */
     private void enableOpenFileTab(Boolean enable){
-        
-       
         txtOpenFile.setEnabled(enable);
         btnSelectOpenFile.setEnabled(enable);
         lblOpenFile.setEnabled(enable);
@@ -643,8 +733,12 @@ public class StepZero extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Shows or hides the Duplicate tab
+     * Tab allows user to copy from an existing file into a new file
+     * @param enable - true to show the Duplicate tab, false to hide
+     */
     private void enableDuplicateFileTab(Boolean enable){
-        
         txtDuplicateFile.setEnabled(enable);
         txtDuplicateNewFileName.setEnabled(enable);
         btnSelectDuplicateFile.setEnabled(enable);
@@ -653,7 +747,6 @@ public class StepZero extends javax.swing.JFrame {
         txtDuplicateFileLocation.setEnabled(enable);
         lblDuplicateFileLocation.setEnabled(enable);
         btnSelectDuplicateFileLocation.setEnabled(enable);
-        
         
         int index = jTabbedPanel.indexOfTab(
                             DUPLICATE_TAB_NAME);
@@ -667,6 +760,10 @@ public class StepZero extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Pulls the directory the user selected from the file chooser
+     * @return - the selected file
+     */
     private File getDirectoryFromFileChooser() {
         File returnFile = null;
         
@@ -683,6 +780,10 @@ public class StepZero extends javax.swing.JFrame {
         return returnFile;
     }
     
+    /**
+     * Gets the file the user selected from the file chooser
+     * @return - the selected file
+     */
     private File getFileFromFileChooser() {
         File returnFile = null;
 
@@ -719,8 +820,6 @@ public class StepZero extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenu_ExitMenu;
     private javax.swing.JMenu jMenu_Help;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JTabbedPane jTabbedPanel;
     private javax.swing.JLabel lblDuplicateFile;
     private javax.swing.JLabel lblDuplicateFileLocation;
@@ -730,6 +829,8 @@ public class StepZero extends javax.swing.JFrame {
     private javax.swing.JLabel lblNewFileName;
     private javax.swing.JLabel lblOpenFile;
     private javax.swing.JPanel tabbedPanelNew;
+    private javax.swing.JPanel tabbedPanel_Duplicate;
+    private javax.swing.JPanel tabbedPanel_Open;
     private javax.swing.JTextField txtDuplicateFile;
     private javax.swing.JTextField txtDuplicateFileLocation;
     private javax.swing.JTextField txtDuplicateNewFileName;

@@ -238,9 +238,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" pref="163" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtLandUseHouseholdMap" max="32767" attributes="0"/>
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="txtLandUseHouseholdMap" pref="606" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -266,7 +266,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Selected Household Density Map :"/>
+                <Property name="text" type="java.lang.String" value="Selected Household Density Map:"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -366,7 +366,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="lblPopulationMicroData">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Selected Population Micro-data :"/>
+                <Property name="text" type="java.lang.String" value="Selected Population Micro-data:"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -448,14 +448,14 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Vacent Classes: "/>
+                <Property name="text" type="java.lang.String" value="Vacant Classes: "/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtVacantClasses">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Vacent Class Description: "/>
+                <Property name="text" type="java.lang.String" value="Vacant Class Description: "/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtVacantClassDescription">

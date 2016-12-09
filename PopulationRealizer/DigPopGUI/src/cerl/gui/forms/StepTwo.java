@@ -145,7 +145,7 @@ public class StepTwo extends javax.swing.JFrame {
 
         txtLandUseHouseholdMap.setEditable(false);
 
-        jLabel1.setText("Selected Household Density Map :");
+        jLabel1.setText("Selected Household Density Map:");
 
         javax.swing.GroupLayout jPanelLandUseHouseholdMapLayout = new javax.swing.GroupLayout(jPanelLandUseHouseholdMap);
         jPanelLandUseHouseholdMap.setLayout(jPanelLandUseHouseholdMapLayout);
@@ -153,9 +153,9 @@ public class StepTwo extends javax.swing.JFrame {
             jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtLandUseHouseholdMap)
+                .addComponent(txtLandUseHouseholdMap, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelLandUseHouseholdMapLayout.setVerticalGroup(
@@ -201,7 +201,7 @@ public class StepTwo extends javax.swing.JFrame {
 
         txtPopulationMicroData.setEditable(false);
 
-        lblPopulationMicroData.setText("Selected Population Micro-data :");
+        lblPopulationMicroData.setText("Selected Population Micro-data:");
 
         javax.swing.GroupLayout jPanelPopulationMicroDataLayout = new javax.swing.GroupLayout(jPanelPopulationMicroData);
         jPanelPopulationMicroData.setLayout(jPanelPopulationMicroDataLayout);
@@ -231,9 +231,9 @@ public class StepTwo extends javax.swing.JFrame {
 
         txtLandUseHouseholdMap1.setEditable(false);
 
-        jLabel2.setText("Vacent Classes: ");
+        jLabel2.setText("Vacant Classes: ");
 
-        jLabel3.setText("Vacent Class Description: ");
+        jLabel3.setText("Vacant Class Description: ");
 
         javax.swing.GroupLayout jPanelConstraintMapLayout = new javax.swing.GroupLayout(jPanelConstraintMap);
         jPanelConstraintMap.setLayout(jPanelConstraintMapLayout);
