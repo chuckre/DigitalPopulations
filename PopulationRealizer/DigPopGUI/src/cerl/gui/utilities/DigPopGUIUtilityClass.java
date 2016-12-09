@@ -19,6 +19,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Optional;
+import javax.swing.JProgressBar;
 
 /**
  *
@@ -27,6 +30,10 @@ import java.util.Calendar;
 public class DigPopGUIUtilityClass {
 
     private static final String HELP_FILE_PATH = "./docs/HelpText.xml";
+    
+    private static final int FIRST_COLUMN_FOR_CENSUS_ENUMERATIONS_FILE = 9;
+    private static final int FIRST_COLUMN_FOR_HOUSEHOLD_ENUMERATIONS_FILE = 8;
+    private static final int FIRST_COLUMN_FOR_POPULATION_ENUMERATIONS_FILE = 6;
 
     private static HelpFile getDefaultHelpFile() {
 
@@ -118,7 +125,7 @@ public class DigPopGUIUtilityClass {
 
         switch(digPopFileType){
             case Census_Enumerations:
-                result = readClassNamesFromFirstLine(filePath,9);
+                result = readClassNamesFromFirstLine(filePath, FIRST_COLUMN_FOR_CENSUS_ENUMERATIONS_FILE, Census_Enumerations);
                 
                 if(result.isSuccess()){
                     returnObject.setCensusClasses((ArrayList<Class>)result.getValue());
@@ -126,7 +133,7 @@ public class DigPopGUIUtilityClass {
                 
                 break;
             case Population_Micro_Data:
-                result = readClassNamesFromFirstLine(filePath,6); 
+                result = readClassNamesFromFirstLine(filePath, FIRST_COLUMN_FOR_POPULATION_ENUMERATIONS_FILE, Population_Micro_Data); 
                 
                 if(result.isSuccess()){
                     returnObject.setPopulationMicroDataClasses((ArrayList<Class>)result.getValue());
@@ -134,7 +141,7 @@ public class DigPopGUIUtilityClass {
                 
                 break;
             case Household_Micro_Data:
-                result = readClassNamesFromFirstLine(filePath,8);
+                result = readClassNamesFromFirstLine(filePath, FIRST_COLUMN_FOR_HOUSEHOLD_ENUMERATIONS_FILE, Household_Micro_Data);
                 
                 if(result.isSuccess()){
                     returnObject.setHouseholdMicroDataClasses((ArrayList<Class>)result.getValue());
@@ -148,7 +155,10 @@ public class DigPopGUIUtilityClass {
         return result;
     }
     
-    private static Result readClassNamesFromFirstLine(String filePath, int columnIndent){
+    private static Result readClassNamesFromFirstLine(
+            String filePath, 
+            int columnIndent,
+            DigPopFileTypeEnum digPopFileType){
         Result result = new Result();
         
         ArrayList<Class> foundClasses = new ArrayList<Class>();
@@ -165,7 +175,7 @@ public class DigPopGUIUtilityClass {
                 String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
 
                     for (int count = columnIndent; count < lineInfo.length; count++) {
-                        Class newClass = new Class(lineInfo[count],count,false, classIDCounter);
+                        Class newClass = new Class(lineInfo[count],count,false, classIDCounter, digPopFileType);
                         foundClasses.add(newClass);
                         classIDCounter++;
                     }
@@ -235,20 +245,64 @@ public class DigPopGUIUtilityClass {
         return result;
     }
     
+//    public static Result getSurveyDataColumnValues(String filePath, int columnNumber){
+//        Result result = new Result();
+//        ArrayList<SurveyColumnValue> columnValues = new ArrayList<>();
+//        
+//        String line = "";
+//        int lineCounter = 0;
+//
+//        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+//            while((line = br.readLine()) != null) {
+//                if(lineCounter >= 1){
+//                    // use comma as separator, but allow for commas inside a string
+//                    String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+//                    
+//                    columnValues.add(new SurveyColumnValue(lineCounter,Integer.parseInt(lineInfo[columnNumber]), false, 0));//TODO FIX THISD
+//                }
+//                
+//                lineCounter++;
+//            }
+//
+//            br.close();
+//            result.setSuccess(true);
+//        } catch (IOException ex) {
+//            result.setErrorMessage(
+//                    "getCensusClassesFromCSVFile",
+//                    ex.getMessage());
+//            result.setSuccess(false);
+//        }
+//        
+//        result.setValue(columnValues);
+//        return result;
+//    }
+
     public static Result getSurveyDataColumnValues(String filePath, int columnNumber){
         Result result = new Result();
-        ArrayList<SurveyColumnValue> columnValues = new ArrayList<>();
+        List<SurveyColumnValue> columnValues = new ArrayList<SurveyColumnValue>();
         
         String line = "";
         int lineCounter = 0;
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             while((line = br.readLine()) != null) {
-                if(lineCounter > 1){
+                if(lineCounter >= 1){
                     // use comma as separator, but allow for commas inside a string
                     String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
                     
-                    columnValues.add(new SurveyColumnValue(lineCounter,Integer.parseInt(lineInfo[columnNumber]), false));
+                    int value =Integer.parseInt(lineInfo[columnNumber]);
+                    
+                    //boolean alreadyFound = columnValues.stream().anyMatch(c -> c.getValue() == value);
+                    
+                    Optional<SurveyColumnValue> foundFromStream = columnValues.stream().filter(c-> c.getValue() == value).findFirst();
+                    
+                    if(!foundFromStream.isPresent()){
+                        columnValues.add(new SurveyColumnValue(lineCounter,Integer.parseInt(lineInfo[columnNumber]), false, 1));
+                    }
+                    else{
+                        SurveyColumnValue found = foundFromStream.get();
+                        found.addOneToNumberOfTimesUsed();
+                    }
                 }
                 
                 lineCounter++;
@@ -266,5 +320,4 @@ public class DigPopGUIUtilityClass {
         result.setValue(columnValues);
         return result;
     }
-
 }

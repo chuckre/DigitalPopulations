@@ -120,7 +120,7 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Available Survey Data Coulumn Values:");
+        jLabel2.setText("Available Survey Data Column Values:");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("User Defined Description:");

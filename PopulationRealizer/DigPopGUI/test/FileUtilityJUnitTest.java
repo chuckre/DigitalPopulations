@@ -132,9 +132,18 @@ public class FileUtilityJUnitTest {
         System.out.print(result.getValue());
     }
     
+//    @Test 
+ //   public void testgetSurveyDataColumnValues(){
+  //      DigPopGUIUtilityClass.getSurveyDataColumnValues("P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv", 11);
+ //   }
+    
     @Test 
-    public void testgetSurveyDataColumnValues(){
-        DigPopGUIUtilityClass.getSurveyDataColumnValues("P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv", 11);
+    public void getSurveyDataColumnValuesNEWWWWWWWWWWWWWWWWWWWWWWWWW1(){
+        DigPopGUIUtilityClass.getSurveyDataColumnValues("P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv", 13);
+    }
+    @Test 
+    public void getSurveyDataColumnValuesNEWWWWWWWWWWWWWWWWWWWWWWWWW2(){
+        DigPopGUIUtilityClass.getSurveyDataColumnValues("P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv", 13);
     }
     
  
@@ -153,35 +162,35 @@ public class FileUtilityJUnitTest {
         FileUtility.WriteNewTextFile(newFilePath, newText);
     }
 
-    @Test
-    public void exportToXML() {
-
-        String landUseMapFilePath = "Tester 11";
-        String householdDensityMapFilePath = "Tester 12";
-        String regionMapFilePath = "Tester 13";
-        String censusEnumerationsFilePath = "Tester 14";
-
-        ArrayList<String> constraintMapsFilePaths = new ArrayList<String>();
-        constraintMapsFilePaths.add("Tester");
-        constraintMapsFilePaths.add("Tester1");
-        constraintMapsFilePaths.add("Tester2");
-        constraintMapsFilePaths.add("Tester3");
-
-        String populationMicroDataFilePath = "Tester 15";
-        String householdMicroDataFilePath = "Tester 16";
-
-        DigPopGUIInformation test = new DigPopGUIInformation(
-                landUseMapFilePath,
-                householdDensityMapFilePath,
-                regionMapFilePath,
-                censusEnumerationsFilePath,
-                constraintMapsFilePaths,
-                populationMicroDataFilePath,
-                householdMicroDataFilePath);
-
-        Result result = FileUtility.ParseObjectToXML(test, "file.xml", DigPopGUIInformation.class);
-        Assert.assertEquals(true, result.isSuccess());
-    }
+//    @Test
+//    public void exportToXML() {
+//
+//        String landUseMapFilePath = "Tester 11";
+//        String householdDensityMapFilePath = "Tester 12";
+//        String regionMapFilePath = "Tester 13";
+//        String censusEnumerationsFilePath = "Tester 14";
+//
+//        ArrayList<String> constraintMapsFilePaths = new ArrayList<String>();
+//        constraintMapsFilePaths.add("Tester");
+//        constraintMapsFilePaths.add("Tester1");
+//        constraintMapsFilePaths.add("Tester2");
+//        constraintMapsFilePaths.add("Tester3");
+//
+//        String populationMicroDataFilePath = "Tester 15";
+//        String householdMicroDataFilePath = "Tester 16";
+//
+//        DigPopGUIInformation test = new DigPopGUIInformation(
+//                landUseMapFilePath,
+//                householdDensityMapFilePath,
+//                regionMapFilePath,
+//                censusEnumerationsFilePath,
+//                constraintMapsFilePaths,
+//                populationMicroDataFilePath,
+//                householdMicroDataFilePath);
+//
+//        Result result = FileUtility.ParseObjectToXML(test, "file.xml", DigPopGUIInformation.class);
+//        Assert.assertEquals(true, result.isSuccess());
+//    }
 
     @Test
     public void ReadInSaveFile() {

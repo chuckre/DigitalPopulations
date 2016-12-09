@@ -48,27 +48,46 @@ public class DigPopGUIInformation {
     //Used in Step 6 - Generate Trait Clusters
     private ArrayList<ArrayList<Object>> traitClusters;
     private ArrayList<String> traitList;
+    
+    private CensusSurveyClasses censusSurveyClasses;
 
 
     public DigPopGUIInformation() {
         this.constraintMapsFilePaths = new ArrayList<>();
+        this.censusSurveyClasses = new CensusSurveyClasses();
     }
 
-    public DigPopGUIInformation(
-            String landUseMapFilePath,
-            String householdDensityMapFilePath,
-            String regionMapFilePath,
-            String censusEnumerationsFilePath,
-            ArrayList<String> constraintMapsFilePaths,
-            String populationMicroDataFilePath,
-            String householdMicroDataFilePath) {
+    public DigPopGUIInformation(String filePath, String createdDate, String lastSaveDate, String landUseMapFilePath, Boolean validLandUseMapFilePath, String householdDensityMapFilePath, Boolean validHouseholdDensityMapFilePath, String regionMapFilePath, Boolean validRegionMapFilePath, String censusEnumerationsFilePath, Boolean validCensusEnumerationsFilePath, ArrayList<String> constraintMapsFilePaths, Boolean validConstraintMapsFilePaths, String populationMicroDataFilePath, Boolean validPopulationMicroDataFilePath, String householdMicroDataFilePath, Boolean validHouseholdMicroDataFilePath, ArrayList<String> FittingCriteriaColumnNames, ArrayList<ArrayList<Object>> FittingCriteriaCellValues, ArrayList<ArrayList<Object>> traitClusters, ArrayList<String> traitList, CensusSurveyClasses censusSurveyClasses) {
+        this.filePath = filePath;
+        this.createdDate = createdDate;
+        this.lastSaveDate = lastSaveDate;
         this.landUseMapFilePath = landUseMapFilePath;
+        this.validLandUseMapFilePath = validLandUseMapFilePath;
         this.householdDensityMapFilePath = householdDensityMapFilePath;
+        this.validHouseholdDensityMapFilePath = validHouseholdDensityMapFilePath;
         this.regionMapFilePath = regionMapFilePath;
+        this.validRegionMapFilePath = validRegionMapFilePath;
         this.censusEnumerationsFilePath = censusEnumerationsFilePath;
+        this.validCensusEnumerationsFilePath = validCensusEnumerationsFilePath;
         this.constraintMapsFilePaths = constraintMapsFilePaths;
+        this.validConstraintMapsFilePaths = validConstraintMapsFilePaths;
         this.populationMicroDataFilePath = populationMicroDataFilePath;
+        this.validPopulationMicroDataFilePath = validPopulationMicroDataFilePath;
         this.householdMicroDataFilePath = householdMicroDataFilePath;
+        this.validHouseholdMicroDataFilePath = validHouseholdMicroDataFilePath;
+        this.FittingCriteriaColumnNames = FittingCriteriaColumnNames;
+        this.FittingCriteriaCellValues = FittingCriteriaCellValues;
+        this.traitClusters = traitClusters;
+        this.traitList = traitList;
+        this.censusSurveyClasses = censusSurveyClasses;
+    }
+
+    public CensusSurveyClasses getCensusSurveyClasses() {
+        return censusSurveyClasses;
+    }
+
+    public void setCensusSurveyClasses(CensusSurveyClasses censusSurveyClasses) {
+        this.censusSurveyClasses = censusSurveyClasses;
     }
 
     public String getLandUseMapFilePath() {

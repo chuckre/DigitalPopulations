@@ -7,14 +7,17 @@ package cerl.gui.forms;
 
 import cerl.gui.standard.utilities.Result;
 import cerl.gui.utilities.CensusSurveyClasses;
+import static cerl.gui.utilities.DigPopFileTypeEnum.Household_Micro_Data;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.SurveyColumnValue;
+import cerl.gui.utilities.SurveyColumnValuesGrouping;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -37,9 +40,9 @@ public class StepThree extends javax.swing.JFrame {
     private DefaultListModel surveyGroupsListModel = new DefaultListModel();
     private JList surveyGroupsList = new JList(surveyGroupsListModel);
     
-    private String FILE_PATH_CENSUS = "P:\\CERL\\md_sample-data\\md_census_enumerations.csv";
-    private String FILE_PATH_POPULATION = "P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv";
-    private String FILE_PATH_HOUSEHOLD = "P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv";
+    private String DEFAULT_FILE_PATH_CENSUS = "P:\\CERL\\md_sample-data\\md_census_enumerations.csv";
+    private String DEFAULT_FILE_PATH_POPULATION = "P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv";
+    private String DEFAULT_FILE_PATH_HOUSEHOLD = "P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv";
 
     private final DigPopGUIInformation digPopGUIInformation;
     
@@ -49,104 +52,25 @@ public class StepThree extends javax.swing.JFrame {
      */
     public StepThree() {
         this.digPopGUIInformation = new DigPopGUIInformation();
-        Result result = DigPopGUIUtilityClass.getLoadedCensusSurveyClasses(
-                FILE_PATH_CENSUS,
-                FILE_PATH_POPULATION,
-                FILE_PATH_HOUSEHOLD);
-        censusSurveyClasses = (CensusSurveyClasses) result.getValue();
+        this.digPopGUIInformation.setCensusEnumerationsFilePath(DEFAULT_FILE_PATH_CENSUS);
+        this.digPopGUIInformation.setPopulationMicroDataFilePath(DEFAULT_FILE_PATH_POPULATION);
+        this.digPopGUIInformation.setHouseholdMicroDataFilePath(DEFAULT_FILE_PATH_HOUSEHOLD);
+        
+        loadCensusSurveyClasses();
 
         initComponents();
         
-        censusSurveyClasses.getCensusClasses().stream().forEach((c) -> {
-            censusAllListModel.addElement(c);
-        });
-        censusSurveyClasses.getHouseholdMicroDataClasses().stream().forEach((c) -> {
-            surveyAllListModel.addElement(c);
-        });
-        censusSurveyClasses.getPopulationMicroDataClasses().stream().forEach((c) -> {
-            surveyAllListModel.addElement(c);
-        });
-        
-        selectSurveyClass.getSurveyColumnValuesGroupings().stream().forEach((c) -> {
-            surveyGroupsListModel.addElement(c);
-        });
-
-        jScrollPaneCensusAll.setViewportView(censusAllList);
-        jScrollPaneCensusSelected.setViewportView(censusSelectedList);
-        
-        surveyAllList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        jScrollPaneSurveyAll.setViewportView(surveyAllList);
-        
-        jScrollPaneSurveyDataGroups.setViewportView(surveyGroupsList);
-        
-        surveyAllList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                if(surveyAllList.getSelectedValue().getClass() == cerl.gui.utilities.Class.class){
-                    btnSurveyDataGroups.setEnabled(true);
-                }else {
-                    btnSurveyDataGroups.setEnabled(false);
-                }
-            }
-        });
-
-        pack();
+        loadForm();
     }
     
     public StepThree(DigPopGUIInformation digPopGUIInformation) {
         this.digPopGUIInformation = digPopGUIInformation;
         
-        if(this.digPopGUIInformation.getValidCensusEnumerationsFilePath()
-                && this.digPopGUIInformation.getValidPopulationMicroDataFilePath()
-                && this.digPopGUIInformation.getValidHouseholdMicroDataFilePath()){
-            Result result = DigPopGUIUtilityClass.getLoadedCensusSurveyClasses(
-                this.digPopGUIInformation.getCensusEnumerationsFilePath(),
-                this.digPopGUIInformation.getPopulationMicroDataFilePath(),
-                this.digPopGUIInformation.getHouseholdMicroDataFilePath());
-        censusSurveyClasses = (CensusSurveyClasses) result.getValue();
-        }
-        else{
-        Result result = DigPopGUIUtilityClass.getLoadedCensusSurveyClasses(
-                FILE_PATH_CENSUS,
-                FILE_PATH_POPULATION,
-                FILE_PATH_HOUSEHOLD);
-        censusSurveyClasses = (CensusSurveyClasses) result.getValue();
-        }
+        loadCensusSurveyClasses();
 
         initComponents();
         
-        censusSurveyClasses.getCensusClasses().stream().forEach((c) -> {
-            censusAllListModel.addElement(c);
-        });
-        censusSurveyClasses.getHouseholdMicroDataClasses().stream().forEach((c) -> {
-            surveyAllListModel.addElement(c);
-        });
-        censusSurveyClasses.getPopulationMicroDataClasses().stream().forEach((c) -> {
-            surveyAllListModel.addElement(c);
-        });
-        
-        selectSurveyClass.getSurveyColumnValuesGroupings().stream().forEach((c) -> {
-            surveyGroupsListModel.addElement(c);
-        });
-
-        jScrollPaneCensusAll.setViewportView(censusAllList);
-        jScrollPaneCensusSelected.setViewportView(censusSelectedList);
-        
-        surveyAllList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        jScrollPaneSurveyAll.setViewportView(surveyAllList);
-        
-        jScrollPaneSurveyDataGroups.setViewportView(surveyGroupsList);
-        
-        surveyAllList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                if(surveyAllList.getSelectedValue().getClass() == cerl.gui.utilities.Class.class){
-                    btnSurveyDataGroups.setEnabled(true);
-                }else {
-                    btnSurveyDataGroups.setEnabled(false);
-                }
-            }
-        });
-
-        pack();
+        loadForm();
     }
 
     /**
@@ -158,12 +82,16 @@ public class StepThree extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialogLoadingFile = new javax.swing.JDialog();
+        jLabel5 = new javax.swing.JLabel();
+        jProgressBar1 = new javax.swing.JProgressBar();
         jPanel1 = new javax.swing.JPanel();
         surveyJPanel = new javax.swing.JPanel();
         jScrollPaneSurveyAll = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
         btnSurveyDataGroups = new javax.swing.JButton();
         jScrollPaneSurveyDataGroups = new javax.swing.JScrollPane();
+        jButton1 = new javax.swing.JButton();
         censusJPanel = new javax.swing.JPanel();
         jScrollPaneCensusAll = new javax.swing.JScrollPane();
         btnAddCensusClass = new javax.swing.JButton();
@@ -179,6 +107,42 @@ public class StepThree extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
+
+        jDialogLoadingFile.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        jDialogLoadingFile.setAlwaysOnTop(true);
+        jDialogLoadingFile.setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
+        jDialogLoadingFile.setModal(true);
+        jDialogLoadingFile.setResizable(false);
+        jDialogLoadingFile.setType(java.awt.Window.Type.UTILITY);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Please Wait While File is Loading.....");
+
+        jProgressBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jProgressBar1.setIndeterminate(true);
+        jProgressBar1.setString("");
+
+        javax.swing.GroupLayout jDialogLoadingFileLayout = new javax.swing.GroupLayout(jDialogLoadingFile.getContentPane());
+        jDialogLoadingFile.getContentPane().setLayout(jDialogLoadingFileLayout);
+        jDialogLoadingFileLayout.setHorizontalGroup(
+            jDialogLoadingFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogLoadingFileLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jDialogLoadingFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jDialogLoadingFileLayout.setVerticalGroup(
+            jDialogLoadingFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogLoadingFileLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Step 3");
@@ -196,7 +160,7 @@ public class StepThree extends javax.swing.JFrame {
         jScrollPaneSurveyAll.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Available Survey Data(Select Only One):");
+        jLabel1.setText("Available Survey Data (Select Only One):");
 
         btnSurveyDataGroups.setText("Add/Edit Survey Data Groups");
         btnSurveyDataGroups.setEnabled(false);
@@ -207,6 +171,13 @@ public class StepThree extends javax.swing.JFrame {
         });
 
         jScrollPaneSurveyDataGroups.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jButton1.setText("Clear Survey Data");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout surveyJPanelLayout = new javax.swing.GroupLayout(surveyJPanel);
         surveyJPanel.setLayout(surveyJPanelLayout);
@@ -221,7 +192,8 @@ public class StepThree extends javax.swing.JFrame {
                         .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(surveyJPanelLayout.createSequentialGroup()
                                 .addComponent(btnSurveyDataGroups)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPaneSurveyDataGroups)))
                     .addComponent(jLabel1))
                 .addContainerGap())
@@ -235,7 +207,9 @@ public class StepThree extends javax.swing.JFrame {
                 .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPaneSurveyAll, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                     .addGroup(surveyJPanelLayout.createSequentialGroup()
-                        .addComponent(btnSurveyDataGroups)
+                        .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnSurveyDataGroups)
+                            .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPaneSurveyDataGroups)))
                 .addContainerGap())
@@ -433,10 +407,9 @@ public class StepThree extends javax.swing.JFrame {
 
     private void btnEditSelectedCensusDataDescriptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditSelectedCensusDataDescriptionsActionPerformed
         CensusClassUserDefinitions censusClassUserDefinitionsForm = new CensusClassUserDefinitions(this);
-
         censusClassUserDefinitionsForm.setVisible(true);
-
         censusClassUserDefinitionsForm.setAlwaysOnTop(true);
+        censusClassUserDefinitionsForm.setLocationRelativeTo(this);
 
         this.setVisible(false);
     }//GEN-LAST:event_btnEditSelectedCensusDataDescriptionsActionPerformed
@@ -447,42 +420,151 @@ public class StepThree extends javax.swing.JFrame {
 
     private void btnSurveyDataGroupsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSurveyDataGroupsActionPerformed
         
-        this.selectSurveyClass = (cerl.gui.utilities.Class)surveyAllList.getSelectedValue();
+        SwingWorker<Void,Void> worker = new SwingWorker<Void,Void>()
+        {
+            @Override
+            protected Void doInBackground()
+            {
+                selectSurveyClass = (cerl.gui.utilities.Class)surveyAllList.getSelectedValue();
+
+                if(selectSurveyClass.getAllSurveyColumnValues().isEmpty()){
+                    String filePath = "";
+                    switch(selectSurveyClass.getDigPopFileTypeEnum()){
+                        case Household_Micro_Data:
+                            filePath = digPopGUIInformation.getHouseholdMicroDataFilePath();
+                            break;
+                        case Population_Micro_Data:
+                            filePath = digPopGUIInformation.getPopulationMicroDataFilePath();
+                            break;
+                    }
+
+                    Result result = DigPopGUIUtilityClass.getSurveyDataColumnValues(
+                            filePath, 
+                            selectSurveyClass.getColumnNumber());
+                    ArrayList<SurveyColumnValue> columnValues = (ArrayList<SurveyColumnValue>)result.getValue();
+                    selectSurveyClass.setAllSurveyColumnValues(columnValues);
+                }
+                return null;
+            }
+ 
+            @Override
+            protected void done()
+            {
+                jDialogLoadingFile.dispose();
+            }
+        };
         
-        if(this.selectSurveyClass.getAllSurveyColumnValues().isEmpty()){
+        worker.execute();
         
-            Result result = DigPopGUIUtilityClass.getSurveyDataColumnValues(
-                    FILE_PATH_HOUSEHOLD, 
-                    this.selectSurveyClass.getColumnNumber());
-            ArrayList<SurveyColumnValue> columnValues = (ArrayList<SurveyColumnValue>)result.getValue();
-            this.selectSurveyClass.setAllSurveyColumnValues(columnValues);
-        }
+        jDialogLoadingFile.pack();
+        jDialogLoadingFile.setLocationRelativeTo(this);
+        jDialogLoadingFile.setVisible(true); 
         
-        SelectSurveyDataColumnGroupings selectSurveyDataColumnGroupings = new SelectSurveyDataColumnGroupings(this.selectSurveyClass, this);
+        SelectSurveyDataColumnGroupings selectSurveyDataColumnGroupings = new SelectSurveyDataColumnGroupings(selectSurveyClass, this);
         selectSurveyDataColumnGroupings.setVisible(true);
         selectSurveyDataColumnGroupings.setAlwaysOnTop(true);
-        
+        selectSurveyDataColumnGroupings.setLocationRelativeTo(this);
+        this.setVisible(false);
+        this.setAlwaysOnTop(false);
     }//GEN-LAST:event_btnSurveyDataGroupsActionPerformed
 
     private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
-        new About().setVisible(true);
+        About about = new About();
+        about.setVisible(true);
+        about.setLocationRelativeTo(this);
     }//GEN-LAST:event_jMenu3MouseClicked
 
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
-        new StepTwo(this.digPopGUIInformation).setVisible(true);
+        save();
+        
+        StepTwo stepTwo = new StepTwo(this.digPopGUIInformation);
+        stepTwo.setVisible(true);
+        stepTwo.setLocationRelativeTo(this);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
-        new MarkovChainMatrix(this.digPopGUIInformation).setVisible(true);
+        save();
+        
+        MarkovChainMatrix markovChainMatrix =new MarkovChainMatrix(this.digPopGUIInformation);
+        markovChainMatrix.setVisible(true);
+        markovChainMatrix.setLocationRelativeTo(this);
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        surveyAllList.clearSelection();
+        selectSurveyClass.setSurveyColumnValuesGroupings(new ArrayList<SurveyColumnValuesGrouping>());
+        updateSurveyGroupsListModel();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public void updateSurveyGroupsListModel(){
         surveyGroupsListModel.removeAllElements();
         selectSurveyClass.getSurveyColumnValuesGroupings().stream().forEach((c) -> {
             surveyGroupsListModel.addElement(c);
         });
+    }
+    
+    public void updateCensusSelectedListModel(){
+        censusSelectedListModel.removeAllElements();
+        censusSurveyClasses.getCensusClasses().stream().forEach((c) -> {
+            if(c.isSelected()){
+                censusSelectedListModel.addElement(c);
+            }
+        });
+    }
+    
+    private void loadForm(){
+        censusSurveyClasses.getCensusClasses().stream().forEach((c) -> {
+            censusAllListModel.addElement(c);
+        });
+        censusSurveyClasses.getHouseholdMicroDataClasses().stream().forEach((c) -> {
+            surveyAllListModel.addElement(c);
+        });
+        censusSurveyClasses.getPopulationMicroDataClasses().stream().forEach((c) -> {
+            surveyAllListModel.addElement(c);
+        });
+        
+        selectSurveyClass.getSurveyColumnValuesGroupings().stream().forEach((c) -> {
+            surveyGroupsListModel.addElement(c);
+        });
+
+        jScrollPaneCensusAll.setViewportView(censusAllList);
+        jScrollPaneCensusSelected.setViewportView(censusSelectedList);
+        
+        surveyAllList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jScrollPaneSurveyAll.setViewportView(surveyAllList);
+        
+        jScrollPaneSurveyDataGroups.setViewportView(surveyGroupsList);
+        
+        surveyAllList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                if(!surveyAllList.isSelectionEmpty() 
+                        && surveyAllList.getSelectedValue().getClass() == cerl.gui.utilities.Class.class){
+                    btnSurveyDataGroups.setEnabled(true);
+                }else {
+                    btnSurveyDataGroups.setEnabled(false);
+                }
+            }
+        });
+
+        pack();
+    }
+    
+    private void loadCensusSurveyClasses(){
+        Result result = DigPopGUIUtilityClass.getLoadedCensusSurveyClasses(
+                this.digPopGUIInformation.getCensusEnumerationsFilePath(),
+                this.digPopGUIInformation.getPopulationMicroDataFilePath(),
+                this.digPopGUIInformation.getHouseholdMicroDataFilePath());
+        this.censusSurveyClasses = (CensusSurveyClasses) result.getValue();
+    }
+    
+    private void save(){
+        this.digPopGUIInformation.setCensusSurveyClasses(this.censusSurveyClasses);
+        //Save to file
+        Result result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(
+                    this.digPopGUIInformation,
+                this.digPopGUIInformation.getFilePath());
     }
     
     
@@ -529,15 +611,19 @@ public class StepThree extends javax.swing.JFrame {
     private javax.swing.JButton btnRemoveCensusClass;
     private javax.swing.JButton btnSurveyDataGroups;
     private javax.swing.JPanel censusJPanel;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JDialog jDialogLoadingFile;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPaneCensusAll;
     private javax.swing.JScrollPane jScrollPaneCensusSelected;
     private javax.swing.JScrollPane jScrollPaneSurveyAll;

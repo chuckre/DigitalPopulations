@@ -20,6 +20,7 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
 
     private ClassTableItemModel classTableItemModel;
     private StepThree parentStep;
+    private boolean cancelOnWindowClose = true;
     
     private ArrayList<cerl.gui.utilities.Class> nonEditedClasses = new ArrayList<>();
 
@@ -170,29 +171,33 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-
-        this.parentStep.censusSurveyClasses.setCensusClasses(this.nonEditedClasses);
-        this.parentStep.setVisible(true);
-        this.parentStep.setAlwaysOnTop(true);
-        this.dispose();
+        this.cancelOnWindowClose = true;
+        closeAndDisposeReturnToStepThree();
 
     }//GEN-LAST:event_formWindowClosing
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        this.parentStep.setVisible(true);
-        this.parentStep.setAlwaysOnTop(true);
-        this.dispose();
+        
+        this.cancelOnWindowClose = false;
+        closeAndDisposeReturnToStepThree();
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+
         
-        this.parentStep.censusSurveyClasses.setCensusClasses(this.nonEditedClasses);
+        this.cancelOnWindowClose = true;
+        closeAndDisposeReturnToStepThree();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void closeAndDisposeReturnToStepThree(){
+        if(this.cancelOnWindowClose){
+            this.parentStep.censusSurveyClasses.setCensusClasses(this.nonEditedClasses);
+            this.parentStep.updateCensusSelectedListModel();
+        }
         this.parentStep.setVisible(true);
         this.parentStep.setAlwaysOnTop(true);
         this.dispose();
-        
-    }//GEN-LAST:event_btnCancelActionPerformed
-
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;

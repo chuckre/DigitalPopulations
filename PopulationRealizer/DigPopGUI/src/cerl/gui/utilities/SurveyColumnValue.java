@@ -13,15 +13,25 @@ public class SurveyColumnValue  implements Cloneable {
     private int rowId;
     private int value;
     private boolean used;
+    private int numberOfTimesUsed; 
 
     public SurveyColumnValue() {
         used = false;
     }
 
-    public SurveyColumnValue(int rowId, int value, boolean used) {
+    public SurveyColumnValue(int rowId, int value, boolean used, int numberOfTimesUsed) {
         this.rowId = rowId;
         this.value = value;
         this.used = used;
+        this.numberOfTimesUsed = numberOfTimesUsed;
+    }
+
+    public int getNumberOfTimesUsed() {
+        return numberOfTimesUsed;
+    }
+
+    public void setNumberOfTimesUsed(int numberOfTimesUsed) {
+        this.numberOfTimesUsed = numberOfTimesUsed;
     }
 
     public int getRowId() {
@@ -50,7 +60,7 @@ public class SurveyColumnValue  implements Cloneable {
 
     @Override
     public String toString() {
-        return "Row ID: " + rowId + " Value: " + value;
+        return "First Row ID: " + this.rowId + "   -   Used: " +  this.numberOfTimesUsed + " times   -   Value: " + this.value;
     }
     
     public SurveyColumnValue clone() throws CloneNotSupportedException 
@@ -58,5 +68,9 @@ public class SurveyColumnValue  implements Cloneable {
         SurveyColumnValue clonedSurveyColumnValue = (SurveyColumnValue) super.clone();
  
         return clonedSurveyColumnValue;
+    }
+    
+    public void addOneToNumberOfTimesUsed() {
+        this.numberOfTimesUsed++;
     }
 }

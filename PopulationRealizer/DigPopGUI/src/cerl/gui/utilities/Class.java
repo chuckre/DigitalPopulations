@@ -23,6 +23,7 @@ public class Class implements Cloneable {
     private String userDefinedDescription;
     private List<SurveyColumnValue> allSurveyColumnValues;
     private List<SurveyColumnValuesGrouping> surveyColumnValuesGroupings;
+    private DigPopFileTypeEnum digPopFileTypeEnum;
 
     public Class() {
         this.className = null;
@@ -33,7 +34,7 @@ public class Class implements Cloneable {
         this.surveyColumnValuesGroupings = new ArrayList<SurveyColumnValuesGrouping>();
     }
 
-    public Class(String className, int columnNumber, boolean selected, int idForFinding) {
+    public Class(String className, int columnNumber, boolean selected, int idForFinding, DigPopFileTypeEnum digPopFileTypeEnum) {
         this.className = className;
         this.classTotal = 0;
         this.columnNumber = columnNumber;
@@ -42,9 +43,10 @@ public class Class implements Cloneable {
         this.userDefinedDescription = "";
         this.allSurveyColumnValues = new ArrayList<SurveyColumnValue>();
         this.surveyColumnValuesGroupings = new ArrayList<SurveyColumnValuesGrouping>();
+        this.digPopFileTypeEnum = digPopFileTypeEnum;
     }
 
-    public Class(String className, long classTotal, int columnNumber, boolean selected, int idForFinding, String userDefinedDescription, ArrayList<SurveyColumnValue> allSurveyColumnValues, ArrayList<SurveyColumnValuesGrouping> surveyColumnValuesGroupings) {
+    public Class(String className, long classTotal, int columnNumber, boolean selected, int idForFinding, String userDefinedDescription, List<SurveyColumnValue> allSurveyColumnValues, List<SurveyColumnValuesGrouping> surveyColumnValuesGroupings, DigPopFileTypeEnum digPopFileTypeEnum) {
         this.className = className;
         this.classTotal = classTotal;
         this.columnNumber = columnNumber;
@@ -53,6 +55,15 @@ public class Class implements Cloneable {
         this.userDefinedDescription = userDefinedDescription;
         this.allSurveyColumnValues = allSurveyColumnValues;
         this.surveyColumnValuesGroupings = surveyColumnValuesGroupings;
+        this.digPopFileTypeEnum = digPopFileTypeEnum;
+    }
+
+    public DigPopFileTypeEnum getDigPopFileTypeEnum() {
+        return digPopFileTypeEnum;
+    }
+
+    public void setDigPopFileTypeEnum(DigPopFileTypeEnum digPopFileTypeEnum) {
+        this.digPopFileTypeEnum = digPopFileTypeEnum;
     }
 
     public List<SurveyColumnValuesGrouping> getSurveyColumnValuesGroupings() {

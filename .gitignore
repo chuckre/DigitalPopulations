@@ -5,3 +5,4 @@ out
 *.class
 .DS_Store
 /PopulationRealizer/DigPopGUI/dist/
+/PopulationRealizer/DigPopGUI/build/
