@@ -41,6 +41,14 @@ public class DigPopGUIInformation {
     private String householdMicroDataFilePath;
     private Boolean validHouseholdMicroDataFilePath;
     
+    //Used in Step 5 - Generate Fitting Criteria File
+    private ArrayList<String> FittingCriteriaColumnNames;
+    private ArrayList<ArrayList<Object>> FittingCriteriaCellValues;
+    
+    //Used in Step 6 - Generate Trait Clusters
+    private ArrayList<ArrayList<Object>> traitClusters;
+    private ArrayList<String> traitList;
+
 
     public DigPopGUIInformation() {
         this.constraintMapsFilePaths = new ArrayList<>();
@@ -179,6 +187,38 @@ public class DigPopGUIInformation {
         this.validHouseholdMicroDataFilePath = validHouseholdMicroDataFilePath;
     }
 
+    public ArrayList<ArrayList<Object>> getTraitClusters() {
+        return traitClusters;
+    }
+
+    public void setTraitClusters(ArrayList<ArrayList<Object>> traitClusters) {
+        this.traitClusters = traitClusters;
+    }
+
+    public ArrayList<String> getTraitList() {
+        return traitList;
+    }
+
+    public void setTraitList(ArrayList<String> traitList) {
+        this.traitList = traitList;
+    }
+
+    public ArrayList<String> getFittingCriteriaColumnNames() {
+        return FittingCriteriaColumnNames;
+    }
+
+    public void setFittingCriteriaColumnNames(ArrayList<String> FittingCriteriaColumnNames) {
+        this.FittingCriteriaColumnNames = FittingCriteriaColumnNames;
+    }
+
+    public ArrayList<ArrayList<Object>> getFittingCriteriaCellValues() {
+        return FittingCriteriaCellValues;
+    }
+
+    public void setFittingCriteriaCellValues(ArrayList<ArrayList<Object>> FittingCriteriaCellValues) {
+        this.FittingCriteriaCellValues = FittingCriteriaCellValues;
+    }
+    
     public String getCreatedDate() {
         return createdDate;
     }

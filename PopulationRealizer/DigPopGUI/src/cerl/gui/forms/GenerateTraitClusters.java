@@ -19,6 +19,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -68,7 +69,9 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         ArrayList<ArrayList<Object>> cellValues = new ArrayList<>();
         //Vector<ArrayList<Object>> cellValues = new Vector(3,3);
         
-        if(this.digPopGUIInformation.getCensusEnumerationsFilePath() == null){
+        if(this.digPopGUIInformation.getTraitClusters() != null){
+            cellValues = this.digPopGUIInformation.getTraitClusters();
+        } else {
             //Add rows
             cellValues.add(0,new ArrayList<>());
             cellValues.add(1,new ArrayList<>());
@@ -232,11 +235,13 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         //create the dropdown selector for Trait ID
         //Trait ID (List with descriptions)
         JComboBox trait = new JComboBox();
-        String[] traitList = {"123", "456", "789"};
-        for(int i = 0; i<traitList.length; i++){
-            trait.addItem(traitList[i]);
-        }
         
+        if(this.digPopGUIInformation.getTraitList() != null){
+            trait.setModel(new DefaultComboBoxModel(this.digPopGUIInformation.getTraitList().toArray()));
+        } else {
+            String[] traitList = {"123", "456", "789"};
+            trait.setModel(new DefaultComboBoxModel(traitList));
+        }     
         //create the reduction/distance textboxes
         JFormattedTextField reduction = new JFormattedTextField(intFormat);
         JFormattedTextField distance = new JFormattedTextField(intFormat);
@@ -308,7 +313,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu_AboutMouseClicked
 
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
-        new StepSeven().setVisible(true);
+        new StepSeven(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed
 

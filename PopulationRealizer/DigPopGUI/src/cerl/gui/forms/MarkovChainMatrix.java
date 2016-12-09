@@ -11,6 +11,7 @@ import cerl.gui.standard.utilities.customTableCellEditor;
 import cerl.gui.standard.utilities.customTableCellRenderer;
 import cerl.gui.standard.utilities.jTableButtonMouseListener;
 import cerl.gui.standard.utilities.customTableModelListener;
+import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.MarkovTableCell;
@@ -29,13 +30,39 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     private int END_EDITABLE_ROW;
     private int END_EDITABLE_COL;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_FOUR_HELP_FILE_NAME.toString();
-            
+    private final DigPopGUIInformation digPopGUIInformation;
+    
     /**
      * Creates new form MarkovChainMatrix
      * 
      * TO DO: Pull from Survey/Census data files, Write out to CSV files
      */
     public MarkovChainMatrix() {
+        this.digPopGUIInformation = new DigPopGUIInformation();
+        //load table
+        myTable = populateMarkovTableModel();
+        myTable.handleTableChange(-1,-1); //calculate the amount left
+        
+        initComponents();
+        
+        //sets up columns with new renderer, and clear buttons for the rows/columns
+        for(int i=0; i<myTable.getColumnCount(); i++){
+            TableColumn tableCol = jTable_MarkovMatrix.getColumnModel().getColumn(i);
+            tableCol.setCellRenderer(new customTableCellRenderer());
+            tableCol.setCellEditor(new customTableCellEditor());
+        }
+        //adds the mouse listener for the buttons to work in the jTable
+        jTable_MarkovMatrix.addMouseListener(new jTableButtonMouseListener(jTable_MarkovMatrix));
+        
+        //adds the listener for the cell calculations
+        jTable_MarkovMatrix.getModel().addTableModelListener(new customTableModelListener(jTable_MarkovMatrix));
+        //hide error messages until needed
+        jLabel_ErrorMessages.setVisible(false);
+    }
+
+    MarkovChainMatrix(DigPopGUIInformation digPopGUIInformation) {
+        this.digPopGUIInformation = digPopGUIInformation;
+        
         //load table
         myTable = populateMarkovTableModel();
         myTable.handleTableChange(-1,-1); //calculate the amount left
@@ -281,7 +308,8 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
      * @param evt 
      */
     private void jButton_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BackActionPerformed
-        // TODO add your handling code here:
+        new StepThree(this.digPopGUIInformation).setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton_BackActionPerformed
 
     /**
@@ -317,6 +345,8 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     private void jButton_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveActionPerformed
         // TODO add your handling code here:
         // TODO: save markovName to XML with full populated table object.
+        new FittingCriteria(this.digPopGUIInformation).setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton_SaveActionPerformed
 
     private void jMenu_EditTabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_EditTabMouseClicked

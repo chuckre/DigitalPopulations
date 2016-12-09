@@ -5,6 +5,7 @@
  */
 package cerl.gui.forms;
 
+import cerl.gui.standard.utilities.Result;
 import cerl.gui.standard.utilities.customTableModel;
 import cerl.gui.standard.utilities.customTableCell;
 import cerl.gui.standard.utilities.customTableCellRenderer;
@@ -41,7 +42,7 @@ public class FittingCriteria extends javax.swing.JFrame {
      * @param digPopGUIInformation - the saved log file
      */
     public FittingCriteria(DigPopGUIInformation digPopGUIInformation) {
-        this.digPopGUIInformation = new DigPopGUIInformation();
+        this.digPopGUIInformation = digPopGUIInformation;
         //load table
         myTable = populateTableModel();
         initComponents();
@@ -50,17 +51,24 @@ public class FittingCriteria extends javax.swing.JFrame {
 
     private customTableModel populateTableModel(){
         ArrayList<String> columnNames = new ArrayList<>();
+        
+        if(this.digPopGUIInformation.getFittingCriteriaColumnNames() != null){
+            columnNames = this.digPopGUIInformation.getFittingCriteriaColumnNames();
+        } else{
         //Census Value Names
-        columnNames.addAll(Arrays.asList("ID","Census Region Trait"
-                ,"Census Region Total","Survey Trait Table"
-                ,"Survey Trait Select","Survey Trait Field"
-                ,"Survey Total Table", "Survey Total Field"
-                , "User Entered Description", "Trait Weight"));
-
+            columnNames.addAll(Arrays.asList("ID","Census Region Trait"
+                    ,"Census Region Total","Survey Trait Table"
+                    ,"Survey Trait Select","Survey Trait Field"
+                    ,"Survey Total Table", "Survey Total Field"
+                    , "User Entered Description", "Trait Weight"));
+            this.digPopGUIInformation.setFittingCriteriaColumnNames(columnNames);
+        }
         //columns must be rows+1 because the header row is the -1th row.
         ArrayList<ArrayList<Object>> cellValues = new ArrayList<>();
         
-        if(this.digPopGUIInformation.getCensusEnumerationsFilePath() == null){
+        if(this.digPopGUIInformation.getFittingCriteriaCellValues() != null){
+            cellValues = this.digPopGUIInformation.getFittingCriteriaCellValues();
+        } else {
             //Set up rows and columns
             for(int r = 0; r<3; r++){
                 cellValues.add(r, new ArrayList<>());
@@ -119,6 +127,7 @@ public class FittingCriteria extends javax.swing.JFrame {
             cellValues.get(1).add(9, new customTableCell("", true, "Double", false));
             cellValues.get(2).add(9, new customTableCell("", true, "Double", false));
 
+            this.digPopGUIInformation.setFittingCriteriaCellValues(cellValues);
         }
         //create table with custom MarkovTableModel
         customTableModel myTableModel = new customTableModel(columnNames, cellValues);
@@ -245,15 +254,24 @@ public class FittingCriteria extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu_AboutMouseClicked
 
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
+        saveToFile();
         new GenerateTraitClusters(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed
 
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
-        new MarkovChainMatrix().setVisible(true);
+        saveToFile();
+        new MarkovChainMatrix(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 
+    private void saveToFile(){
+        //Save to file
+        Result result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(
+                    this.digPopGUIInformation,
+                this.digPopGUIInformation.getFilePath());
+    }
+    
     /**
      * @param args the command line arguments
      */
