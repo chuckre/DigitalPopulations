@@ -59,6 +59,11 @@ public class SurveyColumnValuesGrouping implements Cloneable {
 
     @Override
     public String toString() {
-        return userDefinedDescription;
+        if(userDefinedDescription == null || userDefinedDescription.equals("")){
+            return getAllRowIdsAsString();
+        }
+        else{
+            return userDefinedDescription;
+        }
     }
 }
