@@ -18,12 +18,12 @@ import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Creates a new Step one form
  * @author ajohnson
  */
 public class StepOne extends javax.swing.JFrame {
     
-        /**
+    /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -59,6 +59,7 @@ public class StepOne extends javax.swing.JFrame {
         });
     }
 
+    //Variables
     private final DigPopGUIInformation digPopGUIInformation;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_ONE_HELP_FILE_NAME.toString();
 
@@ -716,66 +717,122 @@ public class StepOne extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Manages the Help Menu selection
+     * @param evt 
+     */
     private void menuHelpMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_menuHelpMenuSelected
 
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
 
     }//GEN-LAST:event_menuHelpMenuSelected
 
+    /**
+     * Manages the About menu selection
+     * @param evt 
+     */
     private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
         new About().setVisible(true);
     }//GEN-LAST:event_jMenu_AboutMouseClicked
 
+    /**
+     * Handles the contextual help icon for Population Micro Data
+     * @param evt 
+     */
     private void populationMicroDataInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_populationMicroDataInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepOneInstructionNames.Population_Micro_Data.toString());
     }//GEN-LAST:event_populationMicroDataInfoIconMouseClicked
 
+    /**
+     * Verifies a newly added Population Micro Data file from the file picker
+     * @param evt 
+     */
     private void btnPopulationMicroDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPopulationMicroDataActionPerformed
 
         getAndVerifyFile(DigPopFileTypeEnum.Population_Micro_Data);
     }//GEN-LAST:event_btnPopulationMicroDataActionPerformed
 
+    /**
+     * Handles the contextual help icon for Household Micro Data
+     * @param evt 
+     */
     private void householdMicroDataInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_householdMicroDataInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepOneInstructionNames.Household_Micro_Data.toString());
     }//GEN-LAST:event_householdMicroDataInfoIconMouseClicked
 
+    /**
+     * Verifies a newly added Household Micro Data file from the file picker
+     * @param evt 
+     */
     private void btnHouseholdMicroDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHouseholdMicroDataActionPerformed
 
         getAndVerifyFile(DigPopFileTypeEnum.Household_Micro_Data);
     }//GEN-LAST:event_btnHouseholdMicroDataActionPerformed
 
+    /**
+     * Handles the contextual help icon for Constraint Maps
+     * @param evt 
+     */
     private void constraintMapsInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_constraintMapsInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepOneInstructionNames.Constraint_Map.toString());
     }//GEN-LAST:event_constraintMapsInfoIconMouseClicked
 
+    /**
+     * Verifies a newly added Constraint Map file from the file picker
+     * @param evt 
+     */
     private void btnConstaintMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConstaintMapActionPerformed
 
         getAndVerifyFile(DigPopFileTypeEnum.Constraint_Map);
     }//GEN-LAST:event_btnConstaintMapActionPerformed
 
+    /**
+     * Handles the contextual help icon for the Region Map
+     * @param evt 
+     */
     private void regionMapInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepOneInstructionNames.Region_Map.toString());
     }//GEN-LAST:event_regionMapInfoIconMouseClicked
 
+    /**
+     * Handles the contextual help icon for the Census Enumeration field
+     * @param evt 
+     */
     private void censusEnumerationsInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_censusEnumerationsInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepOneInstructionNames.Census_Enumerations.toString());
     }//GEN-LAST:event_censusEnumerationsInfoIconMouseClicked
 
+    /**
+     * Verifies the file added for the census enumerations
+     * @param evt 
+     */
     private void btnCensusEnumerationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCensusEnumerationsActionPerformed
 
         getAndVerifyFile(DigPopFileTypeEnum.Census_Enumerations);
     }//GEN-LAST:event_btnCensusEnumerationsActionPerformed
 
+    /**
+     * Verifies the file added for region map field
+     * @param evt 
+     */
     private void btnRegionMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegionMapActionPerformed
 
         getAndVerifyFile(DigPopFileTypeEnum.Region_Map);
     }//GEN-LAST:event_btnRegionMapActionPerformed
 
+    /**
+     * Handles the contextual help icon for the Land Use/Household map
+     * @param evt 
+     */
     private void landUseHouseholdDensityMapInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_landUseHouseholdDensityMapInfoIconMouseClicked
 
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepOneInstructionNames.Land_Use_Household_Map.toString());
     }//GEN-LAST:event_landUseHouseholdDensityMapInfoIconMouseClicked
 
+    /**
+     * Verifies the file added for land use/household map
+     * @param evt 
+     */
     private void btnLandMapHouseholdMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLandMapHouseholdMapActionPerformed
         if(rbtnLandUseMap.isSelected())
         {
@@ -791,18 +848,30 @@ public class StepOne extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLandMapHouseholdMapActionPerformed
 
+    /**
+     * Handles the switch from land use to household density map
+     * @param evt 
+     */
     private void rbtnHouseholdDensityMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnHouseholdDensityMapActionPerformed
 
         enableLandUseHouseholdDensityButton();
 
     }//GEN-LAST:event_rbtnHouseholdDensityMapActionPerformed
 
+    /**
+     * Handles the switch from household density to land use map
+     * @param evt 
+     */
     private void rbtnLandUseMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnLandUseMapActionPerformed
 
         enableLandUseHouseholdDensityButton();
 
     }//GEN-LAST:event_rbtnLandUseMapActionPerformed
 
+    /**
+     * Handles the end of Step 1 and move to Step 2, saves data and passes object
+     * @param evt 
+     */
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
         //Save to file
         Result result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(
@@ -814,11 +883,19 @@ public class StepOne extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed
 
+    /**
+     * Handles the move back to Step 0 from Step 1
+     * @param evt 
+     */
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
         new StepZero().setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
   
+    /**
+     * Disables the land use household map button if neither land use,
+     * nor household density maps are selected
+     */
     private void enableLandUseHouseholdDensityButton(){
         if(rbtnLandUseMap.isSelected() || rbtnHouseholdDensityMap.isSelected()){
             btnLandMapHouseholdMap.setEnabled(true);
@@ -889,14 +966,19 @@ public class StepOne extends javax.swing.JFrame {
         txtHouseholdMicroData.setText(this.digPopGUIInformation.getHouseholdMicroDataFilePath());
     }
 
+    /**
+     * Verifies the file provided, and updates error messages
+     * @param fileType - the file to check
+     */
     private void getAndVerifyFile(DigPopFileTypeEnum fileType) {
 
         File file = getFileFromFileChooser();
         if (file != null) {
             Result result = StepOneUtilityClass.verifyFile(file, fileType);
-
+            Boolean uniqueFile = checkIfUnique(fileType, file.getPath());
+            
             if (result.isSuccess()
-                    && (boolean) result.getValue()) {
+                    && (boolean) result.getValue() && uniqueFile) {
 
                 switch (fileType) {
                     case Land_Use_Map:
@@ -956,8 +1038,6 @@ public class StepOne extends javax.swing.JFrame {
                 //setIconImage(fileType, true);
             } else {
                 
-                //
-                
                 switch (fileType) {
                     case Land_Use_Map:
                         txtLandUseHouseholdMap.setText("");
@@ -984,7 +1064,9 @@ public class StepOne extends javax.swing.JFrame {
                         txtCensusEnumerations.setText("");
                         digPopGUIInformation.setCensusEnumerationsFilePath(null);
                         digPopGUIInformation.setValidCensusEnumerationsFilePath(false);
-                        lblCensusEnumerationsErrorMessage.setText(StepOneUtilityClass.CENSUS_ENUMERATIONS_FILE_PATH_ERROR_MESSAGE);
+                        if(uniqueFile){
+                            lblCensusEnumerationsErrorMessage.setText(StepOneUtilityClass.CENSUS_ENUMERATIONS_FILE_PATH_ERROR_MESSAGE);
+                        }
                         setIconImage(fileType, false);
                         break;
                     case Constraint_Map:
@@ -999,13 +1081,17 @@ public class StepOne extends javax.swing.JFrame {
                         txtPopulationMicroData.setText("");
                         digPopGUIInformation.setPopulationMicroDataFilePath(null);
                         digPopGUIInformation.setValidPopulationMicroDataFilePath(false);
-                        lblPopulationMicroDataErrorMessage.setText(StepOneUtilityClass.POPULATION_MICRO_DATA_FILE_PATH_ERROR_MESSAGE);
+                        if(uniqueFile){
+                            lblPopulationMicroDataErrorMessage.setText(StepOneUtilityClass.POPULATION_MICRO_DATA_FILE_PATH_ERROR_MESSAGE);
+                        }
                         break;
                     case Household_Micro_Data:
                         txtHouseholdMicroData.setText("");
                         digPopGUIInformation.setHouseholdMicroDataFilePath(null);
                         digPopGUIInformation.setValidHouseholdMicroDataFilePath(false);
-                        lblHouseholdMicroDataErrorMessage.setText(StepOneUtilityClass.HOUSEHOLD_MICRO_DATA_FILE_PATH_ERROR_MESSAGE);
+                        if(uniqueFile){
+                            lblHouseholdMicroDataErrorMessage.setText(StepOneUtilityClass.HOUSEHOLD_MICRO_DATA_FILE_PATH_ERROR_MESSAGE);
+                        }
                         setIconImage(fileType, false);
                         break;
                 }
@@ -1017,7 +1103,73 @@ public class StepOne extends javax.swing.JFrame {
             pack();
         }
     }
+    
+    /**
+     * Checks if the census/population/household files are unique
+     * @param fileType - the file most recently added
+     * @return - true if unique, false if not (error)
+     */
+    private boolean checkIfUnique(DigPopFileTypeEnum fileType, String path){
+        boolean result = true;
+        String censusFile = digPopGUIInformation.getCensusEnumerationsFilePath();
+        String populationFile = digPopGUIInformation.getPopulationMicroDataFilePath();
+        String householdFile = digPopGUIInformation.getHouseholdMicroDataFilePath();
+        
+        switch (fileType) {
+            case Census_Enumerations:
+                censusFile = path;
+                if(censusFile.equals(populationFile)){
+                    result = false;
+                    lblCensusEnumerationsErrorMessage.setText("ERROR: CENSUS ENUMERATION FILE MAY NOT MATCH THE POPULATION MICRODATA FILE");
+                } else if(censusFile.equals(householdFile)){
+                    result = false;
+                    lblCensusEnumerationsErrorMessage.setText("ERROR: CENSUS ENUMERATION FILE MAY NOT MATCH THE HOUSEHOLD MICRODATA FILE");
+                }
+                else{
+                    result = true;
+                }
+                
+                setIconImage(fileType, false);
+                break;
+            case Population_Micro_Data:
+                populationFile = path;
+        
+                if(populationFile.equals(householdFile)){
+                    result = false;
+                    lblPopulationMicroDataErrorMessage.setText("ERROR: POPULATION MICRODATA FILE MAY NOT MATCH THE HOUSEHOLD MICRODATA FILE");
+                } else if(populationFile.equals(censusFile)){
+                    result = false;
+                    lblPopulationMicroDataErrorMessage.setText("ERROR: POPULATION MICRODATA FILE MAY NOT MATCH THE CENSUS ENUMERATION FILE");
+                }
+                else{
+                    result = true;
+                }
+                break;
+            case Household_Micro_Data:
+                householdFile = path;
+        
+                if(householdFile.equals(populationFile)){
+                    result = false;
+                    lblHouseholdMicroDataErrorMessage.setText("ERROR: HOUSEHOLD MICRODATA FILE MAY NOT MATCH THE POPULATION MICRODATA FILE");
+                } else if(householdFile.equals(censusFile)){
+                    result = false;
+                    lblHouseholdMicroDataErrorMessage.setText("ERROR: HOUSEHOLD MICRODATA FILE MAY NOT MATCH THE CENSUS ENUMERATION FILE");
+                }
+                else{
+                    result = true;
+                }
+                break;
+            default:
+                result = true;
+                break;
+        }
+        return result;
+    }
 
+    /**
+     * Gets the file the user selected from the file chooser
+     * @return - The selected file object
+     */
     private File getFileFromFileChooser() {
         File returnFile = null;
 
@@ -1074,6 +1226,10 @@ public class StepOne extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Adds a new constraint map to the table
+     * @param value - the map to add to the list
+     */
     private void AddItemToConstaintMapTable(String value) {
         DefaultTableModel model = (DefaultTableModel) tblConstraintMaps.getModel();
         Object[] obj = {value};
