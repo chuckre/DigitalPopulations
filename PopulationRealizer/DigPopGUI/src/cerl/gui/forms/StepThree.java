@@ -95,11 +95,22 @@ public class StepThree extends javax.swing.JFrame {
     public StepThree(DigPopGUIInformation digPopGUIInformation) {
         this.digPopGUIInformation = digPopGUIInformation;
         
+        if(this.digPopGUIInformation.getValidCensusEnumerationsFilePath()
+                && this.digPopGUIInformation.getValidPopulationMicroDataFilePath()
+                && this.digPopGUIInformation.getValidHouseholdMicroDataFilePath()){
+            Result result = DigPopGUIUtilityClass.getLoadedCensusSurveyClasses(
+                this.digPopGUIInformation.getCensusEnumerationsFilePath(),
+                this.digPopGUIInformation.getPopulationMicroDataFilePath(),
+                this.digPopGUIInformation.getHouseholdMicroDataFilePath());
+        censusSurveyClasses = (CensusSurveyClasses) result.getValue();
+        }
+        else{
         Result result = DigPopGUIUtilityClass.getLoadedCensusSurveyClasses(
                 FILE_PATH_CENSUS,
                 FILE_PATH_POPULATION,
                 FILE_PATH_HOUSEHOLD);
         censusSurveyClasses = (CensusSurveyClasses) result.getValue();
+        }
 
         initComponents();
         
