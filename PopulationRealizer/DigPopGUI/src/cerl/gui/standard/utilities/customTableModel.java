@@ -56,6 +56,9 @@ public class customTableModel  extends AbstractTableModel {
         } catch (ArrayIndexOutOfBoundsException e) {
             System.err.println("Caught ArrayIndexOutOfBoundsException" + e.getMessage());
             return null;
+        } catch(IndexOutOfBoundsException e){
+            System.err.println("Caught IndexOutOfBoundsException" + e.getMessage());
+            return null;
         }
     } 
     
@@ -101,14 +104,19 @@ public class customTableModel  extends AbstractTableModel {
      */
     @Override
     public boolean isCellEditable(int row, int col) {
-        if(tableCells.get(row) == null){
+        try{
+            if(tableCells.get(row) == null){
+                return false;
+            } else if(tableCells.get(row).get(col) == null){
+                return true;
+            } else if (tableCells.get(row).get(col).getClass().equals(customTableCell.class)) {
+                return ((customTableCell) (tableCells.get(row).get(col))).isEditable();
+            } else {
+                return true; 
+            }
+        } catch(IndexOutOfBoundsException e){
+            System.err.println("Caught IndexOutOfBoundsException" + e.getMessage());
             return false;
-        } else if(tableCells.get(row).get(col) == null){
-            return true;
-        } else if (tableCells.get(row).get(col).getClass().equals(customTableCell.class)) {
-            return ((customTableCell) (tableCells.get(row).get(col))).isEditable();
-        } else {
-            return true; 
         }
     }
     
@@ -119,13 +127,18 @@ public class customTableModel  extends AbstractTableModel {
      * @return
      */
     public boolean isErrorInCell(int row, int col) {
-        if(tableCells.get(row) == null){
-            return false;
-        } else if(tableCells.get(row).get(col) == null){
-            return false;
-        } else if (tableCells.get(row).get(col).getClass().equals(customTableCell.class)) {
-            return ((customTableCell) (tableCells.get(row).get(col))).isError();
-        } else {
+        try{
+            if(tableCells.get(row) == null){
+                return false;
+            } else if(tableCells.get(row).get(col) == null){
+                return false;
+            } else if (tableCells.get(row).get(col).getClass().equals(customTableCell.class)) {
+                return ((customTableCell) (tableCells.get(row).get(col))).isError();
+            } else {
+                return false;
+            }
+        } catch(IndexOutOfBoundsException e){
+            System.err.println("Caught IndexOutOfBoundsException" + e.getMessage());
             return false;
         }
     }
