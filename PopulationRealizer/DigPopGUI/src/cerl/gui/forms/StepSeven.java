@@ -5,10 +5,16 @@
  */
 package cerl.gui.forms;
 
+import cerl.gui.standard.utilities.FileType;
+import cerl.gui.standard.utilities.FileUtility;
+import cerl.gui.standard.utilities.Result;
+import cerl.gui.standard.utilities.Validations;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
+import cerl.gui.utilities.RunFile;
 import cerl.gui.utilities.StepSevenInstructionNames;
+import java.io.File;
 
 /**
  *
@@ -16,7 +22,10 @@ import cerl.gui.utilities.StepSevenInstructionNames;
  */
 public class StepSeven extends javax.swing.JFrame {
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_SEVEN_HELP_FILE_NAME.toString();
+    private final String DEFAULT_NEW_FILE_NAME = "last-run.properties";
+    private final FileType DEFAULT_NEW_FILE_TYPE = FileType.TXT;
     private final DigPopGUIInformation digPopGUIInformation;
+    private RunFile RunProperties;
     
     /**
      * Creates new form Step 7 - Run File form
@@ -24,6 +33,7 @@ public class StepSeven extends javax.swing.JFrame {
     public StepSeven() {
         initComponents();
         this.digPopGUIInformation = new DigPopGUIInformation();
+        this.RunProperties = new RunFile();
     }
     
     /**
@@ -33,6 +43,7 @@ public class StepSeven extends javax.swing.JFrame {
     public StepSeven(DigPopGUIInformation digPopGUIInformation) {
         initComponents();
         this.digPopGUIInformation = digPopGUIInformation;
+        this.RunProperties = new RunFile();
     }
 
     /**
@@ -56,6 +67,7 @@ public class StepSeven extends javax.swing.JFrame {
         Phase2SkippedProbabilityInfoIcon = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel_CreateRunFile = new javax.swing.JLabel();
+        jLabel_Errors = new javax.swing.JLabel();
         jPanel_Run = new javax.swing.JPanel();
         jLabel_NameOfRun = new javax.swing.JLabel();
         nameOfRunInfoIcon = new javax.swing.JLabel();
@@ -115,7 +127,7 @@ public class StepSeven extends javax.swing.JFrame {
         phase3TimeLimitInfoIcon = new javax.swing.JLabel();
         jLabel_Phase3TimeLimit = new javax.swing.JLabel();
         jComboBox_Phase3Skip = new javax.swing.JComboBox<>();
-        btn_Next = new javax.swing.JButton();
+        btn_Save = new javax.swing.JButton();
         btnPreviousStep = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel_FirstRealizationIndex = new javax.swing.JLabel();
@@ -149,12 +161,30 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
+        jTextField_Phase2RandomPlacement.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_Phase2RandomPlacementFocusLost(evt);
+            }
+        });
+
+        jTextField_Phase2SkipTracts.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_Phase2SkipTractsFocusLost(evt);
+            }
+        });
+
         Phase2SkipTractsInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         Phase2SkipTractsInfoIcon.setToolTipText("Help Infomation for Phase 2 Skip Tracts Probability");
         Phase2SkipTractsInfoIcon.setIconTextGap(0);
         Phase2SkipTractsInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Phase2SkipTractsInfoIconMouseClicked(evt);
+            }
+        });
+
+        jTextField_Phase2SkippedTracts.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_Phase2SkippedTractsFocusLost(evt);
             }
         });
 
@@ -177,15 +207,15 @@ public class StepSeven extends javax.swing.JFrame {
                     .addGroup(jPanel_Phase2Layout.createSequentialGroup()
                         .addComponent(jLabel_Phase2RandomPlacement)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Phase2RandomPercentInfoIcon)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField_Phase2RandomPlacement, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Phase2RandomPercentInfoIcon))
                     .addGroup(jPanel_Phase2Layout.createSequentialGroup()
                         .addComponent(jLabel_Phase2SkipTracts)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Phase2SkipTractsInfoIcon)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField_Phase2SkipTracts)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Phase2SkipTractsInfoIcon)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_Phase2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField_Phase2SkipTracts)
+                    .addComponent(jTextField_Phase2RandomPlacement, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel_Phase2SkippedTracts)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -210,9 +240,10 @@ public class StepSeven extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_Phase2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextField_Phase2SkipTracts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel_Phase2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(Phase2SkipTractsInfoIcon)
-                        .addComponent(jLabel_Phase2SkipTracts)))
+                    .addGroup(jPanel_Phase2Layout.createSequentialGroup()
+                        .addComponent(jLabel_Phase2SkipTracts)
+                        .addGap(6, 6, 6))
+                    .addComponent(Phase2SkipTractsInfoIcon))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -220,21 +251,28 @@ public class StepSeven extends javax.swing.JFrame {
         jLabel_CreateRunFile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel_CreateRunFile.setText("Create Run File");
 
+        jLabel_Errors.setForeground(java.awt.Color.red);
+        jLabel_Errors.setText("All Values are Required");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel_CreateRunFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(6, 6, 6)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel_CreateRunFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel_Errors)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(3, 3, 3)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel_CreateRunFile)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel_Errors))
         );
 
         jPanel_Run.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -247,6 +285,12 @@ public class StepSeven extends javax.swing.JFrame {
         nameOfRunInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 nameOfRunInfoIconMouseClicked(evt);
+            }
+        });
+
+        jTextField_NameOfRun.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_NameOfRunFocusLost(evt);
             }
         });
 
@@ -434,6 +478,12 @@ public class StepSeven extends javax.swing.JFrame {
 
         jPanel_RealizationIndex.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jTextField_FinalRealizationIndex.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_FinalRealizationIndexFocusLost(evt);
+            }
+        });
+
         FinalRealizationIndexInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         FinalRealizationIndexInfoIcon.setToolTipText("Help Infomation for Final Realization Index");
         FinalRealizationIndexInfoIcon.setIconTextGap(0);
@@ -514,6 +564,18 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
+        jTextField_OutputDirectory.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_OutputDirectoryFocusLost(evt);
+            }
+        });
+
+        jTextField_ParallelThreads.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_ParallelThreadsFocusLost(evt);
+            }
+        });
+
         ParallelThreadsInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         ParallelThreadsInfoIcon.setToolTipText("Help Infomation for Parallel Threads");
         ParallelThreadsInfoIcon.setIconTextGap(0);
@@ -525,9 +587,9 @@ public class StepSeven extends javax.swing.JFrame {
 
         jLabel_ParallelThreads.setText("Number of parallel threads");
 
-        jTextField_Phase1TimeLimit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_Phase1TimeLimitActionPerformed(evt);
+        jTextField_Phase1TimeLimit.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_Phase1TimeLimitFocusLost(evt);
             }
         });
 
@@ -607,6 +669,12 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
+        jTextField_Phase4_Lags.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_Phase4_LagsFocusLost(evt);
+            }
+        });
+
         Phase4SaveInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         Phase4SaveInfoIcon.setToolTipText("Help Infomation for Phase 4 Save Both Ends");
         Phase4SaveInfoIcon.setIconTextGap(0);
@@ -626,6 +694,12 @@ public class StepSeven extends javax.swing.JFrame {
         SkipPhase4InfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 SkipPhase4InfoIconMouseClicked(evt);
+            }
+        });
+
+        jTextField_Phase4TimeLimit.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_Phase4TimeLimitFocusLost(evt);
             }
         });
 
@@ -730,6 +804,12 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
+        jTextField_Phase34SaveInterval.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_Phase34SaveIntervalFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel_Phase3and4Layout = new javax.swing.GroupLayout(jPanel_Phase3and4);
         jPanel_Phase3and4.setLayout(jPanel_Phase3and4Layout);
         jPanel_Phase3and4Layout.setHorizontalGroup(
@@ -768,6 +848,12 @@ public class StepSeven extends javax.swing.JFrame {
         SkipPhase3InfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 SkipPhase3InfoIconMouseClicked(evt);
+            }
+        });
+
+        jTextField_Phase2TimeLimit.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_Phase2TimeLimitFocusLost(evt);
             }
         });
 
@@ -824,10 +910,10 @@ public class StepSeven extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btn_Next.setText("Next");
-        btn_Next.addActionListener(new java.awt.event.ActionListener() {
+        btn_Save.setText("Save Run File");
+        btn_Save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_NextActionPerformed(evt);
+                btn_SaveActionPerformed(evt);
             }
         });
 
@@ -849,6 +935,18 @@ public class StepSeven extends javax.swing.JFrame {
         FirstRealizationIndexInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 FirstRealizationIndexInfoIconMouseClicked(evt);
+            }
+        });
+
+        jTextField_FirstRealizationIndex.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_FirstRealizationIndexFocusLost(evt);
+            }
+        });
+
+        jTextField_RandomNumberSeed.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_RandomNumberSeedFocusLost(evt);
             }
         });
 
@@ -934,7 +1032,7 @@ public class StepSeven extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnPreviousStep)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_Next))
+                        .addComponent(btn_Save))
                     .addComponent(jPanel_Phase4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel_Phase3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -950,13 +1048,13 @@ public class StepSeven extends javax.swing.JFrame {
                             .addComponent(jPanel_Archetype, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel_RealizationIndex, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jPanel_Seeds, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel_Run, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -979,7 +1077,7 @@ public class StepSeven extends javax.swing.JFrame {
                 .addComponent(jPanel_Phase4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Next)
+                    .addComponent(btn_Save)
                     .addComponent(btnPreviousStep))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1075,40 +1173,87 @@ public class StepSeven extends javax.swing.JFrame {
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase3_Time_Limit.toString());
     }//GEN-LAST:event_phase3TimeLimitInfoIconMouseClicked
 
-    private void btn_NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_NextActionPerformed
+    private void btn_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SaveActionPerformed
+        String saveFilePath = this.digPopGUIInformation.getFilePath();
+        
+        if(saveFilePath.contains(".XML")){
+            saveFilePath = saveFilePath.substring(0, saveFilePath.lastIndexOf("\\")+1);
+        }
+        
+        //create new run file
+        File newRunFile = new File(String.format("%s\\%s", saveFilePath, DEFAULT_NEW_FILE_NAME));
+                
+        //write to file
+        Result result = FileUtility.WriteNewTextFile(newRunFile.getPath(), this.RunProperties.toString());
+        
+        //provide message to user that the file has been created
+        this.jLabel_Errors.setText("The Run file was saved");
+        System.out.println("file was saved!" + result.getValue());
+    }//GEN-LAST:event_btn_SaveActionPerformed
 
     private void jComboBox_LogPhase1ResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_LogPhase1ResultsActionPerformed
-        // TODO add your handling code here:
+        if((String)(jComboBox_LogPhase1Results.getSelectedItem()) == "TRUE"){
+            this.RunProperties.setDo_dump_number_archtypes(true);
+        } else{
+            this.RunProperties.setDo_dump_number_archtypes(false);
+        }
     }//GEN-LAST:event_jComboBox_LogPhase1ResultsActionPerformed
 
     private void jComboBox_LogQualityEvalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_LogQualityEvalActionPerformed
-        // TODO add your handling code here:
+        if((String)(jComboBox_LogQualityEval.getSelectedItem()) == "TRUE"){
+            this.RunProperties.setDo_dump_statistics(true);
+        } else{
+            this.RunProperties.setDo_dump_statistics(false);
+        }
     }//GEN-LAST:event_jComboBox_LogQualityEvalActionPerformed
 
     private void jComboBox_HouseholdArchetypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_HouseholdArchetypeActionPerformed
-        // TODO add your handling code here:
+        if((String)(jComboBox_HouseholdArchetype.getSelectedItem()) == "TRUE"){
+            this.RunProperties.setDo_write_all_hoh_fields(true);
+        } else{
+            this.RunProperties.setDo_write_all_hoh_fields(false);
+        }
     }//GEN-LAST:event_jComboBox_HouseholdArchetypeActionPerformed
 
     private void jComboBox_PopulationArchetypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_PopulationArchetypeActionPerformed
-        // TODO add your handling code here:
+        if((String)(jComboBox_PopulationArchetype.getSelectedItem()) == "TRUE"){
+            this.RunProperties.setDo_write_all_pop_fields(true);
+        } else{
+            this.RunProperties.setDo_write_all_pop_fields(false);
+        }
     }//GEN-LAST:event_jComboBox_PopulationArchetypeActionPerformed
 
     private void jComboBox_FirstCensusTractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_FirstCensusTractActionPerformed
-        // TODO add your handling code here:
+        //Use only the first census tract
+        if((String)(jComboBox_FirstCensusTract.getSelectedItem()) == "TRUE"){
+            this.RunProperties.setOnly_one_region(true);
+        } else{
+            this.RunProperties.setOnly_one_region(false);
+        }
     }//GEN-LAST:event_jComboBox_FirstCensusTractActionPerformed
 
     private void jComboBox_Phase3SkipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Phase3SkipActionPerformed
-        // TODO add your handling code here:
+        if((String)(jComboBox_Phase3Skip.getSelectedItem()) == "TRUE"){
+            this.RunProperties.setPhase3_skip(true);
+        } else{
+            this.RunProperties.setPhase3_skip(false);
+        }
     }//GEN-LAST:event_jComboBox_Phase3SkipActionPerformed
 
     private void jComboBox_Phase4SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Phase4SaveActionPerformed
-        // TODO add your handling code here:
+        if((String)(jComboBox_Phase4Save.getSelectedItem()) == "TRUE"){
+            this.RunProperties.setPhase4_save_both_ends(true);
+        } else{
+            this.RunProperties.setPhase4_save_both_ends(false);
+        }
     }//GEN-LAST:event_jComboBox_Phase4SaveActionPerformed
 
     private void jComboBox_Phase4SkipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Phase4SkipActionPerformed
-        // TODO add your handling code here:
+        if((String)(jComboBox_Phase4Skip.getSelectedItem()) == "TRUE"){
+            this.RunProperties.setPhase4_skip(true);
+        } else{
+            this.RunProperties.setPhase4_skip(false);
+        }
     }//GEN-LAST:event_jComboBox_Phase4SkipActionPerformed
 
     private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
@@ -1123,11 +1268,133 @@ public class StepSeven extends javax.swing.JFrame {
         new GenerateTraitClusters(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
+    
+    private void jTextField_FirstRealizationIndexFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_FirstRealizationIndexFocusLost
+        String value = jTextField_FirstRealizationIndex.getText();
+        
+        if(Validations.validateAndReturnDouble(value)){
+            this.RunProperties.setFirst_rzn_num(Integer.parseInt(value));
+        } else {
+            jLabel_Errors.setText("The First Realization Index Must be a Valid Integer");
+        }
+    }//GEN-LAST:event_jTextField_FirstRealizationIndexFocusLost
 
-    private void jTextField_Phase1TimeLimitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_Phase1TimeLimitActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_Phase1TimeLimitActionPerformed
+    private void jTextField_Phase1TimeLimitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase1TimeLimitFocusLost
+        String value = jTextField_Phase1TimeLimit.getText();
+        if(Validations.validateAndReturnDouble(value)){
+            this.RunProperties.setPhase1_time_limit(Double.parseDouble(value));   
+        } else {
+            jLabel_Errors.setText("The Phase 1 Time Limit Must be a Valid Double");
+        }
+    }//GEN-LAST:event_jTextField_Phase1TimeLimitFocusLost
 
+    private void jTextField_NameOfRunFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_NameOfRunFocusLost
+        this.RunProperties.setRunName(jTextField_NameOfRun.getText());
+    }//GEN-LAST:event_jTextField_NameOfRunFocusLost
+
+    private void jTextField_RandomNumberSeedFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_RandomNumberSeedFocusLost
+        String value = jTextField_RandomNumberSeed.getText();
+        
+        if(Validations.validateAndReturnLong(value)){
+            this.RunProperties.setInitial_seed(Long.parseLong(value));
+        } else {
+            jLabel_Errors.setText("The Random Number Seed Must be a Valid Long");
+        }
+    }//GEN-LAST:event_jTextField_RandomNumberSeedFocusLost
+
+    private void jTextField_FinalRealizationIndexFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_FinalRealizationIndexFocusLost
+        String value = jTextField_FinalRealizationIndex.getText();
+        
+        if(Validations.validateAndReturnInteger(value)){
+            this.RunProperties.setFinal_rzn_num(Integer.parseInt(value));
+        } else {
+            jLabel_Errors.setText("The Final Realization Index Must be a Valid Integer");
+        }
+    }//GEN-LAST:event_jTextField_FinalRealizationIndexFocusLost
+
+    private void jTextField_OutputDirectoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_OutputDirectoryFocusLost
+        this.RunProperties.setOutput_dir(jTextField_OutputDirectory.getText());
+    }//GEN-LAST:event_jTextField_OutputDirectoryFocusLost
+
+    private void jTextField_ParallelThreadsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_ParallelThreadsFocusLost
+        String value = jTextField_ParallelThreads.getText();
+        
+        if(Validations.validateAndReturnInteger(value)){
+            this.RunProperties.setParallel_threads(Integer.parseInt(value));
+        } else {
+            jLabel_Errors.setText("The Parallel Threads Must be a Valid Integer");
+        }
+    }//GEN-LAST:event_jTextField_ParallelThreadsFocusLost
+
+    private void jTextField_Phase2RandomPlacementFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase2RandomPlacementFocusLost
+        String value = jTextField_Phase2RandomPlacement.getText();
+        if(Validations.validateAndReturnDouble(value)){
+            this.RunProperties.setPhase2_random_tract_prob(Double.parseDouble(value));   
+        } else {
+            jLabel_Errors.setText("The Phase 2 Random Placement Percentage Must be a Valid Double");
+        }
+    }//GEN-LAST:event_jTextField_Phase2RandomPlacementFocusLost
+
+    private void jTextField_Phase2SkippedTractsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase2SkippedTractsFocusLost
+        String value = jTextField_Phase2SkippedTracts.getText();
+        
+        if(Validations.validateAndReturnDouble(value)){
+            this.RunProperties.setPhase2_tract_skip_prob_init(Double.parseDouble(value));   
+        }else {
+            jLabel_Errors.setText("The Phase 2 Skip Tracts Probability Must be a Valid Double");
+        }
+    }//GEN-LAST:event_jTextField_Phase2SkippedTractsFocusLost
+
+    private void jTextField_Phase2SkipTractsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase2SkipTractsFocusLost
+        String value = jTextField_Phase2SkippedTracts.getText();
+        
+        if(Validations.validateAndReturnDouble(value)){
+            this.RunProperties.setPhase2_tract_skip_prob_init(Double.parseDouble(value));   
+        } else {
+            jLabel_Errors.setText("The Phase 2 Skip Tracts Probability Must be a Valid Double");
+        }
+    }//GEN-LAST:event_jTextField_Phase2SkipTractsFocusLost
+
+    private void jTextField_Phase34SaveIntervalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase34SaveIntervalFocusLost
+        String value = jTextField_Phase34SaveInterval.getText();
+        
+        if(Validations.validateAndReturnDouble(value)){
+            this.RunProperties.setPhase3_save_intermediate(Double.parseDouble(value));   
+        } else {
+            jLabel_Errors.setText("The Phase 3 and 4 Intermediate save Interval Must be a Valid Double");
+        }
+    }//GEN-LAST:event_jTextField_Phase34SaveIntervalFocusLost
+
+    private void jTextField_Phase2TimeLimitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase2TimeLimitFocusLost
+        String value = jTextField_Phase2TimeLimit.getText();
+        
+        if(Validations.validateAndReturnDouble(value)){
+            this.RunProperties.setPhase3_time_limit(Double.parseDouble(value));   
+        } else {
+            jLabel_Errors.setText("The Phase 3 Time Limit Must be a Valid Double");
+        }
+    }//GEN-LAST:event_jTextField_Phase2TimeLimitFocusLost
+
+    private void jTextField_Phase4_LagsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase4_LagsFocusLost
+        String value = jTextField_Phase4_Lags.getText();
+        
+        if(Validations.validateAndReturnInteger(value)){
+            this.RunProperties.setPhase4_num_lags(Integer.parseInt(value));
+        } else {
+            jLabel_Errors.setText("The Number of Lags Must be a Valid Integer");
+        }
+    }//GEN-LAST:event_jTextField_Phase4_LagsFocusLost
+
+    private void jTextField_Phase4TimeLimitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase4TimeLimitFocusLost
+        String value = jTextField_Phase4TimeLimit.getText();
+        
+        if(Validations.validateAndReturnDouble(value)){
+            this.RunProperties.setPhase4_time_limit(Double.parseDouble(value));   
+        } else {
+            jLabel_Errors.setText("The Phase 4 Time Limit Must be a Valid Double");
+        }
+    }//GEN-LAST:event_jTextField_Phase4TimeLimitFocusLost
+    
     /**
      * @param args the command line arguments
      */
@@ -1183,7 +1450,7 @@ public class StepSeven extends javax.swing.JFrame {
     private javax.swing.JLabel SkipPhase3InfoIcon;
     private javax.swing.JLabel SkipPhase4InfoIcon;
     private javax.swing.JButton btnPreviousStep;
-    private javax.swing.JButton btn_Next;
+    private javax.swing.JButton btn_Save;
     private javax.swing.JComboBox<String> jComboBox_FirstCensusTract;
     private javax.swing.JComboBox<String> jComboBox_HouseholdArchetype;
     private javax.swing.JComboBox<String> jComboBox_LogPhase1Results;
@@ -1193,6 +1460,7 @@ public class StepSeven extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox_Phase4Skip;
     private javax.swing.JComboBox<String> jComboBox_PopulationArchetype;
     private javax.swing.JLabel jLabel_CreateRunFile;
+    private javax.swing.JLabel jLabel_Errors;
     private javax.swing.JLabel jLabel_FinalRealizationIndex;
     private javax.swing.JLabel jLabel_FirstCensusTract;
     private javax.swing.JLabel jLabel_FirstRealizationIndex;

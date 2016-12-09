@@ -58,7 +58,7 @@
                   <Group type="102" attributes="0">
                       <Component id="btnPreviousStep" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btn_Next" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_Save" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jPanel_Phase4" alignment="0" max="32767" attributes="0"/>
                   <Component id="jPanel_Phase3" alignment="0" max="32767" attributes="0"/>
@@ -79,15 +79,15 @@
                   </Group>
                   <Component id="jPanel_Seeds" alignment="0" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jPanel2" min="-2" pref="30" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel_Run" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -112,7 +112,7 @@
               <Component id="jPanel_Phase4" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btn_Next" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_Save" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnPreviousStep" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -136,20 +136,21 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Component id="jLabel_Phase2RandomPlacement" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="Phase2RandomPercentInfoIcon" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField_Phase2RandomPlacement" min="-2" pref="121" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Component id="jLabel_Phase2SkipTracts" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="Phase2SkipTractsInfoIcon" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField_Phase2SkipTracts" max="32767" attributes="0"/>
                       </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jTextField_Phase2SkipTracts" max="32767" attributes="0"/>
+                      <Component id="jTextField_Phase2RandomPlacement" pref="121" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel_Phase2SkippedTracts" min="-2" max="-2" attributes="0"/>
@@ -180,10 +181,11 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="jTextField_Phase2SkipTracts" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                          <Component id="Phase2SkipTractsInfoIcon" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel_Phase2SkipTracts" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="Phase2SkipTractsInfoIcon" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -219,8 +221,14 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField_Phase2RandomPlacement">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_Phase2RandomPlacementFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField_Phase2SkipTracts">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_Phase2SkipTractsFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="Phase2SkipTractsInfoIcon">
           <Properties>
@@ -235,6 +243,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField_Phase2SkippedTracts">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_Phase2SkippedTractsFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="Phase2SkippedProbabilityInfoIcon">
           <Properties>
@@ -256,18 +267,24 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel_CreateRunFile" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel_CreateRunFile" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="jLabel_Errors" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
                   <Component id="jLabel_CreateRunFile" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jLabel_Errors" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -280,6 +297,14 @@
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Create Run File"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel_Errors">
+          <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" id="red" palette="1" red="ff" type="palette"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="All Values are Required"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -342,6 +367,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField_NameOfRun">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_NameOfRunFocusLost"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -663,6 +691,9 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="jTextField_FinalRealizationIndex">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_FinalRealizationIndexFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="FinalRealizationIndexInfoIcon">
           <Properties>
@@ -812,8 +843,14 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField_OutputDirectory">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_OutputDirectoryFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField_ParallelThreads">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_ParallelThreadsFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="ParallelThreadsInfoIcon">
           <Properties>
@@ -834,7 +871,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField_Phase1TimeLimit">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_Phase1TimeLimitActionPerformed"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_Phase1TimeLimitFocusLost"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="Phase1TimeLimitInfoIcon">
@@ -968,6 +1005,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField_Phase4_Lags">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_Phase4_LagsFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="Phase4SaveInfoIcon">
           <Properties>
@@ -1004,6 +1044,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField_Phase4TimeLimit">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_Phase4TimeLimitFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="Phase4TimeLimitInfoIcon">
           <Properties>
@@ -1114,6 +1157,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField_Phase34SaveInterval">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_Phase34SaveIntervalFocusLost"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -1195,6 +1241,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField_Phase2TimeLimit">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_Phase2TimeLimitFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="phase3TimeLimitInfoIcon">
           <Properties>
@@ -1231,12 +1280,12 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="btn_Next">
+    <Component class="javax.swing.JButton" name="btn_Save">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Next"/>
+        <Property name="text" type="java.lang.String" value="Save Run File"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_NextActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_SaveActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnPreviousStep">
@@ -1327,8 +1376,14 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField_FirstRealizationIndex">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_FirstRealizationIndexFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField_RandomNumberSeed">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_RandomNumberSeedFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="randomNumberSeedInfoIcon">
           <Properties>
