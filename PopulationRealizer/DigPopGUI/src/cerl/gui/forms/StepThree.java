@@ -7,13 +7,18 @@ package cerl.gui.forms;
 
 import cerl.gui.standard.utilities.Result;
 import cerl.gui.utilities.CensusSurveyClasses;
+import cerl.gui.utilities.Class;
 import static cerl.gui.utilities.DigPopFileTypeEnum.Household_Micro_Data;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.MarkovChain;
 import cerl.gui.utilities.SurveyColumnValue;
 import cerl.gui.utilities.SurveyColumnValuesGrouping;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
@@ -560,7 +565,21 @@ public class StepThree extends javax.swing.JFrame {
     }
     
     private void save(){
+        ArrayList<cerl.gui.utilities.Class> selectedCensusClasses = new ArrayList<cerl.gui.utilities.Class> ();
+        
+        censusSurveyClasses.getCensusClasses().stream().forEach((c) -> {
+            if(c.isSelected()){
+                selectedCensusClasses.add(c);
+            }
+        });
+        
+        
+        
+        MarkovChain markovChain = new MarkovChain("New Markov Chain", selectedCensusClasses, this.selectSurveyClass, 1);
+        this.censusSurveyClasses.addMarkovChains(markovChain);
+        
         this.digPopGUIInformation.setCensusSurveyClasses(this.censusSurveyClasses);
+        
         //Save to file
         Result result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(
                     this.digPopGUIInformation,

@@ -14,7 +14,9 @@ import cerl.gui.standard.utilities.customTableModelListener;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
+import cerl.gui.utilities.MarkovChain;
 import cerl.gui.utilities.MarkovTableCell;
+import cerl.gui.utilities.SurveyColumnValuesGrouping;
 import javax.swing.table.TableColumn;
 
 /**
@@ -85,9 +87,16 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     }
 
     private MarkovTableModel populateMarkovTableModel(){
+        
+        MarkovChain markovChain = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(1);
+        List<SurveyColumnValuesGrouping> surveyGroups = markovChain.getSelectSurveyClass().getSurveyColumnValuesGroupings();
+        
         ArrayList<String> columnNames = new ArrayList<>();
         //Census Value Names
-        columnNames.addAll(Arrays.asList("","Value","Yes Electricity","No Electricity","N/A","Amount Left",""));
+     //   columnNames.addAll(Arrays.asList("","Value","Yes Electricity","No Electricity","N/A","Amount Left",""));
+     columnNames.addAll(Arrays.asList("","Value"));
+        columnNames.addAll(markovChain.getAllSelectedCensusClassesUserDefinedNames());
+        columnNames.addAll(Arrays.asList("Amount Left",""));
 
         //columns must be rows+1 because the header row is the -1th row.
         ArrayList<ArrayList<Object>> cellValues = new ArrayList<>(); //MarkovTableCell[6][7];
@@ -100,29 +109,46 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         int[][] cells = new int[2][Math.max(END_EDITABLE_COL-START_EDITABLE_COL, END_EDITABLE_ROW-START_EDITABLE_ROW)+1];
         
         //Set up rows and columns
-        for(int r = 0; r<6; r++){
+        int numberOfNeededRows = 3 + surveyGroups.size();
+        int numberOfNeededColumn = columnNames.size();
+        for(int r = 0; r<numberOfNeededRows; r++){
             cellValues.add(r, new ArrayList<>());
-            for(int c=0;c<7;c++){
+            for(int c=0;c<numberOfNeededColumn;c++){
                 cellValues.get(r).add(c, new MarkovTableCell(r, c, "", false, false, false, true));
             }
         }
         
         //MarkovTableCell(int row, int column, Object value, boolean calculated, boolean userEntered, boolean error, boolean editable)
         cellValues.get(0).add(0, new MarkovTableCell(0, 0, "Value", false, false, false, false));
-        cellValues.get(4).add(0, new MarkovTableCell(4, 0, "Amount Left", false, false, false, false));
-        cellValues.get(5).add(0, new MarkovTableCell(5, 0, "", false, false, false, false));
+        cellValues.get(4).add(0, new MarkovTableCell(numberOfNeededRows - 2, 0, "Amount Left", false, false, false, false));
+        cellValues.get(5).add(0, new MarkovTableCell(numberOfNeededRows - 1, 0, "", false, false, false, false));
         cellValues.get(0).add(1, new MarkovTableCell(0, 1, "Proportion", false, false, false, false));
-        //non-editable corner cells
-        cellValues.get(0).add(5, new MarkovTableCell(0, 5, "Range Min:    Range Max:", false, false, false, false));
-        cellValues.get(0).add(6, new MarkovTableCell(0, 6, "", false, false, false, false));
-        cellValues.get(4).add(1, new MarkovTableCell(4, 1, "Range Min:    Range Max:", false, false, false, false));
-        cellValues.get(5).add(1, new MarkovTableCell(5, 1, "", false, false, false, false));
-        cellValues.get(5).add(6, new MarkovTableCell(5, 6, "", false, false, false, false));
+        
               
         //Survey Values
-        cellValues.get(1).add(0, new MarkovTableCell(1, 1, "Yes Electricity", false, false, false, false));
-        cellValues.get(2).add(0, new MarkovTableCell(2, 1, "No Electricity", false, false, false, false));
-        cellValues.get(3).add(0, new MarkovTableCell(3, 1, "N/A", false, false, false, false));
+//        cellValues.get(1).add(0, new MarkovTableCell(1, 1, "Yes Electricity", false, false, false, false));
+//        cellValues.get(2).add(0, new MarkovTableCell(2, 1, "No Electricity", false, false, false, false));
+//        cellValues.get(3).add(0, new MarkovTableCell(3, 1, "N/A", false, false, false, false));
+        
+        int surveyGroupingCounter = 0;
+        for(int counter = 1; counter <= surveyGroups.size(); counter++){
+            cellValues.get(counter).add(
+                    0, 
+                    new MarkovTableCell(
+                            counter, 
+                            1, 
+                            surveyGroups.get(surveyGroupingCounter).getUserDefinedDescription(), 
+                            false, false, false, false));
+            surveyGroupingCounter++;
+        }
+        
+        
+        //non-editable corner cells
+        cellValues.get(0).add(5, new MarkovTableCell(0, numberOfNeededRows - 1, "Range Min:    Range Max:", false, false, false, false));
+        cellValues.get(0).add(6, new MarkovTableCell(0, numberOfNeededRows, "", false, false, false, false));
+        cellValues.get(4).add(1, new MarkovTableCell(numberOfNeededColumn - 3, 1, "Range Min:    Range Max:", false, false, false, false));
+        cellValues.get(5).add(1, new MarkovTableCell(numberOfNeededColumn - 2, 1, "", false, false, false, false));
+        cellValues.get(5).add(6, new MarkovTableCell(numberOfNeededColumn -2, numberOfNeededRows, "", false, false, false, false));
         
         //load proportions
         //census - proportion min/max start the same
