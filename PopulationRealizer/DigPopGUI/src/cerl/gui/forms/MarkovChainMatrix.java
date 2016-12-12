@@ -105,8 +105,8 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         //based on the number of rows/columns, set the limits of editable cells
         START_EDITABLE_ROW = 1;
         START_EDITABLE_COL = 2;
-        END_EDITABLE_ROW = 3;
-        END_EDITABLE_COL = 4;
+        END_EDITABLE_ROW = surveyGroups.size();//3;
+        END_EDITABLE_COL = 1 + markovChain.getCensusClasses().size();//4;
         int[][] cells = new int[2][Math.max(END_EDITABLE_COL-START_EDITABLE_COL, END_EDITABLE_ROW-START_EDITABLE_ROW)+1];
         
         //Set up rows and columns
