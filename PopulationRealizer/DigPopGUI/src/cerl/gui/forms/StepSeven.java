@@ -71,9 +71,8 @@ public class StepSeven extends javax.swing.JFrame {
             //result = FileUtility.ParseXMLFileIntoSpecifiedObject(newRunFile.getPath(), RunFile.class);
             this.RunProperties = new RunFile(result.getValue().toString());
             setDataOnForm();
-        }else {
-            this.jLabel_Errors.setText("All data fields are required");
         }
+        this.jLabel_Errors.setText("All data fields are required");
     }
     
     /**
@@ -1252,89 +1251,112 @@ public class StepSeven extends javax.swing.JFrame {
      * @return - True if all fields were provided, false if missing information
      */
     private boolean validateData(){
+        Boolean isValid = true; //valid until proven otherwise
         String errorText = "<html>The following data fields must be provided missing: ";
         
         //Check all true/false combo boxes:
         if(jComboBox_LogPhase1Results.getSelectedIndex() <= 0){
             errorText += "<br /> - " + this.jLabel_LogPhase1Results.getText();
+            isValid = false;
         }
         
         if(jComboBox_LogQualityEval.getSelectedIndex() <= 0){
             errorText += "<br /> - " + this.jLabel_LogQualityEval.getText();
+            isValid = false;
         }
         
         if(jComboBox_HouseholdArchetype.getSelectedIndex() <= 0){
             errorText += "<br /> - " + this.jLabel_HouseholdArchetype.getText();
+            isValid = false;
         }
         
         if(jComboBox_PopulationArchetype.getSelectedIndex() <= 0){
             errorText += "<br /> - " + this.jLabel_PopulationArchetype.getText();
+            isValid = false;
         }
         
         if(jComboBox_FirstCensusTract.getSelectedIndex() <= 0){
             errorText += "<br /> - " + this.jLabel_FirstCensusTract.getText();
+            isValid = false;
         }
         
         if(jComboBox_Phase3Skip.getSelectedIndex() <= 0){
             errorText += "<br /> - " + this.jLabel_Phase3Skip.getText();
+            isValid = false;
         }
         
         if(jComboBox_Phase4Save.getSelectedIndex() <= 0){
             errorText += "<br /> - " + this.jLabel_Phase4Save.getText();
+            isValid = false;
         }
         
         if(jComboBox_Phase4Skip.getSelectedIndex() <= 0){
             errorText += "<br /> - " + this.jLabel_Phase4Skip.getText();
+            isValid = false;
         }
         
         //Check all text fields
         if(jTextField_NameOfRun.getText().equals("")){
             errorText += "<br /> - " + this.jLabel_NameOfRun.getText();
+            isValid = false;
         }
         if(jTextField_FinalRealizationIndex.getText().equals("")){
             errorText += "<br /> - " + this.jLabel_FinalRealizationIndex.getText();
+            isValid = false;
         }
         if(jTextField_FirstRealizationIndex.getText().equals("")){
             errorText += "<br /> - " + this.jLabel_FirstRealizationIndex.getText();
+            isValid = false;
         }
         if(jTextField_OutputDirectory.getText().equals("")){
             errorText += "<br /> - " + this.jLabel_OutputDirectory.getText();
+            isValid = false;
         }
         if(jTextField_ParallelThreads.getText().equals("")){
             errorText += "<br /> - " + this.jLabel_ParallelThreads.getText();
+            isValid = false;
         }
         if(jTextField_Phase1TimeLimit.getText().equals("")){
             errorText += "<br /> - " + this.jLabel_Phase1TimeLimit.getText();
+            isValid = false;
         }
         if(jTextField_Phase2RandomPlacement.getText().equals("")){
             errorText += "<br /> - " + this.jLabel_Phase2RandomPlacement.getText();
+            isValid = false;
         }
         if(jTextField_Phase2SkipTractsProb.getText().equals("")){
             errorText += "<br /> - " + this.jLabel_Phase2SkipTracts.getText();
+            isValid = false;
         }
         if(jTextField_Phase2SkipTractsDelta.getText().equals("")){
             errorText += "<br /> - " + this.jLabel_Phase2SkippedTracts.getText();
+            isValid = false;
         }
         if(jTextField_Phase3TimeLimit.getText().equals("")){
             errorText += "<br /> - " + this.jLabel_Phase3TimeLimit.getText();
+            isValid = false;
         }
         if(jTextField_Phase34SaveInterval.getText().equals("")){
             errorText += "<br /> - " + this.jLabel_Phase34SaveInterval.getText();
+            isValid = false;
         }
         if(jTextField_Phase4TimeLimit.getText().equals("")){
             errorText += "<br /> - " + this.jLabel_Phase4_TimeLimit.getText();
+            isValid = false;
         }
         if(jTextField_Phase4_Lags.getText().equals("")){
             errorText += "<br /> - " + this.jLabel_Phase4_Lags.getText();
+            isValid = false;
         }
         if(jTextField_RandomNumberSeed.getText().equals("")){
             errorText += "<br /> - " + this.jLabel_RandomNumberSeed.getText();
+            isValid = false;
         }
         errorText += "</html>";
         
         jLabel_Errors.setText(errorText);
         
-        return false;
+        return isValid;
     }
     
     /**
@@ -1360,7 +1382,7 @@ public class StepSeven extends javax.swing.JFrame {
      * @param evt 
      */
     private void btn_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SaveActionPerformed
-        validateData();
+        Boolean isValid = validateData();
         String saveFilePath = this.digPopGUIInformation.getFilePath();
         
         if(saveFilePath.contains(".XML")){
@@ -1374,7 +1396,9 @@ public class StepSeven extends javax.swing.JFrame {
         Result result = FileUtility.WriteNewTextFile(newRunFile.getPath(), this.RunProperties.toString());
         
         //provide message to user that the file has been created
-        this.jLabel_Errors.setText("The Run file was saved");
+        if(isValid){
+            this.jLabel_Errors.setText("The Run file was saved");
+        }
     }//GEN-LAST:event_btn_SaveActionPerformed
 
     private void jComboBox_LogPhase1ResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_LogPhase1ResultsActionPerformed
