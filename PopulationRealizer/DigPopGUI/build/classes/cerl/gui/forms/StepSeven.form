@@ -149,7 +149,7 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jTextField_Phase2SkipTracts" max="32767" attributes="0"/>
+                      <Component id="jTextField_Phase2SkipTractsProb" max="32767" attributes="0"/>
                       <Component id="jTextField_Phase2RandomPlacement" pref="121" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
@@ -157,7 +157,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="Phase2SkippedProbabilityInfoIcon" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jTextField_Phase2SkippedTracts" max="32767" attributes="0"/>
+                  <Component id="jTextField_Phase2SkipTractsDelta" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -172,7 +172,7 @@
                           <Component id="jTextField_Phase2RandomPlacement" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel_Phase2SkippedTracts" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jTextField_Phase2SkippedTracts" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextField_Phase2SkipTractsDelta" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                           <Component id="Phase2RandomPercentInfoIcon" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel_Phase2RandomPlacement" min="-2" max="-2" attributes="0"/>
@@ -180,7 +180,7 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jTextField_Phase2SkipTracts" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextField_Phase2SkipTractsProb" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel_Phase2SkipTracts" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
@@ -225,9 +225,9 @@
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_Phase2RandomPlacementFocusLost"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField_Phase2SkipTracts">
+        <Component class="javax.swing.JTextField" name="jTextField_Phase2SkipTractsProb">
           <Events>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_Phase2SkipTractsFocusLost"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_Phase2SkipTractsProbFocusLost"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="Phase2SkipTractsInfoIcon">
@@ -242,9 +242,9 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Phase2SkipTractsInfoIconMouseClicked"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField_Phase2SkippedTracts">
+        <Component class="javax.swing.JTextField" name="jTextField_Phase2SkipTractsDelta">
           <Events>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_Phase2SkippedTractsFocusLost"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_Phase2SkipTractsDeltaFocusLost"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="Phase2SkippedProbabilityInfoIcon">
@@ -477,11 +477,8 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox_LogPhase1Results">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="TRUE"/>
-                <StringItem index="1" value="FALSE"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new DefaultComboBoxModel&lt;&gt;(TRUE_FALSE_VALUES)" type="code"/>
             </Property>
           </Properties>
           <Events>
@@ -493,11 +490,8 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox_LogQualityEval">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="TRUE"/>
-                <StringItem index="1" value="FALSE"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new DefaultComboBoxModel&lt;&gt;(TRUE_FALSE_VALUES)" type="code"/>
             </Property>
           </Properties>
           <Events>
@@ -602,11 +596,8 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox_HouseholdArchetype">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="TRUE"/>
-                <StringItem index="1" value="FALSE"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new DefaultComboBoxModel&lt;&gt;(TRUE_FALSE_VALUES)" type="code"/>
             </Property>
           </Properties>
           <Events>
@@ -618,11 +609,8 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox_PopulationArchetype">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="TRUE"/>
-                <StringItem index="1" value="FALSE"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new DefaultComboBoxModel&lt;&gt;(TRUE_FALSE_VALUES)" type="code"/>
             </Property>
           </Properties>
           <Events>
@@ -714,11 +702,8 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox_FirstCensusTract">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="TRUE"/>
-                <StringItem index="1" value="FALSE"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new DefaultComboBoxModel&lt;&gt;(TRUE_FALSE_VALUES)" type="code"/>
             </Property>
           </Properties>
           <Events>
@@ -1067,11 +1052,8 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox_Phase4Save">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="TRUE"/>
-                <StringItem index="1" value="FALSE"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new DefaultComboBoxModel&lt;&gt;(TRUE_FALSE_VALUES)" type="code"/>
             </Property>
           </Properties>
           <Events>
@@ -1083,11 +1065,8 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox_Phase4Skip">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="TRUE"/>
-                <StringItem index="1" value="FALSE"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new DefaultComboBoxModel&lt;&gt;(TRUE_FALSE_VALUES)" type="code"/>
             </Property>
           </Properties>
           <Events>
@@ -1187,7 +1166,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="phase3TimeLimitInfoIcon" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jTextField_Phase2TimeLimit" max="32767" attributes="0"/>
+                  <Component id="jTextField_Phase3TimeLimit" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -1197,7 +1176,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jTextField_Phase2TimeLimit" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextField_Phase3TimeLimit" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jComboBox_Phase3Skip" min="-2" max="-2" attributes="0"/>
                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                           <Component id="SkipPhase3InfoIcon" min="-2" max="-2" attributes="0"/>
@@ -1240,9 +1219,9 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="SkipPhase3InfoIconMouseClicked"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField_Phase2TimeLimit">
+        <Component class="javax.swing.JTextField" name="jTextField_Phase3TimeLimit">
           <Events>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_Phase2TimeLimitFocusLost"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField_Phase3TimeLimitFocusLost"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="phase3TimeLimitInfoIcon">
@@ -1264,11 +1243,8 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox_Phase3Skip">
           <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="TRUE"/>
-                <StringItem index="1" value="FALSE"/>
-              </StringArray>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new DefaultComboBoxModel&lt;&gt;(TRUE_FALSE_VALUES)" type="code"/>
             </Property>
           </Properties>
           <Events>

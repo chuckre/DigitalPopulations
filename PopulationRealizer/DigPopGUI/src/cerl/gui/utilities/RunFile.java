@@ -5,6 +5,7 @@
  */
 package cerl.gui.utilities;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 /**
@@ -89,6 +90,100 @@ public class RunFile {
         this.phase4_save_both_ends = phase4_save_both_ends;
         this.phase4_skip = phase4_skip;
         this.phase4_time_limit = phase4_time_limit;
+    }
+    
+    /**
+     * Creates a new RunFile object from an existing file string
+     * @param fullRunFile 
+     */
+    public RunFile(String fullRunFile) {
+        String delims = "[,]+";
+        String[] tokens = fullRunFile.split(delims);
+        
+        for (int i=0; i<tokens.length; i++){
+            String innerDelims = "[=]+";
+            String values[] = tokens[i].split(innerDelims);
+            
+            if((values.length == 2) && (values[1] != null) && !(values[1].equals("null"))){
+                switch(values[0]){
+                    case "#":
+                        if(i == 0){
+                            this.runName = values[1];
+                        } else if(i == 1){
+                            this.dateOfRun = new Date(); //today
+                        }
+                        break;
+                    case "criteria_file":
+                        this.criteria_file = values[1];
+                        break;      
+                    case "do_dump_number_archtypes":
+                        this.do_dump_number_archtypes = Boolean.parseBoolean(values[1]);
+                        break;
+                    case "do_dump_statistics":
+                        this.do_dump_statistics = Boolean.parseBoolean(values[1]);
+                        break;
+                    case "do_write_all_hoh_fields":
+                        this.do_write_all_hoh_fields = Boolean.parseBoolean(values[1]);
+                        break;
+                    case "do_write_all_pop_fields":
+                        this.do_write_all_pop_fields = Boolean.parseBoolean(values[1]);
+                        break;
+                    case "final_rzn_num":
+                        this.final_rzn_num = Integer.parseInt(values[1]);
+                        break;
+                    case "first_rzn_num":
+                        this.first_rzn_num = Integer.parseInt(values[1]);
+                        break;
+                    case "initial_seed":
+                        this.initial_seed = Long.parseLong(values[1]);
+                        break;
+                    case "only_one_region":
+                        this.only_one_region = Boolean.parseBoolean(values[1]);
+                        break;
+                    case "output_dir":
+                        this.output_dir = values[1];
+                        break;
+                    case "parallel_threads":
+                        this.parallel_threads = Integer.parseInt(values[1]);
+                        break;
+                    case "phase1_time_limit":
+                        this.phase1_time_limit = Double.parseDouble(values[1]);
+                        break;
+                    case "phase2_random_tract_prob":
+                        this.phase2_random_tract_prob = Double.parseDouble(values[1]);
+                        break;
+                    case "phase2_tract_skip_prob_delta":
+                        this.phase2_tract_skip_prob_delta = Double.parseDouble(values[1]);
+                        break;
+                    case "phase2_tract_skip_prob_init":
+                        this.phase2_tract_skip_prob_init = Double.parseDouble(values[1]);
+                        break;
+                    case "phase3_save_intermediate":
+                        this.phase3_save_intermediate = Double.parseDouble(values[1]);
+                        break;
+                    case "phase3_skip":
+                        this.phase3_skip = Boolean.parseBoolean(values[1]);
+                        break;
+                    case "phase3_time_limit":
+                        this.phase3_time_limit = Double.parseDouble(values[1]);
+                        break;
+                    case "phase4_num_lags":        
+                        this.phase4_num_lags = Integer.parseInt(values[1]);
+                        break;
+                    case "phase4_save_both_ends":
+                        this.phase4_save_both_ends = Boolean.parseBoolean(values[1]);
+                        break;
+                    case "phase4_skip":
+                        this.phase4_skip = Boolean.parseBoolean(values[1]);
+                        break;
+                    case "phase4_time_limit":
+                        this.phase4_time_limit = Double.parseDouble(values[1]);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
     public String getRunName() {

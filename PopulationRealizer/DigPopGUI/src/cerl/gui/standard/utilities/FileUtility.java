@@ -60,7 +60,7 @@ public class FileUtility {
         return result;
     }
 
-    public static Result VeirfySecondaryFileExists(
+    public static Result VerifySecondaryFileExists(
             File orginalFile,
             FileType secondaryExpectedFileType) {
         Result result = new Result();
@@ -73,12 +73,11 @@ public class FileUtility {
         if (result.isSuccess()) {
             String fileNameWithoutExtension;
             fileNameWithoutExtension = (String) result.getValue();
-            String fileLoaction = orginalFile.getParent();
+            String fileLocation = orginalFile.getParent();
 
             String toVerifyPath
-                    = String.format(
-                            "%s\\%s%s%s",
-                            fileLoaction,
+                    = String.format("%s\\%s%s%s",
+                            fileLocation,
                             fileNameWithoutExtension,
                             DEFAULT_PATH_SEPERATOR,
                             secondaryExpectedFileType.toString());
@@ -176,6 +175,35 @@ public class FileUtility {
             }
         }
 
+        return result;
+    }
+    
+    public static Result ReadTextFile(
+            String filePath) {
+        Result result = new Result();
+        
+        //build result string
+        String fileContent = null;
+        String line = null;
+                
+        try{
+            //Read the file
+            FileReader fileReader = new FileReader(filePath);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            
+            //read line by line
+            while((line = bufferedReader.readLine()) != null){
+                fileContent += line + ",";
+            }
+            //close file
+            bufferedReader.close();
+            result.setValue(fileContent);
+        } catch(FileNotFoundException ex){
+            result.setErrorMessage("FileNotFoundException" + ex.getMessage());
+        } catch (IOException io){
+            result.setErrorMessage("IOException" + io.getMessage());
+        }
+        
         return result;
     }
 
