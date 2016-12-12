@@ -195,55 +195,55 @@ public class DigPopGUIUtilityClass {
         return result;
     }
     
-    public static Result readInClassTotals(String filePath, ArrayList<Class> classes){
-        Result result = new Result();
-        
-        String line = "";
-        
-        long total = 0;
-        int lineCounter = 0;
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            while((line = br.readLine()) != null) {
-                if(lineCounter > 1){
-                    // use comma as separator, but allow for commas inside a string
-                    String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-
-                    for(int counter = 0; counter < classes.size(); counter++){
-                        if(classes.get(counter).isSelected()){
-                            try{
-                                Class selectClass = classes.get(counter);
-                                long value = Long.parseLong(lineInfo[selectClass.getColumnNumber()]);
-                                selectClass.addToClassTotal(value);
-                                classes.set(counter, selectClass);
-
-                                total += value;
-                            } catch(NumberFormatException e){
-                                //nothing just move on
-                                //We can add this to the log if they are expecting different results
-                            }
-                        }
-                    }
-                }
-                
-                lineCounter++;
-            }
-
-            br.close();
-            result.setSuccess(true);
-        } catch (IOException ex) {
-            result.setErrorMessage(
-                    "getCensusClassesFromCSVFile",
-                    ex.getMessage());
-            result.setSuccess(false);
-        }
-        
-        Object[] resultValues = new Object[2];
-        resultValues[0] = total;
-        resultValues[1] = classes;
-        result.setValue(resultValues);
-        return result;
-    }
+//    public static Result readInClassTotals(String filePath, ArrayList<Class> classes){
+//        Result result = new Result();
+//        
+//        String line = "";
+//        
+//        long total = 0;
+//        int lineCounter = 0;
+//
+//        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+//            while((line = br.readLine()) != null) {
+//                if(lineCounter > 1){
+//                    // use comma as separator, but allow for commas inside a string
+//                    String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+//
+//                    for(int counter = 0; counter < classes.size(); counter++){
+//                        if(classes.get(counter).isSelected()){
+//                            try{
+//                                Class selectClass = classes.get(counter);
+//                                long value = Long.parseLong(lineInfo[selectClass.getColumnNumber()]);
+//                                selectClass.addToClassTotal(value);
+//                                classes.set(counter, selectClass);
+//
+//                                total += value;
+//                            } catch(NumberFormatException e){
+//                                //nothing just move on
+//                                //We can add this to the log if they are expecting different results
+//                            }
+//                        }
+//                    }
+//                }
+//                
+//                lineCounter++;
+//            }
+//
+//            br.close();
+//            result.setSuccess(true);
+//        } catch (IOException ex) {
+//            result.setErrorMessage(
+//                    "getCensusClassesFromCSVFile",
+//                    ex.getMessage());
+//            result.setSuccess(false);
+//        }
+//        
+//        Object[] resultValues = new Object[2];
+//        resultValues[0] = total;
+//        resultValues[1] = classes;
+//        result.setValue(resultValues);
+//        return result;
+//    }
     
 //    public static Result getSurveyDataColumnValues(String filePath, int columnNumber){
 //        Result result = new Result();
@@ -318,6 +318,39 @@ public class DigPopGUIUtilityClass {
         }
         
         result.setValue(columnValues);
+        return result;
+    }
+    
+    public static Result getSelectedCensusColumnValues(String filePath, List<Class> censusClasses){
+        Result result = new Result();
+        
+        String line = "";
+        int lineCounter = 0;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            while((line = br.readLine()) != null) {
+                if(lineCounter >= 1){
+                    // use comma as separator, but allow for commas inside a string
+                    String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                    
+                    censusClasses.stream().forEach((c) -> {
+                        c.addToClassTotal(Long.parseLong(lineInfo[c.getColumnNumber()]));
+                    });
+                }
+                
+                lineCounter++;
+            }
+
+            br.close();
+            result.setSuccess(true);
+        } catch (IOException ex) {
+            result.setErrorMessage(
+                    "getCensusClassesFromCSVFile",
+                    ex.getMessage());
+            result.setSuccess(false);
+        }
+        
+        result.setValue(censusClasses);
         return result;
     }
 }

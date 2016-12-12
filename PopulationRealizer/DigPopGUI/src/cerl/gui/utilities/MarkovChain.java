@@ -16,6 +16,7 @@ public class MarkovChain {
     private ArrayList<cerl.gui.utilities.Class> censusClasses;
     private cerl.gui.utilities.Class selectSurveyClass;
     private int id;
+    private long allCensusTotal = 0;
 
     public MarkovChain() {
         this.censusClasses = censusClasses = new ArrayList<cerl.gui.utilities.Class>();
@@ -27,6 +28,14 @@ public class MarkovChain {
         this.censusClasses = censusClasses;
         this.selectSurveyClass = selectSurveyClass;
         this.id = id;
+    }
+
+    public long getAllCensusTotal() {
+        this.censusClasses.stream().forEach((c) -> {
+            this.allCensusTotal += c.getClassTotal();
+        });
+        
+        return allCensusTotal;
     }
 
     public int getId() {

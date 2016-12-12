@@ -45,9 +45,9 @@ public class StepThree extends javax.swing.JFrame {
     private DefaultListModel surveyGroupsListModel = new DefaultListModel();
     private JList surveyGroupsList = new JList(surveyGroupsListModel);
     
-    private String DEFAULT_FILE_PATH_CENSUS = "P:\\CERL\\md_sample-data\\md_census_enumerations.csv";
-    private String DEFAULT_FILE_PATH_POPULATION = "P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv";
-    private String DEFAULT_FILE_PATH_HOUSEHOLD = "P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv";
+//    private String DEFAULT_FILE_PATH_CENSUS = "P:\\CERL\\md_sample-data\\md_census_enumerations.csv";
+//    private String DEFAULT_FILE_PATH_POPULATION = "P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv";
+//    private String DEFAULT_FILE_PATH_HOUSEHOLD = "P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv";
 
     private final DigPopGUIInformation digPopGUIInformation;
     
@@ -55,18 +55,18 @@ public class StepThree extends javax.swing.JFrame {
     /**
      * Creates new form StepThree
      */
-    public StepThree() {
-        this.digPopGUIInformation = new DigPopGUIInformation();
-        this.digPopGUIInformation.setCensusEnumerationsFilePath(DEFAULT_FILE_PATH_CENSUS);
-        this.digPopGUIInformation.setPopulationMicroDataFilePath(DEFAULT_FILE_PATH_POPULATION);
-        this.digPopGUIInformation.setHouseholdMicroDataFilePath(DEFAULT_FILE_PATH_HOUSEHOLD);
-        
-        loadCensusSurveyClasses();
-
-        initComponents();
-        
-        loadForm();
-    }
+//    public StepThree() {
+//        this.digPopGUIInformation = new DigPopGUIInformation();
+//        this.digPopGUIInformation.setCensusEnumerationsFilePath(DEFAULT_FILE_PATH_CENSUS);
+//        this.digPopGUIInformation.setPopulationMicroDataFilePath(DEFAULT_FILE_PATH_POPULATION);
+//        this.digPopGUIInformation.setHouseholdMicroDataFilePath(DEFAULT_FILE_PATH_HOUSEHOLD);
+//        
+//        loadCensusSurveyClasses();
+//
+//        initComponents();
+//        
+//        loadForm();
+//    }
     
     public StepThree(DigPopGUIInformation digPopGUIInformation) {
         this.digPopGUIInformation = digPopGUIInformation;
@@ -564,63 +564,67 @@ public class StepThree extends javax.swing.JFrame {
         this.censusSurveyClasses = (CensusSurveyClasses) result.getValue();
     }
     
-    private void save(){
+    private Result save(){
         ArrayList<cerl.gui.utilities.Class> selectedCensusClasses = new ArrayList<cerl.gui.utilities.Class> ();
         
-        censusSurveyClasses.getCensusClasses().stream().forEach((c) -> {
-            if(c.isSelected()){
-                selectedCensusClasses.add(c);
-            }
-        });
+        for(int counter = 0; counter < censusSelectedListModel.getSize(); counter++){
+            selectedCensusClasses.add((cerl.gui.utilities.Class)censusSelectedListModel.get(counter));
+        }
         
+        Result result = DigPopGUIUtilityClass.getSelectedCensusColumnValues(this.digPopGUIInformation.getCensusEnumerationsFilePath(),selectedCensusClasses);
         
-        
-        MarkovChain markovChain = new MarkovChain("New Markov Chain", selectedCensusClasses, this.selectSurveyClass, 1);
-        this.censusSurveyClasses.addMarkovChains(markovChain);
-        
-        this.digPopGUIInformation.setCensusSurveyClasses(this.censusSurveyClasses);
-        
-        //Save to file
-        Result result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(
+        if(result.isSuccess()){
+            selectedCensusClasses = (ArrayList<cerl.gui.utilities.Class>)result.getValue();
+            
+            MarkovChain markovChain = new MarkovChain("New Markov Chain", selectedCensusClasses, this.selectSurveyClass, 1);
+            this.censusSurveyClasses.addMarkovChains(markovChain);
+
+            this.digPopGUIInformation.setCensusSurveyClasses(this.censusSurveyClasses);
+
+            //Save to file
+            result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(
                     this.digPopGUIInformation,
-                this.digPopGUIInformation.getFilePath());
+                    this.digPopGUIInformation.getFilePath());
+        }
+        
+        return result;
     }
     
     
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(StepThree.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(StepThree.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(StepThree.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(StepThree.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new StepThree().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(StepThree.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(StepThree.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(StepThree.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(StepThree.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new StepThree().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCensusClass;

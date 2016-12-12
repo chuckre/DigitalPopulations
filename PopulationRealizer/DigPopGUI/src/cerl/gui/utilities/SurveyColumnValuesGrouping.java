@@ -15,6 +15,7 @@ public class SurveyColumnValuesGrouping implements Cloneable {
     
     private String userDefinedDescription;
     private ArrayList<SurveyColumnValue> surveyColumnValues;
+    private long groupingTotal = 0;
 
     public SurveyColumnValuesGrouping() {
         this.surveyColumnValues = new ArrayList<SurveyColumnValue>();
@@ -23,6 +24,18 @@ public class SurveyColumnValuesGrouping implements Cloneable {
     public SurveyColumnValuesGrouping(String userDefinedDescription, ArrayList<SurveyColumnValue> surveyColumnValues) {
         this.userDefinedDescription = userDefinedDescription;
         this.surveyColumnValues = surveyColumnValues;
+    }
+
+    public long getGroupingTotal() {
+        return groupingTotal;
+    }
+
+    public long calculateGroupingTotal() {
+        this.surveyColumnValues.stream().forEach((s) -> {
+           this.groupingTotal += s.getSurveyColumnValueTotal();
+        });
+        
+        return groupingTotal;
     }
 
     public String getUserDefinedDescription() {

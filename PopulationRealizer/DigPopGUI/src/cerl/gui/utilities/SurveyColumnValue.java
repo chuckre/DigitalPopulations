@@ -16,7 +16,9 @@ public class SurveyColumnValue  implements Cloneable {
     private int numberOfTimesUsed; 
 
     public SurveyColumnValue() {
-        used = false;
+        this.used = false;
+        this.numberOfTimesUsed = 0;
+        this.value = 0;
     }
 
     public SurveyColumnValue(int rowId, int value, boolean used, int numberOfTimesUsed) {
@@ -72,5 +74,9 @@ public class SurveyColumnValue  implements Cloneable {
     
     public void addOneToNumberOfTimesUsed() {
         this.numberOfTimesUsed++;
+    }
+    
+    public int getSurveyColumnValueTotal(){
+        return this.value * this.numberOfTimesUsed;
     }
 }

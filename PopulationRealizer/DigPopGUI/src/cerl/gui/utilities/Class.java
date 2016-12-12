@@ -146,6 +146,14 @@ public class Class implements Cloneable {
     public void addSurveyGrouping(SurveyColumnValuesGrouping surveyColumnValuesGrouping){
         this.surveyColumnValuesGroupings.add(surveyColumnValuesGrouping);
     }
+    
+    public long getAllSurveyGroupsTotal(){
+        this.surveyColumnValuesGroupings.stream().forEach((s) -> {
+           addToClassTotal(s.calculateGroupingTotal());
+        });
+        
+        return this.classTotal;
+    }
 
     @Override
     public String toString() {

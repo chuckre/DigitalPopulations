@@ -91,6 +91,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         MarkovChain markovChain = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(1);
         List<SurveyColumnValuesGrouping> surveyGroups = markovChain.getSelectSurveyClass().getSurveyColumnValuesGroupings();
         
+        
         ArrayList<String> columnNames = new ArrayList<>();
         //Census Value Names
      //   columnNames.addAll(Arrays.asList("","Value","Yes Electricity","No Electricity","N/A","Amount Left",""));
@@ -130,16 +131,19 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
 //        cellValues.get(2).add(0, new MarkovTableCell(2, 1, "No Electricity", false, false, false, false));
 //        cellValues.get(3).add(0, new MarkovTableCell(3, 1, "N/A", false, false, false, false));
         
-        int surveyGroupingCounter = 0;
+        int otherCounter = 0;
         for(int counter = 1; counter <= surveyGroups.size(); counter++){
+            SurveyColumnValuesGrouping selected = surveyGroups.get(otherCounter);
+            
             cellValues.get(counter).add(
                     0, 
                     new MarkovTableCell(
                             counter, 
                             1, 
-                            surveyGroups.get(surveyGroupingCounter).getUserDefinedDescription(), 
+                            selected.getUserDefinedDescription(), 
                             false, false, false, false));
-            surveyGroupingCounter++;
+            
+            otherCounter++;
         }
         
         
@@ -152,13 +156,39 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         
         //load proportions
         //census - proportion min/max start the same
-        cellValues.get(0).add(2, new MarkovTableCell(0, 2, 0.59, 0.59, 0.59, false, false, false, false));
-        cellValues.get(0).add(3, new MarkovTableCell(0, 3, 0.30, 0.30, 0.30, false, false, false, false));
-        cellValues.get(0).add(4, new MarkovTableCell(0, 4, 0.10, 0.10, 0.10, false, false, false, false));
+//        cellValues.get(0).add(2, new MarkovTableCell(0, 2, 0.59, 0.59, 0.59, false, false, false, false));
+//        cellValues.get(0).add(3, new MarkovTableCell(0, 3, 0.30, 0.30, 0.30, false, false, false, false));
+//        cellValues.get(0).add(4, new MarkovTableCell(0, 4, 0.10, 0.10, 0.10, false, false, false, false));
+
+        long allSurveyGroupsTotal = markovChain.getSelectSurveyClass().getAllSurveyGroupsTotal();
+        long allCensusTotal = markovChain.getAllCensusTotal();
+        
+        otherCounter = 2;
+        for(int counter = 0; counter < markovChain.getCensusClasses().size(); counter++){
+            cerl.gui.utilities.Class selected = markovChain.getCensusClasses().get(counter);
+            
+            double proportions = (double)selected.getClassTotal() / allCensusTotal;
+            proportions =Math.round(proportions * 100.0) / 100.0;
+            
+            cellValues.get(0).add(otherCounter, new MarkovTableCell(0, otherCounter, proportions, proportions, proportions, false, false, false, false));
+            otherCounter++;
+        }
+        
+        otherCounter = 1;
+        for(int counter = 0; counter < surveyGroups.size(); counter++){
+            SurveyColumnValuesGrouping selected = surveyGroups.get(counter);
+            
+            double proportions = (double)selected.getGroupingTotal() / allSurveyGroupsTotal;
+            proportions =Math.round(proportions * 100.0) / 100.0;
+            
+            cellValues.get(otherCounter).add(1, new MarkovTableCell(otherCounter, 1, proportions, proportions, proportions, false, false, false, false));
+            otherCounter++;
+        }
+        
         //survey
-        cellValues.get(1).add(1, new MarkovTableCell(1, 1, 0.40, 0.40, 0.40, false, false, false, false));
-        cellValues.get(2).add(1, new MarkovTableCell(2, 1, 0.39, 0.39, 0.39, false, false, false, false));
-        cellValues.get(3).add(1, new MarkovTableCell(3, 1, 0.20, 0.20, 0.20, false, false, false, false));
+//        cellValues.get(1).add(1, new MarkovTableCell(1, 1, 0.40, 0.40, 0.40, false, false, false, false));
+//        cellValues.get(2).add(1, new MarkovTableCell(2, 1, 0.39, 0.39, 0.39, false, false, false, false));
+//        cellValues.get(3).add(1, new MarkovTableCell(3, 1, 0.20, 0.20, 0.20, false, false, false, false));
         
         //create table with custom MarkovTableModel
         MarkovTableModel mtmTable = new MarkovTableModel(columnNames, cellValues,cells);
