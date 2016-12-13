@@ -13,6 +13,8 @@ import cerl.gui.standard.utilities.customTableModelListener;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
+import cerl.gui.utilities.Traits;
+import cerl.gui.utilities.Weights;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.table.TableColumn;
@@ -66,66 +68,81 @@ public class FittingCriteria extends javax.swing.JFrame {
         //columns must be rows+1 because the header row is the -1th row.
         ArrayList<ArrayList<Object>> cellValues = new ArrayList<>();
         
-        if(this.digPopGUIInformation.getFittingCriteriaCellValues() != null){
+        if(this.digPopGUIInformation.getFittingTraits() != null){
+            ArrayList<Traits> fitTraits = this.digPopGUIInformation.getFittingTraits();
+            ArrayList<Weights> fitWeights = this.digPopGUIInformation.getTraitWeights();
+            
+            for(int r=0; r<fitTraits.size(); r++){
+                cellValues.add(r, new ArrayList<>());
+                Traits thisTrait = fitTraits.get(r);
+                Weights thisWeight = fitWeights.get(r);
+                
+                for(int c=0; c<columnNames.size(); c++){
+                    switch(columnNames.get(c)){
+                    case "ID": //int
+                        cellValues.get(r).add(c, new customTableCell(thisTrait.getId(), false, "Integer", false));
+                        break;
+                    case "Census Region Trait": //String
+                        cellValues.get(r).add(c, new customTableCell(thisTrait.getRegionTrait(), false, "String", false));
+                        break;
+                    case "Census Region Total": //String
+                        cellValues.get(r).add(c, new customTableCell(thisTrait.getRegionTotal(), false, "String", false));
+                        break;
+                    case "Survey Trait Table": //String
+                        cellValues.get(r).add(c, new customTableCell(thisTrait.getPumsTraitTable(), false, "String", false));
+                        break;
+                    case "Survey Trait Select": //String
+                        cellValues.get(r).add(c, new customTableCell(thisTrait.getPumsTraitSelect(), false, "Integer", false));
+                        break;
+                    case "Survey Trait Field": //String
+                        cellValues.get(r).add(c, new customTableCell(thisTrait.getPumsTraitField(), false, "String", false));
+                        break;
+                    case "Survey Total Table": //String
+                        cellValues.get(r).add(c, new customTableCell(thisTrait.getPumsTotalTable(), false, "String", false));
+                        break;
+                    case "Survey Total Field": //int
+                        cellValues.get(r).add(c, new customTableCell(thisTrait.getPumsTotalField(), false, "Integer", false));
+                        break;
+                    case "User Entered Description": //String
+                        cellValues.get(r).add(c, new customTableCell(thisTrait.getDesc(), false, "String", false));
+                        break;
+                    case "Trait Weight":  //Double
+                        cellValues.get(r).add(c, new customTableCell(thisWeight.getWeight(), true, "Double", false));
+                        break;
+                    default:
+                        break;
+                }
+                }
+            }
+        }
+        else if(this.digPopGUIInformation.getFittingCriteriaCellValues() != null){
             cellValues = this.digPopGUIInformation.getFittingCriteriaCellValues();
         } else {
             //Set up rows and columns
-            for(int r = 0; r<3; r++){
+            for(int r = 0; r<1; r++){
                 cellValues.add(r, new ArrayList<>());
-                for(int c=0;c<10;c++){
-                    cellValues.get(r).add(c, new customTableCell("", false, "String", false));
-                }
             }
 
             //ID's
             cellValues.get(0).add(0, new customTableCell("1", false, "Integer", false));
-            cellValues.get(1).add(0, new customTableCell("2", false, "Integer", false));
-            cellValues.get(2).add(0, new customTableCell("3", false, "Integer", false));
-
             //Census Region Traits
             cellValues.get(0).add(1, new customTableCell("ABA2E006", false, "String", false));
-            cellValues.get(1).add(1, new customTableCell("ABA2E006", false, "String", false));
-            cellValues.get(2).add(1, new customTableCell("ABA2E006", false, "String", false));
-
             //Census Region Total
             cellValues.get(0).add(2, new customTableCell("Toilet - MC - Total", false, "String", false));
-            cellValues.get(1).add(2, new customTableCell("Toilet - MC - Total", false, "String", false));
-            cellValues.get(2).add(2, new customTableCell("Toilet - MC - Total", false, "String", false));
-
             //Survey Trait Table
             cellValues.get(0).add(3, new customTableCell("HOUSEHOLDS", false, "String", false));
-            cellValues.get(1).add(3, new customTableCell("HOUSEHOLDS", false, "String", false));
-            cellValues.get(2).add(3, new customTableCell("HOUSEHOLDS", false, "String", false));
-
             //Survey Trait Select
             cellValues.get(0).add(4, new customTableCell("0", false, "Integer", false));
-            cellValues.get(1).add(4, new customTableCell("1", false, "Integer", false));
-            cellValues.get(2).add(4, new customTableCell("2", false, "Integer", false));
-
             //Survey Trait Field
             cellValues.get(0).add(5, new customTableCell("JWMNP", false, "String", false));
-            cellValues.get(1).add(5, new customTableCell("JWMNP", false, "String", false));
-            cellValues.get(2).add(5, new customTableCell("JWMNP", false, "String", false));
-
             //Survey Total Table
             cellValues.get(0).add(6, new customTableCell("HOUSEHOLDS", false, "String", false));
-            cellValues.get(1).add(6, new customTableCell("HOUSEHOLDS", false, "String", false));
-            cellValues.get(2).add(6, new customTableCell("HOUSEHOLDS", false, "String", false));
-
             //Survey Total Field
             cellValues.get(0).add(7, new customTableCell("1", false, "Integer", false));
-            cellValues.get(1).add(7, new customTableCell("1", false, "Integer", false));
-            cellValues.get(2).add(7, new customTableCell("1", false, "Integer", false));
-
             //User Entered Description
             cellValues.get(0).add(8, new customTableCell("Flush to piped sewer", false, "String", false));
-            cellValues.get(1).add(8, new customTableCell("Flush to septic tank", false, "String", false));
-            cellValues.get(2).add(8, new customTableCell("Flush to pit latrine", false, "String", false));
-
             //Trait Weight
             cellValues.get(0).add(9, new customTableCell("", true, "Double", false));
-            cellValues.get(1).add(9, new customTableCell("", true, "Double", false));
-            cellValues.get(2).add(9, new customTableCell("", true, "Double", false));
 
             this.digPopGUIInformation.setFittingCriteriaCellValues(cellValues);
         }
@@ -266,10 +283,67 @@ public class FittingCriteria extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 
     private void saveToFile(){
+        ArrayList<Traits> theseTraits = new ArrayList<>();
+        ArrayList<Weights> traitWeights = new ArrayList<>();
+        ArrayList<ArrayList<Object>> cells = myTable.getTableCells();
+        ArrayList<String> columns = myTable.getColumns();
+        
+        for(int r = 0; r<cells.size(); r++){
+            Traits newTrait = new Traits();
+            Weights newWeight = new Weights();
+            
+            for(int c = 0; c<columns.size() && c<cells.get(r).size(); c++){
+                String tableCell = cells.get(r).get(c).toString();
+                        
+                switch(columns.get(c)){
+                    case "ID": //int
+                        newTrait.setId(Integer.parseInt(tableCell));
+                        newWeight.setId(Integer.parseInt(tableCell));
+                        break;
+                    case "Census Region Trait": //String
+                        newTrait.setRegionTrait(tableCell);
+                        break;
+                    case "Census Region Total": //String
+                        newTrait.setRegionTotal(tableCell);
+                        break;
+                    case "Survey Trait Table": //String
+                        newTrait.setPumsTraitTable(tableCell);
+                        break;
+                    case "Survey Trait Select": //String
+                        newTrait.setPumsTraitSelect(tableCell);
+                        break;
+                    case "Survey Trait Field": //String
+                        newTrait.setPumsTraitField(tableCell);
+                        break;
+                    case "Survey Total Table": //String
+                        newTrait.setPumsTotalTable(tableCell);
+                        break;
+                    case "Survey Total Field": //int
+                        newTrait.setPumsTotalField(Integer.parseInt(tableCell));
+                        break;
+                    case "User Entered Description": //String
+                        newTrait.setDesc(tableCell);
+                        break;
+                    case "Trait Weight":  //Double
+                        newWeight.setWeight(Double.parseDouble(tableCell));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            theseTraits.add(r, newTrait);
+            traitWeights.add(newWeight);
+        }
+        
+        this.digPopGUIInformation.setFittingTraits(theseTraits);
+        this.digPopGUIInformation.setTraitWeights(traitWeights);
+        
+        if(this.digPopGUIInformation.getFilePath() != null){
         //Save to file
         Result result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(
                     this.digPopGUIInformation,
                 this.digPopGUIInformation.getFilePath());
+        }
     }
     
     /**
