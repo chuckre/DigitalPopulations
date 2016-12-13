@@ -15,12 +15,19 @@ import static cerl.gui.utilities.DigPopFileTypeEnum.Household_Micro_Data;
 import static cerl.gui.utilities.DigPopFileTypeEnum.Population_Micro_Data;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.swing.JProgressBar;
 
 /**
@@ -351,6 +358,61 @@ public class DigPopGUIUtilityClass {
         }
         
         result.setValue(censusClasses);
+        return result;
+    }
+    
+    public static Result getClassesFromLandUseASCFile(
+        String filePath) throws IOException {
+        
+        Result result = new Result(true);
+        
+         List<String> classes = null;
+        
+        int counter =0;
+                
+        FileInputStream inputStream = null;
+        Scanner sc = null;
+        try {
+            inputStream = new FileInputStream(filePath);
+            sc = new Scanner(inputStream, "UTF-8");
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                if(counter >= 6){
+                    String[] lineInfo = line.split(" ");
+
+                    if(classes == null){
+                        classes = Arrays.asList(lineInfo).stream().distinct().collect(Collectors.toList());
+                    }
+                    else{
+                        classes.addAll(Arrays.asList(lineInfo));
+                        classes = classes.stream().distinct().collect(Collectors.toList());
+                    }
+                }
+                counter++;
+            }
+            if (sc.ioException() != null) {
+                throw sc.ioException();
+            }
+        } catch (FileNotFoundException ex) {
+            result.setErrorMessage(
+                    "getClassesFromLandUseASCFile",
+                    ex.getMessage());
+            result.setSuccess(false);
+        } catch (IOException ex) {
+            result.setErrorMessage(
+                    "getClassesFromLandUseASCFile",
+                    ex.getMessage());
+            result.setSuccess(false);
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            if (sc != null) {
+                sc.close();
+            }
+        }
+        
+        result.setValue(classes);
         return result;
     }
 }

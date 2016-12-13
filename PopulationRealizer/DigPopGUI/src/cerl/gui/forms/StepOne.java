@@ -70,6 +70,7 @@ public class StepOne extends javax.swing.JFrame {
         initComponents();
         setIntialWarningIcons();
         digPopGUIInformation = new DigPopGUIInformation();
+        pack();
     }
     
     /**
@@ -81,6 +82,7 @@ public class StepOne extends javax.swing.JFrame {
         initComponents();
         setIntialWarningIcons();
         populateDataFieldsFromFile();
+        pack();
     }
 
     /**
@@ -855,6 +857,7 @@ public class StepOne extends javax.swing.JFrame {
     private void rbtnHouseholdDensityMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnHouseholdDensityMapActionPerformed
 
         enableLandUseHouseholdDensityButton();
+        clearExistingLandUseHouseholdDensityInfo();
 
     }//GEN-LAST:event_rbtnHouseholdDensityMapActionPerformed
 
@@ -865,6 +868,7 @@ public class StepOne extends javax.swing.JFrame {
     private void rbtnLandUseMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnLandUseMapActionPerformed
 
         enableLandUseHouseholdDensityButton();
+        clearExistingLandUseHouseholdDensityInfo();
 
     }//GEN-LAST:event_rbtnLandUseMapActionPerformed
 
@@ -903,6 +907,19 @@ public class StepOne extends javax.swing.JFrame {
         else{
             btnLandMapHouseholdMap.setEnabled(false);
         }
+    }
+    
+    private void clearExistingLandUseHouseholdDensityInfo(){
+        
+        txtLandUseHouseholdMap.setText("");
+
+        digPopGUIInformation.setLandUseMapFilePath(null);
+        digPopGUIInformation.setHouseholdDensityMapFilePath(null);
+
+        digPopGUIInformation.setValidLandUseMapFilePath(false);
+        digPopGUIInformation.setValidHouseholdDensityMapFilePath(false);
+                      
+        setIconImage(DigPopFileTypeEnum.Household_Density_Map, false);             
     }
 
     /**

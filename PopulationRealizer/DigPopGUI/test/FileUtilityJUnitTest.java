@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import junit.framework.Assert;
 
 /**
@@ -49,6 +51,15 @@ public class FileUtilityJUnitTest {
 
     @After
     public void tearDown() {
+    }
+    
+    @Test 
+    public void readInACSFile(){
+        try {
+            DigPopGUIUtilityClass.getClassesFromLandUseASCFile("P:\\CERL\\md_sample-data\\md_landuse.asc");
+        } catch (IOException ex) {
+            Logger.getLogger(FileUtilityJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Test
