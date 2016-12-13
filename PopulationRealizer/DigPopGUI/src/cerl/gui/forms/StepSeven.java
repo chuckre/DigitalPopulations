@@ -15,6 +15,7 @@ import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.RunFile;
 import cerl.gui.utilities.StepSevenInstructionNames;
 import java.io.File;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -24,6 +25,7 @@ public class StepSeven extends javax.swing.JFrame {
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_SEVEN_HELP_FILE_NAME.toString();
     private final String DEFAULT_NEW_FILE_NAME = "last-run.properties";
     private final FileType DEFAULT_NEW_FILE_TYPE = FileType.TXT;
+    private final String[] TRUE_FALSE_VALUES = { "", "TRUE", "FALSE" };
     private final DigPopGUIInformation digPopGUIInformation;
     private RunFile RunProperties;
     
@@ -44,8 +46,79 @@ public class StepSeven extends javax.swing.JFrame {
         initComponents();
         this.digPopGUIInformation = digPopGUIInformation;
         this.RunProperties = new RunFile();
+        populateData();
     }
 
+    /**
+     * If an existing run file exists, populate from the existing data
+     */
+    private void populateData(){
+        String saveFilePath = this.digPopGUIInformation.getFilePath();
+        
+        if(saveFilePath.contains(".XML")){
+            saveFilePath = saveFilePath.substring(0, saveFilePath.lastIndexOf("\\")+1);
+        }
+        
+        //create new run file
+        File newRunFile = new File(String.format("%s\\%s", saveFilePath, DEFAULT_NEW_FILE_NAME));
+        
+        //check if existing file exists
+        Result result = FileUtility.VerifySecondaryFileExists(newRunFile, DEFAULT_NEW_FILE_TYPE);
+        
+        //If yes - populate data from this file
+        if(result.isSuccess()){
+            result = FileUtility.ReadTextFile(newRunFile.getPath());
+            //result = FileUtility.ParseXMLFileIntoSpecifiedObject(newRunFile.getPath(), RunFile.class);
+            this.RunProperties = new RunFile(result.getValue().toString());
+            setDataOnForm();
+        }
+        this.jLabel_Errors.setText("All data fields are required");
+    }
+    
+    /**
+     * Sets all the data fields on the form from the digPop object
+     */
+    private void setDataOnForm(){
+        this.jTextField_NameOfRun.setText(this.RunProperties.getDateOfRun()!= null ? this.RunProperties.getDateOfRun().toString() : "");
+        this.jComboBox_LogPhase1Results.setSelectedIndex(this.RunProperties.getDo_dump_number_archtypes() != null ? getTrueFalseIndexValue(this.RunProperties.getDo_dump_number_archtypes()) : 0);
+        this.jComboBox_LogQualityEval.setSelectedIndex(this.RunProperties.getDo_dump_statistics() != null ? getTrueFalseIndexValue(this.RunProperties.getDo_dump_statistics()) : 0);
+        this.jComboBox_HouseholdArchetype.setSelectedIndex(this.RunProperties.getDo_write_all_hoh_fields() != null ? getTrueFalseIndexValue(this.RunProperties.getDo_write_all_hoh_fields()) : 0);
+        this.jComboBox_PopulationArchetype.setSelectedIndex(this.RunProperties.getDo_write_all_pop_fields() != null ? getTrueFalseIndexValue(this.RunProperties.getDo_write_all_pop_fields()) : 0);
+        this.jTextField_FinalRealizationIndex.setText(this.RunProperties.getFinal_rzn_num() != null ? this.RunProperties.getFinal_rzn_num().toString() : "");
+        this.jTextField_FirstRealizationIndex.setText(this.RunProperties.getFirst_rzn_num() != null ? this.RunProperties.getFirst_rzn_num().toString() : "");
+        this.jTextField_RandomNumberSeed.setText(this.RunProperties.getInitial_seed() != null ? this.RunProperties.getInitial_seed().toString() : "");
+        this.jComboBox_FirstCensusTract.setSelectedIndex(this.RunProperties.getOnly_one_region() != null ? getTrueFalseIndexValue(this.RunProperties.getOnly_one_region()) : 0);
+        this.jTextField_OutputDirectory.setText(this.RunProperties.getOutput_dir() != null ? this.RunProperties.getOutput_dir() : "");
+        this.jTextField_ParallelThreads.setText(this.RunProperties.getParallel_threads() != null ? this.RunProperties.getParallel_threads().toString() : "");
+        this.jTextField_Phase1TimeLimit.setText(this.RunProperties.getPhase1_time_limit() != null ? this.RunProperties.getPhase1_time_limit().toString() : "");
+        this.jTextField_Phase2RandomPlacement.setText(this.RunProperties.getPhase2_random_tract_prob() != null ? this.RunProperties.getPhase2_random_tract_prob().toString() : "");
+        this.jTextField_Phase2SkipTractsProb.setText(this.RunProperties.getPhase2_tract_skip_prob_init() != null ? this.RunProperties.getPhase2_tract_skip_prob_init().toString() : "");
+        this.jTextField_Phase2SkipTractsDelta.setText(this.RunProperties.getPhase2_tract_skip_prob_delta() != null ? this.RunProperties.getPhase2_tract_skip_prob_delta().toString() : "");
+        this.jTextField_Phase34SaveInterval.setText(this.RunProperties.getPhase3_save_intermediate() != null ? this.RunProperties.getPhase3_save_intermediate().toString() : "");
+        this.jComboBox_Phase3Skip.setSelectedIndex(this.RunProperties.getPhase3_skip() != null ? getTrueFalseIndexValue(this.RunProperties.getPhase3_skip()) : 0);
+        this.jTextField_Phase3TimeLimit.setText(this.RunProperties.getPhase3_time_limit() != null ? this.RunProperties.getPhase3_time_limit().toString() : "");
+        this.jTextField_Phase4_Lags.setText(this.RunProperties.getPhase4_num_lags() != null ? this.RunProperties.getPhase4_num_lags().toString() : "");
+        this.jComboBox_Phase4Save.setSelectedIndex(this.RunProperties.getPhase4_save_both_ends() != null ? getTrueFalseIndexValue(this.RunProperties.getPhase4_save_both_ends()) : 0);
+        this.jComboBox_Phase4Skip.setSelectedIndex(this.RunProperties.getPhase4_skip() != null ? getTrueFalseIndexValue(this.RunProperties.getPhase4_skip()) : 0);
+    }
+    
+    /**
+     * Used to set the values from a previous run.
+     * @param value
+     * @return 
+     */
+    private Integer getTrueFalseIndexValue(Boolean value){
+        //Must change to string otherwise "true" always true in if statement
+        switch(value.toString()){
+            case "true":
+                return 1;
+            case "false":
+                return 2;
+            default:
+                return 0;
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,9 +134,9 @@ public class StepSeven extends javax.swing.JFrame {
         jLabel_Phase2SkippedTracts = new javax.swing.JLabel();
         Phase2RandomPercentInfoIcon = new javax.swing.JLabel();
         jTextField_Phase2RandomPlacement = new javax.swing.JTextField();
-        jTextField_Phase2SkipTracts = new javax.swing.JTextField();
+        jTextField_Phase2SkipTractsProb = new javax.swing.JTextField();
         Phase2SkipTractsInfoIcon = new javax.swing.JLabel();
-        jTextField_Phase2SkippedTracts = new javax.swing.JTextField();
+        jTextField_Phase2SkipTractsDelta = new javax.swing.JTextField();
         Phase2SkippedProbabilityInfoIcon = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel_CreateRunFile = new javax.swing.JLabel();
@@ -123,7 +196,7 @@ public class StepSeven extends javax.swing.JFrame {
         jPanel_Phase3 = new javax.swing.JPanel();
         jLabel_Phase3Skip = new javax.swing.JLabel();
         SkipPhase3InfoIcon = new javax.swing.JLabel();
-        jTextField_Phase2TimeLimit = new javax.swing.JTextField();
+        jTextField_Phase3TimeLimit = new javax.swing.JTextField();
         phase3TimeLimitInfoIcon = new javax.swing.JLabel();
         jLabel_Phase3TimeLimit = new javax.swing.JLabel();
         jComboBox_Phase3Skip = new javax.swing.JComboBox<>();
@@ -167,9 +240,9 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
-        jTextField_Phase2SkipTracts.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextField_Phase2SkipTractsProb.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_Phase2SkipTractsFocusLost(evt);
+                jTextField_Phase2SkipTractsProbFocusLost(evt);
             }
         });
 
@@ -182,9 +255,9 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
-        jTextField_Phase2SkippedTracts.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextField_Phase2SkipTractsDelta.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_Phase2SkippedTractsFocusLost(evt);
+                jTextField_Phase2SkipTractsDeltaFocusLost(evt);
             }
         });
 
@@ -214,14 +287,14 @@ public class StepSeven extends javax.swing.JFrame {
                         .addComponent(Phase2SkipTractsInfoIcon)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_Phase2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField_Phase2SkipTracts)
+                    .addComponent(jTextField_Phase2SkipTractsProb)
                     .addComponent(jTextField_Phase2RandomPlacement, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel_Phase2SkippedTracts)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Phase2SkippedProbabilityInfoIcon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField_Phase2SkippedTracts)
+                .addComponent(jTextField_Phase2SkipTractsDelta)
                 .addContainerGap())
         );
         jPanel_Phase2Layout.setVerticalGroup(
@@ -233,13 +306,13 @@ public class StepSeven extends javax.swing.JFrame {
                     .addGroup(jPanel_Phase2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jTextField_Phase2RandomPlacement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel_Phase2SkippedTracts))
-                    .addComponent(jTextField_Phase2SkippedTracts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_Phase2SkipTractsDelta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel_Phase2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(Phase2RandomPercentInfoIcon)
                         .addComponent(jLabel_Phase2RandomPlacement)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_Phase2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField_Phase2SkipTracts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_Phase2SkipTractsProb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel_Phase2Layout.createSequentialGroup()
                         .addComponent(jLabel_Phase2SkipTracts)
                         .addGap(6, 6, 6))
@@ -345,14 +418,14 @@ public class StepSeven extends javax.swing.JFrame {
         jLabel_LogQualityEval.setText("Log the quality evaluation reports between phases?");
         jLabel_LogQualityEval.setPreferredSize(new java.awt.Dimension(250, 14));
 
-        jComboBox_LogPhase1Results.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_LogPhase1Results.setModel(new DefaultComboBoxModel<>(TRUE_FALSE_VALUES));
         jComboBox_LogPhase1Results.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_LogPhase1ResultsActionPerformed(evt);
             }
         });
 
-        jComboBox_LogQualityEval.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_LogQualityEval.setModel(new DefaultComboBoxModel<>(TRUE_FALSE_VALUES));
         jComboBox_LogQualityEval.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_LogQualityEvalActionPerformed(evt);
@@ -424,14 +497,14 @@ public class StepSeven extends javax.swing.JFrame {
 
         jLabel_PopulationArchetype.setText("Does each Population record contain a full copy of the archetype record?");
 
-        jComboBox_HouseholdArchetype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_HouseholdArchetype.setModel(new DefaultComboBoxModel<>(TRUE_FALSE_VALUES));
         jComboBox_HouseholdArchetype.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_HouseholdArchetypeActionPerformed(evt);
             }
         });
 
-        jComboBox_PopulationArchetype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_PopulationArchetype.setModel(new DefaultComboBoxModel<>(TRUE_FALSE_VALUES));
         jComboBox_PopulationArchetype.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_PopulationArchetypeActionPerformed(evt);
@@ -495,7 +568,7 @@ public class StepSeven extends javax.swing.JFrame {
 
         jLabel_FinalRealizationIndex.setText("Final Realization Index");
 
-        jComboBox_FirstCensusTract.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_FirstCensusTract.setModel(new DefaultComboBoxModel<>(TRUE_FALSE_VALUES));
         jComboBox_FirstCensusTract.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_FirstCensusTractActionPerformed(evt);
@@ -714,14 +787,14 @@ public class StepSeven extends javax.swing.JFrame {
 
         jLabel_Phase4_TimeLimit.setText("Phase 4 Time Limit");
 
-        jComboBox_Phase4Save.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_Phase4Save.setModel(new DefaultComboBoxModel<>(TRUE_FALSE_VALUES));
         jComboBox_Phase4Save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_Phase4SaveActionPerformed(evt);
             }
         });
 
-        jComboBox_Phase4Skip.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_Phase4Skip.setModel(new DefaultComboBoxModel<>(TRUE_FALSE_VALUES));
         jComboBox_Phase4Skip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_Phase4SkipActionPerformed(evt);
@@ -851,9 +924,9 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
-        jTextField_Phase2TimeLimit.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextField_Phase3TimeLimit.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField_Phase2TimeLimitFocusLost(evt);
+                jTextField_Phase3TimeLimitFocusLost(evt);
             }
         });
 
@@ -868,7 +941,7 @@ public class StepSeven extends javax.swing.JFrame {
 
         jLabel_Phase3TimeLimit.setText("Phase 3 Time limit");
 
-        jComboBox_Phase3Skip.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TRUE", "FALSE" }));
+        jComboBox_Phase3Skip.setModel(new DefaultComboBoxModel<>(TRUE_FALSE_VALUES));
         jComboBox_Phase3Skip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_Phase3SkipActionPerformed(evt);
@@ -891,7 +964,7 @@ public class StepSeven extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(phase3TimeLimitInfoIcon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField_Phase2TimeLimit)
+                .addComponent(jTextField_Phase3TimeLimit)
                 .addContainerGap())
         );
         jPanel_Phase3Layout.setVerticalGroup(
@@ -899,7 +972,7 @@ public class StepSeven extends javax.swing.JFrame {
             .addGroup(jPanel_Phase3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_Phase3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField_Phase2TimeLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_Phase3TimeLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox_Phase3Skip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel_Phase3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(SkipPhase3InfoIcon)
@@ -1173,7 +1246,143 @@ public class StepSeven extends javax.swing.JFrame {
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase3_Time_Limit.toString());
     }//GEN-LAST:event_phase3TimeLimitInfoIconMouseClicked
 
+    /**
+     * Checks if all required values were provided, and updates error text as needed
+     * @return - True if all fields were provided, false if missing information
+     */
+    private boolean validateData(){
+        Boolean isValid = true; //valid until proven otherwise
+        String errorText = "<html>The following data fields must be provided missing: ";
+        
+        //Check all true/false combo boxes:
+        if(jComboBox_LogPhase1Results.getSelectedIndex() <= 0){
+            errorText += "<br /> - " + this.jLabel_LogPhase1Results.getText();
+            isValid = false;
+        }
+        
+        if(jComboBox_LogQualityEval.getSelectedIndex() <= 0){
+            errorText += "<br /> - " + this.jLabel_LogQualityEval.getText();
+            isValid = false;
+        }
+        
+        if(jComboBox_HouseholdArchetype.getSelectedIndex() <= 0){
+            errorText += "<br /> - " + this.jLabel_HouseholdArchetype.getText();
+            isValid = false;
+        }
+        
+        if(jComboBox_PopulationArchetype.getSelectedIndex() <= 0){
+            errorText += "<br /> - " + this.jLabel_PopulationArchetype.getText();
+            isValid = false;
+        }
+        
+        if(jComboBox_FirstCensusTract.getSelectedIndex() <= 0){
+            errorText += "<br /> - " + this.jLabel_FirstCensusTract.getText();
+            isValid = false;
+        }
+        
+        if(jComboBox_Phase3Skip.getSelectedIndex() <= 0){
+            errorText += "<br /> - " + this.jLabel_Phase3Skip.getText();
+            isValid = false;
+        }
+        
+        if(jComboBox_Phase4Save.getSelectedIndex() <= 0){
+            errorText += "<br /> - " + this.jLabel_Phase4Save.getText();
+            isValid = false;
+        }
+        
+        if(jComboBox_Phase4Skip.getSelectedIndex() <= 0){
+            errorText += "<br /> - " + this.jLabel_Phase4Skip.getText();
+            isValid = false;
+        }
+        
+        //Check all text fields
+        if(jTextField_NameOfRun.getText().equals("")){
+            errorText += "<br /> - " + this.jLabel_NameOfRun.getText();
+            isValid = false;
+        }
+        if(jTextField_FinalRealizationIndex.getText().equals("")){
+            errorText += "<br /> - " + this.jLabel_FinalRealizationIndex.getText();
+            isValid = false;
+        }
+        if(jTextField_FirstRealizationIndex.getText().equals("")){
+            errorText += "<br /> - " + this.jLabel_FirstRealizationIndex.getText();
+            isValid = false;
+        }
+        if(jTextField_OutputDirectory.getText().equals("")){
+            errorText += "<br /> - " + this.jLabel_OutputDirectory.getText();
+            isValid = false;
+        }
+        if(jTextField_ParallelThreads.getText().equals("")){
+            errorText += "<br /> - " + this.jLabel_ParallelThreads.getText();
+            isValid = false;
+        }
+        if(jTextField_Phase1TimeLimit.getText().equals("")){
+            errorText += "<br /> - " + this.jLabel_Phase1TimeLimit.getText();
+            isValid = false;
+        }
+        if(jTextField_Phase2RandomPlacement.getText().equals("")){
+            errorText += "<br /> - " + this.jLabel_Phase2RandomPlacement.getText();
+            isValid = false;
+        }
+        if(jTextField_Phase2SkipTractsProb.getText().equals("")){
+            errorText += "<br /> - " + this.jLabel_Phase2SkipTracts.getText();
+            isValid = false;
+        }
+        if(jTextField_Phase2SkipTractsDelta.getText().equals("")){
+            errorText += "<br /> - " + this.jLabel_Phase2SkippedTracts.getText();
+            isValid = false;
+        }
+        if(jTextField_Phase3TimeLimit.getText().equals("")){
+            errorText += "<br /> - " + this.jLabel_Phase3TimeLimit.getText();
+            isValid = false;
+        }
+        if(jTextField_Phase34SaveInterval.getText().equals("")){
+            errorText += "<br /> - " + this.jLabel_Phase34SaveInterval.getText();
+            isValid = false;
+        }
+        if(jTextField_Phase4TimeLimit.getText().equals("")){
+            errorText += "<br /> - " + this.jLabel_Phase4_TimeLimit.getText();
+            isValid = false;
+        }
+        if(jTextField_Phase4_Lags.getText().equals("")){
+            errorText += "<br /> - " + this.jLabel_Phase4_Lags.getText();
+            isValid = false;
+        }
+        if(jTextField_RandomNumberSeed.getText().equals("")){
+            errorText += "<br /> - " + this.jLabel_RandomNumberSeed.getText();
+            isValid = false;
+        }
+        errorText += "</html>";
+        
+        jLabel_Errors.setText(errorText);
+        
+        return isValid;
+    }
+    
+    /**
+     * Checks true/false combo boxes for their values & translates to a boolean
+     * @param picklist - the true/false combo box
+     * @return True if the user selected "True", "False" if false or null
+     */
+    private Boolean returnTrueFalseValue(javax.swing.JComboBox<String> picklist){
+        switch (picklist.getSelectedIndex()){
+            case 1:
+                return true;
+            case 2:
+                return false;
+            default:
+                break;
+        }
+        return false;
+    }
+    
+    /**
+     * Handles the save button click, validates data first
+     * Then saves to the last-run.properties file
+     * @param evt 
+     */
     private void btn_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SaveActionPerformed
+        Boolean isValid = validateData();
         String saveFilePath = this.digPopGUIInformation.getFilePath();
         
         if(saveFilePath.contains(".XML")){
@@ -1187,72 +1396,73 @@ public class StepSeven extends javax.swing.JFrame {
         Result result = FileUtility.WriteNewTextFile(newRunFile.getPath(), this.RunProperties.toString());
         
         //provide message to user that the file has been created
-        this.jLabel_Errors.setText("The Run file was saved");
-        System.out.println("file was saved!" + result.getValue());
+        if(isValid){
+            this.jLabel_Errors.setText("The Run file was saved");
+        }
     }//GEN-LAST:event_btn_SaveActionPerformed
 
     private void jComboBox_LogPhase1ResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_LogPhase1ResultsActionPerformed
-        if((String)(jComboBox_LogPhase1Results.getSelectedItem()) == "TRUE"){
-            this.RunProperties.setDo_dump_number_archtypes(true);
+        if(jComboBox_LogPhase1Results.getSelectedIndex() > 0){
+            this.RunProperties.setDo_dump_number_archtypes(returnTrueFalseValue(jComboBox_LogPhase1Results));
         } else{
-            this.RunProperties.setDo_dump_number_archtypes(false);
+            this.jLabel_Errors.setText(this.jLabel_LogPhase1Results.getText() +  " is required");
         }
     }//GEN-LAST:event_jComboBox_LogPhase1ResultsActionPerformed
 
     private void jComboBox_LogQualityEvalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_LogQualityEvalActionPerformed
-        if((String)(jComboBox_LogQualityEval.getSelectedItem()) == "TRUE"){
-            this.RunProperties.setDo_dump_statistics(true);
+        if(jComboBox_LogQualityEval.getSelectedIndex() > 0){
+            this.RunProperties.setDo_dump_statistics(returnTrueFalseValue(jComboBox_LogQualityEval));
         } else{
-            this.RunProperties.setDo_dump_statistics(false);
+            this.jLabel_Errors.setText(this.jLabel_LogQualityEval.getText() +  " is required");
         }
     }//GEN-LAST:event_jComboBox_LogQualityEvalActionPerformed
 
     private void jComboBox_HouseholdArchetypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_HouseholdArchetypeActionPerformed
-        if((String)(jComboBox_HouseholdArchetype.getSelectedItem()) == "TRUE"){
-            this.RunProperties.setDo_write_all_hoh_fields(true);
+        if(jComboBox_HouseholdArchetype.getSelectedIndex() > 0){
+            this.RunProperties.setDo_write_all_hoh_fields(returnTrueFalseValue(jComboBox_HouseholdArchetype));
         } else{
-            this.RunProperties.setDo_write_all_hoh_fields(false);
+            this.jLabel_Errors.setText(this.jLabel_HouseholdArchetype.getText() +  " is required");
         }
     }//GEN-LAST:event_jComboBox_HouseholdArchetypeActionPerformed
 
     private void jComboBox_PopulationArchetypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_PopulationArchetypeActionPerformed
-        if((String)(jComboBox_PopulationArchetype.getSelectedItem()) == "TRUE"){
-            this.RunProperties.setDo_write_all_pop_fields(true);
+        if(jComboBox_PopulationArchetype.getSelectedIndex() > 0){
+            this.RunProperties.setDo_write_all_pop_fields(returnTrueFalseValue(jComboBox_PopulationArchetype));
         } else{
-            this.RunProperties.setDo_write_all_pop_fields(false);
+            this.jLabel_Errors.setText(this.jLabel_PopulationArchetype.getText() +  " is required");
         }
     }//GEN-LAST:event_jComboBox_PopulationArchetypeActionPerformed
 
     private void jComboBox_FirstCensusTractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_FirstCensusTractActionPerformed
         //Use only the first census tract
-        if((String)(jComboBox_FirstCensusTract.getSelectedItem()) == "TRUE"){
-            this.RunProperties.setOnly_one_region(true);
+        if(jComboBox_FirstCensusTract.getSelectedIndex() > 0){
+            this.RunProperties.setOnly_one_region(returnTrueFalseValue(jComboBox_FirstCensusTract));
         } else{
-            this.RunProperties.setOnly_one_region(false);
+            this.jLabel_Errors.setText(this.jLabel_FirstCensusTract.getText() +  " is required");
         }
     }//GEN-LAST:event_jComboBox_FirstCensusTractActionPerformed
 
     private void jComboBox_Phase3SkipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Phase3SkipActionPerformed
-        if((String)(jComboBox_Phase3Skip.getSelectedItem()) == "TRUE"){
-            this.RunProperties.setPhase3_skip(true);
+        if(jComboBox_Phase3Skip.getSelectedIndex() > 0){
+            this.RunProperties.setPhase3_skip(returnTrueFalseValue(jComboBox_Phase3Skip));
         } else{
-            this.RunProperties.setPhase3_skip(false);
+            this.jLabel_Errors.setText(this.jLabel_Phase3Skip.getText() +  " is required");
         }
     }//GEN-LAST:event_jComboBox_Phase3SkipActionPerformed
 
     private void jComboBox_Phase4SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Phase4SaveActionPerformed
-        if((String)(jComboBox_Phase4Save.getSelectedItem()) == "TRUE"){
-            this.RunProperties.setPhase4_save_both_ends(true);
+        if(jComboBox_Phase4Save.getSelectedIndex() > 0){
+            this.RunProperties.setPhase4_save_both_ends(returnTrueFalseValue(jComboBox_Phase4Save));
         } else{
-            this.RunProperties.setPhase4_save_both_ends(false);
+            this.jLabel_Errors.setText(this.jLabel_Phase4Save.getText() +  " is required");
         }
     }//GEN-LAST:event_jComboBox_Phase4SaveActionPerformed
 
     private void jComboBox_Phase4SkipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Phase4SkipActionPerformed
-        if((String)(jComboBox_Phase4Skip.getSelectedItem()) == "TRUE"){
-            this.RunProperties.setPhase4_skip(true);
+        if(jComboBox_Phase4Skip.getSelectedIndex() > 0){
+            this.RunProperties.setPhase4_skip(returnTrueFalseValue(jComboBox_Phase4Skip));
         } else{
-            this.RunProperties.setPhase4_skip(false);
+            this.jLabel_Errors.setText(this.jLabel_Phase4Skip.getText() +  " is required");
         }
     }//GEN-LAST:event_jComboBox_Phase4SkipActionPerformed
 
@@ -1335,25 +1545,25 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField_Phase2RandomPlacementFocusLost
 
-    private void jTextField_Phase2SkippedTractsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase2SkippedTractsFocusLost
-        String value = jTextField_Phase2SkippedTracts.getText();
+    private void jTextField_Phase2SkipTractsDeltaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase2SkipTractsDeltaFocusLost
+        String value = jTextField_Phase2SkipTractsDelta.getText();
         
         if(Validations.validateAndReturnDouble(value)){
             this.RunProperties.setPhase2_tract_skip_prob_init(Double.parseDouble(value));   
         }else {
             jLabel_Errors.setText("The Phase 2 Skip Tracts Probability Must be a Valid Double");
         }
-    }//GEN-LAST:event_jTextField_Phase2SkippedTractsFocusLost
+    }//GEN-LAST:event_jTextField_Phase2SkipTractsDeltaFocusLost
 
-    private void jTextField_Phase2SkipTractsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase2SkipTractsFocusLost
-        String value = jTextField_Phase2SkippedTracts.getText();
+    private void jTextField_Phase2SkipTractsProbFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase2SkipTractsProbFocusLost
+        String value = jTextField_Phase2SkipTractsDelta.getText();
         
         if(Validations.validateAndReturnDouble(value)){
             this.RunProperties.setPhase2_tract_skip_prob_init(Double.parseDouble(value));   
         } else {
             jLabel_Errors.setText("The Phase 2 Skip Tracts Probability Must be a Valid Double");
         }
-    }//GEN-LAST:event_jTextField_Phase2SkipTractsFocusLost
+    }//GEN-LAST:event_jTextField_Phase2SkipTractsProbFocusLost
 
     private void jTextField_Phase34SaveIntervalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase34SaveIntervalFocusLost
         String value = jTextField_Phase34SaveInterval.getText();
@@ -1365,15 +1575,15 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField_Phase34SaveIntervalFocusLost
 
-    private void jTextField_Phase2TimeLimitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase2TimeLimitFocusLost
-        String value = jTextField_Phase2TimeLimit.getText();
+    private void jTextField_Phase3TimeLimitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase3TimeLimitFocusLost
+        String value = jTextField_Phase3TimeLimit.getText();
         
         if(Validations.validateAndReturnDouble(value)){
             this.RunProperties.setPhase3_time_limit(Double.parseDouble(value));   
         } else {
             jLabel_Errors.setText("The Phase 3 Time Limit Must be a Valid Double");
         }
-    }//GEN-LAST:event_jTextField_Phase2TimeLimitFocusLost
+    }//GEN-LAST:event_jTextField_Phase3TimeLimitFocusLost
 
     private void jTextField_Phase4_LagsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase4_LagsFocusLost
         String value = jTextField_Phase4_Lags.getText();
@@ -1505,10 +1715,10 @@ public class StepSeven extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_ParallelThreads;
     private javax.swing.JTextField jTextField_Phase1TimeLimit;
     private javax.swing.JTextField jTextField_Phase2RandomPlacement;
-    private javax.swing.JTextField jTextField_Phase2SkipTracts;
-    private javax.swing.JTextField jTextField_Phase2SkippedTracts;
-    private javax.swing.JTextField jTextField_Phase2TimeLimit;
+    private javax.swing.JTextField jTextField_Phase2SkipTractsDelta;
+    private javax.swing.JTextField jTextField_Phase2SkipTractsProb;
     private javax.swing.JTextField jTextField_Phase34SaveInterval;
+    private javax.swing.JTextField jTextField_Phase3TimeLimit;
     private javax.swing.JTextField jTextField_Phase4TimeLimit;
     private javax.swing.JTextField jTextField_Phase4_Lags;
     private javax.swing.JTextField jTextField_RandomNumberSeed;

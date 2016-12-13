@@ -86,7 +86,7 @@ public class StepOneUtilityClass {
                 
                 if(result.isSuccess())
                 {
-                    result = FileUtility.VeirfySecondaryFileExists(file, LAND_USE_MAP_SECONDARY_FILE_TYPE);
+                    result = FileUtility.VerifySecondaryFileExists(file, LAND_USE_MAP_SECONDARY_FILE_TYPE);
                 }
                 break;
             case Household_Density_Map:
@@ -94,7 +94,7 @@ public class StepOneUtilityClass {
                 
                 if(result.isSuccess())
                 {
-                    result = FileUtility.VeirfySecondaryFileExists(file, HOUSEHOLD_DENSITY_MAP_SECONDARY_FILE_TYPE);
+                    result = FileUtility.VerifySecondaryFileExists(file, HOUSEHOLD_DENSITY_MAP_SECONDARY_FILE_TYPE);
                 }
                 break;
             case Region_Map:
@@ -102,7 +102,7 @@ public class StepOneUtilityClass {
                 
                 if(result.isSuccess())
                 {
-                    result = FileUtility.VeirfySecondaryFileExists(file, REGION_MAP_SECONDARY_FILE_TYPE);
+                    result = FileUtility.VerifySecondaryFileExists(file, REGION_MAP_SECONDARY_FILE_TYPE);
                 }
                 break;
             case Census_Enumerations:
@@ -113,7 +113,7 @@ public class StepOneUtilityClass {
                 
                 if(result.isSuccess())
                 {
-                    result = FileUtility.VeirfySecondaryFileExists(file, HOUSEHOLD_DENSITY_MAP_SECONDARY_FILE_TYPE);
+                    result = FileUtility.VerifySecondaryFileExists(file, HOUSEHOLD_DENSITY_MAP_SECONDARY_FILE_TYPE);
                 }
                 break;
             case Population_Micro_Data:

@@ -44,10 +44,14 @@ public class DigPopGUIInformation {
     //Used in Step 5 - Generate Fitting Criteria File
     private ArrayList<String> FittingCriteriaColumnNames;
     private ArrayList<ArrayList<Object>> FittingCriteriaCellValues;
+    private ArrayList<Traits> FittingTraits;
+    private ArrayList<Weights> TraitWeights;
+    private Double traitWeightLocation;
     
     //Used in Step 6 - Generate Trait Clusters
     private ArrayList<ArrayList<Object>> traitClusters;
     private ArrayList<String> traitList;
+    private ArrayList<Cluster> traitPositionClusters;
     
     private CensusSurveyClasses censusSurveyClasses;
 
@@ -261,4 +265,37 @@ public class DigPopGUIInformation {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
+
+    public ArrayList<Traits> getFittingTraits() {
+        return FittingTraits;
+    }
+
+    public void setFittingTraits(ArrayList<Traits> FittingTraits) {
+        this.FittingTraits = FittingTraits;
+    }
+
+    public Double getTraitWeightLocation() {
+        return traitWeightLocation;
+    }
+
+    public void setTraitWeightLocation(Double traitWeightLocation) {
+        this.traitWeightLocation = traitWeightLocation;
+    }
+
+    public ArrayList<Cluster> getTraitPositionClusters() {
+        return traitPositionClusters;
+    }
+
+    public void setTraitPositionClusters(ArrayList<Cluster> traitPositionClusters) {
+        this.traitPositionClusters = traitPositionClusters;
+    }
+
+    public ArrayList<Weights> getTraitWeights() {
+        return TraitWeights;
+    }
+
+    public void setTraitWeights(ArrayList<Weights> TraitWeights) {
+        this.TraitWeights = TraitWeights;
+    }
+    
 }

@@ -5,16 +5,23 @@
  */
 package cerl.gui.forms;
 
+import cerl.gui.standard.utilities.FileType;
+import cerl.gui.standard.utilities.FileUtility;
+import cerl.gui.standard.utilities.Result;
 import cerl.gui.standard.utilities.customInputVerifier;
 import cerl.gui.standard.utilities.customTableCell;
 import cerl.gui.standard.utilities.customTableCellRenderer;
 import cerl.gui.standard.utilities.customTableModel;
 import cerl.gui.standard.utilities.customTableModelListener;
+import cerl.gui.utilities.Cluster;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.FittingCriteriaInformation;
 import cerl.gui.utilities.HelpFileScreenNames;
+import cerl.gui.utilities.Traits;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.io.File;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +41,8 @@ import javax.swing.table.TableColumn;
 public class GenerateTraitClusters extends javax.swing.JFrame {
     private final customTableModel myTable;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_SIX_HELP_FILE_NAME.toString();
+    private final String DEFAULT_NEW_FILE_NAME = "FittingCriteria.dprxml";
+    private final FileType DEFAULT_NEW_FILE_TYPE = FileType.XML;
     private final DigPopGUIInformation digPopGUIInformation;
     
     /**
@@ -67,31 +76,70 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
 
         //columns must be rows+1 because the header row is the -1th row.
         ArrayList<ArrayList<Object>> cellValues = new ArrayList<>();
-        //Vector<ArrayList<Object>> cellValues = new Vector(3,3);
         
-        if(this.digPopGUIInformation.getTraitClusters() != null){
+        if(this.digPopGUIInformation.getTraitPositionClusters() != null){
+            ArrayList<Cluster> posCluster = this.digPopGUIInformation.getTraitPositionClusters();
+            
+            for(int r=0; r<posCluster.size(); r++){
+                cellValues.add(r, new ArrayList<>());
+                Cluster thisCluster = posCluster.get(r);
+                
+                for(int c=0; c<columnNames.size(); c++){
+                    switch(columnNames.get(c)){
+                    case "Trait ID": //int
+                        cellValues.get(r).add(c, new customTableCell(thisCluster.getId(), false, "Integer", false));
+                        break;
+                    case "Reduction": //int
+                        cellValues.get(r).add(c, new customTableCell(thisCluster.getReduction(), true, "Integer", false));
+                        break;
+                    case "Distance": //int
+                        cellValues.get(r).add(c, new customTableCell(thisCluster.getDistance(), true, "Integer", false));
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+        }
+        else if(this.digPopGUIInformation.getFittingTraits() != null){
+            ArrayList<Traits> fitTraits = this.digPopGUIInformation.getFittingTraits();
+            
+            for(int r=0; r<fitTraits.size(); r++){
+                cellValues.add(r, new ArrayList<>());
+                Traits thisTrait = fitTraits.get(r);
+                
+                for(int c=0; c<columnNames.size(); c++){
+                    switch(columnNames.get(c)){
+                    case "Trait ID": //int
+                        cellValues.get(r).add(c, new customTableCell(thisTrait.getId(), false, "Integer", false));
+                        break;
+                    case "Reduction": //int
+                        cellValues.get(r).add(c, new customTableCell("", true, "Integer", false));
+                        break;
+                    case "Distance": //int
+                        cellValues.get(r).add(c, new customTableCell("", true, "Integer", false));
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+        }
+        else if(this.digPopGUIInformation.getTraitClusters() != null){
             cellValues = this.digPopGUIInformation.getTraitClusters();
         } else {
             //Add rows
             cellValues.add(0,new ArrayList<>());
-            cellValues.add(1,new ArrayList<>());
-            cellValues.add(2,new ArrayList<>());
 
             //Add Column - Trait ID's
             //cellValues[0][0] = new customTableCell("123", false, "Integer", false);
             cellValues.get(0).add(0, new customTableCell("123", false, "Integer", false));
-            cellValues.get(1).add(0, new customTableCell("131", false, "Integer", false));
-            cellValues.get(2).add(0, new customTableCell("136", false, "Integer", false));
 
             //Reduction
             cellValues.get(0).add(1, new customTableCell("", true, "Integer", false));
-            cellValues.get(1).add(1, new customTableCell("", true, "Integer", false));
-            cellValues.get(2).add(1, new customTableCell("", true, "Integer", false));
 
             //Distance
             cellValues.get(0).add(2, new customTableCell("", true, "Integer", false));
-            cellValues.get(1).add(2, new customTableCell("", true, "Integer", false));
-            cellValues.get(2).add(2, new customTableCell("", true, "Integer", false));
         }
         //create table with customTableModel
         customTableModel myTableModel = new customTableModel(columnNames, cellValues);
@@ -110,15 +158,15 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel_Header = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel_TraitClusters = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_TraitInformation = new javax.swing.JTable();
         jButton_NewCluster = new javax.swing.JButton();
         btnNextStep = new javax.swing.JButton();
         btnPreviousStep = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        jMenu_File = new javax.swing.JMenu();
+        jMenu_Help = new javax.swing.JMenu();
         jMenu_About = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -129,8 +177,8 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         jLabel_Header.setText("Generate Trait Clusters");
         jLabel_Header.setName("Header"); // NOI18N
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Trait Clusters");
+        jLabel_TraitClusters.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_TraitClusters.setText("Trait Clusters");
 
         jTable_TraitInformation.setModel(myTable);
         jTable_TraitInformation.setMinimumSize(new java.awt.Dimension(100, 300));
@@ -158,16 +206,16 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
             }
         });
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        jMenu_File.setText("File");
+        jMenuBar1.add(jMenu_File);
 
-        jMenu2.setText("Help");
-        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMenu_Help.setText("Help");
+        jMenu_Help.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu2MouseClicked(evt);
+                jMenu_HelpMouseClicked(evt);
             }
         });
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jMenu_Help);
 
         jMenu_About.setText("About");
         jMenu_About.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -187,7 +235,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel_Header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel_TraitClusters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton_NewCluster)
@@ -204,7 +252,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel_Header)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
+                .addComponent(jLabel_TraitClusters)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_NewCluster)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -236,7 +284,16 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         //Trait ID (List with descriptions)
         JComboBox trait = new JComboBox();
         
-        if(this.digPopGUIInformation.getTraitList() != null){
+        if(this.digPopGUIInformation.getFittingTraits() != null){
+            ArrayList<Traits> fitTraits = this.digPopGUIInformation.getFittingTraits();
+            ArrayList<String> comboValues = new ArrayList<>();
+            
+            for(int i=0;i<fitTraits.size();i++){
+                comboValues.add(fitTraits.get(i).getId() +"");
+            }
+            trait.setModel(new DefaultComboBoxModel(comboValues.toArray()));
+        }
+        else if(this.digPopGUIInformation.getTraitList() != null){
             trait.setModel(new DefaultComboBoxModel(this.digPopGUIInformation.getTraitList().toArray()));
         } else {
             String[] traitList = {"123", "456", "789"};
@@ -304,24 +361,103 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton_NewClusterActionPerformed
 
-    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
+    private void jMenu_HelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_HelpMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
-    }//GEN-LAST:event_jMenu2MouseClicked
+    }//GEN-LAST:event_jMenu_HelpMouseClicked
 
     private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
         new About().setVisible(true);
     }//GEN-LAST:event_jMenu_AboutMouseClicked
 
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
+        saveData();
+        createFittingCriteriaFile();
         new StepSeven(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed
 
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
+        saveData();
         new FittingCriteria(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 
+    private void saveData(){
+        ArrayList<Cluster> clusters = new ArrayList<>();
+        ArrayList<ArrayList<Object>> cells = myTable.getTableCells();
+        ArrayList<String> columns = myTable.getColumns();
+        
+        for(int r = 0; r<cells.size(); r++){
+            Cluster newCluster = new Cluster();
+            for(int c = 0; c<columns.size() && c<cells.get(r).size(); c++){
+                String tableCell = cells.get(r).get(c).toString();
+                
+                try{
+                    switch(columns.get(c)){
+                case "Trait ID": //int
+                    newCluster.setId(Integer.parseInt(tableCell));
+                    break;
+                case "Reduction": //int
+                    newCluster.setReduction(Integer.parseInt(tableCell));
+                    break;
+                case "Distance": //int
+                    newCluster.setDistance(Integer.parseInt(tableCell));
+                    break;
+                default:
+                    break;
+                }
+                } catch(NumberFormatException ex){
+                    System.err.print("NumberFormatException" + ex.getMessage());
+                }
+            }
+            clusters.add(r, newCluster);
+        }
+        this.digPopGUIInformation.setTraitPositionClusters(clusters);
+    }
+    
+    /**
+     * Generates the output Fitting Criteria .dprxml file
+     */
+    private void createFittingCriteriaFile(){
+        String saveFilePath = this.digPopGUIInformation.getFilePath();
+        //get save driectory
+        if(saveFilePath.contains(".XML")){
+            saveFilePath = saveFilePath.substring(0, saveFilePath.lastIndexOf("\\")+1);
+        }
+        
+        //create new Fitting Criteria file
+        File newFittingFile = new File(String.format("%s\\%s", saveFilePath, DEFAULT_NEW_FILE_NAME));
+                
+        //write to file
+        Result result = FileUtility.VerifyFileType(DEFAULT_NEW_FILE_TYPE, newFittingFile);
+
+        if(result.isSuccess()){
+            try {
+                FittingCriteriaInformation fitInfo = new FittingCriteriaInformation();
+                
+                fitInfo.setRelationshipFile(DEFAULT_NEW_FILE_NAME);
+                fitInfo.setTraits(this.digPopGUIInformation.getFittingTraits());
+                fitInfo.setWeights(this.digPopGUIInformation.getTraitWeights());
+                fitInfo.setPositionRules(this.digPopGUIInformation.getTraitPositionClusters());
+                
+                //Need to create the file as empty version of the object
+                result = FileUtility.ParseObjectToXML(fitInfo, newFittingFile.getPath(), fitInfo.getClass());
+
+                //If successully created object - go to Next Step
+                if(result.isSuccess()){
+                    System.out.println("successfully updated file");
+                    //ArrayList<String> fittingValues = (ArrayList<String>)result.getValue();
+                }else {
+                    //lblErrorMessages.setText(result.getErrorMessage());
+                }
+
+            } catch (Exception ex) {
+                System.err.print(ex.getMessage());
+                //Logger.getLogger(StepZero.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -361,12 +497,12 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     private javax.swing.JButton btnNextStep;
     private javax.swing.JButton btnPreviousStep;
     private javax.swing.JButton jButton_NewCluster;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel_Header;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JLabel jLabel_TraitClusters;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenu_About;
+    private javax.swing.JMenu jMenu_File;
+    private javax.swing.JMenu jMenu_Help;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_TraitInformation;
     // End of variables declaration//GEN-END:variables
