@@ -55,6 +55,7 @@ public class DigPopGUIInformation {
     
     private CensusSurveyClasses censusSurveyClasses;
 
+    private RunFile runFile;
 
     public DigPopGUIInformation() {
         this.constraintMapsFilePaths = new ArrayList<>();
@@ -297,5 +298,12 @@ public class DigPopGUIInformation {
     public void setTraitWeights(ArrayList<Weights> TraitWeights) {
         this.TraitWeights = TraitWeights;
     }
-    
+
+    public RunFile getRunFile() {
+        return runFile;
+    }
+
+    public void setRunFile(RunFile runFile) {
+        this.runFile = runFile;
+    }    
 }
