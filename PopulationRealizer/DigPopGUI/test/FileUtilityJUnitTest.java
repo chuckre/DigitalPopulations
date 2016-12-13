@@ -127,7 +127,7 @@ public class FileUtilityJUnitTest {
         returnObject.getHouseholdMicroDataClasses().get(4).setSelected(true);
         returnObject.getHouseholdMicroDataClasses().get(10).setSelected(true);
         
-        result = DigPopGUIUtilityClass.readInClassTotals("P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv",returnObject.getHouseholdMicroDataClasses());
+      //  result = DigPopGUIUtilityClass.readInClassTotals("P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv",returnObject.getHouseholdMicroDataClasses());
         
         System.out.print(result.getValue());
     }
