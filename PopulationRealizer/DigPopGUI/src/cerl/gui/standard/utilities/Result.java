@@ -51,6 +51,8 @@ public class Result {
      */
     public Result(boolean success) {
         this.success = success;
+        this.value = null;
+        this.errorMessage = "";
     }
 
     /**

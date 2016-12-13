@@ -22,6 +22,7 @@ public class DigPopGUIInformation {
 
     private String landUseMapFilePath;
     private Boolean validLandUseMapFilePath;
+    private LandUseMapInformation landUseMapInformation;
     
     private String householdDensityMapFilePath;
     private Boolean validHouseholdDensityMapFilePath;
@@ -60,9 +61,10 @@ public class DigPopGUIInformation {
     public DigPopGUIInformation() {
         this.constraintMapsFilePaths = new ArrayList<>();
         this.censusSurveyClasses = new CensusSurveyClasses();
+        this.landUseMapInformation = new LandUseMapInformation();
     }
 
-    public DigPopGUIInformation(String filePath, String createdDate, String lastSaveDate, String landUseMapFilePath, Boolean validLandUseMapFilePath, String householdDensityMapFilePath, Boolean validHouseholdDensityMapFilePath, String regionMapFilePath, Boolean validRegionMapFilePath, String censusEnumerationsFilePath, Boolean validCensusEnumerationsFilePath, ArrayList<String> constraintMapsFilePaths, Boolean validConstraintMapsFilePaths, String populationMicroDataFilePath, Boolean validPopulationMicroDataFilePath, String householdMicroDataFilePath, Boolean validHouseholdMicroDataFilePath, ArrayList<String> FittingCriteriaColumnNames, ArrayList<ArrayList<Object>> FittingCriteriaCellValues, ArrayList<ArrayList<Object>> traitClusters, ArrayList<String> traitList, CensusSurveyClasses censusSurveyClasses) {
+    public DigPopGUIInformation(String filePath, String createdDate, String lastSaveDate, String landUseMapFilePath, Boolean validLandUseMapFilePath, String householdDensityMapFilePath, Boolean validHouseholdDensityMapFilePath, String regionMapFilePath, Boolean validRegionMapFilePath, String censusEnumerationsFilePath, Boolean validCensusEnumerationsFilePath, ArrayList<String> constraintMapsFilePaths, Boolean validConstraintMapsFilePaths, String populationMicroDataFilePath, Boolean validPopulationMicroDataFilePath, String householdMicroDataFilePath, Boolean validHouseholdMicroDataFilePath, ArrayList<String> FittingCriteriaColumnNames, ArrayList<ArrayList<Object>> FittingCriteriaCellValues, ArrayList<ArrayList<Object>> traitClusters, ArrayList<String> traitList, CensusSurveyClasses censusSurveyClasses, LandUseMapInformation landUseMapInformation) {
         this.filePath = filePath;
         this.createdDate = createdDate;
         this.lastSaveDate = lastSaveDate;
@@ -85,6 +87,15 @@ public class DigPopGUIInformation {
         this.traitClusters = traitClusters;
         this.traitList = traitList;
         this.censusSurveyClasses = censusSurveyClasses;
+        this.landUseMapInformation = landUseMapInformation;
+    }
+
+    public LandUseMapInformation getLandUseMapInformation() {
+        return landUseMapInformation;
+    }
+
+    public void setLandUseMapInformation(LandUseMapInformation landUseMapInformation) {
+        this.landUseMapInformation = landUseMapInformation;
     }
 
     public CensusSurveyClasses getCensusSurveyClasses() {
