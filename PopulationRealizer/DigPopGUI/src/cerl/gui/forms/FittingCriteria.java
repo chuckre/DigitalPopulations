@@ -27,6 +27,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.TableColumn;
 
 /**
@@ -36,10 +37,12 @@ import javax.swing.table.TableColumn;
 public class FittingCriteria extends javax.swing.JFrame {
     private final customTableModel myTable;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_FIVE_HELP_FILE_NAME.toString();
-    private final String RELATIONSHIP_FILE_NAME = "goal_relationship.dprxml";
+    private final String RELATIONSHIP_FILE_NAME = "goal_relationship";
+    private final String RELATIONSHIP_FILE_EXT = ".dprxml";
     private final FileType RELATIONSHIP_FILE_TYPE = FileType.XML;
     private final DigPopGUIInformation digPopGUIInformation;
     private int currentMarkovChainId;
+    private String currentMarkovChainName;
     
     /**
      * Creates new Step 5 form FittingCriteria
@@ -59,6 +62,11 @@ public class FittingCriteria extends javax.swing.JFrame {
     public FittingCriteria(DigPopGUIInformation digPopGUIInformation, int currentMarkovChainId) {
         this.currentMarkovChainId = currentMarkovChainId;
         this.digPopGUIInformation = digPopGUIInformation;
+        
+        //get name of Markov for saving
+        MarkovChain mc = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(this.currentMarkovChainId);
+        this.currentMarkovChainName = mc.getMackovName();
+        
         //load table
         myTable = populateTableModel();
         initComponents();
@@ -82,7 +90,7 @@ public class FittingCriteria extends javax.swing.JFrame {
         //columns must be rows+1 because the header row is the -1th row.
         ArrayList<ArrayList<Object>> cellValues = new ArrayList<>();
         
-        if(this.digPopGUIInformation.getFittingTraits() != null){
+        /*if(this.digPopGUIInformation.getFittingTraits() != null){
             ArrayList<Traits> fitTraits = this.digPopGUIInformation.getFittingTraits();
             ArrayList<Weights> fitWeights = this.digPopGUIInformation.getTraitWeights();
             
@@ -125,42 +133,86 @@ public class FittingCriteria extends javax.swing.JFrame {
                         break;
                     default:
                         break;
-                }
+                    }
                 }
             }
         }
         else if(this.digPopGUIInformation.getFittingCriteriaCellValues() != null){
             cellValues = this.digPopGUIInformation.getFittingCriteriaCellValues();
-        } else { //first time in
+        } else { //first time in */
+            MarkovChain mc = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(this.currentMarkovChainId);
+            this.currentMarkovChainName = mc.getMackovName();
+            ArrayList<String> censusClasses = mc.getAllSelectedCensusClassesUserDefinedNames();
+            List<SurveyColumnValuesGrouping> surveyTraits = mc.getSelectSurveyClass().getSurveyColumnValuesGroupings();
+            
+            //for tables used
+            String householdOrPopulation = "";
+            
+            //to calculate the match up - set all census values to match all survey
+            int censusCounter = 0;
+            int surveyCounter = 0;
+            
+            if(this.digPopGUIInformation.getValidHouseholdMicroDataFilePath()){
+                householdOrPopulation = "HOUSEHOLD";
+            } else if(this.digPopGUIInformation.getValidPopulationMicroDataFilePath()){
+                householdOrPopulation = "POPULATION";
+            }
             
             //Set up rows and columns
-            for(int r = 0; r<1; r++){
+            for(int r = 0; r<censusClasses.size()*surveyTraits.size(); r++){
                 cellValues.add(r, new ArrayList<>());
+                
+                for(int c=0;c<columnNames.size(); c++){
+                    
+                    switch(columnNames.get(c)){
+                    case "ID": //int
+                        cellValues.get(r).add(c, new customTableCell(r, false, "Integer", false));
+                        break;
+                    case "Census Region Trait": //String
+                        cellValues.get(r).add(c, new customTableCell(censusClasses.get(censusCounter), false, "String", false));
+                        break;
+                    case "Census Region Total": //String
+                        cellValues.get(r).add(c, new customTableCell(this.currentMarkovChainName + "_Total", false, "String", false));
+                        break;
+                    case "Survey Trait Table": //String
+                        cellValues.get(r).add(c, new customTableCell(householdOrPopulation, false, "String", false));
+                        break;
+                    case "Survey Trait Select": //String
+                        cellValues.get(r).add(c, new customTableCell(surveyCounter, false, "Integer", false));
+                        break;
+                    case "Survey Trait Field": //String
+                        cellValues.get(r).add(c, new customTableCell(surveyTraits.get(surveyCounter).getAllRowIdsAsString(), false, "String", false));
+                        break;
+                    case "Survey Total Table": //String
+                        cellValues.get(r).add(c, new customTableCell(householdOrPopulation, false, "String", false));
+                        break;
+                    case "Survey Total Field": //int
+                        cellValues.get(r).add(c, new customTableCell(1, false, "Integer", false));
+                        break;
+                    case "User Entered Description": //String
+                        cellValues.get(r).add(c, new customTableCell(surveyTraits.get(surveyCounter).getUserDefinedDescription(), false, "String", false));
+                        break;
+                    case "Trait Weight":  //Double
+                        cellValues.get(r).add(c, new customTableCell("", true, "Double", false));
+                        break;
+                    default:
+                        break;
+                    }   
+                }
+                
+                //match all census values to survey values
+                if(censusCounter<censusClasses.size()){
+                    if(surveyCounter<(surveyTraits.size()-1)){
+                        surveyCounter++; //iterate survey values first
+                    } else{
+                        surveyCounter = 0;
+                        censusCounter++; //then iterate census values
+                    }
+                }
             }
-
-            //ID's
-            cellValues.get(0).add(0, new customTableCell("1", false, "Integer", false));
-            //Census Region Traits
-            cellValues.get(0).add(1, new customTableCell("ABA2E006", false, "String", false));
-            //Census Region Total
-            cellValues.get(0).add(2, new customTableCell("Toilet - MC - Total", false, "String", false));
-            //Survey Trait Table
-            cellValues.get(0).add(3, new customTableCell("HOUSEHOLDS", false, "String", false));
-            //Survey Trait Select
-            cellValues.get(0).add(4, new customTableCell("0", false, "Integer", false));
-            //Survey Trait Field
-            cellValues.get(0).add(5, new customTableCell("JWMNP", false, "String", false));
-            //Survey Total Table
-            cellValues.get(0).add(6, new customTableCell("HOUSEHOLDS", false, "String", false));
-            //Survey Total Field
-            cellValues.get(0).add(7, new customTableCell("1", false, "Integer", false));
-            //User Entered Description
-            cellValues.get(0).add(8, new customTableCell("Flush to piped sewer", false, "String", false));
-            //Trait Weight
-            cellValues.get(0).add(9, new customTableCell("", true, "Double", false));
-
+            
             this.digPopGUIInformation.setFittingCriteriaCellValues(cellValues);
-        }
+        //}
         //create table with custom MarkovTableModel
         customTableModel myTableModel = new customTableModel(columnNames, cellValues);
         
@@ -286,17 +338,46 @@ public class FittingCriteria extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu_AboutMouseClicked
 
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
-        saveToFile();
-        new GenerateTraitClusters(this.digPopGUIInformation).setVisible(true);
-        dispose();
+        if(validateFile()){
+            saveToFile();
+            new GenerateTraitClusters(this.digPopGUIInformation, this.currentMarkovChainId).setVisible(true);
+            dispose();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "All weights are required", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnNextStepActionPerformed
 
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
-        saveToFile();
-        new MarkovChainMatrix(this.digPopGUIInformation, this.currentMarkovChainId ).setVisible(true);
-        dispose();
+        if(!validateFile()){
+            Object[] options = { "OK", "CANCEL" };
+            int result = JOptionPane.showOptionDialog(null, "Not all weights are provided, changes will not be saved, would you like to continue?", "Warning",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+        
+            if(result == 0){
+                new MarkovChainMatrix(this.digPopGUIInformation, this.currentMarkovChainId).setVisible(true);
+                dispose();
+            }
+        } else{
+            saveToFile();
+            new MarkovChainMatrix(this.digPopGUIInformation, this.currentMarkovChainId).setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 
+    private Boolean validateFile(){
+        ArrayList<ArrayList<Object>> cells = myTable.getTableCells();
+        ArrayList<String> columns = myTable.getColumns();
+        
+        for(int r = 0; r<cells.size(); r++){
+            int c = columns.indexOf("Trait Weight");
+            if(cells.get(r).get(c).toString().equals("")){
+                return false;
+            }
+        }
+        return true;
+    }
+    
     private void saveToFile(){
         ArrayList<Traits> theseTraits = new ArrayList<>();
         ArrayList<Weights> traitWeights = new ArrayList<>();
@@ -367,9 +448,15 @@ public class FittingCriteria extends javax.swing.JFrame {
     
     private void createRelationshipFile(){
         String saveFileDirectory = this.digPopGUIInformation.getFileDirectory();
-        
+        String fileName = RELATIONSHIP_FILE_NAME;
+        if(this.currentMarkovChainName.contains(" ")){
+            fileName += this.currentMarkovChainName.replace(" ", "_") + RELATIONSHIP_FILE_EXT;
+        } else{
+            fileName += this.currentMarkovChainName + RELATIONSHIP_FILE_EXT;
+        }
+         
         //create new Fitting Criteria file
-        File newRelationshipFile = new File(String.format("%s\\%s", saveFileDirectory, RELATIONSHIP_FILE_NAME));
+        File newRelationshipFile = new File(String.format("%s\\%s", saveFileDirectory, fileName));
                 
         //write to file
         Result result = FileUtility.VerifyFileType(RELATIONSHIP_FILE_TYPE, newRelationshipFile);

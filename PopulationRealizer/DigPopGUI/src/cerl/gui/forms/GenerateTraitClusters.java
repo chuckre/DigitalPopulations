@@ -41,9 +41,11 @@ import javax.swing.table.TableColumn;
 public class GenerateTraitClusters extends javax.swing.JFrame {
     private final customTableModel myTable;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_SIX_HELP_FILE_NAME.toString();
-    private final String DEFAULT_NEW_FILE_NAME = "FittingCriteria.dprxml";
+    private final String FITTING_FILE_NAME = "FittingCriteria";
+    private final String FITTING_FILE_EXT = ".dprxml";
     private final FileType DEFAULT_NEW_FILE_TYPE = FileType.XML;
     private final DigPopGUIInformation digPopGUIInformation;
+    private int currentMarkovChainId;
     
     /**
      * Creates new Step 6 form GenerateTraitClusters
@@ -60,7 +62,8 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     /**
      * Creates new Step 6 form GenerateTraitClusters with existing data
      */
-    public GenerateTraitClusters(DigPopGUIInformation digPopGUIInformation) {
+    public GenerateTraitClusters(DigPopGUIInformation digPopGUIInformation, int currentMarkovChainId) {
+        this.currentMarkovChainId = currentMarkovChainId;
         this.digPopGUIInformation = digPopGUIInformation;
         //load table
         myTable = populateTableModel();
@@ -372,13 +375,14 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
         saveData();
         createFittingCriteriaFile();
-        new StepSeven(this.digPopGUIInformation).setVisible(true);
+        new StepThree(this.digPopGUIInformation).setVisible(true);
+        //new StepSeven(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed
 
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
         saveData();
-        new FittingCriteria(this.digPopGUIInformation, 1).setVisible(true);
+        new FittingCriteria(this.digPopGUIInformation, this.currentMarkovChainId).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 
@@ -421,8 +425,11 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     private void createFittingCriteriaFile(){
         String saveFileDirectory = this.digPopGUIInformation.getFileDirectory();
         
+        String mcName = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(currentMarkovChainId).getMackovName();
+        String fileName = FITTING_FILE_NAME + mcName.replace(" ", "_") + FITTING_FILE_EXT;
+        
         //create new Fitting Criteria file
-        File newFittingFile = new File(String.format("%s\\%s", saveFileDirectory, DEFAULT_NEW_FILE_NAME));
+        File newFittingFile = new File(String.format("%s\\%s", saveFileDirectory, fileName));
                 
         //write to file
         Result result = FileUtility.VerifyFileType(DEFAULT_NEW_FILE_TYPE, newFittingFile);
@@ -431,7 +438,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
             try {
                 FittingCriteriaInformation fitInfo = new FittingCriteriaInformation();
                 
-                fitInfo.setRelationshipFile(DEFAULT_NEW_FILE_NAME);
+                fitInfo.setRelationshipFile(fileName);
                 fitInfo.setTraits(this.digPopGUIInformation.getFittingTraits());
                 fitInfo.setWeights(this.digPopGUIInformation.getTraitWeights());
                 fitInfo.setPositionRules(this.digPopGUIInformation.getTraitPositionClusters());
