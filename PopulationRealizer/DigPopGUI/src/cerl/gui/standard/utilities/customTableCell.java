@@ -56,6 +56,10 @@ public class customTableCell {
 
     @Override
     public String toString() {
-        return value.toString();
+        if(value != null){
+            return value.toString();
+        } else{
+            return "";
+        }
     }
 }
