@@ -10,12 +10,14 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author mrivera
  */
-@XmlRootElement(name="FittingCriteriaFile")
+@XmlRootElement(name="FittingCriteria")
+@XmlType(propOrder={"traits","weights","position-rules"})
 public class FittingCriteriaInformation {
     private String relationshipFile;
     

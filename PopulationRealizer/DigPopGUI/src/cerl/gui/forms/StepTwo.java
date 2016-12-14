@@ -6,24 +6,16 @@
 package cerl.gui.forms;
 
 import cerl.gui.standard.utilities.Result;
-import cerl.gui.utilities.DigPopFileTypeEnum;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.LandUseCombinationTableItemModel;
-import cerl.gui.utilities.LandUseMapClassCombination;
-//import cerl.gui.utilities.DigPopGUIFiles;
-import cerl.gui.utilities.StepOneUtilityClass;
-import cerl.gui.utilities.SurveyColumnValue;
-import java.io.File;
+import cerl.gui.utilities.VacantClass;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
@@ -691,9 +683,12 @@ public class StepTwo extends javax.swing.JFrame {
             jPanelHouseholdDensityMap.setVisible(false);
             
             UpdateLandUseClassCombinationTable();
-            
-            this.txtVacantClassDescription.setText(this.digPopGUIInformation.getLandUseMapInformation().getVacentClassDescription());
-            this.txtVacantClasses.setText(this.digPopGUIInformation.getLandUseMapInformation().getVacentClassDescription());
+            if((this.digPopGUIInformation.getLandUseMapInformation() != null) 
+                    && (this.digPopGUIInformation.getLandUseMapInformation().getVacantClasses() != null))
+            {
+                this.txtVacantClassDescription.setText(this.digPopGUIInformation.getLandUseMapInformation().getVacantClasses().getDescription());
+                this.txtVacantClasses.setText(this.digPopGUIInformation.getLandUseMapInformation().getVacantClasses().getClasses());
+            }
             this.txtLandUseComment.setText(this.digPopGUIInformation.getLandUseMapInformation().getComment());
             
         } else{
@@ -725,8 +720,8 @@ public class StepTwo extends javax.swing.JFrame {
     }
     
     private void save(){
-        this.digPopGUIInformation.getLandUseMapInformation().setVacentClassDescription(this.txtVacantClassDescription.getText());
-        this.digPopGUIInformation.getLandUseMapInformation().setVacentClasses(this.txtVacantClasses.getText());
+        VacantClass vacant = new VacantClass(this.txtVacantClassDescription.getText(), this.txtVacantClasses.getText());
+        this.digPopGUIInformation.getLandUseMapInformation().setVacantClasses(vacant);
         this.digPopGUIInformation.getLandUseMapInformation().setComment(this.txtLandUseComment.getText());
     }
 

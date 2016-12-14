@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class DigPopGUIInformation {
     
     private String filePath;
+    private String fileDirectory;
     
     private String createdDate;
     private String lastSaveDate;
@@ -48,6 +49,7 @@ public class DigPopGUIInformation {
     private ArrayList<Traits> FittingTraits;
     private ArrayList<Weights> TraitWeights;
     private Double traitWeightLocation;
+    private GoalRelationshipFile goalRelationshipFile;
     
     //Used in Step 6 - Generate Trait Clusters
     private ArrayList<ArrayList<Object>> traitClusters;
@@ -62,6 +64,7 @@ public class DigPopGUIInformation {
         this.constraintMapsFilePaths = new ArrayList<>();
         this.censusSurveyClasses = new CensusSurveyClasses();
         this.landUseMapInformation = new LandUseMapInformation();
+        this.goalRelationshipFile = new GoalRelationshipFile();
     }
 
     public DigPopGUIInformation(String filePath, String createdDate, String lastSaveDate, String landUseMapFilePath, Boolean validLandUseMapFilePath, String householdDensityMapFilePath, Boolean validHouseholdDensityMapFilePath, String regionMapFilePath, Boolean validRegionMapFilePath, String censusEnumerationsFilePath, Boolean validCensusEnumerationsFilePath, ArrayList<String> constraintMapsFilePaths, Boolean validConstraintMapsFilePaths, String populationMicroDataFilePath, Boolean validPopulationMicroDataFilePath, String householdMicroDataFilePath, Boolean validHouseholdMicroDataFilePath, ArrayList<String> FittingCriteriaColumnNames, ArrayList<ArrayList<Object>> FittingCriteriaCellValues, ArrayList<ArrayList<Object>> traitClusters, ArrayList<String> traitList, CensusSurveyClasses censusSurveyClasses, LandUseMapInformation landUseMapInformation) {
@@ -95,6 +98,7 @@ public class DigPopGUIInformation {
     }
 
     public void setLandUseMapInformation(LandUseMapInformation landUseMapInformation) {
+        this.goalRelationshipFile.setLandUseMapInformation(landUseMapInformation);
         this.landUseMapInformation = landUseMapInformation;
     }
 
@@ -111,6 +115,8 @@ public class DigPopGUIInformation {
     }
 
     public void setLandUseMapFilePath(String landUseMapFilePath) {
+        this.goalRelationshipFile.setLandUseMap(landUseMapFilePath);
+        
         this.landUseMapFilePath = landUseMapFilePath;
     }
 
@@ -163,6 +169,10 @@ public class DigPopGUIInformation {
     }
 
     public void addConstraintMapFilePath(String path) {
+        Forbid f = new Forbid();
+        f.setMap(path);
+        this.goalRelationshipFile.setForbid(f);
+
         this.constraintMapsFilePaths.add(path);
     }
 
@@ -283,6 +293,7 @@ public class DigPopGUIInformation {
     }
 
     public void setFittingTraits(ArrayList<Traits> FittingTraits) {
+        this.goalRelationshipFile.setTraits(FittingTraits);
         this.FittingTraits = FittingTraits;
     }
 
@@ -317,4 +328,20 @@ public class DigPopGUIInformation {
     public void setRunFile(RunFile runFile) {
         this.runFile = runFile;
     }    
+
+    public String getFileDirectory() {
+        return fileDirectory;
+    }
+
+    public void setFileDirectory(String fileDirectory) {
+        this.fileDirectory = fileDirectory;
+    }
+
+    public GoalRelationshipFile getGoalRelationshipFile() {
+        return goalRelationshipFile;
+    }
+
+    public void setGoalRelationshipFile(GoalRelationshipFile goalRelationshipFile) {
+        this.goalRelationshipFile = goalRelationshipFile;
+    }
 }

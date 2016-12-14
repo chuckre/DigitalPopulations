@@ -482,6 +482,7 @@ public class StepZero extends javax.swing.JFrame {
                         //If successully created object - go to Next Step
                         if(result.isSuccess()){
                             this.digPopGUIInformation = (DigPopGUIInformation)result.getValue();
+                            this.digPopGUIInformation.setFileDirectory(directory);
                             //Now I need to move too step 2
                             goToNextStep(evt);
 
@@ -534,6 +535,7 @@ public class StepZero extends javax.swing.JFrame {
                             
                             //populate object
                             this.digPopGUIInformation = origObj;
+                            this.digPopGUIInformation.setFileDirectory(dupDirectory);
                             
                             //Now I need to move too step 2
                             goToNextStep(evt);

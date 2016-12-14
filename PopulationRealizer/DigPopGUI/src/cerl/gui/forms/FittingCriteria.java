@@ -5,18 +5,28 @@
  */
 package cerl.gui.forms;
 
+import cerl.gui.standard.utilities.FileType;
+import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.Result;
 import cerl.gui.standard.utilities.customTableModel;
 import cerl.gui.standard.utilities.customTableCell;
 import cerl.gui.standard.utilities.customTableCellRenderer;
 import cerl.gui.standard.utilities.customTableModelListener;
+import cerl.gui.utilities.CensusSurveyClasses;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.Forbid;
+import cerl.gui.utilities.GoalRelationshipFile;
 import cerl.gui.utilities.HelpFileScreenNames;
+import cerl.gui.utilities.LandUseMapInformation;
+import cerl.gui.utilities.MarkovChain;
+import cerl.gui.utilities.SurveyColumnValuesGrouping;
 import cerl.gui.utilities.Traits;
 import cerl.gui.utilities.Weights;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javax.swing.table.TableColumn;
 
 /**
@@ -26,6 +36,8 @@ import javax.swing.table.TableColumn;
 public class FittingCriteria extends javax.swing.JFrame {
     private final customTableModel myTable;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_FIVE_HELP_FILE_NAME.toString();
+    private final String RELATIONSHIP_FILE_NAME = "goal_relationship.dprxml";
+    private final FileType RELATIONSHIP_FILE_TYPE = FileType.XML;
     private final DigPopGUIInformation digPopGUIInformation;
     
     /**
@@ -117,7 +129,8 @@ public class FittingCriteria extends javax.swing.JFrame {
         }
         else if(this.digPopGUIInformation.getFittingCriteriaCellValues() != null){
             cellValues = this.digPopGUIInformation.getFittingCriteriaCellValues();
-        } else {
+        } else { //first time in
+            
             //Set up rows and columns
             for(int r = 0; r<1; r++){
                 cellValues.add(r, new ArrayList<>());
@@ -338,11 +351,45 @@ public class FittingCriteria extends javax.swing.JFrame {
         this.digPopGUIInformation.setFittingTraits(theseTraits);
         this.digPopGUIInformation.setTraitWeights(traitWeights);
         
+        if(this.digPopGUIInformation.getFileDirectory() != null){
+            createRelationshipFile();
+        }
+        
         if(this.digPopGUIInformation.getFilePath() != null){
         //Save to file
         Result result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(
                     this.digPopGUIInformation,
                 this.digPopGUIInformation.getFilePath());
+        }
+    }
+    
+    private void createRelationshipFile(){
+        String saveFileDirectory = this.digPopGUIInformation.getFileDirectory();
+        
+        //create new Fitting Criteria file
+        File newRelationshipFile = new File(String.format("%s\\%s", saveFileDirectory, RELATIONSHIP_FILE_NAME));
+                
+        //write to file
+        Result result = FileUtility.VerifyFileType(RELATIONSHIP_FILE_TYPE, newRelationshipFile);
+
+        if(result.isSuccess()){
+            try {
+                //LandUseMapInformation relInfo = this.digPopGUIInformation.getLandUseMapInformation();
+                GoalRelationshipFile goalFile = this.digPopGUIInformation.getGoalRelationshipFile();
+                
+                //Need to create the file as empty version of the object
+                result = FileUtility.ParseObjectToXML(goalFile, newRelationshipFile.getPath(), goalFile.getClass());
+
+                //If successully created object - go to Next Step
+                if(result.isSuccess()){
+                    System.out.println("Successfully created relationship file");
+                }else {
+                    //lblErrorMessages.setText(result.getErrorMessage());
+                }
+
+            } catch (Exception ex) {
+                System.err.print(ex.getMessage());
+            }
         }
     }
     
