@@ -75,7 +75,7 @@ public class StepSeven extends javax.swing.JFrame {
         Result result = FileUtility.VerifySecondaryFileExists(newRunFile, DEFAULT_NEW_FILE_TYPE);
         
         //If yes - populate data from this file
-        if(result.isSuccess()){
+        if(result.isSuccess() && (Boolean)result.getValue()){
             result = FileUtility.ReadTextFile(newRunFile.getPath());
             //result = FileUtility.ParseXMLFileIntoSpecifiedObject(newRunFile.getPath(), RunFile.class);
             this.RunProperties = new RunFile(result.getValue().toString());

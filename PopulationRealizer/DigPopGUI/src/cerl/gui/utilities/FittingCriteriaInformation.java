@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  * @author mrivera
  */
 @XmlRootElement(name="FittingCriteria")
-@XmlType(propOrder={"traits","weights","position-rules"})
+@XmlType(propOrder={"traits","weights","location","positionRules"})
 public class FittingCriteriaInformation {
     private String relationshipFile;
     
