@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -23,18 +24,29 @@ public class LandUseMapInformation {
     private String comment;
     private ArrayList<String> allClasses;
     private ArrayList<LandUseMapClassCombination> landUseMapClassCombinations;
+    private String map;
 
     public LandUseMapInformation() {
         this.allClasses = new ArrayList<String>();
         this.landUseMapClassCombinations = new ArrayList<LandUseMapClassCombination>();
     }
 
-    public LandUseMapInformation(VacantClass vacantClasses, String comment, ArrayList<String> allClasses, ArrayList<LandUseMapClassCombination> landUseMapClassCombinations) {
+    public LandUseMapInformation(String map, VacantClass vacantClasses, String comment, ArrayList<String> allClasses, ArrayList<LandUseMapClassCombination> landUseMapClassCombinations) {
         this.vacantClasses = vacantClasses;
         //this.vacantClassDescription = vacentClassDescription;
         this.comment = comment;
         this.allClasses = allClasses;
         this.landUseMapClassCombinations = landUseMapClassCombinations;
+        this.map = map;
+    }
+
+    @XmlAttribute
+    public String getMap() {
+        return map;
+    }
+
+    public void setMap(String map) {
+        this.map = map;
     }
 
     @XmlElement(name="comment")
@@ -64,6 +76,7 @@ public class LandUseMapInformation {
         this.vacantClassDescription = vacantClassDescription;
     }*/
 
+    @XmlTransient
     public ArrayList<String> getAllClasses() {
         return allClasses;
     }
@@ -72,6 +85,7 @@ public class LandUseMapInformation {
         this.allClasses = allClasses;
     }
 
+    @XmlElement(name="combination")
     public ArrayList<LandUseMapClassCombination> getLandUseMapClassCombinations() {
         return landUseMapClassCombinations;
     }

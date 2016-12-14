@@ -723,6 +723,15 @@ public class StepTwo extends javax.swing.JFrame {
         VacantClass vacant = new VacantClass(this.txtVacantClassDescription.getText(), this.txtVacantClasses.getText());
         this.digPopGUIInformation.getLandUseMapInformation().setVacantClasses(vacant);
         this.digPopGUIInformation.getLandUseMapInformation().setComment(this.txtLandUseComment.getText());
+        
+        saveToFile();
+    }
+    
+    private void saveToFile(){
+        //Save to file
+        Result    result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(
+                    this.digPopGUIInformation,
+                    this.digPopGUIInformation.getFilePath());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

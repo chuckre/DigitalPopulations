@@ -5,7 +5,9 @@
  */
 package cerl.gui.utilities;
 
+import java.io.File;
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -93,6 +95,7 @@ public class DigPopGUIInformation {
         this.landUseMapInformation = landUseMapInformation;
     }
 
+    @XmlElement(name="landuse")
     public LandUseMapInformation getLandUseMapInformation() {
         return landUseMapInformation;
     }
@@ -115,9 +118,12 @@ public class DigPopGUIInformation {
     }
 
     public void setLandUseMapFilePath(String landUseMapFilePath) {
-        this.goalRelationshipFile.setLandUseMap(landUseMapFilePath);
+     //   this.goalRelationshipFile.setLandUseMap(landUseMapFilePath);
         
         this.landUseMapFilePath = landUseMapFilePath;
+        
+        File file = new File(landUseMapFilePath);
+        this.landUseMapInformation.setMap(file.getName());
     }
 
     public String getHouseholdDensityMapFilePath() {

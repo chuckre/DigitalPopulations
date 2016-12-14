@@ -56,6 +56,8 @@ public class StepSeven extends javax.swing.JFrame {
             this.RunProperties = new RunFile();
             populateData();
         }
+        
+        pack();
     }
 
     /**
@@ -1372,6 +1374,7 @@ public class StepSeven extends javax.swing.JFrame {
         errorText += "</html>";
         
         jLabel_Errors.setText(errorText);
+        pack();
         
         return isValid;
     }
@@ -1421,6 +1424,7 @@ public class StepSeven extends javax.swing.JFrame {
         //provide message to user that the file has been created
         if(isValid){
             this.jLabel_Errors.setText("The Run file was saved");
+            pack();
         }
     }//GEN-LAST:event_btn_SaveActionPerformed
 
@@ -1429,6 +1433,7 @@ public class StepSeven extends javax.swing.JFrame {
             this.RunProperties.setDo_dump_number_archtypes(returnTrueFalseValue(jComboBox_LogPhase1Results));
         } else{
             this.jLabel_Errors.setText(this.jLabel_LogPhase1Results.getText() +  " is required");
+            pack();
         }
     }//GEN-LAST:event_jComboBox_LogPhase1ResultsActionPerformed
 
@@ -1437,6 +1442,7 @@ public class StepSeven extends javax.swing.JFrame {
             this.RunProperties.setDo_dump_statistics(returnTrueFalseValue(jComboBox_LogQualityEval));
         } else{
             this.jLabel_Errors.setText(this.jLabel_LogQualityEval.getText() +  " is required");
+            pack();
         }
     }//GEN-LAST:event_jComboBox_LogQualityEvalActionPerformed
 
@@ -1445,6 +1451,7 @@ public class StepSeven extends javax.swing.JFrame {
             this.RunProperties.setDo_write_all_hoh_fields(returnTrueFalseValue(jComboBox_HouseholdArchetype));
         } else{
             this.jLabel_Errors.setText(this.jLabel_HouseholdArchetype.getText() +  " is required");
+            pack();
         }
     }//GEN-LAST:event_jComboBox_HouseholdArchetypeActionPerformed
 
@@ -1453,6 +1460,7 @@ public class StepSeven extends javax.swing.JFrame {
             this.RunProperties.setDo_write_all_pop_fields(returnTrueFalseValue(jComboBox_PopulationArchetype));
         } else{
             this.jLabel_Errors.setText(this.jLabel_PopulationArchetype.getText() +  " is required");
+            pack();
         }
     }//GEN-LAST:event_jComboBox_PopulationArchetypeActionPerformed
 
@@ -1462,6 +1470,7 @@ public class StepSeven extends javax.swing.JFrame {
             this.RunProperties.setOnly_one_region(returnTrueFalseValue(jComboBox_FirstCensusTract));
         } else{
             this.jLabel_Errors.setText(this.jLabel_FirstCensusTract.getText() +  " is required");
+            pack();
         }
     }//GEN-LAST:event_jComboBox_FirstCensusTractActionPerformed
 
@@ -1470,6 +1479,7 @@ public class StepSeven extends javax.swing.JFrame {
             this.RunProperties.setPhase3_skip(returnTrueFalseValue(jComboBox_Phase3Skip));
         } else{
             this.jLabel_Errors.setText(this.jLabel_Phase3Skip.getText() +  " is required");
+            pack();
         }
     }//GEN-LAST:event_jComboBox_Phase3SkipActionPerformed
 
@@ -1478,6 +1488,7 @@ public class StepSeven extends javax.swing.JFrame {
             this.RunProperties.setPhase4_save_both_ends(returnTrueFalseValue(jComboBox_Phase4Save));
         } else{
             this.jLabel_Errors.setText(this.jLabel_Phase4Save.getText() +  " is required");
+            pack();
         }
     }//GEN-LAST:event_jComboBox_Phase4SaveActionPerformed
 
@@ -1486,6 +1497,7 @@ public class StepSeven extends javax.swing.JFrame {
             this.RunProperties.setPhase4_skip(returnTrueFalseValue(jComboBox_Phase4Skip));
         } else{
             this.jLabel_Errors.setText(this.jLabel_Phase4Skip.getText() +  " is required");
+            pack();
         }
     }//GEN-LAST:event_jComboBox_Phase4SkipActionPerformed
 
@@ -1510,12 +1522,15 @@ public class StepSeven extends javax.swing.JFrame {
             if(frn > 0){
                 this.RunProperties.setFirst_rzn_num(frn);                
                 jLabel_Errors.setText(" ");
+                pack();
             }
             else{
                 jLabel_Errors.setText("The First Realization Index Must be Greater than 0");
+                pack();
             }
         } else {
             jLabel_Errors.setText("The First Realization Index Must be a Valid Integer");
+            pack();
         }
     }//GEN-LAST:event_jTextField_FirstRealizationIndexFocusLost
 
@@ -1527,12 +1542,15 @@ public class StepSeven extends javax.swing.JFrame {
             if(d > 1){
                 this.RunProperties.setPhase1_time_limit(d);
                 jLabel_Errors.setText(" ");
+                pack();
             }
             else{
                 jLabel_Errors.setText("The Phase 1 Time Limit Must be Greater than 1");
+                pack();
             }
         } else {
             jLabel_Errors.setText("The Phase 1 Time Limit Must be a Valid Double");
+            pack();
         }
     }//GEN-LAST:event_jTextField_Phase1TimeLimitFocusLost
 
@@ -1546,8 +1564,10 @@ public class StepSeven extends javax.swing.JFrame {
         if(Validations.validateAndReturnLong(value)){
             this.RunProperties.setInitial_seed(Long.parseLong(value));
             jLabel_Errors.setText(" ");
+            pack();
         } else {
             jLabel_Errors.setText("The Random Number Seed Must be a Valid Long");
+            pack();
         }
     }//GEN-LAST:event_jTextField_RandomNumberSeedFocusLost
 
@@ -1559,12 +1579,15 @@ public class StepSeven extends javax.swing.JFrame {
             if(frn > 0){
                 this.RunProperties.setFinal_rzn_num(frn);
                 jLabel_Errors.setText(" ");
+                pack();
             }
             else{
                 jLabel_Errors.setText("The Final Realization Index Must be Greater than 0");
+                pack();
             }
         } else {
             jLabel_Errors.setText("The Final Realization Index Must be a Valid Integer");
+            pack();
         }
     }//GEN-LAST:event_jTextField_FinalRealizationIndexFocusLost
 
@@ -1580,12 +1603,15 @@ public class StepSeven extends javax.swing.JFrame {
             if(i > 1){
                 this.RunProperties.setParallel_threads(i);
                 jLabel_Errors.setText(" ");
+                pack();
             }
             else{
                 jLabel_Errors.setText("The Parallel Threads Must be Greater than 1");
+                pack();
             }
         } else {
             jLabel_Errors.setText("The Parallel Threads Must be a Valid Integer");
+            pack();
         }
     }//GEN-LAST:event_jTextField_ParallelThreadsFocusLost
 
@@ -1594,8 +1620,10 @@ public class StepSeven extends javax.swing.JFrame {
         if(Validations.validateAndReturnDouble(value)){
             this.RunProperties.setPhase2_random_tract_prob(Double.parseDouble(value));   
             jLabel_Errors.setText(" ");
+            pack();
         } else {
             jLabel_Errors.setText("The Phase 2 Random Placement Percentage Must be a Valid Double");
+            pack();
         }
     }//GEN-LAST:event_jTextField_Phase2RandomPlacementFocusLost
 
@@ -1605,8 +1633,10 @@ public class StepSeven extends javax.swing.JFrame {
         if(Validations.validateAndReturnDouble(value)){
             this.RunProperties.setPhase2_tract_skip_prob_delta(Double.parseDouble(value));
             jLabel_Errors.setText(" ");
+            pack();
         }else {
             jLabel_Errors.setText("The Phase 2 Skip Tracts Probability Must be a Valid Double");
+            pack();
         }
     }//GEN-LAST:event_jTextField_Phase2SkipTractsDeltaFocusLost
 
@@ -1616,8 +1646,10 @@ public class StepSeven extends javax.swing.JFrame {
         if(Validations.validateAndReturnDouble(value)){
             this.RunProperties.setPhase2_tract_skip_prob_init(Double.parseDouble(value));
             jLabel_Errors.setText(" ");
+            pack();
         } else {
             jLabel_Errors.setText("The Phase 2 Skip Tracts Probability Must be a Valid Double");
+            pack();
         }
     }//GEN-LAST:event_jTextField_Phase2SkipTractsProbFocusLost
 
@@ -1627,8 +1659,10 @@ public class StepSeven extends javax.swing.JFrame {
         if(Validations.validateAndReturnDouble(value)){
             this.RunProperties.setPhase3_save_intermediate(Double.parseDouble(value));   
             jLabel_Errors.setText(" ");
+            pack();
         } else {
             jLabel_Errors.setText("The Phase 3 and 4 Intermediate save Interval Must be a Valid Double");
+            pack();
         }
     }//GEN-LAST:event_jTextField_Phase34SaveIntervalFocusLost
 
@@ -1638,8 +1672,10 @@ public class StepSeven extends javax.swing.JFrame {
         if(Validations.validateAndReturnDouble(value)){
             this.RunProperties.setPhase3_time_limit(Double.parseDouble(value));  
             jLabel_Errors.setText(" ");
+            pack();
         } else {
             jLabel_Errors.setText("The Phase 3 Time Limit Must be a Valid Double");
+            pack();
         }
     }//GEN-LAST:event_jTextField_Phase3TimeLimitFocusLost
 
@@ -1651,12 +1687,15 @@ public class StepSeven extends javax.swing.JFrame {
             if(i > 1){
                 this.RunProperties.setPhase4_num_lags(i);
                 jLabel_Errors.setText(" ");
+                pack();
             }
             else{
                 jLabel_Errors.setText("The Number of Lags Must be Greater than 1");
+                pack();
             }
         } else {
             jLabel_Errors.setText("The Number of Lags Must be a Valid Integer");
+            pack();
         }
     }//GEN-LAST:event_jTextField_Phase4_LagsFocusLost
 
@@ -1666,8 +1705,10 @@ public class StepSeven extends javax.swing.JFrame {
         if(Validations.validateAndReturnDouble(value)){
             this.RunProperties.setPhase4_time_limit(Double.parseDouble(value));   
             jLabel_Errors.setText(" ");
+            pack();
         } else {
             jLabel_Errors.setText("The Phase 4 Time Limit Must be a Valid Double");
+            pack();
         }
     }//GEN-LAST:event_jTextField_Phase4TimeLimitFocusLost
     
