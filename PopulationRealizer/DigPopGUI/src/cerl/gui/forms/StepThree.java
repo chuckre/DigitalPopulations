@@ -74,14 +74,10 @@ public class StepThree extends javax.swing.JFrame {
         jTableListOfAllMarkovChains.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent me) {
                 if (me.getClickCount() == 2) {
-                    
-                    
                     MarkovChain markovChain = 
                             step3MarkovChainTableItemModel.getMarkovAt(jTableListOfAllMarkovChains.getSelectedRow(), jTableListOfAllMarkovChains.getSelectedColumn());
                     
                     openOrDeleteExistingMarkov(markovChain);
-                    
-                    
                 }
             }
         });
@@ -564,6 +560,12 @@ public class StepThree extends javax.swing.JFrame {
 
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
         saveToFile();
+        
+        StepSeven stepSeven = new StepSeven(this.digPopGUIInformation);
+        stepSeven.setVisible(true);
+        stepSeven.setLocationRelativeTo(this);
+        
+        dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed
 
     private void btnClearSurveyDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearSurveyDataActionPerformed
@@ -609,6 +611,17 @@ public class StepThree extends javax.swing.JFrame {
             markovChainMatrix.setLocationRelativeTo(this);
 
             dispose();
+        } else if(selectedOption == 1){
+            int answer = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to delete Markov Chain: " + markovChain.getMackovName() + "?",
+                "Delete?",
+                JOptionPane.YES_NO_OPTION);
+            
+            if(answer == 0){
+                this.censusSurveyClasses.getMarkovChains().remove(markovChain);
+                this.step3MarkovChainTableItemModel.fireTableDataChanged();
+            }
         }
                     
     }

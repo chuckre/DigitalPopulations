@@ -131,8 +131,8 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         
         //MarkovTableCell(int row, int column, Object value, boolean calculated, boolean userEntered, boolean error, boolean editable)
         cellValues.get(0).add(0, new MarkovTableCell(0, 0, "Value", false, false, false, false));
-        cellValues.get(4).add(0, new MarkovTableCell(numberOfNeededRows - 2, 0, "Amount Left", false, false, false, false));
-        cellValues.get(5).add(0, new MarkovTableCell(numberOfNeededRows - 1, 0, "", false, false, false, false));
+        cellValues.get(numberOfNeededRows - 2).add(0, new MarkovTableCell(numberOfNeededRows - 2, 0, "Amount Left", false, false, false, false));
+        cellValues.get(numberOfNeededRows - 1).add(0, new MarkovTableCell(numberOfNeededRows - 1, 0, "", false, false, false, false));
         cellValues.get(0).add(1, new MarkovTableCell(0, 1, "Proportion", false, false, false, false));
         
               
@@ -157,12 +157,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         }
         
         
-        //non-editable corner cells
-        cellValues.get(0).add(5, new MarkovTableCell(0, numberOfNeededRows - 1, "Range Min:    Range Max:", false, false, false, false));
-        cellValues.get(0).add(6, new MarkovTableCell(0, numberOfNeededRows, "", false, false, false, false));
-        cellValues.get(4).add(1, new MarkovTableCell(numberOfNeededColumn - 3, 1, "Range Min:    Range Max:", false, false, false, false));
-        cellValues.get(5).add(1, new MarkovTableCell(numberOfNeededColumn - 2, 1, "", false, false, false, false));
-        cellValues.get(5).add(6, new MarkovTableCell(numberOfNeededColumn -2, numberOfNeededRows, "", false, false, false, false));
+        
         
         //load proportions
         //census - proportion min/max start the same
@@ -194,6 +189,14 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
             cellValues.get(otherCounter).add(1, new MarkovTableCell(otherCounter, 1, proportions, proportions, proportions, false, false, false, false));
             otherCounter++;
         }
+        
+        //non-editable corner cells
+        cellValues.get(0).add(numberOfNeededColumn -2, new MarkovTableCell(0, numberOfNeededColumn-2, "Range Min:    Range Max:", false, false, false, false));
+        cellValues.get(0).add(numberOfNeededColumn - 1, new MarkovTableCell(0, numberOfNeededColumn -1, "", false, false, false, false));
+        cellValues.get(numberOfNeededRows - 2).add(1, new MarkovTableCell(numberOfNeededRows - 2, 1, "Range Min:    Range Max:", false, false, false, false));
+        cellValues.get(numberOfNeededRows - 1).add(1, new MarkovTableCell(numberOfNeededRows - 1, 1, "", false, false, false, false));
+        cellValues.get(numberOfNeededRows - 1).add(numberOfNeededColumn - 1, new MarkovTableCell(numberOfNeededRows -1, numberOfNeededColumn-1, "", false, false, false, false));
+        cellValues.get(numberOfNeededRows - 2).add(numberOfNeededColumn - 2, new MarkovTableCell(numberOfNeededRows -2, numberOfNeededColumn-2, "", false, false, false, false));
         
         //survey
 //        cellValues.get(1).add(1, new MarkovTableCell(1, 1, 0.40, 0.40, 0.40, false, false, false, false));
