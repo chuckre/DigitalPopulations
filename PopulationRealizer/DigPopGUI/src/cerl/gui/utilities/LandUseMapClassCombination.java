@@ -6,14 +6,25 @@
 package cerl.gui.utilities;
 
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author ajohnson
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name="combination")
 public class LandUseMapClassCombination {
+    @XmlAttribute(name="classes")
     private ArrayList<String> classes;
+    
+    @XmlAttribute(name="target")
     private String target;
+    
+    @XmlAttribute(name="desc")
     private String classCombinationDescription;
 
     public LandUseMapClassCombination() {

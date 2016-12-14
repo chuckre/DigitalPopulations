@@ -9,6 +9,7 @@ import cerl.gui.standard.utilities.Result;
 import cerl.gui.utilities.DigPopFileTypeEnum;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.Forbid;
 import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.StepOneInstructionNames;
 import cerl.gui.utilities.StepOneUtilityClass;
@@ -1032,7 +1033,6 @@ public class StepOne extends javax.swing.JFrame {
                          */
 
                         digPopGUIInformation.addConstraintMapFilePath(file.getPath());
-
                         AddItemToConstaintMapTable(file.getPath());
 
                         //            constraintMapsDataModel = new DefaultTableModel(digPopGUIFiles.getConstraintMapFilePaths().toArray(),0);

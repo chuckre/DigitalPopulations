@@ -58,7 +58,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     }
     
     /**
-     * Creates new Step 6 form GenerateTraitClusters with exsting data
+     * Creates new Step 6 form GenerateTraitClusters with existing data
      */
     public GenerateTraitClusters(DigPopGUIInformation digPopGUIInformation) {
         this.digPopGUIInformation = digPopGUIInformation;
@@ -419,14 +419,10 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
      * Generates the output Fitting Criteria .dprxml file
      */
     private void createFittingCriteriaFile(){
-        String saveFilePath = this.digPopGUIInformation.getFilePath();
-        //get save driectory
-        if(saveFilePath.contains(".XML")){
-            saveFilePath = saveFilePath.substring(0, saveFilePath.lastIndexOf("\\")+1);
-        }
+        String saveFileDirectory = this.digPopGUIInformation.getFileDirectory();
         
         //create new Fitting Criteria file
-        File newFittingFile = new File(String.format("%s\\%s", saveFilePath, DEFAULT_NEW_FILE_NAME));
+        File newFittingFile = new File(String.format("%s\\%s", saveFileDirectory, DEFAULT_NEW_FILE_NAME));
                 
         //write to file
         Result result = FileUtility.VerifyFileType(DEFAULT_NEW_FILE_TYPE, newFittingFile);

@@ -6,14 +6,20 @@
 package cerl.gui.utilities;
 
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author ajohnson
  */
+@XmlRootElement(name="landuse")
 public class LandUseMapInformation {
-    private String vacentClasses;
-    private String vacentClassDescription;
+    private VacantClass vacantClasses;
+    //private String vacantClasses;
+    //private String vacantClassDescription;
     private String comment;
     private ArrayList<String> allClasses;
     private ArrayList<LandUseMapClassCombination> landUseMapClassCombinations;
@@ -23,14 +29,15 @@ public class LandUseMapInformation {
         this.landUseMapClassCombinations = new ArrayList<LandUseMapClassCombination>();
     }
 
-    public LandUseMapInformation(String vacentClasses, String vacentClassDescription, String comment, ArrayList<String> allClasses, ArrayList<LandUseMapClassCombination> landUseMapClassCombinations) {
-        this.vacentClasses = vacentClasses;
-        this.vacentClassDescription = vacentClassDescription;
+    public LandUseMapInformation(VacantClass vacantClasses, String comment, ArrayList<String> allClasses, ArrayList<LandUseMapClassCombination> landUseMapClassCombinations) {
+        this.vacantClasses = vacantClasses;
+        //this.vacantClassDescription = vacentClassDescription;
         this.comment = comment;
         this.allClasses = allClasses;
         this.landUseMapClassCombinations = landUseMapClassCombinations;
     }
 
+    @XmlElement(name="comment")
     public String getComment() {
         return comment;
     }
@@ -39,21 +46,23 @@ public class LandUseMapInformation {
         this.comment = comment;
     }
 
-    public String getVacentClasses() {
-        return vacentClasses;
+    @XmlElement(name="vacant")
+    public VacantClass getVacantClasses() {
+        return vacantClasses;
     }
 
-    public void setVacentClasses(String vacentClasses) {
-        this.vacentClasses = vacentClasses;
+    public void setVacantClasses(VacantClass vacantClasses) {
+        this.vacantClasses = vacantClasses;
     }
 
-    public String getVacentClassDescription() {
-        return vacentClassDescription;
+    /*@XmlAttribute(name="desc")
+    public String getVacantClassDescription() {
+        return vacantClassDescription;
     }
 
-    public void setVacentClassDescription(String vacentClassDescription) {
-        this.vacentClassDescription = vacentClassDescription;
-    }
+    public void setVacantClassDescription(String vacantClassDescription) {
+        this.vacantClassDescription = vacantClassDescription;
+    }*/
 
     public ArrayList<String> getAllClasses() {
         return allClasses;

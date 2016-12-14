@@ -187,7 +187,7 @@
         <description>This page allows users to setup the Run Parameter File.  This is a record of all options and settings active the last time Digital Populations was run.  It provide access to "hidden" and internal options, and makes it easy to exactly reproduce an older run.</description>
         <instruction>
             <instructionName>Name of Run</instructionName>
-            <helpText>Used as a comment to organize the runs</helpText>
+            <helpText>Used as a comment to organize the runs.</helpText>
         </instruction>
         <instruction>
             <instructionName>Fitting File path</instructionName>
@@ -231,7 +231,7 @@
         </instruction>
         <instruction>
             <instructionName>Number of parallel threads</instructionName>
-            <helpText>The number of threads being run at the same time in parallel. Recommended to be in the range from 1 to a maxiumm of the number of processors on the users' computer.</helpText>
+            <helpText>The number of threads being run at the same time in parallel. Recommended to be in the range from 1 to a maximum of the number of processors on the users' computer.</helpText>
         </instruction>
         <instruction>
             <instructionName>Phase 1 Time limit</instructionName>
@@ -263,7 +263,7 @@
         </instruction>
         <instruction>
             <instructionName>Phase 4 - Number of Lags</instructionName>
-            <helpText>Rule of thumb 5 - 10 lags.</helpText>
+            <helpText>As a rule of thumb, 5 - 10 lags is appropriate.</helpText>
         </instruction>
         <instruction>
             <instructionName>Phase 4 - Save both ends?</instructionName>

@@ -15,6 +15,9 @@ import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.RunFile;
 import cerl.gui.utilities.StepSevenInstructionNames;
 import java.io.File;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -45,8 +48,14 @@ public class StepSeven extends javax.swing.JFrame {
     public StepSeven(DigPopGUIInformation digPopGUIInformation) {
         initComponents();
         this.digPopGUIInformation = digPopGUIInformation;
-        this.RunProperties = new RunFile();
-        populateData();
+        
+        if(this.digPopGUIInformation.getRunFile() != null){
+            this.RunProperties = this.digPopGUIInformation.getRunFile();
+            setDataOnForm();
+        } else{
+            this.RunProperties = new RunFile();
+            populateData();
+        }
     }
 
     /**
@@ -66,7 +75,7 @@ public class StepSeven extends javax.swing.JFrame {
         Result result = FileUtility.VerifySecondaryFileExists(newRunFile, DEFAULT_NEW_FILE_TYPE);
         
         //If yes - populate data from this file
-        if(result.isSuccess()){
+        if(result.isSuccess() && (Boolean)result.getValue()){
             result = FileUtility.ReadTextFile(newRunFile.getPath());
             //result = FileUtility.ParseXMLFileIntoSpecifiedObject(newRunFile.getPath(), RunFile.class);
             this.RunProperties = new RunFile(result.getValue().toString());
@@ -79,7 +88,14 @@ public class StepSeven extends javax.swing.JFrame {
      * Sets all the data fields on the form from the digPop object
      */
     private void setDataOnForm(){
-        this.jTextField_NameOfRun.setText(this.RunProperties.getDateOfRun()!= null ? this.RunProperties.getDateOfRun().toString() : "");
+        //used for the phase 1 time limit, phase 2 random %, phase 3/4 save, phase 3 time, & phase 4 time limit
+        DecimalFormat oneDecimal = new DecimalFormat("#.#");
+        //used for the phase 2 skip tracts & phase 2 prob delta, 
+        DecimalFormat twoDecimals = new DecimalFormat("#.##");
+        oneDecimal.setRoundingMode(RoundingMode.HALF_UP);
+        twoDecimals.setRoundingMode(RoundingMode.HALF_UP);
+
+        this.jTextField_NameOfRun.setText(this.RunProperties.getRunName() != null ? this.RunProperties.getRunName() : "");
         this.jComboBox_LogPhase1Results.setSelectedIndex(this.RunProperties.getDo_dump_number_archtypes() != null ? getTrueFalseIndexValue(this.RunProperties.getDo_dump_number_archtypes()) : 0);
         this.jComboBox_LogQualityEval.setSelectedIndex(this.RunProperties.getDo_dump_statistics() != null ? getTrueFalseIndexValue(this.RunProperties.getDo_dump_statistics()) : 0);
         this.jComboBox_HouseholdArchetype.setSelectedIndex(this.RunProperties.getDo_write_all_hoh_fields() != null ? getTrueFalseIndexValue(this.RunProperties.getDo_write_all_hoh_fields()) : 0);
@@ -90,16 +106,17 @@ public class StepSeven extends javax.swing.JFrame {
         this.jComboBox_FirstCensusTract.setSelectedIndex(this.RunProperties.getOnly_one_region() != null ? getTrueFalseIndexValue(this.RunProperties.getOnly_one_region()) : 0);
         this.jTextField_OutputDirectory.setText(this.RunProperties.getOutput_dir() != null ? this.RunProperties.getOutput_dir() : "");
         this.jTextField_ParallelThreads.setText(this.RunProperties.getParallel_threads() != null ? this.RunProperties.getParallel_threads().toString() : "");
-        this.jTextField_Phase1TimeLimit.setText(this.RunProperties.getPhase1_time_limit() != null ? this.RunProperties.getPhase1_time_limit().toString() : "");
-        this.jTextField_Phase2RandomPlacement.setText(this.RunProperties.getPhase2_random_tract_prob() != null ? this.RunProperties.getPhase2_random_tract_prob().toString() : "");
-        this.jTextField_Phase2SkipTractsProb.setText(this.RunProperties.getPhase2_tract_skip_prob_init() != null ? this.RunProperties.getPhase2_tract_skip_prob_init().toString() : "");
-        this.jTextField_Phase2SkipTractsDelta.setText(this.RunProperties.getPhase2_tract_skip_prob_delta() != null ? this.RunProperties.getPhase2_tract_skip_prob_delta().toString() : "");
-        this.jTextField_Phase34SaveInterval.setText(this.RunProperties.getPhase3_save_intermediate() != null ? this.RunProperties.getPhase3_save_intermediate().toString() : "");
+        this.jTextField_Phase1TimeLimit.setText(this.RunProperties.getPhase1_time_limit() != null ? oneDecimal.format(this.RunProperties.getPhase1_time_limit()) : "");
+        this.jTextField_Phase2RandomPlacement.setText(this.RunProperties.getPhase2_random_tract_prob() != null ? oneDecimal.format(this.RunProperties.getPhase2_random_tract_prob()) : "");
+        this.jTextField_Phase2SkipTractsProb.setText(this.RunProperties.getPhase2_tract_skip_prob_init() != null ? twoDecimals.format(this.RunProperties.getPhase2_tract_skip_prob_init()) : "");
+        this.jTextField_Phase2SkipTractsDelta.setText(this.RunProperties.getPhase2_tract_skip_prob_delta() != null ? twoDecimals.format(this.RunProperties.getPhase2_tract_skip_prob_delta()) : "");
+        this.jTextField_Phase34SaveInterval.setText(this.RunProperties.getPhase3_save_intermediate() != null ? oneDecimal.format(this.RunProperties.getPhase3_save_intermediate()) : "");
         this.jComboBox_Phase3Skip.setSelectedIndex(this.RunProperties.getPhase3_skip() != null ? getTrueFalseIndexValue(this.RunProperties.getPhase3_skip()) : 0);
-        this.jTextField_Phase3TimeLimit.setText(this.RunProperties.getPhase3_time_limit() != null ? this.RunProperties.getPhase3_time_limit().toString() : "");
+        this.jTextField_Phase3TimeLimit.setText(this.RunProperties.getPhase3_time_limit() != null ? oneDecimal.format(this.RunProperties.getPhase3_time_limit()) : "");
         this.jTextField_Phase4_Lags.setText(this.RunProperties.getPhase4_num_lags() != null ? this.RunProperties.getPhase4_num_lags().toString() : "");
         this.jComboBox_Phase4Save.setSelectedIndex(this.RunProperties.getPhase4_save_both_ends() != null ? getTrueFalseIndexValue(this.RunProperties.getPhase4_save_both_ends()) : 0);
         this.jComboBox_Phase4Skip.setSelectedIndex(this.RunProperties.getPhase4_skip() != null ? getTrueFalseIndexValue(this.RunProperties.getPhase4_skip()) : 0);
+        this.jTextField_Phase4TimeLimit.setText(this.RunProperties.getPhase4_time_limit() != null ? oneDecimal.format(this.RunProperties.getPhase4_time_limit()) : "");
     }
     
     /**
@@ -1383,11 +1400,17 @@ public class StepSeven extends javax.swing.JFrame {
      */
     private void btn_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SaveActionPerformed
         Boolean isValid = validateData();
+        this.digPopGUIInformation.setRunFile(this.RunProperties);
+        
         String saveFilePath = this.digPopGUIInformation.getFilePath();
+        
+        this.RunProperties.setDateOfRun(Calendar.getInstance().getTime());
         
         if(saveFilePath.contains(".XML")){
             saveFilePath = saveFilePath.substring(0, saveFilePath.lastIndexOf("\\")+1);
         }
+        
+        this.RunProperties.setCriteria_file(String.format("%s\\%s", saveFilePath, "FittingCriteria.dprxml"));
         
         //create new run file
         File newRunFile = new File(String.format("%s\\%s", saveFilePath, DEFAULT_NEW_FILE_NAME));
@@ -1482,8 +1505,15 @@ public class StepSeven extends javax.swing.JFrame {
     private void jTextField_FirstRealizationIndexFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_FirstRealizationIndexFocusLost
         String value = jTextField_FirstRealizationIndex.getText();
         
-        if(Validations.validateAndReturnDouble(value)){
-            this.RunProperties.setFirst_rzn_num(Integer.parseInt(value));
+        if(Validations.validateAndReturnInteger(value)){
+            int frn = Integer.parseInt(value);
+            if(frn > 0){
+                this.RunProperties.setFirst_rzn_num(frn);                
+                jLabel_Errors.setText(" ");
+            }
+            else{
+                jLabel_Errors.setText("The First Realization Index Must be Greater than 0");
+            }
         } else {
             jLabel_Errors.setText("The First Realization Index Must be a Valid Integer");
         }
@@ -1492,7 +1522,15 @@ public class StepSeven extends javax.swing.JFrame {
     private void jTextField_Phase1TimeLimitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase1TimeLimitFocusLost
         String value = jTextField_Phase1TimeLimit.getText();
         if(Validations.validateAndReturnDouble(value)){
-            this.RunProperties.setPhase1_time_limit(Double.parseDouble(value));   
+            
+            double d = Double.parseDouble(value);
+            if(d > 1){
+                this.RunProperties.setPhase1_time_limit(d);
+                jLabel_Errors.setText(" ");
+            }
+            else{
+                jLabel_Errors.setText("The Phase 1 Time Limit Must be Greater than 1");
+            }
         } else {
             jLabel_Errors.setText("The Phase 1 Time Limit Must be a Valid Double");
         }
@@ -1507,6 +1545,7 @@ public class StepSeven extends javax.swing.JFrame {
         
         if(Validations.validateAndReturnLong(value)){
             this.RunProperties.setInitial_seed(Long.parseLong(value));
+            jLabel_Errors.setText(" ");
         } else {
             jLabel_Errors.setText("The Random Number Seed Must be a Valid Long");
         }
@@ -1516,7 +1555,14 @@ public class StepSeven extends javax.swing.JFrame {
         String value = jTextField_FinalRealizationIndex.getText();
         
         if(Validations.validateAndReturnInteger(value)){
-            this.RunProperties.setFinal_rzn_num(Integer.parseInt(value));
+            int frn = Integer.parseInt(value);
+            if(frn > 0){
+                this.RunProperties.setFinal_rzn_num(frn);
+                jLabel_Errors.setText(" ");
+            }
+            else{
+                jLabel_Errors.setText("The Final Realization Index Must be Greater than 0");
+            }
         } else {
             jLabel_Errors.setText("The Final Realization Index Must be a Valid Integer");
         }
@@ -1530,7 +1576,14 @@ public class StepSeven extends javax.swing.JFrame {
         String value = jTextField_ParallelThreads.getText();
         
         if(Validations.validateAndReturnInteger(value)){
-            this.RunProperties.setParallel_threads(Integer.parseInt(value));
+            int i = Integer.parseInt(value);
+            if(i > 1){
+                this.RunProperties.setParallel_threads(i);
+                jLabel_Errors.setText(" ");
+            }
+            else{
+                jLabel_Errors.setText("The Parallel Threads Must be Greater than 1");
+            }
         } else {
             jLabel_Errors.setText("The Parallel Threads Must be a Valid Integer");
         }
@@ -1540,6 +1593,7 @@ public class StepSeven extends javax.swing.JFrame {
         String value = jTextField_Phase2RandomPlacement.getText();
         if(Validations.validateAndReturnDouble(value)){
             this.RunProperties.setPhase2_random_tract_prob(Double.parseDouble(value));   
+            jLabel_Errors.setText(" ");
         } else {
             jLabel_Errors.setText("The Phase 2 Random Placement Percentage Must be a Valid Double");
         }
@@ -1549,17 +1603,19 @@ public class StepSeven extends javax.swing.JFrame {
         String value = jTextField_Phase2SkipTractsDelta.getText();
         
         if(Validations.validateAndReturnDouble(value)){
-            this.RunProperties.setPhase2_tract_skip_prob_init(Double.parseDouble(value));   
+            this.RunProperties.setPhase2_tract_skip_prob_delta(Double.parseDouble(value));
+            jLabel_Errors.setText(" ");
         }else {
             jLabel_Errors.setText("The Phase 2 Skip Tracts Probability Must be a Valid Double");
         }
     }//GEN-LAST:event_jTextField_Phase2SkipTractsDeltaFocusLost
 
     private void jTextField_Phase2SkipTractsProbFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase2SkipTractsProbFocusLost
-        String value = jTextField_Phase2SkipTractsDelta.getText();
+        String value = jTextField_Phase2SkipTractsProb.getText();
         
         if(Validations.validateAndReturnDouble(value)){
-            this.RunProperties.setPhase2_tract_skip_prob_init(Double.parseDouble(value));   
+            this.RunProperties.setPhase2_tract_skip_prob_init(Double.parseDouble(value));
+            jLabel_Errors.setText(" ");
         } else {
             jLabel_Errors.setText("The Phase 2 Skip Tracts Probability Must be a Valid Double");
         }
@@ -1570,6 +1626,7 @@ public class StepSeven extends javax.swing.JFrame {
         
         if(Validations.validateAndReturnDouble(value)){
             this.RunProperties.setPhase3_save_intermediate(Double.parseDouble(value));   
+            jLabel_Errors.setText(" ");
         } else {
             jLabel_Errors.setText("The Phase 3 and 4 Intermediate save Interval Must be a Valid Double");
         }
@@ -1579,7 +1636,8 @@ public class StepSeven extends javax.swing.JFrame {
         String value = jTextField_Phase3TimeLimit.getText();
         
         if(Validations.validateAndReturnDouble(value)){
-            this.RunProperties.setPhase3_time_limit(Double.parseDouble(value));   
+            this.RunProperties.setPhase3_time_limit(Double.parseDouble(value));  
+            jLabel_Errors.setText(" ");
         } else {
             jLabel_Errors.setText("The Phase 3 Time Limit Must be a Valid Double");
         }
@@ -1589,7 +1647,14 @@ public class StepSeven extends javax.swing.JFrame {
         String value = jTextField_Phase4_Lags.getText();
         
         if(Validations.validateAndReturnInteger(value)){
-            this.RunProperties.setPhase4_num_lags(Integer.parseInt(value));
+            int i = Integer.parseInt(value);
+            if(i > 1){
+                this.RunProperties.setPhase4_num_lags(i);
+                jLabel_Errors.setText(" ");
+            }
+            else{
+                jLabel_Errors.setText("The Number of Lags Must be Greater than 1");
+            }
         } else {
             jLabel_Errors.setText("The Number of Lags Must be a Valid Integer");
         }
@@ -1600,6 +1665,7 @@ public class StepSeven extends javax.swing.JFrame {
         
         if(Validations.validateAndReturnDouble(value)){
             this.RunProperties.setPhase4_time_limit(Double.parseDouble(value));   
+            jLabel_Errors.setText(" ");
         } else {
             jLabel_Errors.setText("The Phase 4 Time Limit Must be a Valid Double");
         }
