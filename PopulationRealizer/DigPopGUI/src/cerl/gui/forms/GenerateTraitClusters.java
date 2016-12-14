@@ -378,7 +378,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
 
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
         saveData();
-        new FittingCriteria(this.digPopGUIInformation).setVisible(true);
+        new FittingCriteria(this.digPopGUIInformation, 1).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 
