@@ -255,7 +255,7 @@ public class FileUtility {
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             
             jaxbMarshaller.marshal(objectToParseIntoXML, file);
-            jaxbMarshaller.marshal(objectToParseIntoXML, System.out);
+          //  jaxbMarshaller.marshal(objectToParseIntoXML, System.out);
             
             result.setSuccess(true);
             

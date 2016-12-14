@@ -6,6 +6,7 @@
 package cerl.gui.utilities;
 
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlElement;
 
 /**
  *
@@ -62,7 +63,8 @@ public class MarkovChain {
         this.censusClasses = censusClasses;
     }
 
-    public Class getSelectSurveyClass() {
+    @XmlElement
+    public cerl.gui.utilities.Class  getSelectSurveyClass() {
         return selectSurveyClass;
     }
 
@@ -74,7 +76,12 @@ public class MarkovChain {
         ArrayList<String> userDefinedNames =  new ArrayList<>();
         
         censusClasses.stream().forEach((c) -> {
+            if(c.getUserDefinedDescription() == null || c.getUserDefinedDescription().equals("")){
+                userDefinedNames.add(c.getClassName());
+            }
+            else{
                 userDefinedNames.add(c.getUserDefinedDescription());
+            }
         });
         
         return userDefinedNames;

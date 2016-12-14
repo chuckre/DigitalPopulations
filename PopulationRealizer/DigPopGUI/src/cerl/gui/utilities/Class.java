@@ -6,9 +6,9 @@
 package cerl.gui.utilities;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.xml.bind.annotation.XmlElement;
 
 /**
  *
@@ -21,8 +21,8 @@ public class Class implements Cloneable {
     private boolean selected;
     private int idForFinding;
     private String userDefinedDescription;
-    private List<SurveyColumnValue> allSurveyColumnValues;
-    private List<SurveyColumnValuesGrouping> surveyColumnValuesGroupings;
+    private ArrayList<SurveyColumnValue> allSurveyColumnValues;
+    private ArrayList<SurveyColumnValuesGrouping> surveyColumnValuesGroupings;
     private DigPopFileTypeEnum digPopFileTypeEnum;
 
     public Class() {
@@ -30,8 +30,8 @@ public class Class implements Cloneable {
         this.classTotal = 0;
         this.columnNumber = 0;
         this.selected = false;
-        this.allSurveyColumnValues = new ArrayList<SurveyColumnValue>();
-        this.surveyColumnValuesGroupings = new ArrayList<SurveyColumnValuesGrouping>();
+        this.allSurveyColumnValues = new ArrayList<>();
+        this.surveyColumnValuesGroupings = new ArrayList<>();
     }
 
     public Class(String className, int columnNumber, boolean selected, int idForFinding, DigPopFileTypeEnum digPopFileTypeEnum) {
@@ -41,8 +41,8 @@ public class Class implements Cloneable {
         this.selected = selected;
         this.idForFinding = idForFinding;
         this.userDefinedDescription = "";
-        this.allSurveyColumnValues = new ArrayList<SurveyColumnValue>();
-        this.surveyColumnValuesGroupings = new ArrayList<SurveyColumnValuesGrouping>();
+        this.allSurveyColumnValues = new ArrayList<>();
+        this.surveyColumnValuesGroupings = new ArrayList<>();
         this.digPopFileTypeEnum = digPopFileTypeEnum;
     }
 
@@ -53,8 +53,8 @@ public class Class implements Cloneable {
         this.selected = selected;
         this.idForFinding = idForFinding;
         this.userDefinedDescription = userDefinedDescription;
-        this.allSurveyColumnValues = allSurveyColumnValues;
-        this.surveyColumnValuesGroupings = surveyColumnValuesGroupings;
+        this.allSurveyColumnValues = new ArrayList<>(allSurveyColumnValues);
+        this.surveyColumnValuesGroupings = new ArrayList<>(surveyColumnValuesGroupings);
         this.digPopFileTypeEnum = digPopFileTypeEnum;
     }
 
@@ -66,6 +66,7 @@ public class Class implements Cloneable {
         this.digPopFileTypeEnum = digPopFileTypeEnum;
     }
 
+    @XmlElement
     public List<SurveyColumnValuesGrouping> getSurveyColumnValuesGroupings() {
         return surveyColumnValuesGroupings;
     }
@@ -88,7 +89,7 @@ public class Class implements Cloneable {
     }
     
     public void removeFromAllSurveyColumnValues(ArrayList<SurveyColumnValue> allSurveyColumnValues) {
-        this.allSurveyColumnValues.remove(allSurveyColumnValues);
+        this.allSurveyColumnValues.removeAll(allSurveyColumnValues);//.remove(allSurveyColumnValues);
     }
 
     public String getUserDefinedDescription() {

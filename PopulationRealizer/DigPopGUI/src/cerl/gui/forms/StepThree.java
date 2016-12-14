@@ -7,22 +7,28 @@ package cerl.gui.forms;
 
 import cerl.gui.standard.utilities.Result;
 import cerl.gui.utilities.CensusSurveyClasses;
-import cerl.gui.utilities.Class;
 import static cerl.gui.utilities.DigPopFileTypeEnum.Household_Micro_Data;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.MarkovChain;
+import cerl.gui.utilities.Step3MarkovChainTableItemModel;
 import cerl.gui.utilities.SurveyColumnValue;
 import cerl.gui.utilities.SurveyColumnValuesGrouping;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingWorker;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -33,49 +39,60 @@ public class StepThree extends javax.swing.JFrame {
     public CensusSurveyClasses censusSurveyClasses = new CensusSurveyClasses();
     public cerl.gui.utilities.Class selectSurveyClass = new cerl.gui.utilities.Class();
 
-    private DefaultListModel censusAllListModel = new DefaultListModel();
-    private JList censusAllList = new JList(censusAllListModel);
+    private final DefaultListModel censusAllListModel = new DefaultListModel();
+    private final JList censusAllList = new JList(censusAllListModel);
 
-    private DefaultListModel censusSelectedListModel = new DefaultListModel();
-    private JList censusSelectedList = new JList(censusSelectedListModel);
+    private final DefaultListModel censusSelectedListModel = new DefaultListModel();
+    private final JList censusSelectedList = new JList(censusSelectedListModel);
 
-    private DefaultListModel surveyAllListModel = new DefaultListModel();
-    private JList surveyAllList = new JList(surveyAllListModel);
+    private final DefaultListModel surveyAllListModel = new DefaultListModel();
+    private final JList surveyAllList = new JList(surveyAllListModel);
     
-    private DefaultListModel surveyGroupsListModel = new DefaultListModel();
-    private JList surveyGroupsList = new JList(surveyGroupsListModel);
+    private final DefaultListModel surveyGroupsListModel = new DefaultListModel();
+    private final JList surveyGroupsList = new JList(surveyGroupsListModel);
     
-//    private String DEFAULT_FILE_PATH_CENSUS = "P:\\CERL\\md_sample-data\\md_census_enumerations.csv";
-//    private String DEFAULT_FILE_PATH_POPULATION = "P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv";
-//    private String DEFAULT_FILE_PATH_HOUSEHOLD = "P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv";
+    private final Step3MarkovChainTableItemModel step3MarkovChainTableItemModel;
 
     private final DigPopGUIInformation digPopGUIInformation;
     
-    // TableRowSorter<ClassTableItemModel> sorter = new TableRowSorter<ClassTableItemModel>(censusClassDefinitionTableItemModel);
-    /**
-     * Creates new form StepThree
-     */
-//    public StepThree() {
-//        this.digPopGUIInformation = new DigPopGUIInformation();
-//        this.digPopGUIInformation.setCensusEnumerationsFilePath(DEFAULT_FILE_PATH_CENSUS);
-//        this.digPopGUIInformation.setPopulationMicroDataFilePath(DEFAULT_FILE_PATH_POPULATION);
-//        this.digPopGUIInformation.setHouseholdMicroDataFilePath(DEFAULT_FILE_PATH_HOUSEHOLD);
-//        
-//        loadCensusSurveyClasses();
-//
-//        initComponents();
-//        
-//        loadForm();
-//    }
+    private final String DEFAULT_NEW_MARKOV_CHAIN_NAME = "New Markov Chain Name";
+    
+    private boolean newSurveyGroupingsHaveAllBeenCreated = false;
+    private int currentMarkovChainIdToShow;
+    
     
     public StepThree(DigPopGUIInformation digPopGUIInformation) {
         this.digPopGUIInformation = digPopGUIInformation;
+        this.step3MarkovChainTableItemModel = new Step3MarkovChainTableItemModel(this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChains());
         
         loadCensusSurveyClasses();
 
         initComponents();
         
         loadForm();
+        
+        jTableListOfAllMarkovChains.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    
+                    
+                    MarkovChain markovChain = 
+                            step3MarkovChainTableItemModel.getMarkovAt(jTableListOfAllMarkovChains.getSelectedRow(), jTableListOfAllMarkovChains.getSelectedColumn());
+                    
+                    openOrDeleteExistingMarkov(markovChain);
+                    
+                    
+                }
+            }
+        });
+        
+//        jTableListOfAllMarkovChains.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+//            public void valueChanged(ListSelectionEvent event) {
+//                // do some actions here, for example
+//                // print first column value from selected row
+//                System.out.println(jTableListOfAllMarkovChains.getValueAt(jTableListOfAllMarkovChains.getSelectedRow(), 0).toString());
+//            }
+//        });
     }
 
     /**
@@ -96,7 +113,7 @@ public class StepThree extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnSurveyDataGroups = new javax.swing.JButton();
         jScrollPaneSurveyDataGroups = new javax.swing.JScrollPane();
-        jButton1 = new javax.swing.JButton();
+        btnClearSurveyData = new javax.swing.JButton();
         censusJPanel = new javax.swing.JPanel();
         jScrollPaneCensusAll = new javax.swing.JScrollPane();
         btnAddCensusClass = new javax.swing.JButton();
@@ -105,9 +122,15 @@ public class StepThree extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnEditSelectedCensusDataDescriptions = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        txtNewMarkovChainName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        btnCreateNewMarkovChain = new javax.swing.JButton();
         btnPreviousStep = new javax.swing.JButton();
         btnNextStep = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableListOfAllMarkovChains = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -177,10 +200,10 @@ public class StepThree extends javax.swing.JFrame {
 
         jScrollPaneSurveyDataGroups.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jButton1.setText("Clear Survey Data");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnClearSurveyData.setText("Clear Survey Data");
+        btnClearSurveyData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnClearSurveyDataActionPerformed(evt);
             }
         });
 
@@ -198,7 +221,7 @@ public class StepThree extends javax.swing.JFrame {
                             .addGroup(surveyJPanelLayout.createSequentialGroup()
                                 .addComponent(btnSurveyDataGroups)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnClearSurveyData, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPaneSurveyDataGroups)))
                     .addComponent(jLabel1))
                 .addContainerGap())
@@ -209,15 +232,15 @@ public class StepThree extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneSurveyAll, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(surveyJPanelLayout.createSequentialGroup()
                         .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSurveyDataGroups)
-                            .addComponent(jButton1))
+                            .addComponent(btnClearSurveyData))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPaneSurveyDataGroups)))
-                .addContainerGap())
+                        .addComponent(jScrollPaneSurveyDataGroups))
+                    .addComponent(jScrollPaneSurveyAll, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         censusJPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -253,6 +276,9 @@ public class StepThree extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("New Markov Chain Name:");
+
         javax.swing.GroupLayout censusJPanelLayout = new javax.swing.GroupLayout(censusJPanel);
         censusJPanel.setLayout(censusJPanelLayout);
         censusJPanelLayout.setHorizontalGroup(
@@ -261,47 +287,64 @@ public class StepThree extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(censusJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(censusJPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPaneCensusAll, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(censusJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(censusJPanelLayout.createSequentialGroup()
+                                .addComponent(jScrollPaneCensusAll, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(censusJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnAddCensusClass, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnRemoveCensusClass)))
+                            .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(censusJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAddCensusClass, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnRemoveCensusClass)))
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(censusJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jScrollPaneCensusSelected, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditSelectedCensusDataDescriptions))
-                .addContainerGap(11, Short.MAX_VALUE))
+                            .addComponent(jLabel4)
+                            .addComponent(jScrollPaneCensusSelected, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEditSelectedCensusDataDescriptions))
+                        .addGap(0, 1, Short.MAX_VALUE))
+                    .addGroup(censusJPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNewMarkovChainName)))
+                .addContainerGap())
         );
         censusJPanelLayout.setVerticalGroup(
             censusJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(censusJPanelLayout.createSequentialGroup()
                 .addGroup(censusJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, censusJPanelLayout.createSequentialGroup()
+                    .addGroup(censusJPanelLayout.createSequentialGroup()
                         .addContainerGap()
+                        .addGroup(censusJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(txtNewMarkovChainName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(censusJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(censusJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPaneCensusAll)
+                            .addComponent(jScrollPaneCensusAll, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(censusJPanelLayout.createSequentialGroup()
-                                .addComponent(jScrollPaneCensusSelected, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPaneCensusSelected, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnEditSelectedCensusDataDescriptions))))
                     .addGroup(censusJPanelLayout.createSequentialGroup()
-                        .addGap(59, 59, 59)
+                        .addGap(68, 68, 68)
                         .addComponent(btnAddCensusClass)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRemoveCensusClass)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(btnRemoveCensusClass)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Select The Information for The New Markov Chain");
+
+        btnCreateNewMarkovChain.setText("Create New Markov Chain");
+        btnCreateNewMarkovChain.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateNewMarkovChainActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -312,7 +355,10 @@ public class StepThree extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(censusJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(surveyJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCreateNewMarkovChain)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -324,7 +370,9 @@ public class StepThree extends javax.swing.JFrame {
                 .addComponent(censusJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(surveyJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCreateNewMarkovChain)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         btnPreviousStep.setText("Previous Step");
@@ -340,6 +388,28 @@ public class StepThree extends javax.swing.JFrame {
                 btnNextStepActionPerformed(evt);
             }
         });
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jTableListOfAllMarkovChains.setModel(step3MarkovChainTableItemModel);
+        jScrollPane1.setViewportView(jTableListOfAllMarkovChains);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -364,6 +434,7 @@ public class StepThree extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnPreviousStep)
@@ -376,6 +447,8 @@ public class StepThree extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPreviousStep)
@@ -480,30 +553,74 @@ public class StepThree extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu3MouseClicked
 
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
-        save();
+        saveToFile();
         
         StepTwo stepTwo = new StepTwo(this.digPopGUIInformation);
         stepTwo.setVisible(true);
         stepTwo.setLocationRelativeTo(this);
+        
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
-        save();
-        
-        MarkovChainMatrix markovChainMatrix =new MarkovChainMatrix(this.digPopGUIInformation);
-        markovChainMatrix.setVisible(true);
-        markovChainMatrix.setLocationRelativeTo(this);
-        dispose();
+        saveToFile();
     }//GEN-LAST:event_btnNextStepActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnClearSurveyDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearSurveyDataActionPerformed
+        clearSurveyListData();
+        updateSurveyGroupsListModel();
+    }//GEN-LAST:event_btnClearSurveyDataActionPerformed
+
+    private void btnCreateNewMarkovChainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateNewMarkovChainActionPerformed
+        if(this.newSurveyGroupingsHaveAllBeenCreated && this.censusSelectedListModel.getSize() > 0){
+            saveNewMarkovChain();
+
+            MarkovChainMatrix markovChainMatrix =new MarkovChainMatrix(this.digPopGUIInformation, this.currentMarkovChainIdToShow);
+            markovChainMatrix.setVisible(true);
+            markovChainMatrix.setLocationRelativeTo(this);
+
+            dispose();
+        }else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "One or more census classes needs seleded and all survey classes must be grouped.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btnCreateNewMarkovChainActionPerformed
+
+    public void openOrDeleteExistingMarkov(MarkovChain markovChain){
+        Object[] options = {
+                        "Open",
+                        "Delete"};
+        int selectedOption = JOptionPane.showOptionDialog(this,
+            "Would you like to open or delete the Markov Chain: " + markovChain.getMackovName(),
+            "Question",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            options,
+            options[0]);
+        
+        if(selectedOption == 0){
+            MarkovChainMatrix markovChainMatrix =new MarkovChainMatrix(this.digPopGUIInformation, markovChain.getId());
+            markovChainMatrix.setVisible(true);
+            markovChainMatrix.setLocationRelativeTo(this);
+
+            dispose();
+        }
+                    
+    }
+    
+    
+    private void clearSurveyListData(){
         surveyAllList.clearSelection();
         selectSurveyClass.setSurveyColumnValuesGroupings(new ArrayList<SurveyColumnValuesGrouping>());
-        updateSurveyGroupsListModel();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    }
+    
     public void updateSurveyGroupsListModel(){
+        this.newSurveyGroupingsHaveAllBeenCreated = true;
         surveyGroupsListModel.removeAllElements();
         selectSurveyClass.getSurveyColumnValuesGroupings().stream().forEach((c) -> {
             surveyGroupsListModel.addElement(c);
@@ -521,6 +638,15 @@ public class StepThree extends javax.swing.JFrame {
     
     private void loadForm(){
         censusSurveyClasses.getCensusClasses().stream().forEach((c) -> {
+            
+            /**
+             * No census classes can be selected when starting to create a new 
+             * markov chain. 
+             */
+            if(c.isSelected()){
+               c.setSelected(false);
+            }
+            
             censusAllListModel.addElement(c);
         });
         censusSurveyClasses.getHouseholdMicroDataClasses().stream().forEach((c) -> {
@@ -552,19 +678,32 @@ public class StepThree extends javax.swing.JFrame {
                 }
             }
         });
+        
+        String dateString = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        String newDefaultNameWithTimeStamp = String.format(
+                    "%s_%s", 
+                    DEFAULT_NEW_MARKOV_CHAIN_NAME,
+                    dateString);
+        
+        txtNewMarkovChainName.setText(newDefaultNameWithTimeStamp);
 
         pack();
     }
     
     private void loadCensusSurveyClasses(){
-        Result result = DigPopGUIUtilityClass.getLoadedCensusSurveyClasses(
-                this.digPopGUIInformation.getCensusEnumerationsFilePath(),
-                this.digPopGUIInformation.getPopulationMicroDataFilePath(),
-                this.digPopGUIInformation.getHouseholdMicroDataFilePath());
-        this.censusSurveyClasses = (CensusSurveyClasses) result.getValue();
+        if(this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChains().size() > 0){
+            this.censusSurveyClasses = this.digPopGUIInformation.getCensusSurveyClasses();
+        }
+        else {
+            Result result = DigPopGUIUtilityClass.getLoadedCensusSurveyClasses(
+                    this.digPopGUIInformation.getCensusEnumerationsFilePath(),
+                    this.digPopGUIInformation.getPopulationMicroDataFilePath(),
+                    this.digPopGUIInformation.getHouseholdMicroDataFilePath());
+            this.censusSurveyClasses = (CensusSurveyClasses) result.getValue();
+        }
     }
     
-    private Result save(){
+    private Result saveNewMarkovChain(){
         ArrayList<cerl.gui.utilities.Class> selectedCensusClasses = new ArrayList<cerl.gui.utilities.Class> ();
         
         for(int counter = 0; counter < censusSelectedListModel.getSize(); counter++){
@@ -575,82 +714,104 @@ public class StepThree extends javax.swing.JFrame {
         
         if(result.isSuccess()){
             selectedCensusClasses = (ArrayList<cerl.gui.utilities.Class>)result.getValue();
+            String newName = txtNewMarkovChainName.getText();
             
-            MarkovChain markovChain = new MarkovChain("New Markov Chain", selectedCensusClasses, this.selectSurveyClass, 1);
+            //ArrayList<SurveyColumnValuesGrouping> clonedEditedSurveyColumnValuesGroupings = new ArrayList<SurveyColumnValuesGrouping>();
+            
+//            /**
+//            * Creates a clean deep clone of the census classes. 
+//            * This will be used for when the user hits cancel.
+//            */
+//           this.selectSurveyClass.getSurveyColumnValuesGroupings().stream().forEach((c) -> {
+//               try {
+//                   clonedEditedSurveyColumnValuesGroupings.add(c.clone());
+//               } catch (CloneNotSupportedException ex) {
+//                   Logger.getLogger(CensusClassUserDefinitions.class.getName()).log(Level.SEVERE, null, ex);
+//               }
+//           });
+
+
+
+          
+           
+            cerl.gui.utilities.Class savedSelectSurveyClass = new cerl.gui.utilities.Class();
+            
+            savedSelectSurveyClass.setClassName(this.selectSurveyClass.getClassName());
+            savedSelectSurveyClass.setColumnNumber(this.selectSurveyClass.getColumnNumber());
+            savedSelectSurveyClass.setUserDefinedDescription(this.selectSurveyClass.getUserDefinedDescription());
+            
+            
+            ArrayList<SurveyColumnValuesGrouping> copy = new ArrayList<>(this.selectSurveyClass.getSurveyColumnValuesGroupings());
+            
+            Object cloneCopy = copy.clone();
+            
+            ArrayList<SurveyColumnValuesGrouping> clonedEditedSurveyColumnValuesGroupings = new ArrayList<SurveyColumnValuesGrouping>();
+            
+            for(SurveyColumnValuesGrouping clone : (ArrayList<SurveyColumnValuesGrouping>)cloneCopy){
+                clonedEditedSurveyColumnValuesGroupings.add(clone);
+            }
+            
+            
+            
+            
+            savedSelectSurveyClass.setSurveyColumnValuesGroupings(clonedEditedSurveyColumnValuesGroupings);
+            
+            
+            int newId = this.censusSurveyClasses.getMarkovChains().size() + 1;
+            
+            MarkovChain markovChain = new MarkovChain(newName, selectedCensusClasses, savedSelectSurveyClass, newId);
             this.censusSurveyClasses.addMarkovChains(markovChain);
 
             this.digPopGUIInformation.setCensusSurveyClasses(this.censusSurveyClasses);
 
-            //Save to file
-            result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(
-                    this.digPopGUIInformation,
-                    this.digPopGUIInformation.getFilePath());
+            
+            
+            this.currentMarkovChainIdToShow = markovChain.getId();
+            
+            saveToFile();
         }
         
         return result;
     }
     
-    
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(StepThree.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(StepThree.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(StepThree.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(StepThree.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new StepThree().setVisible(true);
-//            }
-//        });
-//    }
+    private void saveToFile(){
+        //Save to file
+        Result    result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(
+                    this.digPopGUIInformation,
+                    this.digPopGUIInformation.getFilePath());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCensusClass;
+    private javax.swing.JButton btnClearSurveyData;
+    private javax.swing.JButton btnCreateNewMarkovChain;
     private javax.swing.JButton btnEditSelectedCensusDataDescriptions;
     private javax.swing.JButton btnNextStep;
     private javax.swing.JButton btnPreviousStep;
     private javax.swing.JButton btnRemoveCensusClass;
     private javax.swing.JButton btnSurveyDataGroups;
     private javax.swing.JPanel censusJPanel;
-    private javax.swing.JButton jButton1;
     private javax.swing.JDialog jDialogLoadingFile;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPaneCensusAll;
     private javax.swing.JScrollPane jScrollPaneCensusSelected;
     private javax.swing.JScrollPane jScrollPaneSurveyAll;
     private javax.swing.JScrollPane jScrollPaneSurveyDataGroups;
+    private javax.swing.JTable jTableListOfAllMarkovChains;
     private javax.swing.JPanel surveyJPanel;
+    private javax.swing.JTextField txtNewMarkovChainName;
     // End of variables declaration//GEN-END:variables
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -337,10 +338,21 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddRestToNewGroupsActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        this.parentStep.updateSurveyGroupsListModel();
-        this.parentStep.setVisible(true);
-        this.parentStep.setAlwaysOnTop(true);
-        this.dispose();
+        List<SurveyColumnValue> allSurveyColumnValuesNotUsed = selectSurveyClass.getAllSurveyColumnValuesNotUsed();
+        
+        int leftUnGroupedCount = allSurveyColumnValuesNotUsed.size();
+        if(leftUnGroupedCount == 0){
+            this.parentStep.updateSurveyGroupsListModel();
+            this.parentStep.setVisible(true);
+            this.parentStep.setAlwaysOnTop(true);
+            this.dispose();
+        }else {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "All survey classes must be grouped.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed

@@ -278,7 +278,7 @@ public class FittingCriteria extends javax.swing.JFrame {
 
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
         saveToFile();
-        new MarkovChainMatrix(this.digPopGUIInformation).setVisible(true);
+        new MarkovChainMatrix(this.digPopGUIInformation, 1).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 

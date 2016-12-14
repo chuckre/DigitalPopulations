@@ -32,7 +32,7 @@ public class SurveyColumnValuesGrouping implements Cloneable {
 
     public long calculateGroupingTotal() {
         this.surveyColumnValues.stream().forEach((s) -> {
-           this.groupingTotal += s.getSurveyColumnValueTotal();
+           this.groupingTotal += s.getNumberOfTimesUsed();
         });
         
         return groupingTotal;

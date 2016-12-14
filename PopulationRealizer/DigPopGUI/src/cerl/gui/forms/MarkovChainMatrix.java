@@ -33,43 +33,51 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     private int END_EDITABLE_COL;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_FOUR_HELP_FILE_NAME.toString();
     private final DigPopGUIInformation digPopGUIInformation;
+    private MarkovChain currentMarkovChain;
+    private int currentMarkovChainId;
     
     /**
      * Creates new form MarkovChainMatrix
      * 
      * TO DO: Pull from Survey/Census data files, Write out to CSV files
      */
-    public MarkovChainMatrix() {
-        this.digPopGUIInformation = new DigPopGUIInformation();
-        //load table
-        myTable = populateMarkovTableModel();
-        myTable.handleTableChange(-1,-1); //calculate the amount left
-        
-        initComponents();
-        
-        //sets up columns with new renderer, and clear buttons for the rows/columns
-        for(int i=0; i<myTable.getColumnCount(); i++){
-            TableColumn tableCol = jTable_MarkovMatrix.getColumnModel().getColumn(i);
-            tableCol.setCellRenderer(new customTableCellRenderer());
-            tableCol.setCellEditor(new customTableCellEditor());
-        }
-        //adds the mouse listener for the buttons to work in the jTable
-        jTable_MarkovMatrix.addMouseListener(new jTableButtonMouseListener(jTable_MarkovMatrix));
-        
-        //adds the listener for the cell calculations
-        jTable_MarkovMatrix.getModel().addTableModelListener(new customTableModelListener(jTable_MarkovMatrix));
-        //hide error messages until needed
-        jLabel_ErrorMessages.setVisible(false);
-    }
+//    public MarkovChainMatrix() {
+//        this.digPopGUIInformation = new DigPopGUIInformation();
+//        //load table
+//        myTable = populateMarkovTableModel();
+//        myTable.handleTableChange(-1,-1); //calculate the amount left
+//        
+//        initComponents();
+//        
+//        this.txtMarkovChainName.setText(this.markovName);
+//        
+//        //sets up columns with new renderer, and clear buttons for the rows/columns
+//        for(int i=0; i<myTable.getColumnCount(); i++){
+//            TableColumn tableCol = jTable_MarkovMatrix.getColumnModel().getColumn(i);
+//            tableCol.setCellRenderer(new customTableCellRenderer());
+//            tableCol.setCellEditor(new customTableCellEditor());
+//        }
+//        //adds the mouse listener for the buttons to work in the jTable
+//        jTable_MarkovMatrix.addMouseListener(new jTableButtonMouseListener(jTable_MarkovMatrix));
+//        
+//        //adds the listener for the cell calculations
+//        jTable_MarkovMatrix.getModel().addTableModelListener(new customTableModelListener(jTable_MarkovMatrix));
+//        //hide error messages until needed
+//        jLabel_ErrorMessages.setVisible(false);
+//        
+//        pack();
+//    }
 
-    MarkovChainMatrix(DigPopGUIInformation digPopGUIInformation) {
+    MarkovChainMatrix(DigPopGUIInformation digPopGUIInformation, int currentMarkovChainId) {
         this.digPopGUIInformation = digPopGUIInformation;
-        
+        this.currentMarkovChainId = currentMarkovChainId;
         //load table
         myTable = populateMarkovTableModel();
         myTable.handleTableChange(-1,-1); //calculate the amount left
         
         initComponents();
+        
+        this.txtMarkovChainName.setText(this.markovName);
         
         //sets up columns with new renderer, and clear buttons for the rows/columns
         for(int i=0; i<myTable.getColumnCount(); i++){
@@ -88,15 +96,17 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
 
     private MarkovTableModel populateMarkovTableModel(){
         
-        MarkovChain markovChain = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(1);
-        List<SurveyColumnValuesGrouping> surveyGroups = markovChain.getSelectSurveyClass().getSurveyColumnValuesGroupings();
+        this.currentMarkovChain = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(this.currentMarkovChainId);
+        this.markovName = this.currentMarkovChain.getMackovName();
+        
+        List<SurveyColumnValuesGrouping> surveyGroups = this.currentMarkovChain.getSelectSurveyClass().getSurveyColumnValuesGroupings();
         
         
         ArrayList<String> columnNames = new ArrayList<>();
         //Census Value Names
      //   columnNames.addAll(Arrays.asList("","Value","Yes Electricity","No Electricity","N/A","Amount Left",""));
      columnNames.addAll(Arrays.asList("","Value"));
-        columnNames.addAll(markovChain.getAllSelectedCensusClassesUserDefinedNames());
+        columnNames.addAll(this.currentMarkovChain.getAllSelectedCensusClassesUserDefinedNames());
         columnNames.addAll(Arrays.asList("Amount Left",""));
 
         //columns must be rows+1 because the header row is the -1th row.
@@ -106,7 +116,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         START_EDITABLE_ROW = 1;
         START_EDITABLE_COL = 2;
         END_EDITABLE_ROW = surveyGroups.size();//3;
-        END_EDITABLE_COL = 1 + markovChain.getCensusClasses().size();//4;
+        END_EDITABLE_COL = 1 + this.currentMarkovChain.getCensusClasses().size();//4;
         int[][] cells = new int[2][Math.max(END_EDITABLE_COL-START_EDITABLE_COL, END_EDITABLE_ROW-START_EDITABLE_ROW)+1];
         
         //Set up rows and columns
@@ -140,7 +150,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
                     new MarkovTableCell(
                             counter, 
                             1, 
-                            selected.getUserDefinedDescription(), 
+                            selected.toString(), 
                             false, false, false, false));
             
             otherCounter++;
@@ -160,12 +170,12 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
 //        cellValues.get(0).add(3, new MarkovTableCell(0, 3, 0.30, 0.30, 0.30, false, false, false, false));
 //        cellValues.get(0).add(4, new MarkovTableCell(0, 4, 0.10, 0.10, 0.10, false, false, false, false));
 
-        long allSurveyGroupsTotal = markovChain.getSelectSurveyClass().getAllSurveyGroupsTotal();
-        long allCensusTotal = markovChain.getAllCensusTotal();
+        long allSurveyGroupsTotal = this.currentMarkovChain.getSelectSurveyClass().getAllSurveyGroupsTotal();
+        long allCensusTotal = this.currentMarkovChain.getAllCensusTotal();
         
         otherCounter = 2;
-        for(int counter = 0; counter < markovChain.getCensusClasses().size(); counter++){
-            cerl.gui.utilities.Class selected = markovChain.getCensusClasses().get(counter);
+        for(int counter = 0; counter < this.currentMarkovChain.getCensusClasses().size(); counter++){
+            cerl.gui.utilities.Class selected = this.currentMarkovChain.getCensusClasses().get(counter);
             
             double proportions = (double)selected.getClassTotal() / allCensusTotal;
             proportions =Math.round(proportions * 100.0) / 100.0;
@@ -205,7 +215,6 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField_MarkovName = new javax.swing.JTextField();
         jLabel_MarkovName = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_MarkovMatrix = new javax.swing.JTable();
@@ -214,6 +223,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         jButton_Save = new javax.swing.JButton();
         jButton_Clear = new javax.swing.JButton();
         jLabel_ErrorMessages = new javax.swing.JLabel();
+        txtMarkovChainName = new javax.swing.JTextField();
         jMenuBar_FileMenu = new javax.swing.JMenuBar();
         jMenu_FileTab = new javax.swing.JMenu();
         jMenu_EditTab = new javax.swing.JMenu();
@@ -222,13 +232,6 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Step Four");
         setPreferredSize(new java.awt.Dimension(840, 500));
-
-        jTextField_MarkovName.setToolTipText("Please enter the name of the Markov Chain for saving and reuse later.");
-        jTextField_MarkovName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField_MarkovNameActionPerformed(evt);
-            }
-        });
 
         jLabel_MarkovName.setText("Markov Chain Name:");
 
@@ -316,10 +319,6 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel_MarkovName)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField_MarkovName, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(50, 50, 50)
                                 .addComponent(jButton_Back)
                                 .addGap(18, 18, 18)
@@ -330,7 +329,11 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
                                 .addComponent(jButton_Clear)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel_ErrorMessages)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 179, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel_MarkovName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMarkovChainName)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -338,8 +341,8 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField_MarkovName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel_MarkovName))
+                    .addComponent(jLabel_MarkovName)
+                    .addComponent(txtMarkovChainName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton_Clear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -386,15 +389,6 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_ClearActionPerformed
 
     /**
-     * Sets the name of the Markov when the user updates the name
-     * @param evt 
-     */
-    private void jTextField_MarkovNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_MarkovNameActionPerformed
-        //Save name of Markov
-        markovName = jTextField_MarkovName.getText();
-    }//GEN-LAST:event_jTextField_MarkovNameActionPerformed
-
-    /**
      * Saves the current Markov chain
      * @param evt 
      */
@@ -413,40 +407,40 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         new About().setVisible(true);
     }//GEN-LAST:event_jMenu_AboutMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MarkovChainMatrix.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MarkovChainMatrix.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MarkovChainMatrix.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MarkovChainMatrix.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-                        
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MarkovChainMatrix().setVisible(true);
-            }
-        });
-    }
+//    /**
+//     * @param args the command line arguments
+//     */
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(MarkovChainMatrix.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(MarkovChainMatrix.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(MarkovChainMatrix.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(MarkovChainMatrix.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//                        
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new MarkovChainMatrix().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Back;
@@ -461,7 +455,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu_FileTab;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_MarkovMatrix;
-    private javax.swing.JTextField jTextField_MarkovName;
+    private javax.swing.JTextField txtMarkovChainName;
     // End of variables declaration//GEN-END:variables
 
 }

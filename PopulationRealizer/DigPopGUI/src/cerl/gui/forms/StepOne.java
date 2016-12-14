@@ -965,7 +965,7 @@ public class StepOne extends javax.swing.JFrame {
         if((this.digPopGUIInformation.getLandUseMapFilePath() != null) && !this.digPopGUIInformation.getLandUseMapFilePath().equals("")){
             rbtnLandUseMap.setSelected(true);
             txtLandUseHouseholdMap.setText(this.digPopGUIInformation.getLandUseMapFilePath());
-        } else{
+        } else if((this.digPopGUIInformation.getHouseholdDensityMapFilePath() != null) && !this.digPopGUIInformation.getHouseholdDensityMapFilePath().equals("")){
             rbtnHouseholdDensityMap.setSelected(true);
             txtLandUseHouseholdMap.setText(this.digPopGUIInformation.getHouseholdDensityMapFilePath());
         }
