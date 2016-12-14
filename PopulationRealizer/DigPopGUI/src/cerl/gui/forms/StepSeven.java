@@ -1510,7 +1510,8 @@ public class StepSeven extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu_HelpMouseClicked
 
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
-        new GenerateTraitClusters(this.digPopGUIInformation).setVisible(true);
+        //new GenerateTraitClusters(this.digPopGUIInformation).setVisible(true);
+        new StepThree(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
     
