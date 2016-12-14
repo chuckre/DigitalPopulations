@@ -39,6 +39,7 @@ public class FittingCriteria extends javax.swing.JFrame {
     private final String RELATIONSHIP_FILE_NAME = "goal_relationship.dprxml";
     private final FileType RELATIONSHIP_FILE_TYPE = FileType.XML;
     private final DigPopGUIInformation digPopGUIInformation;
+    private int currentMarkovChainId;
     
     /**
      * Creates new Step 5 form FittingCriteria
@@ -55,7 +56,8 @@ public class FittingCriteria extends javax.swing.JFrame {
      * Creates new Step 5 form FittingCriteria with existing data
      * @param digPopGUIInformation - the saved log file
      */
-    public FittingCriteria(DigPopGUIInformation digPopGUIInformation) {
+    public FittingCriteria(DigPopGUIInformation digPopGUIInformation, int currentMarkovChainId) {
+        this.currentMarkovChainId = currentMarkovChainId;
         this.digPopGUIInformation = digPopGUIInformation;
         //load table
         myTable = populateTableModel();
@@ -291,7 +293,7 @@ public class FittingCriteria extends javax.swing.JFrame {
 
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
         saveToFile();
-        new MarkovChainMatrix(this.digPopGUIInformation, 1).setVisible(true);
+        new MarkovChainMatrix(this.digPopGUIInformation, this.currentMarkovChainId ).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 

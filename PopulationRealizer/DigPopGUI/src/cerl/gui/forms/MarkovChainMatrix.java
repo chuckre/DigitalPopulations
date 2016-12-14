@@ -395,7 +395,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     private void jButton_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveActionPerformed
         // TODO add your handling code here:
         // TODO: save markovName to XML with full populated table object.
-        new FittingCriteria(this.digPopGUIInformation).setVisible(true);
+        new FittingCriteria(this.digPopGUIInformation, this.currentMarkovChainId).setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton_SaveActionPerformed
 
