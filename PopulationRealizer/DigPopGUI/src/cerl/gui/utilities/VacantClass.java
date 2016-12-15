@@ -6,7 +6,6 @@
 package cerl.gui.utilities;
 
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 
 /**
  * Used in the Goal Relationship File - landuse vacant classes

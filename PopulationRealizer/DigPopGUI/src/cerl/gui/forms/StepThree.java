@@ -10,6 +10,7 @@ import cerl.gui.utilities.CensusSurveyClasses;
 import static cerl.gui.utilities.DigPopFileTypeEnum.Household_Micro_Data;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.MarkovChain;
 import cerl.gui.utilities.Step3MarkovChainTableItemModel;
 import cerl.gui.utilities.SurveyColumnValue;
@@ -59,6 +60,8 @@ public class StepThree extends javax.swing.JFrame {
     
     private boolean newSurveyGroupingsHaveAllBeenCreated = false;
     private int currentMarkovChainIdToShow;
+    
+    private final String SCREEN_NAME = HelpFileScreenNames.STEP_THREE_HELP_FILE_NAME.toString();
     
     
     public StepThree(DigPopGUIInformation digPopGUIInformation) {
@@ -129,7 +132,7 @@ public class StepThree extends javax.swing.JFrame {
         jTableListOfAllMarkovChains = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        jMenuHelp = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
         jDialogLoadingFile.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -410,8 +413,13 @@ public class StepThree extends javax.swing.JFrame {
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        jMenuHelp.setText("Help");
+        jMenuHelp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuHelpMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenuHelp);
 
         jMenu3.setText("About");
         jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -592,12 +600,16 @@ public class StepThree extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnCreateNewMarkovChainActionPerformed
 
+    private void jMenuHelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuHelpMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
+    }//GEN-LAST:event_jMenuHelpMouseClicked
+
     public void openOrDeleteExistingMarkov(MarkovChain markovChain){
         Object[] options = {
                         "Open",
                         "Delete"};
         int selectedOption = JOptionPane.showOptionDialog(this,
-            "Would you like to open or delete the Markov Chain: " + markovChain.getMackovName(),
+            "Would you like to open or delete the Markov Chain: " + markovChain.getMarkovName(),
             "Question",
             JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE,
@@ -614,7 +626,7 @@ public class StepThree extends javax.swing.JFrame {
         } else if(selectedOption == 1){
             int answer = JOptionPane.showConfirmDialog(
                 this,
-                "Are you sure you want to delete Markov Chain: " + markovChain.getMackovName() + "?",
+                "Are you sure you want to delete Markov Chain: " + markovChain.getMarkovName() + "?",
                 "Delete?",
                 JOptionPane.YES_NO_OPTION);
             
@@ -812,9 +824,9 @@ public class StepThree extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuHelp;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JProgressBar jProgressBar1;

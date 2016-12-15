@@ -12,13 +12,10 @@ import cerl.gui.standard.utilities.customTableModel;
 import cerl.gui.standard.utilities.customTableCell;
 import cerl.gui.standard.utilities.customTableCellRenderer;
 import cerl.gui.standard.utilities.customTableModelListener;
-import cerl.gui.utilities.CensusSurveyClasses;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
-import cerl.gui.utilities.Forbid;
 import cerl.gui.utilities.GoalRelationshipFile;
 import cerl.gui.utilities.HelpFileScreenNames;
-import cerl.gui.utilities.LandUseMapInformation;
 import cerl.gui.utilities.MarkovChain;
 import cerl.gui.utilities.SurveyColumnValuesGrouping;
 import cerl.gui.utilities.Traits;
@@ -66,7 +63,7 @@ public class FittingCriteria extends javax.swing.JFrame {
         
         //get name of Markov for saving
         MarkovChain mc = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(this.currentMarkovChainId);
-        this.currentMarkovChainName = mc.getMackovName();
+        this.currentMarkovChainName = mc.getMarkovName();
         this.markovChain = mc;
         
         //load table
@@ -143,7 +140,7 @@ public class FittingCriteria extends javax.swing.JFrame {
             cellValues = this.markovChain.getFittingCriteriaCellValues();
         } else { //first time in 
             MarkovChain mc = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(this.currentMarkovChainId);
-            this.currentMarkovChainName = mc.getMackovName();
+            this.currentMarkovChainName = mc.getMarkovName();
             ArrayList<String> censusClasses = mc.getAllSelectedCensusClassesUserDefinedNames();
             List<SurveyColumnValuesGrouping> surveyTraits = mc.getSelectSurveyClass().getSurveyColumnValuesGroupings();
             

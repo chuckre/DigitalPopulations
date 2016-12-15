@@ -6,6 +6,8 @@
 package cerl.gui.forms;
 
 import cerl.gui.utilities.ClassTableItemModel;
+import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.HelpFileScreenNames;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,13 +22,13 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
 
     private ClassTableItemModel classTableItemModel;
     private StepThree parentStep;
-    private boolean cancelOnWindowClose = true;
     
     private ArrayList<cerl.gui.utilities.Class> nonEditedClasses = new ArrayList<>();
+    
+    private final String SCREEN_NAME = HelpFileScreenNames.STEP_THREE_HELP_FILE_NAME.toString();
 
     /**
      * Creates new form CensusClassUserDefinitions
-     * @param classes
      * @param parentStep
      */
     public CensusClassUserDefinitions(StepThree parentStep) {
@@ -82,7 +84,8 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
         btnCancel = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        jMenuHelp = new javax.swing.JMenu();
+        jMenuAbout = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -145,8 +148,21 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        jMenuHelp.setText("Help");
+        jMenuHelp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuHelpMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenuHelp);
+
+        jMenuAbout.setText("About");
+        jMenuAbout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuAboutMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenuAbout);
 
         setJMenuBar(jMenuBar1);
 
@@ -171,26 +187,34 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        this.cancelOnWindowClose = true;
-        closeAndDisposeReturnToStepThree();
-
+        
+        closeAndDisposeReturnToStepThree(true);
     }//GEN-LAST:event_formWindowClosing
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         
-        this.cancelOnWindowClose = false;
-        closeAndDisposeReturnToStepThree();
+        closeAndDisposeReturnToStepThree(false);
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
 
-        
-        this.cancelOnWindowClose = true;
-        closeAndDisposeReturnToStepThree();
+        closeAndDisposeReturnToStepThree(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
-    private void closeAndDisposeReturnToStepThree(){
-        if(this.cancelOnWindowClose){
+    private void jMenuHelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuHelpMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
+    }//GEN-LAST:event_jMenuHelpMouseClicked
+
+    private void jMenuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAboutMouseClicked
+        new About().setVisible(true);
+    }//GEN-LAST:event_jMenuAboutMouseClicked
+
+    /**
+     * Closes the window 
+     * and updates the parents parent step's censusSurveyClasses object.
+     */
+    private void closeAndDisposeReturnToStepThree(boolean cancelOnWindowClose){
+        if(cancelOnWindowClose){
             this.parentStep.censusSurveyClasses.setCensusClasses(this.nonEditedClasses);
             this.parentStep.updateCensusSelectedListModel();
         }
@@ -204,8 +228,9 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
     private javax.swing.JButton btnSave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenuAbout;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuHelp;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

@@ -14,24 +14,18 @@ import static cerl.gui.utilities.DigPopFileTypeEnum.Census_Enumerations;
 import static cerl.gui.utilities.DigPopFileTypeEnum.Household_Micro_Data;
 import static cerl.gui.utilities.DigPopFileTypeEnum.Population_Micro_Data;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.swing.JProgressBar;
 
 /**
  *
@@ -49,18 +43,6 @@ public class DigPopGUIUtilityClass {
 
         URL url = DigPopGUIUtilityClass.class.getResource(HELP_FILE_PATH);
         
-//        String filePath = "";
-//        try {
-//           // filePath = Paths.get(url.toURI()).toFile().getPath();
-//            
-//           filePath = url.toURI().getPath();
-//            
-//           // int b = 0;
-//        } catch (URISyntaxException ex) {
-//            Logger.getLogger(StepOneUtilityClass.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-
-        //File helpFileLocation = new File(filePath);
         Result result = FileUtility.ParseXMLFileIntoSpecifiedObjectFromURL(url, HelpFile.class);
         return (HelpFile) result.getValue();
 
@@ -217,88 +199,6 @@ public class DigPopGUIUtilityClass {
         
         return result;
     }
-    
-//    public static Result readInClassTotals(String filePath, ArrayList<Class> classes){
-//        Result result = new Result();
-//        
-//        String line = "";
-//        
-//        long total = 0;
-//        int lineCounter = 0;
-//
-//        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-//            while((line = br.readLine()) != null) {
-//                if(lineCounter > 1){
-//                    // use comma as separator, but allow for commas inside a string
-//                    String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-//
-//                    for(int counter = 0; counter < classes.size(); counter++){
-//                        if(classes.get(counter).isSelected()){
-//                            try{
-//                                Class selectClass = classes.get(counter);
-//                                long value = Long.parseLong(lineInfo[selectClass.getColumnNumber()]);
-//                                selectClass.addToClassTotal(value);
-//                                classes.set(counter, selectClass);
-//
-//                                total += value;
-//                            } catch(NumberFormatException e){
-//                                //nothing just move on
-//                                //We can add this to the log if they are expecting different results
-//                            }
-//                        }
-//                    }
-//                }
-//                
-//                lineCounter++;
-//            }
-//
-//            br.close();
-//            result.setSuccess(true);
-//        } catch (IOException ex) {
-//            result.setErrorMessage(
-//                    "getCensusClassesFromCSVFile",
-//                    ex.getMessage());
-//            result.setSuccess(false);
-//        }
-//        
-//        Object[] resultValues = new Object[2];
-//        resultValues[0] = total;
-//        resultValues[1] = classes;
-//        result.setValue(resultValues);
-//        return result;
-//    }
-    
-//    public static Result getSurveyDataColumnValues(String filePath, int columnNumber){
-//        Result result = new Result();
-//        ArrayList<SurveyColumnValue> columnValues = new ArrayList<>();
-//        
-//        String line = "";
-//        int lineCounter = 0;
-//
-//        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-//            while((line = br.readLine()) != null) {
-//                if(lineCounter >= 1){
-//                    // use comma as separator, but allow for commas inside a string
-//                    String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-//                    
-//                    columnValues.add(new SurveyColumnValue(lineCounter,Integer.parseInt(lineInfo[columnNumber]), false, 0));//TODO FIX THISD
-//                }
-//                
-//                lineCounter++;
-//            }
-//
-//            br.close();
-//            result.setSuccess(true);
-//        } catch (IOException ex) {
-//            result.setErrorMessage(
-//                    "getCensusClassesFromCSVFile",
-//                    ex.getMessage());
-//            result.setSuccess(false);
-//        }
-//        
-//        result.setValue(columnValues);
-//        return result;
-//    }
 
     public static Result getSurveyDataColumnValues(String filePath, int columnNumber){
         Result result = new Result();

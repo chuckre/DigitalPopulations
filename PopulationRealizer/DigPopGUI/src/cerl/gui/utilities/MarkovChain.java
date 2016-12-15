@@ -20,7 +20,7 @@ public class MarkovChain {
     private GoalRelationshipFile goalRelationshipFile;
     private Double traitWeightLocation;
     
-    private String mackovName;
+    private String markovName;
     private ArrayList<cerl.gui.utilities.Class> censusClasses;
     private cerl.gui.utilities.Class selectSurveyClass;
     private int id;
@@ -32,8 +32,8 @@ public class MarkovChain {
         this.goalRelationshipFile = new GoalRelationshipFile();
     }
     
-    public MarkovChain(String mackovName, ArrayList<Class> censusClasses, Class selectSurveyClass, int id) {
-        this.mackovName = mackovName;
+    public MarkovChain(String markovName, ArrayList<Class> censusClasses, Class selectSurveyClass, int id) {
+        this.markovName = markovName;
         this.censusClasses = censusClasses;
         this.selectSurveyClass = selectSurveyClass;
         this.id = id;
@@ -45,7 +45,6 @@ public class MarkovChain {
     }
 
     public void setFittingTraits(ArrayList<Traits> FittingTraits) {
-     //   this.goalRelationshipFile.setTraits(FittingTraits);
         this.FittingTraits = FittingTraits;
     }
     
@@ -90,12 +89,12 @@ public class MarkovChain {
         this.id = id;
     }
     
-    public String getMackovName() {
-        return mackovName;
+    public String getMarkovName() {
+        return markovName;
     }
 
-    public void setMackovName(String mackovName) {
-        this.mackovName = mackovName;
+    public void setMarkovName(String markovName) {
+        this.markovName = markovName;
     }
 
     public ArrayList<Class> getCensusClasses() {

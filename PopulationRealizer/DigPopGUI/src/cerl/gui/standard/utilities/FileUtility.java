@@ -14,9 +14,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -242,6 +239,17 @@ public class FileUtility {
         return result;
     }
     
+    /**
+     * File Utility class that will parse a given XML file into a specified
+     * object.
+     *
+     * Example: HelpFile.xml will be parsed into the HelpFile object.
+     *
+     * @param url The url path of the parsed XML file.
+     * @param classType The Object type that the XML file will be parsed into.
+     * Object loaded with the data from the given XML file.
+     * @return 
+     */
     public static Result ParseXMLFileIntoSpecifiedObjectFromURL(
             URL url,
             Class classType) {
@@ -279,7 +287,6 @@ public class FileUtility {
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             
             jaxbMarshaller.marshal(objectToParseIntoXML, file);
-          //  jaxbMarshaller.marshal(objectToParseIntoXML, System.out);
             
             result.setSuccess(true);
             

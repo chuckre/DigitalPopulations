@@ -5,9 +5,7 @@
  */
 package cerl.gui.utilities;
 
-import java.util.ArrayList;
 import java.util.List;
-import javax.swing.RowFilter;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 

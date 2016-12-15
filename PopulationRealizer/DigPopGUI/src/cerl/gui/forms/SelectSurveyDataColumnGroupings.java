@@ -5,6 +5,8 @@
  */
 package cerl.gui.forms;
 
+import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.SurveyColumnGroupsTableItemModel;
 import cerl.gui.utilities.SurveyColumnValue;
 import cerl.gui.utilities.SurveyColumnValuesGrouping;
@@ -32,6 +34,8 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
     private ArrayList<SurveyColumnValuesGrouping> nonEditedSurveyColumnValuesGroupings = new ArrayList<>();
     private ArrayList<SurveyColumnValue> nonEditedSurveyColumnValues = new ArrayList<>();
 
+    private final String SCREEN_NAME = HelpFileScreenNames.STEP_THREE_HELP_FILE_NAME.toString();
+    
     /**
      * Creates new form SelectSurveyDataColumnGroupings
      */
@@ -99,7 +103,8 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
         btnCancel = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        jMenuHelp = new javax.swing.JMenu();
+        jMenuAbout = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -279,8 +284,21 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        jMenuHelp.setText("Help");
+        jMenuHelp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuHelpMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenuHelp);
+
+        jMenuAbout.setText("About");
+        jMenuAbout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuAboutMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenuAbout);
 
         setJMenuBar(jMenuBar1);
 
@@ -371,6 +389,14 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
+    private void jMenuHelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuHelpMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
+    }//GEN-LAST:event_jMenuHelpMouseClicked
+
+    private void jMenuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAboutMouseClicked
+        new About().setVisible(true);
+    }//GEN-LAST:event_jMenuAboutMouseClicked
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -383,8 +409,9 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenuAbout;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuHelp;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

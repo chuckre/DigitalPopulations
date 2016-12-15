@@ -10,11 +10,7 @@ import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.ImageUtility;
 import cerl.gui.standard.utilities.Result;
 import java.io.File;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Paths;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -64,13 +60,6 @@ public class StepOneUtilityClass {
     private final static int INVALID_IMAGE_ICON_HEIGHT = 25;
     
     public static ImageIcon GetValidImageIcon(){
-        
-//        String filePath = "";
-//        try {
-//            filePath = Paths.get(url.toURI()).toFile().getPath();
-//        } catch (URISyntaxException ex) {
-//            Logger.getLogger(StepOneUtilityClass.class.getName()).log(Level.SEVERE, null, ex);
-//        }
 
         URL url = StepOneUtilityClass.class.getResource(StepOneUtilityClass.VALID_IMAGE_ICON_FILEPATH);
         
@@ -83,13 +72,6 @@ public class StepOneUtilityClass {
     }
     
     public static ImageIcon GetInValidImageIcon(){
-        
-//        String filePath = "";
-//        try {
-//            filePath = Paths.get(url.toURI()).toFile().getPath();
-//        } catch (URISyntaxException ex) {
-//            Logger.getLogger(StepOneUtilityClass.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         
         URL url = StepOneUtilityClass.class.getResource(StepOneUtilityClass.INVALID_IMAGE_ICON_FILEPATH);
         

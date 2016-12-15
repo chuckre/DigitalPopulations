@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <help>
     <name>DigPopGUI</name>
-    <introduction>Test something will need to go here</introduction>
+    <introduction>This software was funded by OSD-ASAALT and produced for the Urban Security Project, developed by Red Horse, and designed by Dr. Charles R. Ehlschlaeger, Jeff Burkhalter, Craig Cheney, Ben Hough, Roger Jenkins, Alexandria Johnson, and Meghan Rivera.</introduction>
     <screen>
         <name>Step 1 - Maps</name>
         <description>This page allows users to enter all the applicable files.</description>

@@ -53,7 +53,7 @@ public class Step3MarkovChainTableItemModel extends AbstractTableModel {
         MarkovChain selectedMarkovChain = markovChains.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                value = selectedMarkovChain.getMackovName();
+                value = selectedMarkovChain.getMarkovName();
                 break;
         }
         return value;

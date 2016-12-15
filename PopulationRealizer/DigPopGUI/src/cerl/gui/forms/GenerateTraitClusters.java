@@ -382,7 +382,6 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         saveData();
         createFittingCriteriaFile();
         new StepThree(this.digPopGUIInformation).setVisible(true);
-        //new StepSeven(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed
 
@@ -431,7 +430,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     private void createFittingCriteriaFile(){
         String saveFileDirectory = this.digPopGUIInformation.getFileDirectory();
         
-        String mcName = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(currentMarkovChainId).getMackovName();
+        String mcName = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(currentMarkovChainId).getMarkovName();
         String fileName = FITTING_FILE_NAME + mcName.replace(" ", "_") + FITTING_FILE_EXT;
         
         //create new Fitting Criteria file

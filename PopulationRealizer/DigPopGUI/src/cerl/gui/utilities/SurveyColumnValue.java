@@ -75,8 +75,4 @@ public class SurveyColumnValue  implements Cloneable {
     public void addOneToNumberOfTimesUsed() {
         this.numberOfTimesUsed++;
     }
-    
-//    public int getSurveyColumnValueTotal(){
-//        return this.value * this.numberOfTimesUsed;
-//    }
 }

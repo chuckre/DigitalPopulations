@@ -6,6 +6,8 @@
 package cerl.gui.forms;
 
 import cerl.gui.utilities.DigPopGUIInformation;
+import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.LandUseMapClassCombination;
 import java.util.ArrayList;
 import javax.swing.JList;
@@ -19,6 +21,7 @@ public class LandUseDefineCombinationClasses extends javax.swing.JFrame {
     private JList allClassesList;
     private StepTwo parentStep;
     private final DigPopGUIInformation digPopGUIInformation;
+    private final String SCREEN_NAME = HelpFileScreenNames.STEP_TWO_HELP_FILE_NAME.toString();
     
     
     /**
@@ -66,8 +69,13 @@ public class LandUseDefineCombinationClasses extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuHelp = new javax.swing.JMenu();
+        jMenuAbout = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Select Land Use Map Class Combinations");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -142,12 +150,33 @@ public class LandUseDefineCombinationClasses extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
                     .addComponent(btnCancel))
                 .addContainerGap())
         );
+
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenuHelp.setText("Help");
+        jMenuHelp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuHelpMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenuHelp);
+
+        jMenuAbout.setText("About");
+        jMenuAbout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuAboutMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenuAbout);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -198,6 +227,14 @@ public class LandUseDefineCombinationClasses extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    private void jMenuHelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuHelpMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
+    }//GEN-LAST:event_jMenuHelpMouseClicked
+
+    private void jMenuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAboutMouseClicked
+        new About().setVisible(true);
+    }//GEN-LAST:event_jMenuAboutMouseClicked
+
 //    /**
 //     * @param args the command line arguments
 //     */
@@ -239,6 +276,10 @@ public class LandUseDefineCombinationClasses extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenuAbout;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuHelp;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPaneClasses;
     private javax.swing.JTextField txtDescription;

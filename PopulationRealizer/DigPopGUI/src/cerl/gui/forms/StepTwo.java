@@ -48,6 +48,7 @@ public class StepTwo extends javax.swing.JFrame {
     
     /**
      * Creates new form StepOne
+     * @param digPopGUIInformation
      */
     public StepTwo(DigPopGUIInformation digPopGUIInformation) {
         this.digPopGUIInformation = digPopGUIInformation;

@@ -9,12 +9,10 @@ import cerl.gui.standard.utilities.Result;
 import cerl.gui.utilities.DigPopFileTypeEnum;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
-import cerl.gui.utilities.Forbid;
 import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.StepOneInstructionNames;
 import cerl.gui.utilities.StepOneUtilityClass;
 import java.io.File;
-import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
@@ -929,11 +927,7 @@ public class StepOne extends javax.swing.JFrame {
      */
     private void setIntialWarningIcons() {
         
-        //URL urlValidPath = getClass().getResource(StepOneUtilityClass.VALID_IMAGE_ICON_FILEPATH);
-        
         jLabel_ProvidedFieldsIcon.setIcon(StepOneUtilityClass.GetValidImageIcon());
-        
-       // URL urlInValidPath = getClass().getResource(StepOneUtilityClass.INVALID_IMAGE_ICON_FILEPATH);
         
         jLabel_RequiredFieldsIcon.setIcon(StepOneUtilityClass.GetInValidImageIcon());
         
@@ -1119,9 +1113,6 @@ public class StepOne extends javax.swing.JFrame {
                         setIconImage(fileType, false);
                         break;
                 }
-                
-           //     setErrorMessage();
-                
 
             }
             pack();
@@ -1220,10 +1211,8 @@ public class StepOne extends javax.swing.JFrame {
         ImageIcon imageIcon;
 
         if (showValidIcon) {
-           // URL urlPath = getClass().getResource(StepOneUtilityClass.VALID_IMAGE_ICON_FILEPATH);
             imageIcon = StepOneUtilityClass.GetValidImageIcon();
         } else {
-         //   URL urlInValidPath = getClass().getResource(StepOneUtilityClass.INVALID_IMAGE_ICON_FILEPATH);
             imageIcon = StepOneUtilityClass.GetInValidImageIcon();
         }
 
@@ -1261,24 +1250,6 @@ public class StepOne extends javax.swing.JFrame {
         Object[] obj = {value};
         model.addRow(obj);
     }
-
-//    private void setErrorMessage() {
-//        String errorMessageText = "<html>";
-//
-//        for (String error : errors) {
-//            if (errorMessageText.length() > 6) {
-//                errorMessageText = String.format(
-//                        "%s<br>%s",
-//                        errorMessageText,
-//                        error);
-//            } else {
-//                errorMessageText = errorMessageText + error;
-//            }
-//        }
-//
-//        lblErrorMessages.setText(errorMessageText);
-//        ((JFrame) lblErrorMessages.getTopLevelAncestor()).pack();
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCensusEnumerations;
