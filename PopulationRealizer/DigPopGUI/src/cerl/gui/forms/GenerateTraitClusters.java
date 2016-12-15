@@ -86,8 +86,8 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         //columns must be rows+1 because the header row is the -1th row.
         ArrayList<ArrayList<Object>> cellValues = new ArrayList<>();
         
-        if(this.digPopGUIInformation.getTraitPositionClusters() != null){
-            ArrayList<Cluster> posCluster = this.digPopGUIInformation.getTraitPositionClusters();
+        if(this.markovChain.getTraitPositionClusters() != null){
+            ArrayList<Cluster> posCluster = this.markovChain.getTraitPositionClusters();
             
             for(int r=0; r<posCluster.size(); r++){
                 cellValues.add(r, new ArrayList<>());
@@ -134,8 +134,8 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 }
             }
         }
-        else if(this.digPopGUIInformation.getTraitClusters() != null){
-            cellValues = this.digPopGUIInformation.getTraitClusters();
+        else if(this.markovChain.getTraitClusters() != null){
+            cellValues = this.markovChain.getTraitClusters();
         } else {
             //Add rows
             cellValues.add(0,new ArrayList<>());
@@ -302,8 +302,8 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
             }
             trait.setModel(new DefaultComboBoxModel(comboValues.toArray()));
         }
-        else if(this.digPopGUIInformation.getTraitList() != null){
-            trait.setModel(new DefaultComboBoxModel(this.digPopGUIInformation.getTraitList().toArray()));
+        else if(this.markovChain.getTraitList() != null){
+            trait.setModel(new DefaultComboBoxModel(this.markovChain.getTraitList().toArray()));
         } else {
             String[] traitList = {"123", "456", "789"};
             trait.setModel(new DefaultComboBoxModel(traitList));
@@ -421,7 +421,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
             }
             clusters.add(r, newCluster);
         }
-        this.digPopGUIInformation.setTraitPositionClusters(clusters);
+        this.markovChain.setTraitPositionClusters(clusters);
     }
     
     /**
@@ -446,7 +446,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 fitInfo.setRelationshipFile(fileName);
                 fitInfo.setTraits(this.markovChain.getFittingTraits());
                 fitInfo.setWeights(this.markovChain.getTraitWeights());
-                fitInfo.setPositionRules(this.digPopGUIInformation.getTraitPositionClusters());
+                fitInfo.setPositionRules(this.markovChain.getTraitPositionClusters());
                 
                 //Need to create the file as empty version of the object
                 result = FileUtility.ParseObjectToXML(fitInfo, newFittingFile.getPath(), fitInfo.getClass());

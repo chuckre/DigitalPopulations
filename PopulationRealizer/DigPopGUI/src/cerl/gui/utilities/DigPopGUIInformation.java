@@ -45,11 +45,6 @@ public class DigPopGUIInformation {
     private String householdMicroDataFilePath;
     private Boolean validHouseholdMicroDataFilePath;
     
-    //Used in Step 6 - Generate Trait Clusters
-    private ArrayList<ArrayList<Object>> traitClusters;
-    private ArrayList<String> traitList;
-    private ArrayList<Cluster> traitPositionClusters;
-    
     private CensusSurveyClasses censusSurveyClasses;
 
     private RunFile runFile;
@@ -78,8 +73,6 @@ public class DigPopGUIInformation {
         this.validPopulationMicroDataFilePath = validPopulationMicroDataFilePath;
         this.householdMicroDataFilePath = householdMicroDataFilePath;
         this.validHouseholdMicroDataFilePath = validHouseholdMicroDataFilePath;
-        this.traitClusters = traitClusters;
-        this.traitList = traitList;
         this.censusSurveyClasses = censusSurveyClasses;
         this.landUseMapInformation = landUseMapInformation;
     }
@@ -220,22 +213,6 @@ public class DigPopGUIInformation {
         this.validHouseholdMicroDataFilePath = validHouseholdMicroDataFilePath;
     }
 
-    public ArrayList<ArrayList<Object>> getTraitClusters() {
-        return traitClusters;
-    }
-
-    public void setTraitClusters(ArrayList<ArrayList<Object>> traitClusters) {
-        this.traitClusters = traitClusters;
-    }
-
-    public ArrayList<String> getTraitList() {
-        return traitList;
-    }
-
-    public void setTraitList(ArrayList<String> traitList) {
-        this.traitList = traitList;
-    }
-    
     public String getCreatedDate() {
         return createdDate;
     }
@@ -258,14 +235,6 @@ public class DigPopGUIInformation {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
-    }
-
-    public ArrayList<Cluster> getTraitPositionClusters() {
-        return traitPositionClusters;
-    }
-
-    public void setTraitPositionClusters(ArrayList<Cluster> traitPositionClusters) {
-        this.traitPositionClusters = traitPositionClusters;
     }
     
     public RunFile getRunFile() {

@@ -22,6 +22,11 @@ public class MarkovChain {
     private GoalRelationshipFile goalRelationshipFile;
     private Double traitWeightLocation;
     
+    //Used in Step 6 - Generate Trait Clusters
+    private ArrayList<ArrayList<Object>> traitClusters;
+    private ArrayList<String> traitList;
+    private ArrayList<Cluster> traitPositionClusters;
+    
     private String markovName;
     private ArrayList<cerl.gui.utilities.Class> censusClasses;
     private cerl.gui.utilities.Class selectSurveyClass;
@@ -147,7 +152,7 @@ public class MarkovChain {
         });
     }
     
-     public GoalRelationshipFile getGoalRelationshipFile() {
+    public GoalRelationshipFile getGoalRelationshipFile() {
         return goalRelationshipFile;
     }
 
@@ -155,5 +160,27 @@ public class MarkovChain {
         this.goalRelationshipFile = goalRelationshipFile;
     }
     
+    public ArrayList<ArrayList<Object>> getTraitClusters() {
+        return traitClusters;
+    }
 
+    public void setTraitClusters(ArrayList<ArrayList<Object>> traitClusters) {
+        this.traitClusters = traitClusters;
+    }
+
+    public ArrayList<String> getTraitList() {
+        return traitList;
+    }
+
+    public void setTraitList(ArrayList<String> traitList) {
+        this.traitList = traitList;
+    }
+    
+    public ArrayList<Cluster> getTraitPositionClusters() {
+        return traitPositionClusters;
+    }
+
+    public void setTraitPositionClusters(ArrayList<Cluster> traitPositionClusters) {
+        this.traitPositionClusters = traitPositionClusters;
+    }
 }
