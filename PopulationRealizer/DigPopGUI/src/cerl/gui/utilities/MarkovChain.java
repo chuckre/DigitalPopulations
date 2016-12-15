@@ -5,8 +5,10 @@
  */
 package cerl.gui.utilities;
 
+import cerl.gui.standard.utilities.customTableCell;
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
@@ -14,7 +16,7 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class MarkovChain {
     private ArrayList<String> FittingCriteriaColumnNames;
-    private ArrayList<ArrayList<Object>> FittingCriteriaCellValues;
+    private ArrayList<ArrayList<customTableCell>> FittingCriteriaCellValues;
     private ArrayList<Traits> FittingTraits;
     private ArrayList<Weights> TraitWeights;
     private GoalRelationshipFile goalRelationshipFile;
@@ -65,11 +67,11 @@ public class MarkovChain {
     }
 
     @XmlElement(name="fittingCriteriaCellValues")
-    public ArrayList<ArrayList<Object>> getFittingCriteriaCellValues() {
+    public ArrayList<ArrayList<customTableCell>> getFittingCriteriaCellValues() {
         return FittingCriteriaCellValues;
     }
 
-    public void setFittingCriteriaCellValues(ArrayList<ArrayList<Object>> FittingCriteriaCellValues) {
+    public void setFittingCriteriaCellValues(ArrayList<ArrayList<customTableCell>> FittingCriteriaCellValues) {
         this.FittingCriteriaCellValues = FittingCriteriaCellValues;
     }
 
@@ -152,4 +154,6 @@ public class MarkovChain {
     public void setGoalRelationshipFile(GoalRelationshipFile goalRelationshipFile) {
         this.goalRelationshipFile = goalRelationshipFile;
     }
+    
+
 }
