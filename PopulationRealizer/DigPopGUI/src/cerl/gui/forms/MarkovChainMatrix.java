@@ -40,8 +40,14 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     MarkovChainMatrix(DigPopGUIInformation digPopGUIInformation, int currentMarkovChainId) {
         this.digPopGUIInformation = digPopGUIInformation;
         this.currentMarkovChainId = currentMarkovChainId;
+        
+        this.currentMarkovChain = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(this.currentMarkovChainId);
+        this.markovName = this.currentMarkovChain.getMarkovName();
+        
+        List<SurveyColumnValuesGrouping> surveyGroups = this.currentMarkovChain.getSelectSurveyClass().getSurveyColumnValuesGroupings();
+        
         //load table
-        myTable = populateMarkovTableModel();
+        myTable = populateMarkovTableModel(surveyGroups);
         myTable.handleTableChange(-1,-1); //calculate the amount left
         
         initComponents();
@@ -63,14 +69,32 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         jLabel_ErrorMessages.setVisible(false);
     }
 
-    private MarkovTableModel populateMarkovTableModel(){
+    private MarkovTableModel populateExistingMarkovTableModel(List<SurveyColumnValuesGrouping> surveyGroups){
+        ArrayList<String> columnNames = new ArrayList<>();
+        //Census Value Names
+        columnNames.addAll(Arrays.asList("","Value"));
+        columnNames.addAll(this.currentMarkovChain.getAllSelectedCensusClassesUserDefinedNames());
+        columnNames.addAll(Arrays.asList("Amount Left",""));
         
-        this.currentMarkovChain = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(this.currentMarkovChainId);
-        this.markovName = this.currentMarkovChain.getMarkovName();
+        //create table with custom MarkovTableModel
+        MarkovTableModel mtmTable = new MarkovTableModel(this.currentMarkovChain.getColumnNames()
+                , this.currentMarkovChain.getGenericTableCells(),this.currentMarkovChain.getEmptyCells());
         
-        List<SurveyColumnValuesGrouping> surveyGroups = this.currentMarkovChain.getSelectSurveyClass().getSurveyColumnValuesGroupings();
+        return mtmTable;
+    }
+    
+    private MarkovTableModel populateMarkovTableModel(List<SurveyColumnValuesGrouping> surveyGroups){
+        MarkovTableModel myModel;
         
-        
+        if(this.currentMarkovChain.getMarkovChainTableCells().size() > 0){
+            myModel = populateExistingMarkovTableModel(surveyGroups);
+        } else{
+            myModel = populateNewMarkovTableModel(surveyGroups);
+        }
+        return myModel;
+    }
+    
+    private MarkovTableModel populateNewMarkovTableModel(List<SurveyColumnValuesGrouping> surveyGroups){
         ArrayList<String> columnNames = new ArrayList<>();
         //Census Value Names
         columnNames.addAll(Arrays.asList("","Value"));
@@ -155,7 +179,10 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         
         //create table with custom MarkovTableModel
         MarkovTableModel mtmTable = new MarkovTableModel(columnNames, cellValues,cells);
-        
+        this.currentMarkovChain.setEmptyCells(cells);
+        //this.currentMarkovChain.setMarkovChainTableCells(cellValues);
+        this.currentMarkovChain.setMarkovTableCellsFromGeneric(cellValues);
+        this.currentMarkovChain.setColumnNames(columnNames);
         return mtmTable;
     }
         

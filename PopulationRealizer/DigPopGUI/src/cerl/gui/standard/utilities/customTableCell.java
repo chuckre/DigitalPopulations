@@ -23,6 +23,9 @@ public class customTableCell {
     private boolean editable;
     private boolean error;
 
+    public customTableCell(){
+    }
+    
     public customTableCell(Object value, boolean editable, String allowedDataType, boolean error) {
         this.value = value;
         this.editable = editable;
@@ -30,22 +33,18 @@ public class customTableCell {
         this.error = error;
     }
 
-    @XmlAttribute(name="value")
     public Object getValue() {
         return value;
     }
 
-    @XmlAttribute(name="editable")
     public boolean isEditable() {
         return editable;
     }
 
-    @XmlAttribute(name="dataType")
     public String getAllowedDataType() {
         return allowedDataType;
     }
 
-    @XmlAttribute(name="isError")
     public boolean isError() {
         return error;
     }

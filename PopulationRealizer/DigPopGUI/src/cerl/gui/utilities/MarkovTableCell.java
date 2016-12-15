@@ -24,6 +24,9 @@ public class MarkovTableCell {
     private boolean error;
     private boolean editable;
 
+    public MarkovTableCell(){
+    }
+    
     /**
      * Creates a new, basic Markov Table Cell
      * @param row - the index of the row the cell will reside in the table

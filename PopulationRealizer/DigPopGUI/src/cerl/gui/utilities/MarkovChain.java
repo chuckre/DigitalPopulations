@@ -28,6 +28,9 @@ public class MarkovChain {
     private ArrayList<Cluster> traitPositionClusters;
     
     private String markovName;
+    private ArrayList<MarkovChainRows> markovChainTableCells;
+    private int[][] emptyCells;
+    private ArrayList<String> columnNames;
     private ArrayList<cerl.gui.utilities.Class> censusClasses;
     private cerl.gui.utilities.Class selectSurveyClass;
     private int id;
@@ -37,6 +40,7 @@ public class MarkovChain {
         this.censusClasses = censusClasses = new ArrayList<cerl.gui.utilities.Class>();
         this.selectSurveyClass = new cerl.gui.utilities.Class();
         this.goalRelationshipFile = new GoalRelationshipFile();
+        this.markovChainTableCells = new ArrayList<MarkovChainRows>();
     }
     
     public MarkovChain(String markovName, ArrayList<Class> censusClasses, Class selectSurveyClass, int id) {
@@ -45,6 +49,7 @@ public class MarkovChain {
         this.selectSurveyClass = selectSurveyClass;
         this.id = id;
         this.goalRelationshipFile = new GoalRelationshipFile();
+        this.markovChainTableCells = new ArrayList<MarkovChainRows>();
     }
     
     public ArrayList<Traits> getFittingTraits() {
@@ -182,5 +187,49 @@ public class MarkovChain {
 
     public void setTraitPositionClusters(ArrayList<Cluster> traitPositionClusters) {
         this.traitPositionClusters = traitPositionClusters;
+    }
+
+    public ArrayList<MarkovChainRows> getMarkovChainTableCells() {
+        return markovChainTableCells;
+    }
+    
+    @XmlElement(name="genericMarkovTableCells")
+    public ArrayList<ArrayList<Object>> getGenericTableCells(){
+        ArrayList<ArrayList<Object>> genericTableCells = new ArrayList<>();
+        
+        this.markovChainTableCells.stream().forEach((c)-> {genericTableCells.add(c.getGenericTableCells());});
+        
+        return genericTableCells;
+    }
+    
+    public void setMarkovTableCellsFromGeneric(ArrayList<ArrayList<Object>> genericTableCells){
+        ArrayList<MarkovChainRows> newTableCells = new ArrayList<>();
+        
+        genericTableCells.stream().forEach((c)-> {
+            MarkovChainRows mc = new MarkovChainRows();
+            mc.setTableCellsFromGeneric(c);
+            newTableCells.add(mc);});
+        
+        this.markovChainTableCells = newTableCells;
+    }
+
+    public void setMarkovChainTableCells(ArrayList<MarkovChainRows> markovChainTableCells) {
+        this.markovChainTableCells = markovChainTableCells;
+    }
+
+    public int[][] getEmptyCells() {
+        return emptyCells;
+    }
+
+    public void setEmptyCells(int[][] emptyCells) {
+        this.emptyCells = emptyCells;
+    }
+
+    public ArrayList<String> getColumnNames() {
+        return columnNames;
+    }
+
+    public void setColumnNames(ArrayList<String> columnNames) {
+        this.columnNames = columnNames;
     }
 }
