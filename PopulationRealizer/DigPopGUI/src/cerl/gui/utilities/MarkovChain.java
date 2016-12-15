@@ -13,6 +13,13 @@ import javax.xml.bind.annotation.XmlElement;
  * @author ajohnson
  */
 public class MarkovChain {
+    private ArrayList<String> FittingCriteriaColumnNames;
+    private ArrayList<ArrayList<Object>> FittingCriteriaCellValues;
+    private ArrayList<Traits> FittingTraits;
+    private ArrayList<Weights> TraitWeights;
+    private GoalRelationshipFile goalRelationshipFile;
+    private Double traitWeightLocation;
+    
     private String mackovName;
     private ArrayList<cerl.gui.utilities.Class> censusClasses;
     private cerl.gui.utilities.Class selectSurveyClass;
@@ -22,6 +29,7 @@ public class MarkovChain {
     public MarkovChain() {
         this.censusClasses = censusClasses = new ArrayList<cerl.gui.utilities.Class>();
         this.selectSurveyClass = new cerl.gui.utilities.Class();
+        this.goalRelationshipFile = new GoalRelationshipFile();
     }
     
     public MarkovChain(String mackovName, ArrayList<Class> censusClasses, Class selectSurveyClass, int id) {
@@ -29,6 +37,41 @@ public class MarkovChain {
         this.censusClasses = censusClasses;
         this.selectSurveyClass = selectSurveyClass;
         this.id = id;
+        this.goalRelationshipFile = new GoalRelationshipFile();
+    }
+    
+    public ArrayList<Traits> getFittingTraits() {
+        return FittingTraits;
+    }
+
+    public void setFittingTraits(ArrayList<Traits> FittingTraits) {
+     //   this.goalRelationshipFile.setTraits(FittingTraits);
+        this.FittingTraits = FittingTraits;
+    }
+    
+     public ArrayList<Weights> getTraitWeights() {
+        return TraitWeights;
+    }
+
+    public void setTraitWeights(ArrayList<Weights> TraitWeights) {
+        this.TraitWeights = TraitWeights;
+    }
+    
+     public ArrayList<String> getFittingCriteriaColumnNames() {
+        return FittingCriteriaColumnNames;
+    }
+
+    public void setFittingCriteriaColumnNames(ArrayList<String> FittingCriteriaColumnNames) {
+        this.FittingCriteriaColumnNames = FittingCriteriaColumnNames;
+    }
+
+    @XmlElement(name="fittingCriteriaCellValues")
+    public ArrayList<ArrayList<Object>> getFittingCriteriaCellValues() {
+        return FittingCriteriaCellValues;
+    }
+
+    public void setFittingCriteriaCellValues(ArrayList<ArrayList<Object>> FittingCriteriaCellValues) {
+        this.FittingCriteriaCellValues = FittingCriteriaCellValues;
     }
 
     public long getAllCensusTotal() {
@@ -85,5 +128,29 @@ public class MarkovChain {
         });
         
         return userDefinedNames;
+    }
+    
+     public Double getTraitWeightLocation() {
+        return traitWeightLocation;
+    }
+
+    public void setTraitWeightLocation(Double traitWeightLocation) {
+        this.traitWeightLocation = traitWeightLocation;
+    }
+    
+    public void addConstraintMapFilePath(ArrayList<String> constraintMapsFilePaths) {
+        constraintMapsFilePaths.stream().forEach((c) -> {
+            Forbid f = new Forbid();
+            f.setMap(c);
+            this.goalRelationshipFile.setForbid(f);
+        });
+    }
+    
+     public GoalRelationshipFile getGoalRelationshipFile() {
+        return goalRelationshipFile;
+    }
+
+    public void setGoalRelationshipFile(GoalRelationshipFile goalRelationshipFile) {
+        this.goalRelationshipFile = goalRelationshipFile;
     }
 }

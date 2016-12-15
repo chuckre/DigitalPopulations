@@ -18,6 +18,7 @@ import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.FittingCriteriaInformation;
 import cerl.gui.utilities.HelpFileScreenNames;
+import cerl.gui.utilities.MarkovChain;
 import cerl.gui.utilities.Traits;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -46,6 +47,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     private final FileType DEFAULT_NEW_FILE_TYPE = FileType.XML;
     private final DigPopGUIInformation digPopGUIInformation;
     private int currentMarkovChainId;
+    private MarkovChain markovChain;
     
     /**
      * Creates new Step 6 form GenerateTraitClusters
@@ -64,7 +66,11 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
      */
     public GenerateTraitClusters(DigPopGUIInformation digPopGUIInformation, int currentMarkovChainId) {
         this.currentMarkovChainId = currentMarkovChainId;
+        
         this.digPopGUIInformation = digPopGUIInformation;
+        
+        this.markovChain = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(currentMarkovChainId);
+        
         //load table
         myTable = populateTableModel();
         initComponents();
@@ -104,8 +110,8 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 }
             }
         }
-        else if(this.digPopGUIInformation.getFittingTraits() != null){
-            ArrayList<Traits> fitTraits = this.digPopGUIInformation.getFittingTraits();
+        else if(this.markovChain.getFittingTraits() != null){
+            ArrayList<Traits> fitTraits = this.markovChain.getFittingTraits();
             
             for(int r=0; r<fitTraits.size(); r++){
                 cellValues.add(r, new ArrayList<>());
@@ -287,8 +293,8 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         //Trait ID (List with descriptions)
         JComboBox trait = new JComboBox();
         
-        if(this.digPopGUIInformation.getFittingTraits() != null){
-            ArrayList<Traits> fitTraits = this.digPopGUIInformation.getFittingTraits();
+        if(this.markovChain.getFittingTraits() != null){
+            ArrayList<Traits> fitTraits = this.markovChain.getFittingTraits();
             ArrayList<String> comboValues = new ArrayList<>();
             
             for(int i=0;i<fitTraits.size();i++){
@@ -439,8 +445,8 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 FittingCriteriaInformation fitInfo = new FittingCriteriaInformation();
                 
                 fitInfo.setRelationshipFile(fileName);
-                fitInfo.setTraits(this.digPopGUIInformation.getFittingTraits());
-                fitInfo.setWeights(this.digPopGUIInformation.getTraitWeights());
+                fitInfo.setTraits(this.markovChain.getFittingTraits());
+                fitInfo.setWeights(this.markovChain.getTraitWeights());
                 fitInfo.setPositionRules(this.digPopGUIInformation.getTraitPositionClusters());
                 
                 //Need to create the file as empty version of the object

@@ -46,12 +46,10 @@ public class DigPopGUIInformation {
     private Boolean validHouseholdMicroDataFilePath;
     
     //Used in Step 5 - Generate Fitting Criteria File
-    private ArrayList<String> FittingCriteriaColumnNames;
-    private ArrayList<ArrayList<Object>> FittingCriteriaCellValues;
-    private ArrayList<Traits> FittingTraits;
-    private ArrayList<Weights> TraitWeights;
-    private Double traitWeightLocation;
-    private GoalRelationshipFile goalRelationshipFile;
+    
+    
+    
+    
     
     //Used in Step 6 - Generate Trait Clusters
     private ArrayList<ArrayList<Object>> traitClusters;
@@ -66,7 +64,7 @@ public class DigPopGUIInformation {
         this.constraintMapsFilePaths = new ArrayList<>();
         this.censusSurveyClasses = new CensusSurveyClasses();
         this.landUseMapInformation = new LandUseMapInformation();
-        this.goalRelationshipFile = new GoalRelationshipFile();
+       // this.goalRelationshipFile = new GoalRelationshipFile();
     }
 
     public DigPopGUIInformation(String filePath, String createdDate, String lastSaveDate, String landUseMapFilePath, Boolean validLandUseMapFilePath, String householdDensityMapFilePath, Boolean validHouseholdDensityMapFilePath, String regionMapFilePath, Boolean validRegionMapFilePath, String censusEnumerationsFilePath, Boolean validCensusEnumerationsFilePath, ArrayList<String> constraintMapsFilePaths, Boolean validConstraintMapsFilePaths, String populationMicroDataFilePath, Boolean validPopulationMicroDataFilePath, String householdMicroDataFilePath, Boolean validHouseholdMicroDataFilePath, ArrayList<String> FittingCriteriaColumnNames, ArrayList<ArrayList<Object>> FittingCriteriaCellValues, ArrayList<ArrayList<Object>> traitClusters, ArrayList<String> traitList, CensusSurveyClasses censusSurveyClasses, LandUseMapInformation landUseMapInformation) {
@@ -87,8 +85,8 @@ public class DigPopGUIInformation {
         this.validPopulationMicroDataFilePath = validPopulationMicroDataFilePath;
         this.householdMicroDataFilePath = householdMicroDataFilePath;
         this.validHouseholdMicroDataFilePath = validHouseholdMicroDataFilePath;
-        this.FittingCriteriaColumnNames = FittingCriteriaColumnNames;
-        this.FittingCriteriaCellValues = FittingCriteriaCellValues;
+        //this.FittingCriteriaColumnNames = FittingCriteriaColumnNames;
+        //this.FittingCriteriaCellValues = FittingCriteriaCellValues;
         this.traitClusters = traitClusters;
         this.traitList = traitList;
         this.censusSurveyClasses = censusSurveyClasses;
@@ -101,7 +99,7 @@ public class DigPopGUIInformation {
     }
 
     public void setLandUseMapInformation(LandUseMapInformation landUseMapInformation) {
-        this.goalRelationshipFile.setLandUseMapInformation(landUseMapInformation);
+       // this.goalRelationshipFile.setLandUseMapInformation(landUseMapInformation);
         this.landUseMapInformation = landUseMapInformation;
     }
 
@@ -175,9 +173,9 @@ public class DigPopGUIInformation {
     }
 
     public void addConstraintMapFilePath(String path) {
-        Forbid f = new Forbid();
-        f.setMap(path);
-        this.goalRelationshipFile.setForbid(f);
+     //   Forbid f = new Forbid();
+      //  f.setMap(path);
+       // this.goalRelationshipFile.setForbid(f);
 
         this.constraintMapsFilePaths.add(path);
     }
@@ -254,21 +252,7 @@ public class DigPopGUIInformation {
         this.traitList = traitList;
     }
 
-    public ArrayList<String> getFittingCriteriaColumnNames() {
-        return FittingCriteriaColumnNames;
-    }
-
-    public void setFittingCriteriaColumnNames(ArrayList<String> FittingCriteriaColumnNames) {
-        this.FittingCriteriaColumnNames = FittingCriteriaColumnNames;
-    }
-
-    public ArrayList<ArrayList<Object>> getFittingCriteriaCellValues() {
-        return FittingCriteriaCellValues;
-    }
-
-    public void setFittingCriteriaCellValues(ArrayList<ArrayList<Object>> FittingCriteriaCellValues) {
-        this.FittingCriteriaCellValues = FittingCriteriaCellValues;
-    }
+   
     
     public String getCreatedDate() {
         return createdDate;
@@ -294,22 +278,9 @@ public class DigPopGUIInformation {
         this.filePath = filePath;
     }
 
-    public ArrayList<Traits> getFittingTraits() {
-        return FittingTraits;
-    }
+    
 
-    public void setFittingTraits(ArrayList<Traits> FittingTraits) {
-        this.goalRelationshipFile.setTraits(FittingTraits);
-        this.FittingTraits = FittingTraits;
-    }
-
-    public Double getTraitWeightLocation() {
-        return traitWeightLocation;
-    }
-
-    public void setTraitWeightLocation(Double traitWeightLocation) {
-        this.traitWeightLocation = traitWeightLocation;
-    }
+   
 
     public ArrayList<Cluster> getTraitPositionClusters() {
         return traitPositionClusters;
@@ -319,13 +290,7 @@ public class DigPopGUIInformation {
         this.traitPositionClusters = traitPositionClusters;
     }
 
-    public ArrayList<Weights> getTraitWeights() {
-        return TraitWeights;
-    }
-
-    public void setTraitWeights(ArrayList<Weights> TraitWeights) {
-        this.TraitWeights = TraitWeights;
-    }
+   
 
     public RunFile getRunFile() {
         return runFile;
@@ -343,11 +308,5 @@ public class DigPopGUIInformation {
         this.fileDirectory = fileDirectory;
     }
 
-    public GoalRelationshipFile getGoalRelationshipFile() {
-        return goalRelationshipFile;
-    }
-
-    public void setGoalRelationshipFile(GoalRelationshipFile goalRelationshipFile) {
-        this.goalRelationshipFile = goalRelationshipFile;
-    }
+   
 }

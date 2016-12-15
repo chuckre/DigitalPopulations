@@ -43,6 +43,7 @@ public class FittingCriteria extends javax.swing.JFrame {
     private final DigPopGUIInformation digPopGUIInformation;
     private int currentMarkovChainId;
     private String currentMarkovChainName;
+    private MarkovChain markovChain;
     
     /**
      * Creates new Step 5 form FittingCriteria
@@ -66,6 +67,7 @@ public class FittingCriteria extends javax.swing.JFrame {
         //get name of Markov for saving
         MarkovChain mc = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(this.currentMarkovChainId);
         this.currentMarkovChainName = mc.getMackovName();
+        this.markovChain = mc;
         
         //load table
         myTable = populateTableModel();
@@ -76,8 +78,8 @@ public class FittingCriteria extends javax.swing.JFrame {
     private customTableModel populateTableModel(){
         ArrayList<String> columnNames = new ArrayList<>();
         
-        if(this.digPopGUIInformation.getFittingCriteriaColumnNames() != null){
-            columnNames = this.digPopGUIInformation.getFittingCriteriaColumnNames();
+        if(this.markovChain.getFittingCriteriaColumnNames() != null){
+            columnNames = this.markovChain.getFittingCriteriaColumnNames();
         } else{
         //Census Value Names
             columnNames.addAll(Arrays.asList("ID","Census Region Trait"
@@ -85,7 +87,7 @@ public class FittingCriteria extends javax.swing.JFrame {
                     ,"Survey Trait Select","Survey Trait Field"
                     ,"Survey Total Table", "Survey Total Field"
                     , "User Entered Description", "Trait Weight"));
-            this.digPopGUIInformation.setFittingCriteriaColumnNames(columnNames);
+            this.markovChain.setFittingCriteriaColumnNames(columnNames);
         }
         //columns must be rows+1 because the header row is the -1th row.
         ArrayList<ArrayList<Object>> cellValues = new ArrayList<>();
@@ -137,9 +139,9 @@ public class FittingCriteria extends javax.swing.JFrame {
                 }
             }
         }
-        else if(this.digPopGUIInformation.getFittingCriteriaCellValues() != null){
-            cellValues = this.digPopGUIInformation.getFittingCriteriaCellValues();
-        } else { //first time in */
+       */ if(this.markovChain.getFittingCriteriaCellValues() != null){
+            cellValues = this.markovChain.getFittingCriteriaCellValues();
+        } else { //first time in 
             MarkovChain mc = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(this.currentMarkovChainId);
             this.currentMarkovChainName = mc.getMackovName();
             ArrayList<String> censusClasses = mc.getAllSelectedCensusClassesUserDefinedNames();
@@ -211,8 +213,8 @@ public class FittingCriteria extends javax.swing.JFrame {
                 }
             }
             
-            this.digPopGUIInformation.setFittingCriteriaCellValues(cellValues);
-        //}
+            this.markovChain.setFittingCriteriaCellValues(cellValues);
+        }
         //create table with custom MarkovTableModel
         customTableModel myTableModel = new customTableModel(columnNames, cellValues);
         
@@ -430,9 +432,13 @@ public class FittingCriteria extends javax.swing.JFrame {
             theseTraits.add(r, newTrait);
             traitWeights.add(newWeight);
         }
+        this.markovChain.setFittingCriteriaCellValues(myTable.getTableCells());
         
-        this.digPopGUIInformation.setFittingTraits(theseTraits);
-        this.digPopGUIInformation.setTraitWeights(traitWeights);
+        this.markovChain.setFittingTraits(theseTraits);
+        this.markovChain.setTraitWeights(traitWeights);
+        
+        this.markovChain.getGoalRelationshipFile().setLandUseMapInformation(this.digPopGUIInformation.getLandUseMapInformation());
+        this.markovChain.addConstraintMapFilePath(this.digPopGUIInformation.getConstraintMapsFilePaths());
         
         if(this.digPopGUIInformation.getFileDirectory() != null){
             createRelationshipFile();
@@ -464,7 +470,7 @@ public class FittingCriteria extends javax.swing.JFrame {
         if(result.isSuccess()){
             try {
                 //LandUseMapInformation relInfo = this.digPopGUIInformation.getLandUseMapInformation();
-                GoalRelationshipFile goalFile = this.digPopGUIInformation.getGoalRelationshipFile();
+                GoalRelationshipFile goalFile = this.markovChain.getGoalRelationshipFile();
                 
                 //Need to create the file as empty version of the object
                 result = FileUtility.ParseObjectToXML(goalFile, newRelationshipFile.getPath(), goalFile.getClass());
