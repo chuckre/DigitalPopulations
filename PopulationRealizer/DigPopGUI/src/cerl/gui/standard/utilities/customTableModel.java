@@ -150,6 +150,19 @@ public class customTableModel  extends AbstractTableModel {
     public ArrayList<ArrayList<Object>> getTableCells() {
         return tableCells;
     }
+    
+    public ArrayList<ArrayList<customTableCell>> getCustomTableCells() {
+        ArrayList<ArrayList<customTableCell>> val = new ArrayList<>();
+        
+        for(int r=0;r<tableCells.size(); r++){
+            val.add(new ArrayList<>());
+            for(int c=0;c<tableCells.get(r).size(); c++){
+                val.get(r).add((customTableCell)tableCells.get(r).get(c));
+            }
+        }
+        return val;
+        //return tableCells;
+    }
 
     /**
      * Called from the customTableModelListener when the table is changed

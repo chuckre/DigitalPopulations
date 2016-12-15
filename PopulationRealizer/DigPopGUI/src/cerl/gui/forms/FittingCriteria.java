@@ -90,11 +90,11 @@ public class FittingCriteria extends javax.swing.JFrame {
             this.markovChain.setFittingCriteriaColumnNames(columnNames);
         }
         //columns must be rows+1 because the header row is the -1th row.
-        ArrayList<ArrayList<Object>> cellValues = new ArrayList<>();
+        ArrayList<ArrayList<customTableCell>> cellValues = new ArrayList<>();
         
-        /*if(this.digPopGUIInformation.getFittingTraits() != null){
-            ArrayList<Traits> fitTraits = this.digPopGUIInformation.getFittingTraits();
-            ArrayList<Weights> fitWeights = this.digPopGUIInformation.getTraitWeights();
+        if(this.markovChain.getFittingTraits() != null){
+            ArrayList<Traits> fitTraits = this.markovChain.getFittingTraits();
+            ArrayList<Weights> fitWeights = this.markovChain.getTraitWeights();
             
             for(int r=0; r<fitTraits.size(); r++){
                 cellValues.add(r, new ArrayList<>());
@@ -139,9 +139,9 @@ public class FittingCriteria extends javax.swing.JFrame {
                 }
             }
         }
-       */ if(this.markovChain.getFittingCriteriaCellValues() != null){
+       /* if(this.markovChain.getFittingCriteriaCellValues() != null){
             cellValues = this.markovChain.getFittingCriteriaCellValues();
-        } else { //first time in 
+        } */ else { //first time in 
             MarkovChain mc = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(this.currentMarkovChainId);
             this.currentMarkovChainName = mc.getMackovName();
             ArrayList<String> censusClasses = mc.getAllSelectedCensusClassesUserDefinedNames();
@@ -216,8 +216,17 @@ public class FittingCriteria extends javax.swing.JFrame {
             this.markovChain.setFittingCriteriaCellValues(cellValues);
         }
         //create table with custom MarkovTableModel
-        customTableModel myTableModel = new customTableModel(columnNames, cellValues);
+        ArrayList<ArrayList<Object>> val = new ArrayList<>();
         
+        for(int r=0;r<cellValues.size(); r++){
+            val.add(new ArrayList<>());
+            for(int c=0;c<cellValues.get(r).size(); c++){
+                val.get(r).add((Object)cellValues.get(r).get(c));
+            }
+        }
+        
+        //customTableModel myTableModel = new customTableModel(columnNames, cellValues);
+        customTableModel myTableModel = new customTableModel(columnNames, val);
         return myTableModel;
     }
     
@@ -432,7 +441,8 @@ public class FittingCriteria extends javax.swing.JFrame {
             theseTraits.add(r, newTrait);
             traitWeights.add(newWeight);
         }
-        this.markovChain.setFittingCriteriaCellValues(myTable.getTableCells());
+        //this.markovChain.setFittingCriteriaCellValues(myTable.getTableCells());
+        this.markovChain.setFittingCriteriaCellValues(myTable.getCustomTableCells());
         
         this.markovChain.setFittingTraits(theseTraits);
         this.markovChain.setTraitWeights(traitWeights);
