@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -229,6 +230,29 @@ public class FileUtility {
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
             result.setValue(jaxbUnmarshaller.unmarshal(file));
+
+            result.setSuccess(true);
+        } catch (JAXBException ex) {
+            result.setErrorMessage(
+                    "ParseXMLFileIntoSpecifiedObject",
+                    ex.getMessage());
+            result.setSuccess(false);
+        }
+
+        return result;
+    }
+    
+    public static Result ParseXMLFileIntoSpecifiedObjectFromURL(
+            URL url,
+            Class classType) {
+        Result result = new Result();
+
+        try {
+
+            JAXBContext jaxbContext = JAXBContext.newInstance(classType);
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+
+            result.setValue(jaxbUnmarshaller.unmarshal(url));
 
             result.setSuccess(true);
         } catch (JAXBException ex) {

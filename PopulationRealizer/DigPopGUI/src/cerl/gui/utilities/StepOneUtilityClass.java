@@ -10,6 +10,11 @@ import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.ImageUtility;
 import cerl.gui.standard.utilities.Result;
 import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -50,17 +55,27 @@ public class StepOneUtilityClass {
     public final static String HOUSEHOLD_MICRO_DATA_FILE_PATH_ERROR_MESSAGE = 
             "*WARNING HOUSEHOLD MICRO DATA: NEED CSV FILE.";
     
-    private final static String VALID_IMAGE_ICON_FILEPATH = "src/cerl/gui/resources/check.png";
+    public final static String VALID_IMAGE_ICON_FILEPATH = "/cerl/gui/resources/check.png";
     private final static int VALID_IMAGE_ICON_WIDTH = 25;
     private final static int VALID_IMAGE_ICON_HEIGHT = 25;
     
-    private final static String INVALID_IMAGE_ICON_FILEPATH = "src/cerl/gui/resources/stop.png";
+    public final static String INVALID_IMAGE_ICON_FILEPATH = "/cerl/gui/resources/stop.png";
     private final static int INVALID_IMAGE_ICON_WIDTH = 25;
     private final static int INVALID_IMAGE_ICON_HEIGHT = 25;
     
     public static ImageIcon GetValidImageIcon(){
+        
+//        String filePath = "";
+//        try {
+//            filePath = Paths.get(url.toURI()).toFile().getPath();
+//        } catch (URISyntaxException ex) {
+//            Logger.getLogger(StepOneUtilityClass.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
+        URL url = StepOneUtilityClass.class.getResource(StepOneUtilityClass.VALID_IMAGE_ICON_FILEPATH);
+        
         ImageIcon newImageIcon = ImageUtility.CreateSizedImageIconScaledSmooth(
-                VALID_IMAGE_ICON_FILEPATH,
+                url,
                 VALID_IMAGE_ICON_WIDTH,
                 VALID_IMAGE_ICON_HEIGHT);
         
@@ -68,8 +83,18 @@ public class StepOneUtilityClass {
     }
     
     public static ImageIcon GetInValidImageIcon(){
+        
+//        String filePath = "";
+//        try {
+//            filePath = Paths.get(url.toURI()).toFile().getPath();
+//        } catch (URISyntaxException ex) {
+//            Logger.getLogger(StepOneUtilityClass.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        
+        URL url = StepOneUtilityClass.class.getResource(StepOneUtilityClass.INVALID_IMAGE_ICON_FILEPATH);
+        
         ImageIcon newImageIcon = ImageUtility.CreateSizedImageIconScaledSmooth(
-                INVALID_IMAGE_ICON_FILEPATH,
+                url,
                 INVALID_IMAGE_ICON_WIDTH,
                 INVALID_IMAGE_ICON_HEIGHT);
         

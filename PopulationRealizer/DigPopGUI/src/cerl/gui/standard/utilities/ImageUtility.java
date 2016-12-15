@@ -6,6 +6,7 @@
 package cerl.gui.standard.utilities;
 
 import java.awt.Image;
+import java.net.URL;
 import javax.swing.ImageIcon;
 
 /**
@@ -15,7 +16,7 @@ import javax.swing.ImageIcon;
 public class ImageUtility {
     
     public static ImageIcon CreateSizedImageIconScaledSmooth(
-            String filePath, 
+            URL filePath, 
             int width, 
             int height){
         

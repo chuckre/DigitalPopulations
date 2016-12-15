@@ -14,6 +14,7 @@ import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.StepOneInstructionNames;
 import cerl.gui.utilities.StepOneUtilityClass;
 import java.io.File;
+import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
@@ -927,7 +928,13 @@ public class StepOne extends javax.swing.JFrame {
      * Sets the initial warning icons for each field
      */
     private void setIntialWarningIcons() {
+        
+        //URL urlValidPath = getClass().getResource(StepOneUtilityClass.VALID_IMAGE_ICON_FILEPATH);
+        
         jLabel_ProvidedFieldsIcon.setIcon(StepOneUtilityClass.GetValidImageIcon());
+        
+       // URL urlInValidPath = getClass().getResource(StepOneUtilityClass.INVALID_IMAGE_ICON_FILEPATH);
+        
         jLabel_RequiredFieldsIcon.setIcon(StepOneUtilityClass.GetInValidImageIcon());
         
         if(this.digPopGUIInformation.getValidCensusEnumerationsFilePath() != null){
@@ -1213,8 +1220,10 @@ public class StepOne extends javax.swing.JFrame {
         ImageIcon imageIcon;
 
         if (showValidIcon) {
+           // URL urlPath = getClass().getResource(StepOneUtilityClass.VALID_IMAGE_ICON_FILEPATH);
             imageIcon = StepOneUtilityClass.GetValidImageIcon();
         } else {
+         //   URL urlInValidPath = getClass().getResource(StepOneUtilityClass.INVALID_IMAGE_ICON_FILEPATH);
             imageIcon = StepOneUtilityClass.GetInValidImageIcon();
         }
 

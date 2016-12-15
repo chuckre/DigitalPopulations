@@ -19,6 +19,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -36,7 +39,7 @@ import javax.swing.JProgressBar;
  */
 public class DigPopGUIUtilityClass {
 
-    private static final String HELP_FILE_PATH = "./docs/HelpText.xml";
+    private static final String HELP_FILE_PATH = "/cerl/gui/resources/HelpText.xml";
     
     private static final int FIRST_COLUMN_FOR_CENSUS_ENUMERATIONS_FILE = 9;
     private static final int FIRST_COLUMN_FOR_HOUSEHOLD_ENUMERATIONS_FILE = 8;
@@ -44,8 +47,21 @@ public class DigPopGUIUtilityClass {
 
     private static HelpFile getDefaultHelpFile() {
 
-        File helpFileLocation = new File(HELP_FILE_PATH);
-        Result result = FileUtility.ParseXMLFileIntoSpecifiedObject(helpFileLocation.getPath(), HelpFile.class);
+        URL url = DigPopGUIUtilityClass.class.getResource(HELP_FILE_PATH);
+        
+//        String filePath = "";
+//        try {
+//           // filePath = Paths.get(url.toURI()).toFile().getPath();
+//            
+//           filePath = url.toURI().getPath();
+//            
+//           // int b = 0;
+//        } catch (URISyntaxException ex) {
+//            Logger.getLogger(StepOneUtilityClass.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
+        //File helpFileLocation = new File(filePath);
+        Result result = FileUtility.ParseXMLFileIntoSpecifiedObjectFromURL(url, HelpFile.class);
         return (HelpFile) result.getValue();
 
     }
