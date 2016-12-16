@@ -101,8 +101,12 @@ public class DigPopGUIInformation {
     public void setLandUseMapFilePath(String landUseMapFilePath) {
         this.landUseMapFilePath = landUseMapFilePath;
         
-        File file = new File(landUseMapFilePath);
-        this.landUseMapInformation.setMap(file.getName());
+        if(landUseMapFilePath == null || landUseMapFilePath.equals("")){
+            this.landUseMapInformation.setMap("");
+        }else{
+            File file = new File(landUseMapFilePath);
+            this.landUseMapInformation.setMap(file.getName());
+        }
     }
 
     public String getHouseholdDensityMapFilePath() {
