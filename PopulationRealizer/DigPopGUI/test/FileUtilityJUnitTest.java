@@ -14,6 +14,7 @@ import static cerl.gui.utilities.DigPopFileTypeEnum.Household_Micro_Data;
 import static cerl.gui.utilities.DigPopFileTypeEnum.Population_Micro_Data;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.NewCensusColumnDetails;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -53,10 +54,78 @@ public class FileUtilityJUnitTest {
     public void tearDown() {
     }
     
+    
+    @Test 
+    public void newRandomizerTester(){
+        
+        NewCensusColumnDetails test1 = new NewCensusColumnDetails("One", 1, .2, .2, 0.0);
+        NewCensusColumnDetails test12 = new NewCensusColumnDetails("2", 1, .1, .2, 0.0);
+        NewCensusColumnDetails test13 = new NewCensusColumnDetails("3", 1, .02, .05, 0.0);
+        NewCensusColumnDetails test14 = new NewCensusColumnDetails("4", 1, .2, .8, 0.0);
+        NewCensusColumnDetails test15 = new NewCensusColumnDetails("5", 1, .8, .9, 0.0);
+        
+            System.out.println("-----------------");
+        for(int count = 0; count <= 100; count++){
+            
+            double value1= test1.getNewRandomPercentage();
+            double value12= test12.getNewRandomPercentage();
+            double value13= test13.getNewRandomPercentage();
+            double value14= test14.getNewRandomPercentage();
+            double value15= test15.getNewRandomPercentage();
+            
+            boolean true1;
+            boolean true12;
+            boolean true13;
+            boolean true14;
+            boolean true15;
+            
+            if(value1 >= test1.getMin() && value1 <= test1.getMax()){
+                true1 = true;
+            }
+            else{
+                true1 = false;
+            }
+            
+            if(value12 >= test12.getMin() && value12 <= test12.getMax()){
+                true12 = true;
+            }
+            else{
+                true12 = false;
+            }
+            
+            if(value13 >= test13.getMin() && value13 <= test13.getMax()){
+                true13 = true;
+            }
+            else{
+                true13 = false;
+            }
+            
+            if(value14 >= test14.getMin() && value14 <= test14.getMax()){
+                true14 = true;
+            }
+            else{
+                true14 = false;
+            }
+            if(value15 >= test15.getMin() && value15 <= test15.getMax()){
+                true15 = true;
+            }
+            else{
+                true15 = false;
+            }
+            System.out.println(test1.getMin() + "-" + test1.getMax() + " : " + value1 + " ---- " + true1);
+            System.out.println(test12.getMin() + "-" + test12.getMax() + " : " + value12 + " ---- " + true12);
+            System.out.println(test13.getMin() + "-" + test13.getMax() + " : " + value13 + " ---- " + true13);
+            System.out.println(test14.getMin() + "-" + test14.getMax() + " : " + value14 + " ---- " + true14);
+            System.out.println(test15.getMin() + "-" + test15.getMax() + " : " + value15 + " ---- " + true15);
+            
+            System.out.println("-----------------");
+        }
+    }
+    
     @Test 
     public void readInACSFile(){
         try {
-            DigPopGUIUtilityClass.getClassesFromLandUseASCFile("P:\\CERL\\md_sample-data\\md_landuse.asc");
+            DigPopGUIUtilityClass.getClassesFromLandUseASCFile("P:\\CERL\\md_sample-data\\md_population_density.asc");
         } catch (IOException ex) {
             Logger.getLogger(FileUtilityJUnitTest.class.getName()).log(Level.SEVERE, null, ex);
         }

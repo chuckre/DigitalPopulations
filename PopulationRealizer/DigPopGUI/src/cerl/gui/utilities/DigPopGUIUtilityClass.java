@@ -6,6 +6,7 @@
 package cerl.gui.utilities;
 
 import cerl.gui.forms.HelpFileDisplay;
+import cerl.gui.forms.MarkovChainMatrix;
 import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.HelpFile;
 import cerl.gui.standard.utilities.Instruction;
@@ -14,6 +15,7 @@ import static cerl.gui.utilities.DigPopFileTypeEnum.Census_Enumerations;
 import static cerl.gui.utilities.DigPopFileTypeEnum.Household_Micro_Data;
 import static cerl.gui.utilities.DigPopFileTypeEnum.Population_Micro_Data;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -23,8 +25,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -331,4 +336,119 @@ public class DigPopGUIUtilityClass {
         result.setValue(classes);
         return result;
     }
+    
+    public static Result outputNewCensusFile(
+            String oldFilePath,
+            String newFilePath,
+            ArrayList<NewCensusColumnDetails> newDetailsToAdd) throws IOException {
+        
+        Result result = new Result(true);
+        
+        ArrayList<String> outputLines = new ArrayList<>();
+        
+        int counter =1;
+                
+        FileInputStream inputStream = null;
+        
+        Scanner sc = null;
+        try {
+            inputStream = new FileInputStream(oldFilePath);
+            sc = new Scanner(inputStream, "UTF-8");
+            while (sc.hasNextLine()) {
+                String line = sc.nextLine();
+                
+                if(counter == 1){
+                    for(NewCensusColumnDetails newInfo : newDetailsToAdd){
+                        line = line + ", " + newInfo.getNewColumnHeader() + "_" + newInfo.getRandomPercentage() +"%";
+                    }
+                }else {
+                    
+                    String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+                    
+                    for(NewCensusColumnDetails newInfo : newDetailsToAdd){
+                        int oldValue = Integer.parseInt(lineInfo[newInfo.getOldColumnNumber()]);
+                        int newValue = (int) (oldValue * newInfo.getRandomPercentage());
+                        
+                        line = line + ", " + newValue;
+                    }
+                }
+                
+                outputLines.add(line);
+                
+                counter++;
+            }
+            if (sc.ioException() != null) {
+                throw sc.ioException();
+            }
+        } catch (FileNotFoundException ex) {
+            result.setErrorMessage(
+                    "getClassesFromLandUseASCFile",
+                    ex.getMessage());
+            result.setSuccess(false);
+        } catch (IOException ex) {
+            result.setErrorMessage(
+                    "getClassesFromLandUseASCFile",
+                    ex.getMessage());
+            result.setSuccess(false);
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            if (sc != null) {
+                sc.close();
+            }
+        }
+        
+        if(result.isSuccess()){
+            result = FileUtility.WriteNewTextFileFromArrayOfLines(newFilePath, outputLines);
+        }
+        
+        return result;
+    }
+    
+    
+    /**
+     * 
+     * @param markovChains
+     * @param numberOfRuns
+     * @param censusEnumerationFullPath
+     * @param fileDirectory
+     * @param originalFileName
+     * @return 
+     */
+    public static Result CreateNewCensusCSVFiles(
+            ArrayList<MarkovChain> markovChains, 
+            int numberOfRuns, 
+            String censusEnumerationFullPath, 
+            String fileDirectory){
+        
+        Result result = new Result(true);
+        int counter = 1;
+        
+        String onlyFilename = (new File(censusEnumerationFullPath)).getName();
+        
+        while(counter <= numberOfRuns && result.isSuccess()){
+            for(MarkovChain markovChain : markovChains){
+                String newFileName = String.format(
+                        "%s\\%s_Run_%s_%s", 
+                        fileDirectory, 
+                        markovChain.getMarkovName(),
+                        counter,
+                        onlyFilename);
+                try {
+                    result = DigPopGUIUtilityClass.outputNewCensusFile(
+                            censusEnumerationFullPath,
+                            newFileName,
+                            markovChain.getNewCensusColumnDetails());
+                } catch (IOException ex) {
+                    Logger.getLogger(MarkovChainMatrix.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            counter++;
+        }
+        
+        return result;
+
+    }
+    
 }

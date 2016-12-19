@@ -35,12 +35,15 @@ public class MarkovChain {
     private cerl.gui.utilities.Class selectSurveyClass;
     private int id;
     private long allCensusTotal = 0;
+    
+    private ArrayList<NewCensusColumnDetails> newCensusColumnDetails;
 
     public MarkovChain() {
         this.censusClasses = censusClasses = new ArrayList<cerl.gui.utilities.Class>();
         this.selectSurveyClass = new cerl.gui.utilities.Class();
         this.goalRelationshipFile = new GoalRelationshipFile();
         this.markovChainTableCells = new ArrayList<MarkovChainRows>();
+        this.newCensusColumnDetails  = new ArrayList<NewCensusColumnDetails>();
     }
     
     public MarkovChain(String markovName, ArrayList<Class> censusClasses, Class selectSurveyClass, int id) {
@@ -50,6 +53,19 @@ public class MarkovChain {
         this.id = id;
         this.goalRelationshipFile = new GoalRelationshipFile();
         this.markovChainTableCells = new ArrayList<MarkovChainRows>();
+        this.newCensusColumnDetails  = new ArrayList<NewCensusColumnDetails>();
+    }
+
+    public ArrayList<NewCensusColumnDetails> getNewCensusColumnDetails() {
+        return newCensusColumnDetails;
+    }
+
+    public void setNewCensusColumnDetails(ArrayList<NewCensusColumnDetails> newCensusColumnDetails) {
+        this.newCensusColumnDetails = newCensusColumnDetails;
+    }
+    
+    public void addNewCensusColumnDetails(NewCensusColumnDetails newCensusColumnDetail) {
+        this.newCensusColumnDetails.add(newCensusColumnDetail);
     }
     
     public ArrayList<Traits> getFittingTraits() {

@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -175,6 +176,45 @@ public class FileUtility {
 
         return result;
     }
+    
+    
+    public static Result WriteNewTextFileFromArrayOfLines(
+            String newFilePath,
+            ArrayList<String> outputLines) {
+        Result result = new Result();
+
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(newFilePath);
+            
+            for(String line : outputLines){
+                line = line + "\n";//adds a line break at the end of every line
+                byte[] output = line.getBytes();
+                out.write(output);
+            }
+
+            result.setSuccess(true);
+        } catch (FileNotFoundException ex) {
+            result.setErrorMessage("WriteNewTextFile", ex.getMessage());
+            result.setSuccess(false);
+        } catch (IOException ex) {
+            result.setErrorMessage("WriteNewTextFile", ex.getMessage());
+            result.setSuccess(false);
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException ex) {
+                result.setErrorMessage("WriteNewTextFile", ex.getMessage());
+                result.setSuccess(false);
+            }
+        }
+
+        return result;
+    }
+    
+    
     
     public static Result ReadTextFile(
             String filePath) {

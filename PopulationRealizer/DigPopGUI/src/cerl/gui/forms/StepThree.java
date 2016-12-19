@@ -12,6 +12,7 @@ import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.MarkovChain;
+import cerl.gui.utilities.NewCensusColumnDetails;
 import cerl.gui.utilities.Step3MarkovChainTableItemModel;
 import cerl.gui.utilities.SurveyColumnValue;
 import cerl.gui.utilities.SurveyColumnValuesGrouping;

@@ -582,4 +582,12 @@ public class MarkovTableModel extends customTableModel {
             ((MarkovTableCell) (markovTable.get(row).get(col))).setError(false);
         }
     }
+    
+    public double[] getMinMaxObject(int row, int column){
+        double min = ((MarkovTableCell)markovTable.get(row).get(column)).getMin();
+        double max = ((MarkovTableCell)markovTable.get(row).get(column)).getMax();
+        double[] values = new double[]{min, max};
+        
+        return values;
+    }
 }

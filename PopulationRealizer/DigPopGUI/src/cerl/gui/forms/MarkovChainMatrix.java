@@ -17,7 +17,11 @@ import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.MarkovChain;
 import cerl.gui.utilities.MarkovTableCell;
+import cerl.gui.utilities.NewCensusColumnDetails;
 import cerl.gui.utilities.SurveyColumnValuesGrouping;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.TableColumn;
 
 /**
@@ -296,23 +300,23 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel_MarkovName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtMarkovChainName))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton_Clear)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel_ErrorMessages))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(50, 50, 50)
                                 .addComponent(jButton_Back)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton_Cancel)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton_Save))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton_Clear)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel_ErrorMessages)))
-                        .addGap(0, 179, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel_MarkovName)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtMarkovChainName)))
+                                .addComponent(jButton_Save)))
+                        .addGap(0, 179, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -388,12 +392,71 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu_AboutMouseClicked
 
     private void saveToFile(){
+        saveMarkovToCSVFileInformation();
         this.currentMarkovChain.setMarkovName(this.txtMarkovChainName.getText());
         
         //Save to file
         Result    result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(
                     this.digPopGUIInformation,
                     this.digPopGUIInformation.getFilePath());
+    }
+    
+    private void saveMarkovToCSVFileInformation(){
+        
+        /**
+         * Clear out the current NewCensusColumnDetails before saving.
+         */
+        this.currentMarkovChain.setNewCensusColumnDetails(new ArrayList<NewCensusColumnDetails>());
+        
+        ArrayList<NewCensusColumnDetails> newCensusColumnDetails = new ArrayList<>();
+            
+        ArrayList<cerl.gui.utilities.Class> censusClasses = this.currentMarkovChain.getCensusClasses();
+        List<SurveyColumnValuesGrouping> surveyGroupings =  this.currentMarkovChain.getSelectSurveyClass().getSurveyColumnValuesGroupings();
+
+        /**
+         * These will be used to find the min and max values stored in the grid. 
+         */
+        int rowToStartAt = 1;
+        int endRow = rowToStartAt + (surveyGroupings.size() - 1);
+        int columnToStartAt = 2;
+        int endColumn = columnToStartAt + (censusClasses.size() - 1);
+
+        int currentColumnNumber = columnToStartAt;
+
+        for(int censusCounter = 0; censusCounter < censusClasses.size(); censusCounter++){
+
+            cerl.gui.utilities.Class censusClass = censusClasses.get(censusCounter);
+            currentColumnNumber += censusCounter;
+
+            for(int surveyCounter = 0; surveyCounter < surveyGroupings.size(); surveyCounter++){
+
+                SurveyColumnValuesGrouping surveyGrouping = surveyGroupings.get(surveyCounter);
+
+                NewCensusColumnDetails details = new NewCensusColumnDetails();
+
+                //column number in original csv file
+                details.setOldColumnNumber(censusClass.getColumnNumber());
+
+                double[] minMaxValues = this.myTable.getMinMaxObject(rowToStartAt + surveyCounter, currentColumnNumber);
+
+                //set min and max numbers
+                details.setMin(minMaxValues[0]);
+                details.setMax(minMaxValues[1]);
+                details.calculateNewRandomPercentage();
+
+                //New column header that will appear in the new csv file
+                details.setNewColumnHeader(censusClass.toString() + "_" + surveyGrouping.toString());
+
+                newCensusColumnDetails.add(details);
+            }
+        }
+        
+        /**
+         * Add the new NewCensusColumnDetails to the current MarkovChain object
+         */
+        this.currentMarkovChain.setNewCensusColumnDetails(newCensusColumnDetails);
+            
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
