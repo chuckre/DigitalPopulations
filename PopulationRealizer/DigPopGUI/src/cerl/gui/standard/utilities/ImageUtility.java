@@ -10,11 +10,17 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 /**
- *
+ * The utility used for resizing images in the DigPop GUI
  * @author ajohnson
  */
 public class ImageUtility {
-    
+    /**
+     * Scales the provided image to the new height/width
+     * @param filePath - The image to resize
+     * @param width - The new width to scale to
+     * @param height - The new height to scale to
+     * @return ImageIcon - the newly resized image
+     */
     public static ImageIcon CreateSizedImageIconScaledSmooth(
             URL filePath, 
             int width, 

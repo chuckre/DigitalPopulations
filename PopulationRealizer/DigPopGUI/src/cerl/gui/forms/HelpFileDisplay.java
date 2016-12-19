@@ -16,7 +16,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
 /**
- *
+ * The Help Information display used throughout the DigPop GUI for the Help menus and contextual help.
  * @author ajohnson
  */
 public class HelpFileDisplay extends javax.swing.JFrame {
@@ -25,8 +25,8 @@ public class HelpFileDisplay extends javax.swing.JFrame {
 
     /**
      * Creates new form HelpFileDisplay
-     * @param defaultSelected
-     * @param helpFile
+     * @param defaultSelected - the default Help File
+     * @param helpFile - The specifically selected Help File
      */
     public HelpFileDisplay(Object defaultSelected, HelpFile helpFile) {
         
@@ -126,6 +126,10 @@ public class HelpFileDisplay extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Updates the displayed information when a user selects a new item in the display tree on the left hand side.
+     * @param evt 
+     */
     private void treeHelpFileSelectValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_treeHelpFileSelectValueChanged
         
         DefaultMutableTreeNode node = (DefaultMutableTreeNode)
@@ -153,6 +157,10 @@ public class HelpFileDisplay extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_treeHelpFileSelectValueChanged
 
+    /**
+     * Allows a user to print the currently displayed information
+     * @param evt 
+     */
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         try {
             txtDisplay.print();
@@ -161,11 +169,18 @@ public class HelpFileDisplay extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
     
+    /**
+     * Loads the navigation tree
+     */
     private void LoadTree()
     {
         treeHelpFileSelect.setModel(helpFile.getAsDefaultTreeModel());
     }
     
+    /**
+     * Sets the currently selected node in the tree
+     * @param selectedNodeObject 
+     */
     private void setSelected(Object selectedNodeObject)
     {
         TreePath path = getTreePath(selectedNodeObject);
@@ -173,6 +188,11 @@ public class HelpFileDisplay extends javax.swing.JFrame {
         treeHelpFileSelect.setSelectionPath(path);
     }
     
+    /**
+     * Gets the path of the currently selected item in the tree
+     * @param selectedNodeObject - The current node that is selected
+     * @return TreePath - the path of the currently selected TreeNode
+     */
     private TreePath getTreePath(Object selectedNodeObject) {
         DefaultMutableTreeNode node = null;
         Enumeration e = helpFile.getRoot().breadthFirstEnumeration();

@@ -21,18 +21,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingWorker;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
- *
+ * Step 3 of the DigPop GUI
+ * Allows the user to select the census and survey information to use in a Markov Chain
+ * Users can create multiple Markov Chains
  * @author ajohnson
  */
 public class StepThree extends javax.swing.JFrame {
@@ -63,7 +61,11 @@ public class StepThree extends javax.swing.JFrame {
     
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_THREE_HELP_FILE_NAME.toString();
     
-    
+    /**
+     * Initializes a new Step 3 from the current DigPop run
+     * Allows users to select the census and survey data to use in their Markov
+     * @param digPopGUIInformation 
+     */
     public StepThree(DigPopGUIInformation digPopGUIInformation) {
         this.digPopGUIInformation = digPopGUIInformation;
         this.step3MarkovChainTableItemModel = new Step3MarkovChainTableItemModel(this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChains());
@@ -85,13 +87,6 @@ public class StepThree extends javax.swing.JFrame {
             }
         });
         
-//        jTableListOfAllMarkovChains.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-//            public void valueChanged(ListSelectionEvent event) {
-//                // do some actions here, for example
-//                // print first column value from selected row
-//                System.out.println(jTableListOfAllMarkovChains.getValueAt(jTableListOfAllMarkovChains.getSelectedRow(), 0).toString());
-//            }
-//        });
     }
 
     /**
@@ -463,6 +458,10 @@ public class StepThree extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Handles adding a new census class, moves from available to selected
+     * @param evt 
+     */
     private void btnAddCensusClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCensusClassActionPerformed
 
         List<cerl.gui.utilities.Class> selected = censusAllList.getSelectedValuesList();
@@ -475,6 +474,11 @@ public class StepThree extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnAddCensusClassActionPerformed
 
+    /**
+     * Removes a selected census class from the selected list
+     * Moves it back to available
+     * @param evt 
+     */
     private void btnRemoveCensusClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveCensusClassActionPerformed
 
         List<cerl.gui.utilities.Class> selected = censusSelectedList.getSelectedValuesList();
@@ -487,6 +491,10 @@ public class StepThree extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnRemoveCensusClassActionPerformed
 
+    /**
+     * Opens the window for users to enter custom descriptions for selected census data
+     * @param evt 
+     */
     private void btnEditSelectedCensusDataDescriptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditSelectedCensusDataDescriptionsActionPerformed
         CensusClassUserDefinitions censusClassUserDefinitionsForm = new CensusClassUserDefinitions(this);
         censusClassUserDefinitionsForm.setVisible(true);
@@ -496,10 +504,18 @@ public class StepThree extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnEditSelectedCensusDataDescriptionsActionPerformed
 
+    /**
+     * Handles opening the window
+     * @param evt 
+     */
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         
     }//GEN-LAST:event_formWindowOpened
 
+    /**
+     * Opens the screen for users to add/edit survey groups
+     * @param evt 
+     */
     private void btnSurveyDataGroupsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSurveyDataGroupsActionPerformed
         
         SwingWorker<Void,Void> worker = new SwingWorker<Void,Void>()
@@ -550,12 +566,20 @@ public class StepThree extends javax.swing.JFrame {
         this.setAlwaysOnTop(false);
     }//GEN-LAST:event_btnSurveyDataGroupsActionPerformed
 
+    /**
+     * Handles the about menu, opens the About pop-up
+     * @param evt 
+     */
     private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
         About about = new About();
         about.setVisible(true);
         about.setLocationRelativeTo(this);
     }//GEN-LAST:event_jMenu3MouseClicked
 
+    /**
+     * Saves the current information and takes the user back to Step 2
+     * @param evt 
+     */
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
         saveToFile();
         
@@ -566,6 +590,10 @@ public class StepThree extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 
+    /**
+     * Saves the current step and takes the user to Step 7
+     * @param evt 
+     */
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
         saveToFile();
         
@@ -576,11 +604,19 @@ public class StepThree extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed
 
+    /**
+     * Clears the currently selected survey information
+     * @param evt 
+     */
     private void btnClearSurveyDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearSurveyDataActionPerformed
         clearSurveyListData();
         updateSurveyGroupsListModel();
     }//GEN-LAST:event_btnClearSurveyDataActionPerformed
 
+    /**
+     * Creates a new Markov Chain from the selected census and survey information
+     * @param evt 
+     */
     private void btnCreateNewMarkovChainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateNewMarkovChainActionPerformed
         if(this.newSurveyGroupingsHaveAllBeenCreated && this.censusSelectedListModel.getSize() > 0){
             saveNewMarkovChain();
@@ -600,10 +636,19 @@ public class StepThree extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnCreateNewMarkovChainActionPerformed
 
+    /**
+     * Handles the help menu, opens Help information for the current screen
+     * @param evt 
+     */
     private void jMenuHelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuHelpMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
     }//GEN-LAST:event_jMenuHelpMouseClicked
 
+    /**
+     * When a user double clicks on a Markov Chain in the list, 
+     * allows the user to open or delete the selected Markov Chain
+     * @param markovChain 
+     */
     public void openOrDeleteExistingMarkov(MarkovChain markovChain){
         Object[] options = {
                         "Open",
@@ -638,12 +683,17 @@ public class StepThree extends javax.swing.JFrame {
                     
     }
     
-    
+    /**
+     * Clears the current survey list data
+     */
     private void clearSurveyListData(){
         surveyAllList.clearSelection();
         selectSurveyClass.setSurveyColumnValuesGroupings(new ArrayList<SurveyColumnValuesGrouping>());
     }
     
+    /**
+     * Updates the current survey groups in the saved model
+     */
     public void updateSurveyGroupsListModel(){
         this.newSurveyGroupingsHaveAllBeenCreated = true;
         surveyGroupsListModel.removeAllElements();
@@ -652,6 +702,9 @@ public class StepThree extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Updates the selected census items in the saved model
+     */
     public void updateCensusSelectedListModel(){
         censusSelectedListModel.removeAllElements();
         censusSurveyClasses.getCensusClasses().stream().forEach((c) -> {
@@ -661,6 +714,9 @@ public class StepThree extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Loads the census and survey data
+     */
     private void loadForm(){
         censusSurveyClasses.getCensusClasses().stream().forEach((c) -> {
             
@@ -715,6 +771,9 @@ public class StepThree extends javax.swing.JFrame {
         pack();
     }
     
+    /**
+     * Loads the census and survey information from the saved DigPop run
+     */
     private void loadCensusSurveyClasses(){
         if(this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChains().size() > 0){
             this.censusSurveyClasses = this.digPopGUIInformation.getCensusSurveyClasses();
@@ -728,6 +787,10 @@ public class StepThree extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Saves a newly created Markov Chain
+     * @return Result Object containing if it successfully saved
+     */
     private Result saveNewMarkovChain(){
         ArrayList<cerl.gui.utilities.Class> selectedCensusClasses = new ArrayList<cerl.gui.utilities.Class> ();
         
@@ -740,31 +803,12 @@ public class StepThree extends javax.swing.JFrame {
         if(result.isSuccess()){
             selectedCensusClasses = (ArrayList<cerl.gui.utilities.Class>)result.getValue();
             String newName = txtNewMarkovChainName.getText();
-            
-            //ArrayList<SurveyColumnValuesGrouping> clonedEditedSurveyColumnValuesGroupings = new ArrayList<SurveyColumnValuesGrouping>();
-            
-//            /**
-//            * Creates a clean deep clone of the census classes. 
-//            * This will be used for when the user hits cancel.
-//            */
-//           this.selectSurveyClass.getSurveyColumnValuesGroupings().stream().forEach((c) -> {
-//               try {
-//                   clonedEditedSurveyColumnValuesGroupings.add(c.clone());
-//               } catch (CloneNotSupportedException ex) {
-//                   Logger.getLogger(CensusClassUserDefinitions.class.getName()).log(Level.SEVERE, null, ex);
-//               }
-//           });
-
-
-
-          
-           
+                       
             cerl.gui.utilities.Class savedSelectSurveyClass = new cerl.gui.utilities.Class();
             
             savedSelectSurveyClass.setClassName(this.selectSurveyClass.getClassName());
             savedSelectSurveyClass.setColumnNumber(this.selectSurveyClass.getColumnNumber());
             savedSelectSurveyClass.setUserDefinedDescription(this.selectSurveyClass.getUserDefinedDescription());
-            
             
             ArrayList<SurveyColumnValuesGrouping> copy = new ArrayList<>(this.selectSurveyClass.getSurveyColumnValuesGroupings());
             
@@ -776,21 +820,13 @@ public class StepThree extends javax.swing.JFrame {
                 clonedEditedSurveyColumnValuesGroupings.add(clone);
             }
             
-            
-            
-            
             savedSelectSurveyClass.setSurveyColumnValuesGroupings(clonedEditedSurveyColumnValuesGroupings);
-            
             
             int newId = this.censusSurveyClasses.getMarkovChains().size() + 1;
             
             MarkovChain markovChain = new MarkovChain(newName, selectedCensusClasses, savedSelectSurveyClass, newId);
             this.censusSurveyClasses.addMarkovChains(markovChain);
-
             this.digPopGUIInformation.setCensusSurveyClasses(this.censusSurveyClasses);
-
-            
-            
             this.currentMarkovChainIdToShow = markovChain.getId();
             
             saveToFile();
@@ -798,7 +834,10 @@ public class StepThree extends javax.swing.JFrame {
         
         return result;
     }
-    
+
+    /**
+     * Saves the current information to the DigPop run object
+     */
     private void saveToFile(){
         //Save to file
         Result    result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(

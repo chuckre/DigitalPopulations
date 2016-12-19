@@ -21,7 +21,8 @@ import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
 
 /**
- *
+ * Creates a new Step 7 for the DigPop GUI
+ * Allows user to set up the last-run.properties file
  * @author ajohnson
  */
 public class StepSeven extends javax.swing.JFrame {
@@ -1177,90 +1178,178 @@ public class StepSeven extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Provides the contextual help for the Name of Run field
+     * @param evt 
+     */
     private void nameOfRunInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nameOfRunInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Name_Of_Run.toString());
     }//GEN-LAST:event_nameOfRunInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Phase 1 Results Log field
+     * @param evt 
+     */
     private void Phase1ResultsLogInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phase1ResultsLogInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase1_Log_Results.toString());
     }//GEN-LAST:event_Phase1ResultsLogInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Log Quality field
+     * @param evt 
+     */
     private void LogQualityInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogQualityInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Log_Quality_Evaluation.toString());
     }//GEN-LAST:event_LogQualityInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Phase 2 Skip Tracts field
+     * @param evt 
+     */
     private void Phase2SkipTractsInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phase2SkipTractsInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase2_Skip_Tracts.toString());
     }//GEN-LAST:event_Phase2SkipTractsInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Phase 2 Random Percent field
+     * @param evt 
+     */
     private void Phase2RandomPercentInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phase2RandomPercentInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase2_Random_Placement.toString());
     }//GEN-LAST:event_Phase2RandomPercentInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Phase 1 Time Limit Field
+     * @param evt 
+     */
     private void Phase1TimeLimitInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phase1TimeLimitInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase1_Time_Limit.toString());
     }//GEN-LAST:event_Phase1TimeLimitInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Parallel Threads field
+     * @param evt 
+     */
     private void ParallelThreadsInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ParallelThreadsInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Parallel_Threads.toString());
     }//GEN-LAST:event_ParallelThreadsInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Output Directory field
+     * @param evt 
+     */
     private void OutputDirectoryInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OutputDirectoryInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Output_Directory.toString());
     }//GEN-LAST:event_OutputDirectoryInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the First Census Tract field
+     * @param evt 
+     */
     private void FirstCensusTractInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FirstCensusTractInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.First_Census_Tract.toString());
     }//GEN-LAST:event_FirstCensusTractInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Random Number Seed field
+     * @param evt 
+     */
     private void randomNumberSeedInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_randomNumberSeedInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Random_Number_Seed.toString());
     }//GEN-LAST:event_randomNumberSeedInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Final Realization Index field
+     * @param evt 
+     */
     private void FinalRealizationIndexInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FinalRealizationIndexInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Final_Realization_Index.toString());
     }//GEN-LAST:event_FinalRealizationIndexInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the First Realization Index field
+     * @param evt 
+     */
     private void FirstRealizationIndexInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FirstRealizationIndexInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.First_Realization_Index.toString());
     }//GEN-LAST:event_FirstRealizationIndexInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Population Archetype field
+     * @param evt 
+     */
     private void PopulationAchetypeInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PopulationAchetypeInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Population_archetype.toString());
     }//GEN-LAST:event_PopulationAchetypeInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Household Archetype field
+     * @param evt 
+     */
     private void HouseholdArchetypeInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HouseholdArchetypeInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Household_archetype.toString());
     }//GEN-LAST:event_HouseholdArchetypeInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Phase 2 Skipped Probability field
+     * @param evt 
+     */
     private void Phase2SkippedProbabilityInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phase2SkippedProbabilityInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase2_Skip_Tracts_Probability.toString());
     }//GEN-LAST:event_Phase2SkippedProbabilityInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Phase 4 Lags field
+     * @param evt 
+     */
     private void phase4LagsInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_phase4LagsInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase4_Lags.toString());
     }//GEN-LAST:event_phase4LagsInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Save Phase 4 field
+     * @param evt 
+     */
     private void Phase4SaveInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phase4SaveInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase4_Save.toString());
     }//GEN-LAST:event_Phase4SaveInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Skip Phase 4 field
+     * @param evt 
+     */
     private void SkipPhase4InfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SkipPhase4InfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase4_Skip.toString());
     }//GEN-LAST:event_SkipPhase4InfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Phase 4 Time Limit field
+     * @param evt 
+     */
     private void Phase4TimeLimitInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phase4TimeLimitInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase4_Time_Limit.toString());
     }//GEN-LAST:event_Phase4TimeLimitInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Save Phase 3/4 field
+     * @param evt 
+     */
     private void Phase34SaveInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Phase34SaveInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase34_Save_Interval.toString());
     }//GEN-LAST:event_Phase34SaveInfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Skip Phase 3 field
+     * @param evt 
+     */
     private void SkipPhase3InfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SkipPhase3InfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase3_Skip.toString());
     }//GEN-LAST:event_SkipPhase3InfoIconMouseClicked
 
+    /**
+     * Provides the contextual help for the Phase 3 Time Limit Field
+     * @param evt 
+     */
     private void phase3TimeLimitInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_phase3TimeLimitInfoIconMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepSevenInstructionNames.Phase3_Time_Limit.toString());
     }//GEN-LAST:event_phase3TimeLimitInfoIconMouseClicked
@@ -1428,6 +1517,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_SaveActionPerformed
 
+    /**
+     * Handles the change of the Log Phase 1 Results field
+     * @param evt 
+     */
     private void jComboBox_LogPhase1ResultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_LogPhase1ResultsActionPerformed
         if(jComboBox_LogPhase1Results.getSelectedIndex() > 0){
             this.RunProperties.setDo_dump_number_archtypes(returnTrueFalseValue(jComboBox_LogPhase1Results));
@@ -1437,6 +1530,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jComboBox_LogPhase1ResultsActionPerformed
 
+    /**
+     * Handles the change of the Log Quality field
+     * @param evt 
+     */
     private void jComboBox_LogQualityEvalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_LogQualityEvalActionPerformed
         if(jComboBox_LogQualityEval.getSelectedIndex() > 0){
             this.RunProperties.setDo_dump_statistics(returnTrueFalseValue(jComboBox_LogQualityEval));
@@ -1446,6 +1543,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jComboBox_LogQualityEvalActionPerformed
 
+    /**
+     * Handles the change of the Household Archetype field
+     * @param evt 
+     */
     private void jComboBox_HouseholdArchetypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_HouseholdArchetypeActionPerformed
         if(jComboBox_HouseholdArchetype.getSelectedIndex() > 0){
             this.RunProperties.setDo_write_all_hoh_fields(returnTrueFalseValue(jComboBox_HouseholdArchetype));
@@ -1455,6 +1556,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jComboBox_HouseholdArchetypeActionPerformed
 
+    /**
+     * Handles the change of the Population Archetype field
+     * @param evt 
+     */
     private void jComboBox_PopulationArchetypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_PopulationArchetypeActionPerformed
         if(jComboBox_PopulationArchetype.getSelectedIndex() > 0){
             this.RunProperties.setDo_write_all_pop_fields(returnTrueFalseValue(jComboBox_PopulationArchetype));
@@ -1464,6 +1569,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jComboBox_PopulationArchetypeActionPerformed
 
+    /**
+     * Handles the change of the First Census Tract field
+     * @param evt 
+     */
     private void jComboBox_FirstCensusTractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_FirstCensusTractActionPerformed
         //Use only the first census tract
         if(jComboBox_FirstCensusTract.getSelectedIndex() > 0){
@@ -1474,6 +1583,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jComboBox_FirstCensusTractActionPerformed
 
+    /**
+     * Handles the change of the Skip Phase 3 field
+     * @param evt 
+     */
     private void jComboBox_Phase3SkipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Phase3SkipActionPerformed
         if(jComboBox_Phase3Skip.getSelectedIndex() > 0){
             this.RunProperties.setPhase3_skip(returnTrueFalseValue(jComboBox_Phase3Skip));
@@ -1483,6 +1596,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jComboBox_Phase3SkipActionPerformed
 
+    /**
+     * Handles the change of the Save Phase 4 Field
+     * @param evt 
+     */
     private void jComboBox_Phase4SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Phase4SaveActionPerformed
         if(jComboBox_Phase4Save.getSelectedIndex() > 0){
             this.RunProperties.setPhase4_save_both_ends(returnTrueFalseValue(jComboBox_Phase4Save));
@@ -1492,6 +1609,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jComboBox_Phase4SaveActionPerformed
 
+    /**
+     * Handles the change of the Skip Phase 4 field
+     * @param evt 
+     */
     private void jComboBox_Phase4SkipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Phase4SkipActionPerformed
         if(jComboBox_Phase4Skip.getSelectedIndex() > 0){
             this.RunProperties.setPhase4_skip(returnTrueFalseValue(jComboBox_Phase4Skip));
@@ -1501,20 +1622,36 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jComboBox_Phase4SkipActionPerformed
 
+    /**
+     * Handles the About menu item, displays the About pop-up
+     * @param evt 
+     */
     private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
         new About().setVisible(true);
     }//GEN-LAST:event_jMenu_AboutMouseClicked
 
+    /**
+     * Handles the help menu, displays the information for the current screen
+     * @param evt 
+     */
     private void jMenu_HelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_HelpMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
     }//GEN-LAST:event_jMenu_HelpMouseClicked
 
+    /**
+     * Handles the previous button click, saves information and opens Step 3
+     * @param evt 
+     */
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
         //new GenerateTraitClusters(this.digPopGUIInformation).setVisible(true);
         new StepThree(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
     
+    /**
+     * Handles the change of the First Realization Index field
+     * @param evt 
+     */
     private void jTextField_FirstRealizationIndexFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_FirstRealizationIndexFocusLost
         String value = jTextField_FirstRealizationIndex.getText();
         
@@ -1535,6 +1672,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField_FirstRealizationIndexFocusLost
 
+    /**
+     * Handles the change of the Phase 1 Time Limit Field
+     * @param evt 
+     */
     private void jTextField_Phase1TimeLimitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase1TimeLimitFocusLost
         String value = jTextField_Phase1TimeLimit.getText();
         if(Validations.validateAndReturnDouble(value)){
@@ -1555,10 +1696,18 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField_Phase1TimeLimitFocusLost
 
+    /**
+     * Handles the change of the Name of Run field
+     * @param evt 
+     */
     private void jTextField_NameOfRunFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_NameOfRunFocusLost
         this.RunProperties.setRunName(jTextField_NameOfRun.getText());
     }//GEN-LAST:event_jTextField_NameOfRunFocusLost
 
+    /**
+     * Handles the change of the Random Number Seed field
+     * @param evt 
+     */
     private void jTextField_RandomNumberSeedFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_RandomNumberSeedFocusLost
         String value = jTextField_RandomNumberSeed.getText();
         
@@ -1572,6 +1721,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField_RandomNumberSeedFocusLost
 
+    /**
+     * Handles the change of the Final Realization Index field
+     * @param evt 
+     */
     private void jTextField_FinalRealizationIndexFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_FinalRealizationIndexFocusLost
         String value = jTextField_FinalRealizationIndex.getText();
         
@@ -1592,10 +1745,18 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField_FinalRealizationIndexFocusLost
 
+    /**
+     * Handles the change of the Output directory field
+     * @param evt 
+     */
     private void jTextField_OutputDirectoryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_OutputDirectoryFocusLost
         this.RunProperties.setOutput_dir(jTextField_OutputDirectory.getText());
     }//GEN-LAST:event_jTextField_OutputDirectoryFocusLost
 
+    /**
+     * Handles the change of the Parallel Threads field
+     * @param evt 
+     */
     private void jTextField_ParallelThreadsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_ParallelThreadsFocusLost
         String value = jTextField_ParallelThreads.getText();
         
@@ -1616,6 +1777,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField_ParallelThreadsFocusLost
 
+    /**
+     * Handles the change of the Phase 2 Random Placement field
+     * @param evt 
+     */
     private void jTextField_Phase2RandomPlacementFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase2RandomPlacementFocusLost
         String value = jTextField_Phase2RandomPlacement.getText();
         if(Validations.validateAndReturnDouble(value)){
@@ -1628,6 +1793,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField_Phase2RandomPlacementFocusLost
 
+    /**
+     * Handles the change of the Phase 2 Skip Tracts Delta field
+     * @param evt 
+     */
     private void jTextField_Phase2SkipTractsDeltaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase2SkipTractsDeltaFocusLost
         String value = jTextField_Phase2SkipTractsDelta.getText();
         
@@ -1641,6 +1810,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField_Phase2SkipTractsDeltaFocusLost
 
+    /**
+     * Handles the change of the Phase 2 Skip Tracts Probability field
+     * @param evt 
+     */
     private void jTextField_Phase2SkipTractsProbFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase2SkipTractsProbFocusLost
         String value = jTextField_Phase2SkipTractsProb.getText();
         
@@ -1654,6 +1827,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField_Phase2SkipTractsProbFocusLost
 
+    /**
+     * Handles the change of the Save Phase 3/4 Field
+     * @param evt 
+     */
     private void jTextField_Phase34SaveIntervalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase34SaveIntervalFocusLost
         String value = jTextField_Phase34SaveInterval.getText();
         
@@ -1667,6 +1844,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField_Phase34SaveIntervalFocusLost
 
+    /**
+     * Handles the change of the Phase 3 Time Limit field
+     * @param evt 
+     */
     private void jTextField_Phase3TimeLimitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase3TimeLimitFocusLost
         String value = jTextField_Phase3TimeLimit.getText();
         
@@ -1680,6 +1861,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField_Phase3TimeLimitFocusLost
 
+    /**
+     * Handles the change of the Phase 4 Lags field
+     * @param evt 
+     */
     private void jTextField_Phase4_LagsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase4_LagsFocusLost
         String value = jTextField_Phase4_Lags.getText();
         
@@ -1700,6 +1885,10 @@ public class StepSeven extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField_Phase4_LagsFocusLost
 
+    /**
+     * Handles the change of the Phase 4 Time Limit field
+     * @param evt 
+     */
     private void jTextField_Phase4TimeLimitFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_Phase4TimeLimitFocusLost
         String value = jTextField_Phase4TimeLimit.getText();
         

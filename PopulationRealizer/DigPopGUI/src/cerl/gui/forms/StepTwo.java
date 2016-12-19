@@ -21,15 +21,14 @@ import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * The second step in the DigPop GUI
  * @author ajohnson
  */
 public class StepTwo extends javax.swing.JFrame {
     
-    private DefaultTableModel constraintMapsDataModel;
-    private ArrayList<String> errors;
+    private final ArrayList<String> errors;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_TWO_HELP_FILE_NAME.toString();
-    private LandUseCombinationTableItemModel landUseCombinationTableItemModel;
+    private final LandUseCombinationTableItemModel landUseCombinationTableItemModel;
     private final DigPopGUIInformation digPopGUIInformation;
     
     private Result landUseLoadClassesResult = new Result();
@@ -42,7 +41,7 @@ public class StepTwo extends javax.swing.JFrame {
         this.landUseCombinationTableItemModel = new LandUseCombinationTableItemModel(this.digPopGUIInformation.getLandUseMapInformation().getLandUseMapClassCombinations());
         initComponents();
         
-        errors = new ArrayList<String>();
+        errors = new ArrayList<>();
         pack();
     }
     
@@ -55,7 +54,7 @@ public class StepTwo extends javax.swing.JFrame {
         this.landUseCombinationTableItemModel = new LandUseCombinationTableItemModel(this.digPopGUIInformation.getLandUseMapInformation().getLandUseMapClassCombinations());
         
         initComponents();
-        errors = new ArrayList<String>();
+        errors = new ArrayList<>();
         populateDataFieldsFromFile();
         pack();
     }
@@ -524,14 +523,26 @@ public class StepTwo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Handles about menu item, opens About pop-up
+     * @param evt 
+     */
     private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
         new About().setVisible(true);
     }//GEN-LAST:event_jMenu_AboutMouseClicked
 
+    /**
+     * Handles help menu item, opens the Help information for the current screen
+     * @param evt 
+     */
     private void menuHelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuHelpMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
     }//GEN-LAST:event_menuHelpMouseClicked
 
+    /**
+     * Saves the data, and takes the user back to Step 1
+     * @param evt 
+     */
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
         save();
         
@@ -539,6 +550,10 @@ public class StepTwo extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 
+    /**
+     * Saves the data and takes the user to Step 3
+     * @param evt 
+     */
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
         save();
         
@@ -546,10 +561,14 @@ public class StepTwo extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed
 
+    /**
+     * Handles the custom adding of a new land use combo class
+     * @param evt 
+     */
     private void btnLandUseAddCombinationClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLandUseAddCombinationClassActionPerformed
 
         if(this.digPopGUIInformation.getLandUseMapInformation().getAllClasses() == null
-                || this.digPopGUIInformation.getLandUseMapInformation().getAllClasses().size() == 0 ){
+                || this.digPopGUIInformation.getLandUseMapInformation().getAllClasses().isEmpty() ){
             SwingWorker<Void,Void> worker = new SwingWorker<Void,Void>()
             {
                 @Override
@@ -643,12 +662,19 @@ public class StepTwo extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Adds a new constraint map
+     * @param value 
+     */
     private void AddItemToConstaintMapTable(String value){
         DefaultTableModel model = (DefaultTableModel)tblConstraintMaps1.getModel();
         Object[] obj = {value};
         model.addRow(obj);
     }
     
+    /**
+     * Updates the error messages
+     */
     private void setErrorMessage()
     {
         String errorMessageText = "<html>";
@@ -713,6 +739,9 @@ public class StepTwo extends javax.swing.JFrame {
         pack();
     }
     
+    /**
+     * Updates the list of combination classes for land use maps
+     */
     public void UpdateLandUseClassCombinationTable(){
         if(this.digPopGUIInformation.getLandUseMapInformation().getLandUseMapClassCombinations().size()>0){
             this.landUseCombinationTableItemModel.fireTableDataChanged();
@@ -720,6 +749,9 @@ public class StepTwo extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Saves the information provided
+     */
     private void save(){
         VacantClass vacant = new VacantClass(this.txtVacantClassDescription.getText(), this.txtVacantClasses.getText());
         this.digPopGUIInformation.getLandUseMapInformation().setVacantClasses(vacant);
@@ -728,6 +760,9 @@ public class StepTwo extends javax.swing.JFrame {
         saveToFile();
     }
     
+    /**
+     * Saves the information to the DigPop object
+     */
     private void saveToFile(){
         //Save to file
         Result    result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(

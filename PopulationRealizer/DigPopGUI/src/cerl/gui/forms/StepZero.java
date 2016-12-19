@@ -654,8 +654,6 @@ public class StepZero extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jMenu_ExitMenuActionPerformed
 
-    
-    
     /**
      * @param args the command line arguments
      */

@@ -63,6 +63,8 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     
     /**
      * Creates new Step 6 form GenerateTraitClusters with existing data
+     * @param digPopGUIInformation - the object holding all information for this run
+     * @param currentMarkovChainId - the unique ID of the selected Markov chain
      */
     public GenerateTraitClusters(DigPopGUIInformation digPopGUIInformation, int currentMarkovChainId) {
         this.currentMarkovChainId = currentMarkovChainId;
@@ -78,6 +80,10 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         setupCustomTable();
     }
 
+    /**
+     * Populates the custom table with data
+     * @return 
+     */
     private customTableModel populateTableModel(){
         ArrayList<String> columnNames = new ArrayList<>();
         //Census Value Names
@@ -370,14 +376,26 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton_NewClusterActionPerformed
 
+    /**
+     * Handles the Help Menu Item selection, displays information for the current screen
+     * @param evt 
+     */
     private void jMenu_HelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_HelpMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
     }//GEN-LAST:event_jMenu_HelpMouseClicked
 
+    /**
+     * Handles the About menu item selection, displays the About pop-up
+     * @param evt 
+     */
     private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
         new About().setVisible(true);
     }//GEN-LAST:event_jMenu_AboutMouseClicked
 
+    /**
+     * Handles the Next button selection, saves information and moves to Step 3
+     * @param evt 
+     */
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
         saveData();
         createFittingCriteriaFile();
@@ -385,12 +403,19 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed
 
+    /**
+     * Handles the Previous button selection, saves the information and moves to the Fitting Criteria step.
+     * @param evt 
+     */
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
         saveData();
         new FittingCriteria(this.digPopGUIInformation, this.currentMarkovChainId).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 
+    /**
+     * Saves the data entered on the page to the currently selected Markov chain
+     */
     private void saveData(){
         ArrayList<Cluster> clusters = new ArrayList<>();
         ArrayList<ArrayList<Object>> cells = myTable.getTableCells();
@@ -515,6 +540,9 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     private javax.swing.JTable jTable_TraitInformation;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Sets up the current custom table with the new table model
+     */
     private void setupCustomTable() {
         //sets up columns with new renderer, and clear buttons for the rows/columns
         for(int i=0; i<myTable.getColumnCount(); i++){

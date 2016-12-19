@@ -20,7 +20,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 /**
- *
+ * The class to manage file types and file manipulation within the DigPop GUI
  * @author ajohnson
  */
 public class FileUtility {
@@ -58,6 +58,14 @@ public class FileUtility {
         return result;
     }
 
+    /**
+     * Verifies that another file with the same name/directory exists with the new expected type
+     * Used to check if the matching .prj file exists for an .asc file in the same folder
+     * 
+     * @param orginalFile - The file who's match needs to exist in the same folder
+     * @param secondaryExpectedFileType - The matching type to look for
+     * @return Result - with success/failure of test
+     */
     public static Result VerifySecondaryFileExists(
             File orginalFile,
             FileType secondaryExpectedFileType) {
@@ -88,15 +96,21 @@ public class FileUtility {
         return result;
     }
     
+    /**
+     * Checks that a file name exists, not just a blank extension
+     * @param fileNameWithExtension - The full name of the file with extension
+     * @param pathSeparator - The separator used for the paths
+     * @return 
+     */
     private static Result getFileNameNoExtension(
             String fileNameWithExtension,
-            char pathSeperator){
+            char pathSeparator){
         
         Result result = new Result();
         
         String foundFileNameNoExtension = "";
         
-        int seperatorIndex = fileNameWithExtension.lastIndexOf(pathSeperator);
+        int seperatorIndex = fileNameWithExtension.lastIndexOf(pathSeparator);
         
         if (seperatorIndex > -1) {
             foundFileNameNoExtension = fileNameWithExtension.substring(0, seperatorIndex);
@@ -113,13 +127,19 @@ public class FileUtility {
         return result;
     }
 
+    /**
+     * Gets the file name of a current file name with extension
+     * @param fileNameWithExtension - The full file name including the extension
+     * @param pathSeparator - The character used to separate paths
+     * @return Result - Result of the check
+     */
     public static Result getFileExtension(
             String fileNameWithExtension,
-            char pathSeperator) {
+            char pathSeparator) {
         Result result = new Result();
         String finalFoundFileExtension = "";
 
-        int seperatorIndex = fileNameWithExtension.lastIndexOf(pathSeperator);
+        int seperatorIndex = fileNameWithExtension.lastIndexOf(pathSeparator);
 
         if (seperatorIndex > -1) {
             seperatorIndex++;
@@ -176,6 +196,11 @@ public class FileUtility {
         return result;
     }
     
+    /**
+     * Reads a text file
+     * @param filePath - the file to read
+     * @return Result - holds the value with the file contents if successful
+     */
     public static Result ReadTextFile(
             String filePath) {
         Result result = new Result();
@@ -273,6 +298,13 @@ public class FileUtility {
         return result;
     }
     
+    /**
+     * Parses an object into an XML File
+     * @param objectToParseIntoXML - The object to save as XML
+     * @param filePath - The path to save the file into
+     * @param classType - The class type of object provided
+     * @return Result - if successful or failed parsing into XML
+     */
     public static Result ParseObjectToXML(
             Object objectToParseIntoXML, 
             String filePath,
@@ -300,6 +332,13 @@ public class FileUtility {
         return result;
     }
     
+    /**
+     * Create a String name for a file based on the type of file and timestamp
+     * @param addCurrentDateTime - Current timestamp
+     * @param starterName - The beginning of the file name to use
+     * @param type - The DigPop File Type to create
+     * @return String as date_starterName.type
+     */
     public static String createNewFileName(Boolean addCurrentDateTime, String starterName, FileType type){
         String result = "";
         
@@ -315,6 +354,11 @@ public class FileUtility {
         return result;
     }
     
+    /**
+     * Creates a copy of the provided file
+     * @param file - the File to copy
+     * @return String of the new file path
+     */
     public static String createNewValidCopyOfFileName(File file){
         String newPath = null;
         

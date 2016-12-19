@@ -909,6 +909,9 @@ public class StepOne extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Clears the land use/household density map textbox
+     */
     private void clearExistingLandUseHouseholdDensityInfo(){
         
         txtLandUseHouseholdMap.setText("");

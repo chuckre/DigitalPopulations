@@ -15,7 +15,8 @@ import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 
 /**
- *
+ * Called from Step 3
+ * Allows the user to provide descriptive names for census classes
  * @author ajohnson
  */
 public class CensusClassUserDefinitions extends javax.swing.JFrame {
@@ -79,7 +80,7 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel_Header = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -98,9 +99,9 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Enter User Defined Description for Each Class");
+        jLabel_Header.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel_Header.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_Header.setText("Enter User Defined Description for Each Class");
 
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -124,7 +125,7 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel_Header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -135,7 +136,7 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabel1)
+                .addComponent(jLabel_Header)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -186,32 +187,53 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Closes the window, cancels updates, and returns to step 3.
+     * @param evt 
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         
         closeAndDisposeReturnToStepThree(true);
     }//GEN-LAST:event_formWindowClosing
 
+    /**
+     * Saves the current information and returns to step 3
+     * @param evt 
+     */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         
         closeAndDisposeReturnToStepThree(false);
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    /**
+     * Cancels the current changes and returns to step 3
+     * @param evt 
+     */
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
 
         closeAndDisposeReturnToStepThree(true);
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    /**
+     * Handles the Help menu item click, opens information about this step
+     * @param evt 
+     */
     private void jMenuHelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuHelpMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
     }//GEN-LAST:event_jMenuHelpMouseClicked
 
+    /**
+     * Handles the About menu item click, opens the About pop-up window
+     * @param evt 
+     */
     private void jMenuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAboutMouseClicked
         new About().setVisible(true);
     }//GEN-LAST:event_jMenuAboutMouseClicked
 
     /**
-     * Closes the window 
-     * and updates the parents parent step's censusSurveyClasses object.
+     * Closes the window and updates the parent step's censusSureyClasses object
+     * @param cancelOnWindowClose - true if the user opted to cancel their changes
+     *          , false if changes should be saved.
      */
     private void closeAndDisposeReturnToStepThree(boolean cancelOnWindowClose){
         if(cancelOnWindowClose){
@@ -226,7 +248,7 @@ public class CensusClassUserDefinitions extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnSave;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel_Header;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenuAbout;
     private javax.swing.JMenuBar jMenuBar1;

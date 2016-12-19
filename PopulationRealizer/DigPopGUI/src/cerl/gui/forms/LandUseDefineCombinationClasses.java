@@ -13,21 +13,21 @@ import java.util.ArrayList;
 import javax.swing.JList;
 
 /**
- *
+ * Allows the user to define custom land use combination classes
  * @author ajohnson
  */
 public class LandUseDefineCombinationClasses extends javax.swing.JFrame {
 
     private JList allClassesList;
-    private StepTwo parentStep;
+    private final StepTwo parentStep;
     private final DigPopGUIInformation digPopGUIInformation;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_TWO_HELP_FILE_NAME.toString();
     
     
     /**
      * Creates new form LandUseDefineCombinationClasses
-     * @param classes
-     * @param parentStepTwo
+     * @param digPopGUIInformation - the current DigPop object for the current run
+     * @param parentStep - The source instance of Step Two
      */
     public LandUseDefineCombinationClasses(DigPopGUIInformation digPopGUIInformation, StepTwo parentStep) {
         this.digPopGUIInformation = digPopGUIInformation;
@@ -198,6 +198,10 @@ public class LandUseDefineCombinationClasses extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Saves the information entered to the DigPop object, Land Use Map Information
+     * @param evt 
+     */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         
         LandUseMapClassCombination landUseMapClassCombination = new LandUseMapClassCombination(
@@ -213,6 +217,10 @@ public class LandUseDefineCombinationClasses extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    /**
+     * Updates the land use class table and closes the current window
+     * @param evt 
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         this.parentStep.UpdateLandUseClassCombinationTable();
         this.parentStep.setVisible(true);
@@ -220,6 +228,10 @@ public class LandUseDefineCombinationClasses extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
+    /**
+     * Cancels the changes made on the page, and returns to the main step
+     * @param evt 
+     */
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.parentStep.UpdateLandUseClassCombinationTable();
         this.parentStep.setVisible(true);
@@ -227,10 +239,18 @@ public class LandUseDefineCombinationClasses extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    /**
+     * Handles the help menu, displays information for the current screen
+     * @param evt 
+     */
     private void jMenuHelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuHelpMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
     }//GEN-LAST:event_jMenuHelpMouseClicked
 
+    /**
+     * Handles the about menu, displays the About pop-up
+     * @param evt 
+     */
     private void jMenuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAboutMouseClicked
         new About().setVisible(true);
     }//GEN-LAST:event_jMenuAboutMouseClicked
