@@ -42,6 +42,14 @@
             <helpText>The file provided in Step 1, the population table where each row describes one individual.</helpText>
         </instruction>
         <instruction>
+            <instructionName>Region Map</instructionName>
+            <helpText>The file provided in Step 1, this raster map provides the location of the regions or tracts that Digital Populations will populate.  This is the finest resolution that DigPop can work with -- a region is selected based on statistical analysis, but the location of a household within a region is random.  Coordinate system must be planar (i.e. UTM).  DigPop does not understand coordinate systems, so distance calculations will not be correct in other systems.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Constraint Map</instructionName>
+            <helpText>The file provided in Step 1, specifies areas where households with a specific value are NOT allowed, by explicitly disallowing the placement of certain households into certain map cells.  To use the constraint map, users must specify the map, then specify the household trait and value from the microdata that links to corresponding raster value on the map.  For example, houses with grid electricity would only be placed where a raster map of grid power has a specific raster value corresponding to access to electricity. For example, urban/rural regions, regions with/without electric </helpText>
+        </instruction>
+        <instruction>
             <instructionName>Household File</instructionName>
             <helpText>The file provided in Step 1, the household table provides a Unique ID Field that identifies the specific house each person lives in.  Records without household ID values will be ignored.</helpText>
         </instruction>

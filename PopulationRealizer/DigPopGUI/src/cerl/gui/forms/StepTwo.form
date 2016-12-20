@@ -226,13 +226,17 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Component id="lblCensusEnumerations" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtCensusEnumerations" max="32767" attributes="0"/>
+                              <Component id="censusEnumerationsInfoIcon" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtCensusEnumerations" pref="589" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Component id="lblRegionMap" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="regionMapInfoIcon" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txtRegionMap" max="32767" attributes="0"/>
                           </Group>
@@ -245,14 +249,20 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtRegionMap" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblRegionMap" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txtRegionMap" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblRegionMap" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="regionMapInfoIcon" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtCensusEnumerations" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblCensusEnumerations" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txtCensusEnumerations" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblCensusEnumerations" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="censusEnumerationsInfoIcon" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="13" max="32767" attributes="0"/>
                   </Group>
@@ -280,6 +290,30 @@
                 <Property name="text" type="java.lang.String" value="Selected Census Enumerations:"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JLabel" name="censusEnumerationsInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Region Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="censusEnumerationsInfoIconMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="regionMapInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Region Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="regionMapInfoIconMouseClicked"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanelHouseholdDensityMap">
@@ -296,20 +330,25 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="txtHouseholdDensityMap" pref="606" max="32767" attributes="0"/>
+                      <Component id="lblHouseholdDensityMap" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="householdDensityMapInfoIcon" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="txtHouseholdDensityMap" pref="580" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtHouseholdDensityMap" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="householdDensityMapInfoIcon" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txtHouseholdDensityMap" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblHouseholdDensityMap" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -322,10 +361,22 @@
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel1">
+            <Component class="javax.swing.JLabel" name="lblHouseholdDensityMap">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Selected Household Density Map:"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="householdDensityMapInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Region Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="householdDensityMapInfoIconMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -348,7 +399,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblHouseholdMicroData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtHouseholdMicroData" max="32767" attributes="0"/>
+                      <Component id="householdMicroDataInfoIcon" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="txtHouseholdMicroData" pref="588" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -357,9 +410,12 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblHouseholdMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtHouseholdMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="householdMicroDataInfoIcon" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblHouseholdMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtHouseholdMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -376,6 +432,18 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Selected Household Micro-data:"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="householdMicroDataInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Region Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="householdMicroDataInfoIconMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -398,7 +466,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblPopulationMicroData" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtPopulationMicroData" max="32767" attributes="0"/>
+                      <Component id="populationMicroDataInfoIcon" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="txtPopulationMicroData" pref="588" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -407,9 +477,12 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtPopulationMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblPopulationMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="populationMicroDataInfoIcon" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txtPopulationMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblPopulationMicroData" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -426,6 +499,18 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Selected Population Micro-data:"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="populationMicroDataInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Region Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="populationMicroDataInfoIconMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -449,31 +534,41 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane1" alignment="1" pref="770" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="lblConstraintMap" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblLanduseMap" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="landuseMapInfoIcon" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txtLandUseHouseholdMap" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="btnLandUseAddCombinationClass" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="landuseMapCombinationClassesInfoIcon" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
+                                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="landuseMapCommentInfoIcon" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="txtLandUseComment" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="landuseMapVacentClassesDescriptionInfoIcon" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="txtVacantClassDescription" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtVacantClasses" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                      <Component id="landuseMapVacentClassesInfoIcon" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtLandUseComment" max="32767" attributes="0"/>
+                                      <Component id="txtVacantClasses" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -486,27 +581,44 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblConstraintMap" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtLandUseHouseholdMap" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="lblLanduseMap" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtLandUseHouseholdMap" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="landuseMapInfoIcon" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtLandUseComment" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="landuseMapCommentInfoIcon" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtVacantClasses" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="landuseMapVacentClassesInfoIcon" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtVacantClassDescription" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="landuseMapVacentClassesDescriptionInfoIcon" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtLandUseComment" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="btnLandUseAddCombinationClass" min="-2" max="-2" attributes="0"/>
+                          <Component id="landuseMapCombinationClassesInfoIcon" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtVacantClasses" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtVacantClassDescription" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnLandUseAddCombinationClass" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="100" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -515,7 +627,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="lblConstraintMap">
+            <Component class="javax.swing.JLabel" name="lblLanduseMap">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Selected Land Use Map:"/>
               </Properties>
@@ -567,6 +679,66 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtLandUseComment">
             </Component>
+            <Component class="javax.swing.JLabel" name="landuseMapInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Region Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="landuseMapInfoIconMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="landuseMapCommentInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Region Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="landuseMapCommentInfoIconMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="landuseMapVacentClassesInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Region Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="landuseMapVacentClassesInfoIconMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="landuseMapVacentClassesDescriptionInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Region Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="landuseMapVacentClassesDescriptionInfoIconMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="landuseMapCombinationClassesInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Region Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="landuseMapCombinationClassesInfoIconMouseClicked"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanelConstraintMap">
@@ -589,8 +761,10 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jScrollPane3" alignment="1" pref="770" max="32767" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="lblConstraintMap1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="lblConstraintMap" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="constraintMapInfoIcon" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="615" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -601,7 +775,10 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblConstraintMap1" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lblConstraintMap" min="-2" max="-2" attributes="0"/>
+                          <Component id="constraintMapInfoIcon" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane3" pref="87" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -610,7 +787,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="lblConstraintMap1">
+            <Component class="javax.swing.JLabel" name="lblConstraintMap">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Selected Constraint Maps :"/>
               </Properties>
@@ -636,6 +813,18 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JLabel" name="constraintMapInfoIcon">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/cerl/gui/resources/info.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Help Infomation for Region Map"/>
+                <Property name="iconTextGap" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="constraintMapInfoIconMouseClicked"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>
