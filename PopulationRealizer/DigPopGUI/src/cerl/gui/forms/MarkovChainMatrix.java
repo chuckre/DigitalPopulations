@@ -19,9 +19,6 @@ import cerl.gui.utilities.MarkovChain;
 import cerl.gui.utilities.MarkovTableCell;
 import cerl.gui.utilities.NewCensusColumnDetails;
 import cerl.gui.utilities.SurveyColumnValuesGrouping;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.TableColumn;
 
 /**
@@ -423,8 +420,8 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
      * Saves the current Markov Chain to the DigPop object
      */
     private void saveToFile(){
-        saveMarkovToCSVFileInformation();
         this.currentMarkovChain.setMarkovName(this.txtMarkovChainName.getText());
+        saveMarkovToCSVFileInformation();
         
         //Save to file
         Result    result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(
@@ -432,6 +429,11 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
                     this.digPopGUIInformation.getFilePath());
     }
     
+    /**
+     * Saves the Markov Chain details to the NewCensusColumnDetails Array List. 
+     * This information is used to create the new Census Enumeration CSV file
+     * after the user selects the number of runs to be ran.
+     */
     private void saveMarkovToCSVFileInformation(){
         
         /**
@@ -446,13 +448,12 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
 
         /**
          * These will be used to find the min and max values stored in the grid. 
+         * 
+         * Row data starts at index 1.
+         * Column data starts at index 2.
          */
         int rowToStartAt = 1;
-        int endRow = rowToStartAt + (surveyGroupings.size() - 1);
-        int columnToStartAt = 2;
-        int endColumn = columnToStartAt + (censusClasses.size() - 1);
-
-        int currentColumnNumber = columnToStartAt;
+        int currentColumnNumber = 2;
 
         for(int censusCounter = 0; censusCounter < censusClasses.size(); censusCounter++){
 
@@ -487,7 +488,6 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
          */
         this.currentMarkovChain.setNewCensusColumnDetails(newCensusColumnDetails);
             
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -26,7 +26,10 @@ import javax.xml.bind.Unmarshaller;
  */
 public class FileUtility {
 
-    private static final char DEFAULT_PATH_SEPERATOR = '.';
+    /**
+     * Default path separator.
+     */
+    private static final char DEFAULT_PATH_SEPARATOR = '.';
 
     /**
      * Verifies that the sent in file matches the sent in File Type.
@@ -43,7 +46,7 @@ public class FileUtility {
         
         boolean validFileType = false;
         
-        result = getFileExtension(file.getName(), DEFAULT_PATH_SEPERATOR);
+        result = getFileExtension(file.getName(), DEFAULT_PATH_SEPARATOR);
 
         if (result.isSuccess()) {
             String foundFileType = (String) result.getValue();
@@ -75,7 +78,7 @@ public class FileUtility {
 
         result = getFileNameNoExtension(
                 orginalFile.getName(),
-                DEFAULT_PATH_SEPERATOR);
+                DEFAULT_PATH_SEPARATOR);
 
         if (result.isSuccess()) {
             String fileNameWithoutExtension;
@@ -86,7 +89,7 @@ public class FileUtility {
                     = String.format("%s\\%s%s%s",
                             fileLocation,
                             fileNameWithoutExtension,
-                            DEFAULT_PATH_SEPERATOR,
+                            DEFAULT_PATH_SEPARATOR,
                             secondaryExpectedFileType.toString());
 
             File newToVerifyFile = new File(toVerifyPath);
@@ -198,9 +201,10 @@ public class FileUtility {
     }
     
     /**
-     * 
-     * @param newFilePath
-     * @param outputLines
+     * Creates the new file based on the newFilePath. The Array List of strings
+     * is added to the new file line by. 
+     * @param newFilePath New file path to be created.
+     * @param outputLines Array List of Strings to be added to the new file. 
      * @return 
      */
     public static Result WriteNewTextFileFromArrayOfLines(
@@ -220,10 +224,10 @@ public class FileUtility {
 
             result.setSuccess(true);
         } catch (FileNotFoundException ex) {
-            result.setErrorMessage("WriteNewTextFile", ex.getMessage());
+            result.setErrorMessage("WriteNewTextFileFromArrayOfLines", ex.getMessage());
             result.setSuccess(false);
         } catch (IOException ex) {
-            result.setErrorMessage("WriteNewTextFile", ex.getMessage());
+            result.setErrorMessage("WriteNewTextFileFromArrayOfLines", ex.getMessage());
             result.setSuccess(false);
         } finally {
             try {
@@ -231,7 +235,7 @@ public class FileUtility {
                     out.close();
                 }
             } catch (IOException ex) {
-                result.setErrorMessage("WriteNewTextFile", ex.getMessage());
+                result.setErrorMessage("WriteNewTextFileFromArrayOfLines", ex.getMessage());
                 result.setSuccess(false);
             }
         }

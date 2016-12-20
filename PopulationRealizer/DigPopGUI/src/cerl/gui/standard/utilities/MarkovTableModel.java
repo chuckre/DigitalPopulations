@@ -158,22 +158,6 @@ public class MarkovTableModel extends customTableModel {
             return markovTable; //invalid cells for this purpose
         }
         
-        /*//EVENTUALLY USE TO GENERATE THE CSV FILE
-        int numStates = columns.size();
-        int currentState = numStates - 1;
-
-        while (currentState > 0) {
-            double r = Math.random();
-            double sum = 0.0;
-
-            for (int j = 0; j < numStates; j++) {
-                sum += new Double(markovTable[currentState][j].toString());
-                if (r <= sum) {
-                    currentState = j;
-                    break;
-                }
-            }
-        }*/
         return markovTable;
     }
     
@@ -597,6 +581,12 @@ public class MarkovTableModel extends customTableModel {
         }
     }
     
+    /**
+     * Finds the Min and Max values at a given Row/Column combination.
+     * @param row The given row index
+     * @param column The given column index
+     * @return 
+     */
     public double[] getMinMaxObject(int row, int column){
         double min = ((MarkovTableCell)markovTable.get(row).get(column)).getMin();
         double max = ((MarkovTableCell)markovTable.get(row).get(column)).getMax();

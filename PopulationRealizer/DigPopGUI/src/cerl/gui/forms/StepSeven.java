@@ -1515,13 +1515,18 @@ public class StepSeven extends javax.swing.JFrame {
             this.jLabel_Errors.setText("The Run file was saved");
             
             //Now that the save file is valid we create the new census csv files.
-            DigPopGUIUtilityClass.CreateNewCensusCSVFiles(
+            result = DigPopGUIUtilityClass.CreateNewCensusCSVFiles(
                     this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChains(),
                     this.RunProperties.getParallel_threads(),
                     this.digPopGUIInformation.getCensusEnumerationsFilePath(),
                     this.digPopGUIInformation.getFileDirectory());
             
-            this.jLabel_Errors.setText("The Run file was saved and new Census csv files are greated.");
+            if(result.isSuccess()){
+                this.jLabel_Errors.setText("The Run file was saved and new Census csv files are greated.");
+            }else
+            {
+                this.jLabel_Errors.setText(result.getErrorMessage());
+            }
             
             pack();
         }

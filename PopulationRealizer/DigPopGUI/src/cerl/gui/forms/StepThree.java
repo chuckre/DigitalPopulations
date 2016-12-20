@@ -12,7 +12,6 @@ import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.MarkovChain;
-import cerl.gui.utilities.NewCensusColumnDetails;
 import cerl.gui.utilities.Step3MarkovChainTableItemModel;
 import cerl.gui.utilities.SurveyColumnValue;
 import cerl.gui.utilities.SurveyColumnValuesGrouping;
@@ -77,6 +76,11 @@ public class StepThree extends javax.swing.JFrame {
         
         loadForm();
         
+        /**
+         * Mouse Listener for the MarkovChains display table.
+         * The user can double click a MarkovChain from the table 
+         * and will be given the option to view or delete.  
+         */
         jTableListOfAllMarkovChains.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent me) {
                 if (me.getClickCount() == 2) {
