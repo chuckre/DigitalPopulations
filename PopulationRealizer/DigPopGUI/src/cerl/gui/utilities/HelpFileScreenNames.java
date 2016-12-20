@@ -6,7 +6,7 @@
 package cerl.gui.utilities;
 
 /**
- *
+ * Maintains the list of screen names used for pulling Help Information
  * @author ajohnson
  */
 public enum HelpFileScreenNames {
@@ -20,11 +20,19 @@ public enum HelpFileScreenNames {
     
     private String screenName = ""; 
     
+    /**
+     * Sets the help file's screen name
+     * @param name - the new screen name
+     */
     private HelpFileScreenNames(String name)
     {
         this.screenName = name;
     }
 
+    /**
+     * Gets the screen name of the current help file
+     * @return - the screen name
+     */
     @Override
     public String toString() {
         return screenName;

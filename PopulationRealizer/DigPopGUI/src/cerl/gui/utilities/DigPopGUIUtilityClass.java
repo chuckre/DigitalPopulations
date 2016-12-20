@@ -63,7 +63,7 @@ public class DigPopGUIUtilityClass {
 
     /**
      * Loads the default help file GUI by the specified screen name.
-     * @param screenName 
+     * @param screenName - the screen to load the help for
      */
     public static void loadDefaultHelpGUIByScreenName(String screenName) {
         HelpFile newHelpFile = getDefaultHelpFile();
@@ -71,9 +71,9 @@ public class DigPopGUIUtilityClass {
     }
 
     /**
-     *
-     * @param screenName
-     * @param instructionName
+     * Loads the Help Screen for a specific item on a screen
+     * @param screenName - the screen to view help for
+     * @param instructionName - the specific item to view help for
      */
     public static void loadDefaultHelpGUIByScreenInstructionName(String screenName, String instructionName) {
         HelpFile newHelpFile = getDefaultHelpFile();
@@ -86,9 +86,9 @@ public class DigPopGUIUtilityClass {
     }
 
     /**
-     *
-     * @param information
-     * @param path
+     * Saves the DigPop Object 
+     * @param information - the current DigPop object
+     * @param path - the FilePath where the file should be saved
      * @return
      */
     public static Result saveDigPopGUIInformationSaveFile(
@@ -103,8 +103,8 @@ public class DigPopGUIUtilityClass {
     }
 
     /**
-     *
-     * @param path
+     * Reads the DigPop Object from the save file
+     * @param path - the file path of the DigPop object to load
      * @return
      */
     public static Result readInDigPopGUIInformationSaveFile(String path) {
@@ -114,10 +114,10 @@ public class DigPopGUIUtilityClass {
     }
 
     /**
-     *
-     * @param censusEnumerationsFilePath
-     * @param populationMicroDataFilePath
-     * @param householdMicroDataFilePath
+     * Gets the census and survey classes that were already loaded in a previous run
+     * @param censusEnumerationsFilePath - the file path of the census enumerations .csv file
+     * @param populationMicroDataFilePath - the file path of the population microdata .csv file
+     * @param householdMicroDataFilePath - the file path of the household microdata .csv file
      * @return
      */
     public static Result getLoadedCensusSurveyClasses(
@@ -161,9 +161,9 @@ public class DigPopGUIUtilityClass {
     }
 
     /**
-     * 
-     * @param filePath
-     * @param digPopFileType
+     * Gets the census or survey class names from the .csv file
+     * @param filePath - the file path of the .csv file to read
+     * @param digPopFileType - the DigPop type, either Census_Enumerations, Population_Micro_Data or Household_Micro_Data
      * @return 
      */
     public static Result getClassNamesFromCSVFile(
@@ -207,11 +207,11 @@ public class DigPopGUIUtilityClass {
     }
 
     /**
-     * 
-     * @param filePath
-     * @param columnIndent
-     * @param digPopFileType
-     * @return 
+     * Reads the census classes from the .csv file
+     * @param filePath - the file path of the file to read in
+     * @param columnIndent - the number of columns to ignore at the front of the file
+     * @param digPopFileType - the type of DigPop File Type provided
+     * @return the found classes
      */
     private static Result readClassNamesFromFirstLine(
             String filePath,
@@ -254,10 +254,10 @@ public class DigPopGUIUtilityClass {
     }
 
     /**
-     * 
-     * @param filePath
-     * @param columnNumber
-     * @return 
+     * Gets the survey data column values from the .csv file
+     * @param filePath - the path of the file to read
+     * @param columnNumber - the number of columns to ignore at the start of the file
+     * @return the found column values
      */
     public static Result getSurveyDataColumnValues(String filePath, int columnNumber) {
         Result result = new Result();
@@ -302,10 +302,10 @@ public class DigPopGUIUtilityClass {
     }
 
     /**
-     * 
-     * @param filePath
-     * @param censusClasses
-     * @return 
+     * Gets the values of the selected census classes and adds them to the column total
+     * @param filePath - the file path for the census enumerations .csv file
+     * @param censusClasses - the selected classes
+     * @return the selected values from the selected census columns
      */
     public static Result getSelectedCensusColumnValues(String filePath, List<Class> censusClasses) {
         Result result = new Result();
@@ -341,10 +341,10 @@ public class DigPopGUIUtilityClass {
     }
 
     /**
-     * 
-     * @param filePath
-     * @return
-     * @throws IOException 
+     * Gets the classes from the land use .asc file
+     * @param filePath - the file path of the land use .asc file
+     * @return - the classes in the land use file
+     * @throws IOException if the file is not found, or classes are not found
      */
     public static Result getClassesFromLandUseASCFile(
             String filePath) throws IOException {
@@ -401,12 +401,12 @@ public class DigPopGUIUtilityClass {
     }
 
     /**
-     * 
-     * @param oldFilePath
-     * @param newFilePath
-     * @param newDetailsToAdd
-     * @return
-     * @throws IOException 
+     * Create a new census enumeration file
+     * @param oldFilePath - the original census enumeration file's path
+     * @param newFilePath - the path for the new census enumeration file
+     * @param newDetailsToAdd - the ArrayList for each of the new columns and related values to add
+     * @return success or failure
+     * @throws IOException If can't find file or can't write to file
      */
     public static Result outputNewCensusFile(
             String oldFilePath,
@@ -478,12 +478,12 @@ public class DigPopGUIUtilityClass {
     }
 
     /**
-     *
-     * @param markovChains
-     * @param numberOfRuns
-     * @param censusEnumerationFullPath
-     * @param fileDirectory
-     * @return
+     * Creates a new census .csv file
+     * @param markovChains - the list of all Markov Chains created
+     * @param numberOfRuns - the number of runs from the Run File step
+     * @param censusEnumerationFullPath - the filepath of the census enumeration file
+     * @param fileDirectory - the directory where all files for this run are saved
+     * @return the new census enumeration .csv output file
      */
     public static Result CreateNewCensusCSVFiles(
             ArrayList<MarkovChain> markovChains,
