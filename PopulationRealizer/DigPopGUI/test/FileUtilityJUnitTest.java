@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 
-import cerl.gui.standard.utilities.Screen;
-import cerl.gui.standard.utilities.HelpFile;
 import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.Result;
 import cerl.gui.utilities.CensusSurveyClasses;
@@ -64,14 +62,20 @@ public class FileUtilityJUnitTest {
         NewCensusColumnDetails test14 = new NewCensusColumnDetails("4", 1, .2, .8, 0.0);
         NewCensusColumnDetails test15 = new NewCensusColumnDetails("5", 1, .8, .9, 0.0);
         
-            System.out.println("-----------------");
+        System.out.println("-----------------");
         for(int count = 0; count <= 100; count++){
             
-            double value1= test1.getNewRandomPercentage();
-            double value12= test12.getNewRandomPercentage();
-            double value13= test13.getNewRandomPercentage();
-            double value14= test14.getNewRandomPercentage();
-            double value15= test15.getNewRandomPercentage();
+            test1.calculateNewRandomPercentage();
+            test12.calculateNewRandomPercentage();
+            test13.calculateNewRandomPercentage();
+            test14.calculateNewRandomPercentage();
+            test15.calculateNewRandomPercentage();
+            
+            double value1= test1.getRandomPercentage();
+            double value12= test12.getRandomPercentage();
+            double value13= test13.getRandomPercentage();
+            double value14= test14.getRandomPercentage();
+            double value15= test15.getRandomPercentage();
             
             boolean true1;
             boolean true12;
