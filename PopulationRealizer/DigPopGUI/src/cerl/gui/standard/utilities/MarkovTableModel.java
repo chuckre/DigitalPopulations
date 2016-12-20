@@ -22,7 +22,6 @@ public class MarkovTableModel extends customTableModel {
     private final ArrayList<String> columns;
     private final int[][] emptyCells;
     private ArrayList<ArrayList<Object>> markovTable;
-    //private Object[][] markovTable;
     private final int PROPORTION_COLUMN = 1;
     private final int PROPORTION_ROW = 0;
     private final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("0.00");
@@ -73,6 +72,13 @@ public class MarkovTableModel extends customTableModel {
         }
     }
     
+    /**
+     * Clears a single cell at the provided row/column
+     * Resets the "calculated" flag to false
+     * Resets the "user entered" flag to false
+     * @param row - the row to clear
+     * @param col - the column to clear
+     */
     private void clearCell(int row, int col){
         this.setValueAt("", row, col);
         ((MarkovTableCell) (markovTable.get(row).get(col))).setCalculated(false);
@@ -322,6 +328,14 @@ public class MarkovTableModel extends customTableModel {
         return newColValue;
     }
     
+    /**
+     * Sets the min/max or total value of an empty cell to the new calculated value
+     * @param rowWithEmptyCell - the row of the cell to set
+     * @param colWithEmptyCell - the column of the cell to set
+     * @param minOrMax - "Min" if the minimum value is being set, "Max" if the maximum value is being set, otherwise, sets the Value
+     * @param total - the value to set in the provided minOrMax attribute
+     * @return 0 if the value was set, or the total provided if no cell was changed
+     */
     private double setCalculatedField(int rowWithEmptyCell, int colWithEmptyCell, String minOrMax, double total){
         //synchronized(markovTable){
 

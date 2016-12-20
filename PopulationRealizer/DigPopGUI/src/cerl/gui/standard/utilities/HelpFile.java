@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
- *
+ * The Help File object used throughout for Contextual Help and Help Menus
  * @author ajohnson
  */
 @XmlRootElement(name="help")
@@ -21,30 +21,59 @@ public class HelpFile {
     private String introduction;
     private String name;
 
+    /**
+     * Get the ArrayList screens (name/description/instruction)
+     * @return ArrayList of screens
+     */
     public ArrayList<Screen> getScreen() {
         return screens;
     }
 
+    /**
+     * Sets the screen (name/description/instruction)
+     * @param screens The screens to set
+     */
     public void setScreen(ArrayList<Screen> screens) {
         this.screens = screens;
     }
     
+    /**
+     * Gets the introduction information for all help files
+     * @return String value of the introduction
+     */
     public String getIntroduction() {
         return introduction;
     }
 
+    /**
+     * Sets the introduction information
+     * @param introduction String value to display as an intro
+     */
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
     }
 
+    /**
+     * Gets the overall name of the HelpFile
+     * @return name as a string
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets the overall name of the HelpFile
+     * @param name as a string
+     */
     public void setName(String name) {
         this.name = name;
     }
     
+    /**
+     * Gets the Screen object by name
+     * @param screenName The screen to find
+     * @return Screen for provided screenName
+     */
     public Screen getSelectedScreenByName(String screenName)
     {
         Screen foundScreen = new Screen();
@@ -62,6 +91,10 @@ public class HelpFile {
         return name + " Help Information";
     }
     
+    /**
+     * Gets the overall introduction text
+     * @return String of introduction text
+     */
     public String getDisplayText()
     {
         return introduction;
@@ -69,10 +102,18 @@ public class HelpFile {
     
     private DefaultMutableTreeNode root;
 
+    /**
+     * Gets the root value for the Help File tree
+     * @return root node
+     */
     public DefaultMutableTreeNode getRoot() {
         return root;
     }
     
+    /**
+     * Gets the default tree nodes, starting at root
+     * @return The DefaultTreeModel starting at the root node
+     */
     public DefaultTreeModel getAsDefaultTreeModel()
     {
         root = new DefaultMutableTreeNode(this);

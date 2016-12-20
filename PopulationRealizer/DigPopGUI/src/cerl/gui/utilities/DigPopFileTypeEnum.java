@@ -6,7 +6,7 @@
 package cerl.gui.utilities;
 
 /**
- *
+ * The types of DigPop Files allowed in the DigPop GUI
  * @author ajohnson
  */
 public enum DigPopFileTypeEnum {

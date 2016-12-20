@@ -18,26 +18,23 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Allows a user to group Survey information
  * @author ajohnson
  */
 public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
     
-    private cerl.gui.utilities.Class selectSurveyClass;
-    
+    private final cerl.gui.utilities.Class selectSurveyClass;
     private JList allSurveyClassesList;
-    
-    private SurveyColumnGroupsTableItemModel surveyColumnGroupsTableItemModel;
-    
-    private StepThree parentStep;
-    
+    private final SurveyColumnGroupsTableItemModel surveyColumnGroupsTableItemModel;
+    private final StepThree parentStep;
     private ArrayList<SurveyColumnValuesGrouping> nonEditedSurveyColumnValuesGroupings = new ArrayList<>();
     private ArrayList<SurveyColumnValue> nonEditedSurveyColumnValues = new ArrayList<>();
-
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_THREE_HELP_FILE_NAME.toString();
     
     /**
      * Creates new form SelectSurveyDataColumnGroupings
+     * @param selectSurveyClass - The Utility Class of the current Survey data
+     * @param parentStep - The instance of Step Three this is associated with
      */
     public SelectSurveyDataColumnGroupings(cerl.gui.utilities.Class selectSurveyClass, StepThree parentStep) {
         this.parentStep = parentStep;
@@ -61,10 +58,7 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
             }
         });
         
-        
-        
         this.selectSurveyClass = selectSurveyClass;
-        
         this.surveyColumnGroupsTableItemModel = new SurveyColumnGroupsTableItemModel(this.selectSurveyClass.getSurveyColumnValuesGroupings());
         
         initComponents();
@@ -88,15 +82,15 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPaneAllSurveyData = new javax.swing.JScrollPane();
         btnAddNewCustomGrouping = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel_SurveyColumns = new javax.swing.JLabel();
+        jLabel_UserDescription = new javax.swing.JLabel();
         txtGroupingUserDefinedDescription = new javax.swing.JTextField();
         btnAddRestToNewGroups = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableSelectedGroups = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel_SelectSurveyData = new javax.swing.JLabel();
         txtSelectedSurveyDataClass = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
@@ -125,11 +119,11 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Available Survey Data Column Values:");
+        jLabel_SurveyColumns.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel_SurveyColumns.setText("Available Survey Data Column Values:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("User Defined Description:");
+        jLabel_UserDescription.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel_UserDescription.setText("User Defined Description:");
 
         btnAddRestToNewGroups.setText("Rest of Values Are Individual Descriptions");
         btnAddRestToNewGroups.addActionListener(new java.awt.event.ActionListener() {
@@ -147,11 +141,11 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPaneAllSurveyData)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addComponent(jLabel_UserDescription)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtGroupingUserDefinedDescription))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel_SurveyColumns, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -164,12 +158,12 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(9, 9, 9)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel_SurveyColumns, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPaneAllSurveyData, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_UserDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtGroupingUserDefinedDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAddNewCustomGrouping)
@@ -202,8 +196,8 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Select Survey Data:");
+        jLabel_SelectSurveyData.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel_SelectSurveyData.setText("Select Survey Data:");
 
         txtSelectedSurveyDataClass.setEditable(false);
 
@@ -213,7 +207,7 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLabel_SelectSurveyData)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSelectedSurveyDataClass)
                 .addContainerGap())
@@ -223,7 +217,7 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(jLabel_SelectSurveyData)
                     .addComponent(txtSelectedSurveyDataClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -322,6 +316,10 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Handles the creation of a new custom grouping - creates a new custom group and adds it to the table
+     * @param evt 
+     */
     private void btnAddNewCustomGroupingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewCustomGroupingActionPerformed
        
         ArrayList<SurveyColumnValue> selected = 
@@ -340,6 +338,10 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
         this.surveyColumnGroupsTableItemModel.fireTableDataChanged();
     }//GEN-LAST:event_btnAddNewCustomGroupingActionPerformed
 
+    /**
+     * Creates a new group for each of the remaining items, where each remaining item is it's own group
+     * @param evt 
+     */
     private void btnAddRestToNewGroupsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRestToNewGroupsActionPerformed
         List<SurveyColumnValue> selected = selectSurveyClass.getAllSurveyColumnValuesNotUsed();
         
@@ -355,6 +357,10 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
         this.surveyColumnGroupsTableItemModel.fireTableDataChanged();
     }//GEN-LAST:event_btnAddRestToNewGroupsActionPerformed
 
+    /**
+     * Saves the information provided
+     * @param evt 
+     */
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         List<SurveyColumnValue> allSurveyColumnValuesNotUsed = selectSurveyClass.getAllSurveyColumnValuesNotUsed();
         
@@ -373,6 +379,10 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    /**
+     * Cancels changes made to the page, and reverts to the last saved version
+     * @param evt 
+     */
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         this.parentStep.selectSurveyClass.setSurveyColumnValuesGroupings(this.nonEditedSurveyColumnValuesGroupings);
         this.parentStep.selectSurveyClass.setAllSurveyColumnValues(this.nonEditedSurveyColumnValues);
@@ -381,6 +391,10 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    /**
+     * Closes the window, and goes back to the parent step
+     * @param evt 
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         this.parentStep.selectSurveyClass.setSurveyColumnValuesGroupings(this.nonEditedSurveyColumnValuesGroupings);
         this.parentStep.selectSurveyClass.setAllSurveyColumnValues(this.nonEditedSurveyColumnValues);
@@ -389,25 +403,31 @@ public class SelectSurveyDataColumnGroupings extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
+    /**
+     * Handles the help menu item, displays the help information for the current screen
+     * @param evt 
+     */
     private void jMenuHelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuHelpMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
     }//GEN-LAST:event_jMenuHelpMouseClicked
 
+    /**
+     * Handles the about menu, opens the About pop-up
+     * @param evt 
+     */
     private void jMenuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAboutMouseClicked
         new About().setVisible(true);
     }//GEN-LAST:event_jMenuAboutMouseClicked
-
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddNewCustomGrouping;
     private javax.swing.JButton btnAddRestToNewGroups;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnSave;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel_SelectSurveyData;
+    private javax.swing.JLabel jLabel_SurveyColumns;
+    private javax.swing.JLabel jLabel_UserDescription;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenuAbout;
     private javax.swing.JMenuBar jMenuBar1;

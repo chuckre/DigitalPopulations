@@ -30,7 +30,7 @@ import javax.swing.table.TableColumn;
  * @author mrivera
  */
 public class MarkovChainMatrix extends javax.swing.JFrame {
-    private String markovName;
+    private final String markovName;
     private final MarkovTableModel myTable;
     private int START_EDITABLE_ROW;
     private int START_EDITABLE_COL;
@@ -38,9 +38,14 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     private int END_EDITABLE_COL;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_FOUR_HELP_FILE_NAME.toString();
     private final DigPopGUIInformation digPopGUIInformation;
-    private MarkovChain currentMarkovChain;
-    private int currentMarkovChainId;
+    private final MarkovChain currentMarkovChain;
+    private final int currentMarkovChainId;
 
+    /**
+     * Initializes the Markov Chain Matrix
+     * @param digPopGUIInformation - The current run's DigPop object
+     * @param currentMarkovChainId - The unique ID for the currently selected Markov Chain
+     */
     MarkovChainMatrix(DigPopGUIInformation digPopGUIInformation, int currentMarkovChainId) {
         this.digPopGUIInformation = digPopGUIInformation;
         this.currentMarkovChainId = currentMarkovChainId;
@@ -73,6 +78,11 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         jLabel_ErrorMessages.setVisible(false);
     }
 
+    /**
+     * Populates the Markov Chain table with existing information
+     * @param surveyGroups - The column values for grouped survey data
+     * @return MarkovTableModel populated with data
+     */
     private MarkovTableModel populateExistingMarkovTableModel(List<SurveyColumnValuesGrouping> surveyGroups){
         ArrayList<String> columnNames = new ArrayList<>();
         //Census Value Names
@@ -87,6 +97,11 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         return mtmTable;
     }
     
+    /**
+     * Populates the Markov Chain table, checks if data already exists, or if a new model needs to be created
+     * @param surveyGroups - The grouped survey data to populate the table with
+     * @return MarkovTableModel - the populated table model
+     */
     private MarkovTableModel populateMarkovTableModel(List<SurveyColumnValuesGrouping> surveyGroups){
         MarkovTableModel myModel;
         
@@ -98,6 +113,11 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         return myModel;
     }
     
+    /**
+     * Creates a new Markov Table Model and populates it with the survey/census data
+     * @param surveyGroups - The groupings of survey data to populate the table
+     * @return MarkovTableModel - populated with data
+     */
     private MarkovTableModel populateNewMarkovTableModel(List<SurveyColumnValuesGrouping> surveyGroups){
         ArrayList<String> columnNames = new ArrayList<>();
         //Census Value Names
@@ -210,7 +230,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         txtMarkovChainName = new javax.swing.JTextField();
         jMenuBar_FileMenu = new javax.swing.JMenuBar();
         jMenu_FileTab = new javax.swing.JMenu();
-        jMenu_EditTab = new javax.swing.JMenu();
+        jMenu_HelpTab = new javax.swing.JMenu();
         jMenu_About = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -271,13 +291,13 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         jMenu_FileTab.setText("File");
         jMenuBar_FileMenu.add(jMenu_FileTab);
 
-        jMenu_EditTab.setText("Help");
-        jMenu_EditTab.addMouseListener(new java.awt.event.MouseAdapter() {
+        jMenu_HelpTab.setText("Help");
+        jMenu_HelpTab.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu_EditTabMouseClicked(evt);
+                jMenu_HelpTabMouseClicked(evt);
             }
         });
-        jMenuBar_FileMenu.add(jMenu_EditTab);
+        jMenuBar_FileMenu.add(jMenu_HelpTab);
 
         jMenu_About.setText("About");
         jMenu_About.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -383,14 +403,25 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton_SaveActionPerformed
 
-    private void jMenu_EditTabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_EditTabMouseClicked
+    /**
+     * Handles the Help menu, opens a new Help screen with the current screen's information
+     * @param evt 
+     */
+    private void jMenu_HelpTabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_HelpTabMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
-    }//GEN-LAST:event_jMenu_EditTabMouseClicked
+    }//GEN-LAST:event_jMenu_HelpTabMouseClicked
 
+    /**
+     * Handles the About menu, opens the About pop-up
+     * @param evt 
+     */
     private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
         new About().setVisible(true);
     }//GEN-LAST:event_jMenu_AboutMouseClicked
 
+    /**
+     * Saves the current Markov Chain to the DigPop object
+     */
     private void saveToFile(){
         saveMarkovToCSVFileInformation();
         this.currentMarkovChain.setMarkovName(this.txtMarkovChainName.getText());
@@ -468,8 +499,8 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_MarkovName;
     private javax.swing.JMenuBar jMenuBar_FileMenu;
     private javax.swing.JMenu jMenu_About;
-    private javax.swing.JMenu jMenu_EditTab;
     private javax.swing.JMenu jMenu_FileTab;
+    private javax.swing.JMenu jMenu_HelpTab;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_MarkovMatrix;
     private javax.swing.JTextField txtMarkovChainName;

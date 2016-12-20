@@ -9,30 +9,47 @@ import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
 /**
- *
+ * A new custom table model, as an extension of the Abstract Table Model
+ * Tracks the ArrayList of column names and a 2D ArrayList of objects for cells
  * @author mrivera
  */
 public class customTableModel  extends AbstractTableModel {
     private final ArrayList<String> columns;
     private final ArrayList<ArrayList<Object>> tableCells;
     
+    /**
+     * Creates a new, empty, customTableModel
+     */
     public customTableModel() {
         super();
         columns = new ArrayList<>();
         tableCells = new ArrayList<>();
     }
     
+    /**
+     * Creates a new customTableModel with the provided values
+     * @param columnNames - The list of column Names as a string array
+     * @param cellValues - The 2D ArrayList of cell values
+     */
     public customTableModel(ArrayList<String> columnNames, ArrayList<ArrayList<Object>> cellValues) {
         super();
         columns = columnNames;
         tableCells = cellValues;
     }
 
+    /**
+     * Gets the current size of the 2D arrayList of tableCells
+     * @return 
+     */
     @Override
     public int getRowCount() {
         return tableCells.size();
     }
 
+    /**
+     * Gets the current size of the columns ArrayList
+     * @return 
+     */
     @Override
     public int getColumnCount() {
         return columns.size();
@@ -49,6 +66,14 @@ public class customTableModel  extends AbstractTableModel {
         return columns.get(col);
     }
 
+    /**
+     * Gets the Object value for the provided row/column
+     * If the row/column are out of bounds, catches and logs as an error
+     * 
+     * @param row - the row to find the value for
+     * @param column - the column to find the value for
+     * @return Object of the current value of the cell
+     */
     @Override
     public Object getValueAt(int row, int column) {
         try{
@@ -62,11 +87,21 @@ public class customTableModel  extends AbstractTableModel {
         }
     } 
     
+    /**
+     * Adds a new row to the 2D array of TableCells
+     * @param values - an ArrayList of Objects to add to the table
+     */
     public void addRow(ArrayList<Object> values){
         tableCells.add(values);
         this.fireTableDataChanged();
     }
     
+    /**
+     * Sets the value at the provided row/column
+     * @param value - the object to set as the new value for the row/column
+     * @param row - the row the cell to set is in
+     * @param col - the column the cell to set is in
+     */
     @Override
     public void setValueAt(Object value, int row, int col) {
         boolean updateWholeTable = false;
@@ -143,14 +178,26 @@ public class customTableModel  extends AbstractTableModel {
         }
     }
 
+    /**
+     * Gets an ArrayList of strings for all the column names
+     * @return list of column names
+     */
     public ArrayList<String> getColumns() {
         return columns;
     }
 
+    /**
+     * Gets the full 2D ArrayList of table cells
+     * @return all table cell objects in a 2D ArrayList
+     */
     public ArrayList<ArrayList<Object>> getTableCells() {
         return tableCells;
     }
     
+    /**
+     * Gets the full 2D ArrayList of table cells, cast as customTableCells
+     * @return all table cell objects in a 2D ArrayList cast as customTableCells
+     */
     public ArrayList<ArrayList<customTableCell>> getCustomTableCells() {
         ArrayList<ArrayList<customTableCell>> val = new ArrayList<>();
         

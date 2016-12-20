@@ -6,13 +6,13 @@
 package cerl.gui.forms;
 
 /**
- *
+ * Creates the About pop-up used on all page menus
  * @author mrivera
  */
 public class About extends javax.swing.JFrame {
 
     /**
-     * Creates new form About
+     * Creates new About form
      */
     public About() {
         initComponents();
@@ -27,9 +27,9 @@ public class About extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel_About = new javax.swing.JPanel();
+        jLabel_FullText = new javax.swing.JLabel();
+        jLabel_About = new javax.swing.JLabel();
         HeaderIcon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -37,41 +37,41 @@ public class About extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 
-        jPanel1.setBackground(java.awt.Color.white);
+        jPanel_About.setBackground(java.awt.Color.white);
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("<html>This software was funded by OSD-ASAALT and produced for the Urban Security Project,<br> developed by Red Horse, and designed by Dr. Charles R. Ehlschlaeger, Jeff Burkhalter,<br> Craig Cheney, Ben Hough, Roger Jenkins, Alexandria Johnson, and Meghan Rivera.</html>");
+        jLabel_FullText.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel_FullText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_FullText.setText("<html>This software was funded by OSD-ASAALT and produced for the Urban Security Project,<br> developed by Red Horse, and designed by Dr. Charles R. Ehlschlaeger, Jeff Burkhalter,<br> Craig Cheney, Ben Hough, Roger Jenkins, Alexandria Johnson, and Meghan Rivera.</html>");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("About");
+        jLabel_About.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel_About.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_About.setText("About");
 
         HeaderIcon.setBackground(java.awt.Color.white);
         HeaderIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/usace_logo2.png"))); // NOI18N
         HeaderIcon.setText(" ");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel_AboutLayout = new javax.swing.GroupLayout(jPanel_About);
+        jPanel_About.setLayout(jPanel_AboutLayout);
+        jPanel_AboutLayout.setHorizontalGroup(
+            jPanel_AboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_AboutLayout.createSequentialGroup()
                 .addComponent(HeaderIcon)
                 .addGap(0, 10, Short.MAX_VALUE))
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addComponent(jLabel_About, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_AboutLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
+                .addComponent(jLabel_FullText)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanel_AboutLayout.setVerticalGroup(
+            jPanel_AboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_AboutLayout.createSequentialGroup()
                 .addComponent(HeaderIcon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
+                .addComponent(jLabel_About)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel_FullText, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -84,14 +84,14 @@ public class About extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel_About, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel_About, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -135,8 +135,8 @@ public class About extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel HeaderIcon;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel_About;
+    private javax.swing.JLabel jLabel_FullText;
+    private javax.swing.JPanel jPanel_About;
     // End of variables declaration//GEN-END:variables
 }

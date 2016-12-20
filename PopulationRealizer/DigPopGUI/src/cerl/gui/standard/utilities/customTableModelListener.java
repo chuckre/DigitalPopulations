@@ -10,12 +10,18 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 /**
- *
+ * A custom Table Model Listener to handle changes to the table
+ * Used to handle the custom Markov Chain table calculations
+ * Calls the customTableModel handleTableChange function
  * @author mrivera
  */
 public class customTableModelListener implements TableModelListener {
     private final JTable table;
     
+    /**
+     * Creates a new customTableModelListener for the provided JTable
+     * @param table - the JTable to set the new listener on
+     */
     public customTableModelListener(JTable table){
         this.table = table;
     }

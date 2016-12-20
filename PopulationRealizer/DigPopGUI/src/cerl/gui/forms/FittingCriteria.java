@@ -72,6 +72,10 @@ public class FittingCriteria extends javax.swing.JFrame {
         setupCustomTable();
     }
 
+    /**
+     * Populates the custom table with initial dataset
+     * @return 
+     */
     private customTableModel populateTableModel(){
         ArrayList<String> columnNames = new ArrayList<>();
         
@@ -136,9 +140,7 @@ public class FittingCriteria extends javax.swing.JFrame {
                 }
             }
         }
-       /* if(this.markovChain.getFittingCriteriaCellValues() != null){
-            cellValues = this.markovChain.getFittingCriteriaCellValues();
-        } */ else { //first time in 
+        else { //first time in 
             MarkovChain mc = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(this.currentMarkovChainId);
             this.currentMarkovChainName = mc.getMarkovName();
             ArrayList<String> censusClasses = mc.getAllSelectedCensusClassesUserDefinedNames();
@@ -222,7 +224,6 @@ public class FittingCriteria extends javax.swing.JFrame {
             }
         }
         
-        //customTableModel myTableModel = new customTableModel(columnNames, cellValues);
         customTableModel myTableModel = new customTableModel(columnNames, val);
         return myTableModel;
     }
@@ -337,14 +338,26 @@ public class FittingCriteria extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Handles the Help menu item, displays information for the current screen
+     * @param evt 
+     */
     private void jMenu_FileHelpMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_FileHelpMenuMouseClicked
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
     }//GEN-LAST:event_jMenu_FileHelpMenuMouseClicked
 
+    /**
+     * Handles the About menu item, displays the About pop-up
+     * @param evt 
+     */
     private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
         new About().setVisible(true);
     }//GEN-LAST:event_jMenu_AboutMouseClicked
 
+    /**
+     * Handles the next button c lick, saves information and moves to the next step
+     * @param evt 
+     */
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
         if(validateFile()){
             saveToFile();
@@ -356,6 +369,10 @@ public class FittingCriteria extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnNextStepActionPerformed
 
+    /**
+     * Handles the previous button click, saves and moves to the previous step
+     * @param evt 
+     */
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
         if(!validateFile()){
             Object[] options = { "OK", "CANCEL" };
@@ -373,6 +390,10 @@ public class FittingCriteria extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 
+    /**
+     * Validates the data entered on the page so far
+     * @return true if data entered is valid, false if an error exists
+     */
     private Boolean validateFile(){
         ArrayList<ArrayList<Object>> cells = myTable.getTableCells();
         ArrayList<String> columns = myTable.getColumns();
@@ -386,6 +407,9 @@ public class FittingCriteria extends javax.swing.JFrame {
         return true;
     }
     
+    /**
+     * Saves the user entered information to the FittingTraits and TraitWeights objects
+     */
     private void saveToFile(){
         ArrayList<Traits> theseTraits = new ArrayList<>();
         ArrayList<Weights> traitWeights = new ArrayList<>();
@@ -459,6 +483,10 @@ public class FittingCriteria extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Creates the Goal Relationship .dprxml file with the information provided 
+     * Saves file into the same folder as the log file selected on the initial step
+     */
     private void createRelationshipFile(){
         String saveFileDirectory = this.digPopGUIInformation.getFileDirectory();
         String fileName = RELATIONSHIP_FILE_NAME;
@@ -543,6 +571,9 @@ public class FittingCriteria extends javax.swing.JFrame {
     private javax.swing.JTable jTable_TraitInformation;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Creates the initial column model for the custom table
+     */
     private void setupCustomTable() {
         //sets up columns with new renderer, and clear buttons for the rows/columns
         for(int i=0; i<myTable.getColumnCount(); i++){

@@ -6,7 +6,7 @@
 package cerl.gui.standard.utilities;
 
 /**
- *
+ * The Valid File Types allowed throughout the DigPop GUI
  * @author ajohnson
  */
 public enum FileType {
@@ -18,6 +18,10 @@ public enum FileType {
     
     private String fileTypeName = ""; 
     
+    /**
+     * Creates a new FileType object with a name
+     * @param name - String value of the name
+     */
     private FileType(String name)
     {
         this.fileTypeName = name;

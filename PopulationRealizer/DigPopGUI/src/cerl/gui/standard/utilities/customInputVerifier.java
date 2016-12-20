@@ -100,14 +100,26 @@ public class customInputVerifier extends InputVerifier{
         }
     }
 
+    /**
+     * Gets the text of the validation Message
+     * @return String of the validationMessage text
+     */
     public String getValidationMessage() {
         return validationMessage.getText();
     }
 
+    /**
+     * Sets the maximum value
+     * @param maximum the double value to set as the new max
+     */
     public void setMaximum(double maximum) {
         this.maximum = maximum;
     }
 
+    /**
+     * Sets the minimum value
+     * @param minimum - the double value to set as the new min
+     */
     public void setMinimum(double minimum) {
         this.minimum = minimum;
     }
