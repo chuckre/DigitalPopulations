@@ -6,7 +6,7 @@
 package cerl.gui.utilities;
 
 /**
- *
+ * The object to store the names of all help instructions for Step 7
  * @author mrivera
  */
 public enum StepSevenInstructionNames {
@@ -36,11 +36,19 @@ public enum StepSevenInstructionNames {
         
         private String instructionName = ""; 
     
+        /**
+         * Sets the instruction Name
+         * @param name - the new instruction name
+         */
         private StepSevenInstructionNames(String name)
         {
             this.instructionName = name;
         }
 
+        /**
+         * Gets the instruction name
+         * @return the instruction name as a string
+         */
         @Override
         public String toString() {
             return instructionName;

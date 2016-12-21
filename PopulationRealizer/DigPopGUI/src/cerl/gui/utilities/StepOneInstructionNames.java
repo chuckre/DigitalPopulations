@@ -6,7 +6,7 @@
 package cerl.gui.utilities;
 
 /**
- *
+ * Used for the names of each of the instruction names, to be pulled into the help files of Step 1
  * @author ajohnson
  */
 public enum StepOneInstructionNames {
@@ -19,11 +19,19 @@ public enum StepOneInstructionNames {
         
         private String instructionName = ""; 
     
+        /**
+         * Sets the name of the instruction
+         * @param name - the new Instruction Name
+         */
         private StepOneInstructionNames(String name)
         {
             this.instructionName = name;
         }
 
+        /**
+         * Gets the string value of the instruction name
+         * @return 
+         */
         @Override
         public String toString() {
             return instructionName;
