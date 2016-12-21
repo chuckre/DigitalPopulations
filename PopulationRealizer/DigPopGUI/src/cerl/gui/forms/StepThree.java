@@ -91,7 +91,6 @@ public class StepThree extends javax.swing.JFrame {
                 }
             }
         });
-        
     }
 
     /**
@@ -130,6 +129,7 @@ public class StepThree extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableListOfAllMarkovChains = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuHelp = new javax.swing.JMenu();
@@ -187,7 +187,7 @@ public class StepThree extends javax.swing.JFrame {
         jScrollPaneSurveyAll.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Available Survey Data (Select Only One):");
+        jLabel1.setText("Available Survey/Microdata Columns  (Select Only One):");
 
         btnSurveyDataGroups.setText("Add/Edit Survey Data Groups");
         btnSurveyDataGroups.setEnabled(false);
@@ -212,17 +212,16 @@ public class StepThree extends javax.swing.JFrame {
             surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(surveyJPanelLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPaneSurveyAll))
+                .addGap(16, 16, 16)
                 .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(surveyJPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPaneSurveyAll, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(surveyJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(surveyJPanelLayout.createSequentialGroup()
-                                .addComponent(btnSurveyDataGroups)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnClearSurveyData, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPaneSurveyDataGroups)))
-                    .addComponent(jLabel1))
+                        .addComponent(btnSurveyDataGroups)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnClearSurveyData, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPaneSurveyDataGroups))
                 .addContainerGap())
         );
         surveyJPanelLayout.setVerticalGroup(
@@ -263,10 +262,10 @@ public class StepThree extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Available Census Data:");
+        jLabel3.setText("Available Enumeration Columns:");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Selected Census Data:");
+        jLabel4.setText("Selected Enumeration Columns:");
 
         btnEditSelectedCensusDataDescriptions.setText("Edit Selected Census Data Descriptions");
         btnEditSelectedCensusDataDescriptions.addActionListener(new java.awt.event.ActionListener() {
@@ -393,19 +392,28 @@ public class StepThree extends javax.swing.JFrame {
         jTableListOfAllMarkovChains.setModel(step3MarkovChainTableItemModel);
         jScrollPane1.setViewportView(jTableListOfAllMarkovChains);
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setText("To Open or Delete Existing Markov Chain: Please Double Click on Specified Markov Chain in Table.");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -867,6 +875,7 @@ public class StepThree extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
