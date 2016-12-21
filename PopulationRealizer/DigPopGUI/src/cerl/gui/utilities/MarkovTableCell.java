@@ -24,6 +24,9 @@ public class MarkovTableCell {
     private boolean error;
     private boolean editable;
 
+    /**
+     * Creates a new, empty Markov Table Cell
+     */
     public MarkovTableCell(){
     }
     

@@ -6,7 +6,7 @@
 package cerl.gui.utilities;
 
 /**
- *
+ * The object to store the help instruction names for all fields in Step 2
  * @author ajohnson
  */
 public enum StepTwoInstructionNames {
@@ -23,15 +23,22 @@ public enum StepTwoInstructionNames {
         Description("Description"),
         Region_Map("Region Map"),
         Constraint_Map("Constraint Map");
-        
                               
         private String instructionName = ""; 
     
+        /**
+         * Sets the instruction name
+         * @param name - the new instruction name
+         */
         private StepTwoInstructionNames(String name)
         {
             this.instructionName = name;
         }
 
+        /**
+         * Gets the instruction name as a string
+         * @return the instruction name
+         */
         @Override
         public String toString() {
             return instructionName;
