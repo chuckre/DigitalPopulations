@@ -19,6 +19,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
 
 /**
  * Creates a new Step 7 for the DigPop GUI
@@ -148,6 +149,7 @@ public class StepSeven extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooserDirectoryOnly = new javax.swing.JFileChooser();
         jPanel_Phase2 = new javax.swing.JPanel();
         jLabel_Phase2RandomPlacement = new javax.swing.JLabel();
         jLabel_Phase2SkipTracts = new javax.swing.JLabel();
@@ -196,6 +198,7 @@ public class StepSeven extends javax.swing.JFrame {
         jTextField_Phase1TimeLimit = new javax.swing.JTextField();
         Phase1TimeLimitInfoIcon = new javax.swing.JLabel();
         jLabel_Phase1TimeLimit = new javax.swing.JLabel();
+        btnSelectDirectory = new javax.swing.JButton();
         jPanel_Phase4 = new javax.swing.JPanel();
         jLabel_Phase4_Lags = new javax.swing.JLabel();
         phase4LagsInfoIcon = new javax.swing.JLabel();
@@ -233,6 +236,8 @@ public class StepSeven extends javax.swing.JFrame {
         jMenu_File = new javax.swing.JMenu();
         jMenu_Help = new javax.swing.JMenu();
         jMenu_About = new javax.swing.JMenu();
+
+        jFileChooserDirectoryOnly.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Step Seven");
@@ -657,6 +662,7 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
+        jTextField_OutputDirectory.setEditable(false);
         jTextField_OutputDirectory.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextField_OutputDirectoryFocusLost(evt);
@@ -698,6 +704,13 @@ public class StepSeven extends javax.swing.JFrame {
         jLabel_Phase1TimeLimit.setText("Phase 1 Time limit");
         jLabel_Phase1TimeLimit.setPreferredSize(new java.awt.Dimension(127, 14));
 
+        btnSelectDirectory.setText("Select Directory");
+        btnSelectDirectory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelectDirectoryActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel_SeedsLayout = new javax.swing.GroupLayout(jPanel_Seeds);
         jPanel_Seeds.setLayout(jPanel_SeedsLayout);
         jPanel_SeedsLayout.setHorizontalGroup(
@@ -720,8 +733,11 @@ public class StepSeven extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField_Phase1TimeLimit)
-                    .addComponent(jTextField_OutputDirectory)
-                    .addComponent(jTextField_ParallelThreads))
+                    .addComponent(jTextField_ParallelThreads)
+                    .addGroup(jPanel_SeedsLayout.createSequentialGroup()
+                        .addComponent(jTextField_OutputDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSelectDirectory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel_SeedsLayout.setVerticalGroup(
@@ -731,7 +747,9 @@ public class StepSeven extends javax.swing.JFrame {
                 .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel_SeedsLayout.createSequentialGroup()
                         .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField_OutputDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextField_OutputDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnSelectDirectory))
                             .addGroup(jPanel_SeedsLayout.createSequentialGroup()
                                 .addComponent(jLabel_OutputDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(6, 6, 6))
@@ -1916,6 +1934,41 @@ public class StepSeven extends javax.swing.JFrame {
             pack();
         }
     }//GEN-LAST:event_jTextField_Phase4TimeLimitFocusLost
+
+    /**
+     * Handles the click event of the btnSelectDirectory button
+     * @param evt 
+     */
+    private void btnSelectDirectoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectDirectoryActionPerformed
+        File file = getDirectoryFromFileChooser();
+
+        if(file != null
+            && file.isDirectory()){
+            jTextField_OutputDirectory.setText(file.getPath());
+        }
+        
+        this.RunProperties.setOutput_dir(jTextField_OutputDirectory.getText());
+    }//GEN-LAST:event_btnSelectDirectoryActionPerformed
+    
+    /**
+     * Pulls the directory the user selected from the file chooser
+     * @return - the selected file
+     */
+    private File getDirectoryFromFileChooser() {
+        File returnFile = null;
+        
+        int returnVal = jFileChooserDirectoryOnly.showOpenDialog(this);
+
+        /**
+         * FileChooser will return APPROVE_OPTION if the user selected a directory
+         * from the dialog.
+         */
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            returnFile = jFileChooserDirectoryOnly.getSelectedFile();
+        }
+
+        return returnFile;
+    }
     
     /**
      * @param args the command line arguments
@@ -1972,6 +2025,7 @@ public class StepSeven extends javax.swing.JFrame {
     private javax.swing.JLabel SkipPhase3InfoIcon;
     private javax.swing.JLabel SkipPhase4InfoIcon;
     private javax.swing.JButton btnPreviousStep;
+    private javax.swing.JButton btnSelectDirectory;
     private javax.swing.JButton btn_Save;
     private javax.swing.JComboBox<String> jComboBox_FirstCensusTract;
     private javax.swing.JComboBox<String> jComboBox_HouseholdArchetype;
@@ -1981,6 +2035,7 @@ public class StepSeven extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox_Phase4Save;
     private javax.swing.JComboBox<String> jComboBox_Phase4Skip;
     private javax.swing.JComboBox<String> jComboBox_PopulationArchetype;
+    private javax.swing.JFileChooser jFileChooserDirectoryOnly;
     private javax.swing.JLabel jLabel_CreateRunFile;
     private javax.swing.JLabel jLabel_Errors;
     private javax.swing.JLabel jLabel_FinalRealizationIndex;

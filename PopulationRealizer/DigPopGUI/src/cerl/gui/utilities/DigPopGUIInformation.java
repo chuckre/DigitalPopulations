@@ -250,185 +250,233 @@ public class DigPopGUIInformation {
     }
 
     /**
-     * 
-     * @return 
+     * Gets the Population MicroData File Path as a string 
+     * @return String Population MicroData File Path
      */
     public String getPopulationMicroDataFilePath() {
         return populationMicroDataFilePath;
     }
 
     /**
-     * 
-     * @param populationMicroDataFilePath 
+     * Sets the Population MicroData File Path as a string 
+     * @param populationMicroDataFilePath String Population MicroData File Path
      */
     public void setPopulationMicroDataFilePath(String populationMicroDataFilePath) {
         this.populationMicroDataFilePath = populationMicroDataFilePath;
     }
 
     /**
-     * 
-     * @return 
+     * Gets the Household MicroData File Path as a string 
+     * @return String Household MicroData File Path
      */
     public String getHouseholdMicroDataFilePath() {
         return householdMicroDataFilePath;
     }
 
     /**
-     * 
-     * @param householdMicroDataFilePath 
+     * Sets the Household MicroData File Path as a string 
+     * @param householdMicroDataFilePath String Household MicroData File Path
      */
     public void setHouseholdMicroDataFilePath(String householdMicroDataFilePath) {
         this.householdMicroDataFilePath = householdMicroDataFilePath;
     }
 
     /**
-     * 
-     * @param path 
+     * Adds new ConstraintMap to the ConstraintMaps ArrayList
+     * @param path New ConstraintMap
      */
     public void addConstraintMap(ConstraintMap path) {
         this.constraintMaps.add(path);
     }
 
     /**
-     * 
-     * @return 
+     * Gets the Boolean value of validLandUseMapFilePath
+     * @return Boolean validLandUseMapFilePath
      */
     public Boolean getValidLandUseMapFilePath() {
         return validLandUseMapFilePath;
     }
 
     /**
-     * 
-     * @param validLandUseMapFilePath 
+     * Sets the Boolean value of validLandUseMapFilePath
+     * @param validLandUseMapFilePath Boolean validLandUseMapFilePath
      */
     public void setValidLandUseMapFilePath(Boolean validLandUseMapFilePath) {
         this.validLandUseMapFilePath = validLandUseMapFilePath;
     }
 
     /**
-     * 
-     * @return 
+     * Gets the Boolean value of validHouseholdDensityMapFilePath
+     * @return Boolean validHouseholdDensityMapFilePath
      */
     public Boolean getValidHouseholdDensityMapFilePath() {
         return validHouseholdDensityMapFilePath;
     }
 
     /**
-     * 
-     * @param validHouseholdDensityMapFilePath 
+     * Sets the Boolean value of validHouseholdDensityMapFilePath
+     * @param validHouseholdDensityMapFilePath Boolean validHouseholdDensityMapFilePath
      */
     public void setValidHouseholdDensityMapFilePath(Boolean validHouseholdDensityMapFilePath) {
         this.validHouseholdDensityMapFilePath = validHouseholdDensityMapFilePath;
     }
 
     /**
-     * 
-     * @return 
+     * Gets the Boolean value of validRegionMapFilePath
+     * @return Boolean validRegionMapFilePath
      */
     public Boolean getValidRegionMapFilePath() {
         return validRegionMapFilePath;
     }
 
     /**
-     * 
-     * @param validRegionMapFilePath 
+     * Sets the Boolean value of validRegionMapFilePath
+     * @param validRegionMapFilePath Boolean validRegionMapFilePath
      */
     public void setValidRegionMapFilePath(Boolean validRegionMapFilePath) {
         this.validRegionMapFilePath = validRegionMapFilePath;
     }
 
     /**
-     * 
-     * @return 
+     * Gets the Boolean value of validCensusEnumerationsFilePath
+     * @return Boolean validCensusEnumerationsFilePath
      */
     public Boolean getValidCensusEnumerationsFilePath() {
         return validCensusEnumerationsFilePath;
     }
 
     /**
-     * 
-     * @param validCensusEnumerationsFilePath 
+     * Sets the Boolean value of validCensusEnumerationsFilePath
+     * @param validCensusEnumerationsFilePath Boolean validCensusEnumerationsFilePath
      */
     public void setValidCensusEnumerationsFilePath(Boolean validCensusEnumerationsFilePath) {
         this.validCensusEnumerationsFilePath = validCensusEnumerationsFilePath;
     }
 
     /**
-     * 
-     * @return 
+     * Gets the Boolean value of validConstraintMapsFilePaths
+     * @return Boolean validConstraintMapsFilePaths
      */
     public Boolean getValidConstraintMapsFilePaths() {
         return validConstraintMapsFilePaths;
     }
 
     /**
-     * 
-     * @param validConstraintMapsFilePaths 
+     * Sets the Boolean value of validConstraintMapsFilePaths
+     * @param validConstraintMapsFilePaths Boolean validConstraintMapsFilePaths
      */
     public void setValidConstraintMapsFilePaths(Boolean validConstraintMapsFilePaths) {
         this.validConstraintMapsFilePaths = validConstraintMapsFilePaths;
     }
 
     /**
-     * 
-     * @return 
+     * Gets the Boolean value of validPopulationMicroDataFilePath
+     * @return Boolean validPopulationMicroDataFilePath
      */
     public Boolean getValidPopulationMicroDataFilePath() {
         return validPopulationMicroDataFilePath;
     }
 
     /**
-     * 
-     * @param validPopulationMicroDataFilePath 
+     * Sets the Boolean value of validPopulationMicroDataFilePath
+     * @param validPopulationMicroDataFilePath Boolean validPopulationMicroDataFilePath
      */
     public void setValidPopulationMicroDataFilePath(Boolean validPopulationMicroDataFilePath) {
         this.validPopulationMicroDataFilePath = validPopulationMicroDataFilePath;
     }
 
+    /**
+     * Gets the Boolean value of validHouseholdMicroDataFilePath
+     * @return Boolean validHouseholdMicroDataFilePath
+     */
     public Boolean getValidHouseholdMicroDataFilePath() {
         return validHouseholdMicroDataFilePath;
     }
 
+    /**
+     * Sets the Boolean value of validHouseholdMicroDataFilePath
+     * @param validHouseholdMicroDataFilePath Boolean validHouseholdMicroDataFilePath
+     */
     public void setValidHouseholdMicroDataFilePath(Boolean validHouseholdMicroDataFilePath) {
         this.validHouseholdMicroDataFilePath = validHouseholdMicroDataFilePath;
     }
 
+    /**
+     * Get the Created Date String
+     * @return String Created Date 
+     */
     public String getCreatedDate() {
         return createdDate;
     }
 
+    /**
+     * Set the Created Date String
+     * @param createdDate String Created Date 
+     */
     public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 
+    /**
+     * Get the LastSaveDate String
+     * @return String LastSaveDate 
+     */
     public String getLastSaveDate() {
         return lastSaveDate;
     }
 
+    /**
+     * Set the LastSaveDate String
+     * @param lastSaveDate String LastSaveDate 
+     */
     public void setLastSaveDate(String lastSaveDate) {
         this.lastSaveDate = lastSaveDate;
     }
 
+    /**
+     * Get the FilePath String
+     * @return String FilePath
+     */
     public String getFilePath() {
         return filePath;
     }
 
+    /**
+     * Set the FilePath String
+     * @param filePath String FilePath
+     */
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Get the RunFile Object
+     * @return RunFile Object
+     */
     public RunFile getRunFile() {
         return runFile;
     }
 
+    /**
+     * Set the RunFile Object
+     * @param runFile RunFile Object
+     */
     public void setRunFile(RunFile runFile) {
         this.runFile = runFile;
     }
 
+    /**
+     * Get the FileDirectory String
+     * @return String FileDirectory
+     */
     public String getFileDirectory() {
         return fileDirectory;
     }
 
+    /**
+     * Set the FileDirectory String
+     * @param fileDirectory String FileDirectory
+     */
     public void setFileDirectory(String fileDirectory) {
         this.fileDirectory = fileDirectory;
     }
