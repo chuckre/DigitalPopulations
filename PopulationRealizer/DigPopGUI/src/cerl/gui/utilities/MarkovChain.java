@@ -164,11 +164,10 @@ public class MarkovChain {
         this.traitWeightLocation = traitWeightLocation;
     }
     
-    public void addConstraintMapFilePath(ArrayList<String> constraintMapsFilePaths) {
-        constraintMapsFilePaths.stream().forEach((c) -> {
-            Forbid f = new Forbid();
-            f.setMap(c);
-            this.goalRelationshipFile.setForbid(f);
+    public void addConstraintMaps(ArrayList<ConstraintMap> constraintMaps) {
+        this.goalRelationshipFile.getForbids().clear();
+        constraintMaps.stream().forEach((c) -> {
+            this.goalRelationshipFile.addForbid(c.getForbid());
         });
     }
     

@@ -88,7 +88,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="&lt;html&gt;This software was funded by OSD-ASAALT and produced for the Urban Security Project,&lt;br&gt; developed by Red Horse, and designed by Dr. Charles R. Ehlschlaeger, Jeff Burkhalter,&lt;br&gt; Craig Cheney, Ben Hough, Roger Jenkins, Alexandria Johnson, and Meghan Rivera.&lt;/html&gt;"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;This software was funded by OSD-ASA(ALT) and produced for the Phase Zero Assessment of Urban Security Threats ERDC project,&lt;br&gt; developed by Red Horse, and designed by Dr. Charles R. Ehlschlaeger, Jeff Burkhalter,&lt;br&gt; Craig Cheney, Ben Hough, Roger Jenkins, Alexandria Johnson, and Meghan Rivera.&lt;/html&gt;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel_About">

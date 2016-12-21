@@ -14,48 +14,71 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author ajohnson
  */
-@XmlRootElement(name="DigPopGUISaveFile")
+@XmlRootElement(name = "DigPopGUISaveFile")
 public class DigPopGUIInformation {
-    
+
     private String filePath;
     private String fileDirectory;
-    
+
     private String createdDate;
     private String lastSaveDate;
 
     private String landUseMapFilePath;
     private Boolean validLandUseMapFilePath;
     private LandUseMapInformation landUseMapInformation;
-    
+
     private String householdDensityMapFilePath;
     private Boolean validHouseholdDensityMapFilePath;
-    
+
     private String regionMapFilePath;
     private Boolean validRegionMapFilePath;
-    
+
     private String censusEnumerationsFilePath;
     private Boolean validCensusEnumerationsFilePath;
-    
-    private ArrayList<String> constraintMapsFilePaths;
+
+    private ArrayList<ConstraintMap> constraintMaps;
     private Boolean validConstraintMapsFilePaths;
-    
+
     private String populationMicroDataFilePath;
     private Boolean validPopulationMicroDataFilePath;
-    
+
     private String householdMicroDataFilePath;
     private Boolean validHouseholdMicroDataFilePath;
-    
+
     private CensusSurveyClasses censusSurveyClasses;
 
     private RunFile runFile;
 
     public DigPopGUIInformation() {
-        this.constraintMapsFilePaths = new ArrayList<>();
         this.censusSurveyClasses = new CensusSurveyClasses();
         this.landUseMapInformation = new LandUseMapInformation();
+        this.constraintMaps = new ArrayList<ConstraintMap>();
     }
 
-    public DigPopGUIInformation(String filePath, String createdDate, String lastSaveDate, String landUseMapFilePath, Boolean validLandUseMapFilePath, String householdDensityMapFilePath, Boolean validHouseholdDensityMapFilePath, String regionMapFilePath, Boolean validRegionMapFilePath, String censusEnumerationsFilePath, Boolean validCensusEnumerationsFilePath, ArrayList<String> constraintMapsFilePaths, Boolean validConstraintMapsFilePaths, String populationMicroDataFilePath, Boolean validPopulationMicroDataFilePath, String householdMicroDataFilePath, Boolean validHouseholdMicroDataFilePath, ArrayList<String> FittingCriteriaColumnNames, ArrayList<ArrayList<Object>> FittingCriteriaCellValues, ArrayList<ArrayList<Object>> traitClusters, ArrayList<String> traitList, CensusSurveyClasses censusSurveyClasses, LandUseMapInformation landUseMapInformation) {
+    public DigPopGUIInformation(
+            String filePath,
+            String createdDate,
+            String lastSaveDate,
+            String landUseMapFilePath,
+            Boolean validLandUseMapFilePath,
+            String householdDensityMapFilePath,
+            Boolean validHouseholdDensityMapFilePath,
+            String regionMapFilePath,
+            Boolean validRegionMapFilePath,
+            String censusEnumerationsFilePath,
+            Boolean validCensusEnumerationsFilePath,
+            ArrayList<ConstraintMap> constraintMaps,
+            Boolean validConstraintMapsFilePaths,
+            String populationMicroDataFilePath,
+            Boolean validPopulationMicroDataFilePath,
+            String householdMicroDataFilePath,
+            Boolean validHouseholdMicroDataFilePath,
+            ArrayList<String> FittingCriteriaColumnNames,
+            ArrayList<ArrayList<Object>> FittingCriteriaCellValues,
+            ArrayList<ArrayList<Object>> traitClusters,
+            ArrayList<String> traitList,
+            CensusSurveyClasses censusSurveyClasses,
+            LandUseMapInformation landUseMapInformation) {
         this.filePath = filePath;
         this.createdDate = createdDate;
         this.lastSaveDate = lastSaveDate;
@@ -67,7 +90,7 @@ public class DigPopGUIInformation {
         this.validRegionMapFilePath = validRegionMapFilePath;
         this.censusEnumerationsFilePath = censusEnumerationsFilePath;
         this.validCensusEnumerationsFilePath = validCensusEnumerationsFilePath;
-        this.constraintMapsFilePaths = constraintMapsFilePaths;
+        this.constraintMaps = constraintMaps;
         this.validConstraintMapsFilePaths = validConstraintMapsFilePaths;
         this.populationMicroDataFilePath = populationMicroDataFilePath;
         this.validPopulationMicroDataFilePath = validPopulationMicroDataFilePath;
@@ -77,7 +100,7 @@ public class DigPopGUIInformation {
         this.landUseMapInformation = landUseMapInformation;
     }
 
-    @XmlElement(name="landuse")
+    @XmlElement(name = "landuse")
     public LandUseMapInformation getLandUseMapInformation() {
         return landUseMapInformation;
     }
@@ -100,10 +123,10 @@ public class DigPopGUIInformation {
 
     public void setLandUseMapFilePath(String landUseMapFilePath) {
         this.landUseMapFilePath = landUseMapFilePath;
-        
-        if(landUseMapFilePath == null || landUseMapFilePath.equals("")){
+
+        if (landUseMapFilePath == null || landUseMapFilePath.equals("")) {
             this.landUseMapInformation.setMap("");
-        }else{
+        } else {
             File file = new File(landUseMapFilePath);
             this.landUseMapInformation.setMap(file.getName());
         }
@@ -133,12 +156,12 @@ public class DigPopGUIInformation {
         this.censusEnumerationsFilePath = censusEnumerationsFilePath;
     }
 
-    public ArrayList<String> getConstraintMapsFilePaths() {
-        return constraintMapsFilePaths;
+    public ArrayList<ConstraintMap> getConstraintMaps() {
+        return constraintMaps;
     }
 
-    public void setConstraintMapsFilePaths(ArrayList<String> constraintMapsFilePaths) {
-        this.constraintMapsFilePaths = constraintMapsFilePaths;
+    public void setConstraintMaps(ArrayList<ConstraintMap> constraintMaps) {
+        this.constraintMaps = constraintMaps;
     }
 
     public String getPopulationMicroDataFilePath() {
@@ -157,8 +180,8 @@ public class DigPopGUIInformation {
         this.householdMicroDataFilePath = householdMicroDataFilePath;
     }
 
-    public void addConstraintMapFilePath(String path) {
-        this.constraintMapsFilePaths.add(path);
+    public void addConstraintMap(ConstraintMap path) {
+        this.constraintMaps.add(path);
     }
 
     public Boolean getValidLandUseMapFilePath() {
@@ -240,14 +263,14 @@ public class DigPopGUIInformation {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
-    
+
     public RunFile getRunFile() {
         return runFile;
     }
 
     public void setRunFile(RunFile runFile) {
         this.runFile = runFile;
-    }    
+    }
 
     public String getFileDirectory() {
         return fileDirectory;

@@ -6,9 +6,11 @@
 package cerl.gui.forms;
 
 import cerl.gui.standard.utilities.Result;
+import cerl.gui.utilities.ConstraintMap;
 import cerl.gui.utilities.DigPopFileTypeEnum;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.Forbid;
 import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.StepOneInstructionNames;
 import cerl.gui.utilities.StepOneUtilityClass;
@@ -978,9 +980,9 @@ public class StepOne extends javax.swing.JFrame {
         txtRegionMap.setText(this.digPopGUIInformation.getRegionMapFilePath());
         txtCensusEnumerations.setText(this.digPopGUIInformation.getCensusEnumerationsFilePath());
         
-        if(this.digPopGUIInformation.getConstraintMapsFilePaths() != null){
-            for(int i = 0; i<this.digPopGUIInformation.getConstraintMapsFilePaths().size(); i++){
-                AddItemToConstaintMapTable(this.digPopGUIInformation.getConstraintMapsFilePaths().get(i));
+        if(this.digPopGUIInformation.getConstraintMaps() != null){
+            for(int i = 0; i<this.digPopGUIInformation.getConstraintMaps().size(); i++){
+                AddItemToConstaintMapTable(this.digPopGUIInformation.getConstraintMaps().get(i));
             }
         }
         
@@ -1035,9 +1037,11 @@ public class StepOne extends javax.swing.JFrame {
                         /**
                          * TODO Need to figure out how I am displaying this
                          */
-
-                        digPopGUIInformation.addConstraintMapFilePath(file.getPath());
-                        AddItemToConstaintMapTable(file.getPath());
+                        
+                        String newId = "f" + this.digPopGUIInformation.getConstraintMaps().size() + 1;
+                        ConstraintMap newConstraintMap = new ConstraintMap(file.getPath(), new Forbid(), newId);
+                        digPopGUIInformation.addConstraintMap(newConstraintMap);
+                        AddItemToConstaintMapTable(newConstraintMap);
 
                         //            constraintMapsDataModel = new DefaultTableModel(digPopGUIFiles.getConstraintMapFilePaths().toArray(),0);
                         //tblConstraintMaps.setModel((TableModel) digPopGUIFiles.getConstraintMapFilePaths());
@@ -1248,7 +1252,7 @@ public class StepOne extends javax.swing.JFrame {
      * Adds a new constraint map to the table
      * @param value - the map to add to the list
      */
-    private void AddItemToConstaintMapTable(String value) {
+    private void AddItemToConstaintMapTable(ConstraintMap  value) {
         DefaultTableModel model = (DefaultTableModel) tblConstraintMaps.getModel();
         Object[] obj = {value};
         model.addRow(obj);
