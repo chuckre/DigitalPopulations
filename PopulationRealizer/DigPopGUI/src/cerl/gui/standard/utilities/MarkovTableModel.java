@@ -541,7 +541,7 @@ public class MarkovTableModel extends customTableModel {
                 maxVal = Double.parseDouble(thisCell.substring(minValLocation+3));
             }
             
-            if(value != ""){
+            if((value != "") && (row-PROPORTION_ROW < emptyCells[0].length) && (col-PROPORTION_COLUMN < emptyCells[1].length)){
                 System.out.println("Updated empty cells");
                 emptyCells[0][row-PROPORTION_ROW-1] = emptyCells[0][row-PROPORTION_ROW-1] - 1;
                 emptyCells[1][col-PROPORTION_COLUMN-1] = emptyCells[1][col-PROPORTION_COLUMN-1] - 1;
