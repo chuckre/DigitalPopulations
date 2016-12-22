@@ -6,12 +6,15 @@
 package cerl.gui.forms;
 
 import cerl.gui.standard.utilities.Result;
+import cerl.gui.utilities.ConstraintMap;
 import cerl.gui.utilities.DigPopFileTypeEnum;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.Forbid;
 import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.StepOneInstructionNames;
 import cerl.gui.utilities.StepOneUtilityClass;
+import java.awt.Dimension;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -62,6 +65,7 @@ public class StepOne extends javax.swing.JFrame {
     //Variables
     private final DigPopGUIInformation digPopGUIInformation;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_ONE_HELP_FILE_NAME.toString();
+    private Dimension lastFileChooserDimension = new Dimension();
 
     /**
      * Creates new form StepOne
@@ -70,6 +74,7 @@ public class StepOne extends javax.swing.JFrame {
         initComponents();
         setIntialWarningIcons();
         digPopGUIInformation = new DigPopGUIInformation();
+        this.lastFileChooserDimension = this.fileChooser.getPreferredSize();
         pack();
     }
     
@@ -82,6 +87,9 @@ public class StepOne extends javax.swing.JFrame {
         initComponents();
         setIntialWarningIcons();
         populateDataFieldsFromFile();
+        
+        this.lastFileChooserDimension = this.fileChooser.getPreferredSize();
+        
         pack();
     }
 
@@ -603,15 +611,15 @@ public class StepOne extends javax.swing.JFrame {
         jPanelStepOne.setLayout(jPanelStepOneLayout);
         jPanelStepOneLayout.setHorizontalGroup(
             jPanelStepOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelStepOneLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStepOneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelStepOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelRegionMapCensusEnum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelLandUseHouseholdMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelConstraintMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelPopulationMicroData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelHouseholdMicroData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanelStepOneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanelRegionMapCensusEnum, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelLandUseHouseholdMap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelConstraintMap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelPopulationMicroData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelHouseholdMicroData, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelStepOneLayout.setVerticalGroup(
@@ -619,16 +627,16 @@ public class StepOne extends javax.swing.JFrame {
             .addGroup(jPanelStepOneLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelLandUseHouseholdMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelRegionMapCensusEnum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelConstraintMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelPopulationMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(8, 8, 8)
                 .addComponent(jPanelHouseholdMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanelPopulationMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -978,9 +986,9 @@ public class StepOne extends javax.swing.JFrame {
         txtRegionMap.setText(this.digPopGUIInformation.getRegionMapFilePath());
         txtCensusEnumerations.setText(this.digPopGUIInformation.getCensusEnumerationsFilePath());
         
-        if(this.digPopGUIInformation.getConstraintMapsFilePaths() != null){
-            for(int i = 0; i<this.digPopGUIInformation.getConstraintMapsFilePaths().size(); i++){
-                AddItemToConstaintMapTable(this.digPopGUIInformation.getConstraintMapsFilePaths().get(i));
+        if(this.digPopGUIInformation.getConstraintMaps() != null){
+            for(int i = 0; i<this.digPopGUIInformation.getConstraintMaps().size(); i++){
+                AddItemToConstaintMapTable(this.digPopGUIInformation.getConstraintMaps().get(i));
             }
         }
         
@@ -1035,9 +1043,11 @@ public class StepOne extends javax.swing.JFrame {
                         /**
                          * TODO Need to figure out how I am displaying this
                          */
-
-                        digPopGUIInformation.addConstraintMapFilePath(file.getPath());
-                        AddItemToConstaintMapTable(file.getPath());
+                        
+                        String newId = "f" + this.digPopGUIInformation.getConstraintMaps().size() + 1;
+                        ConstraintMap newConstraintMap = new ConstraintMap(file.getPath(), new Forbid(), newId);
+                        digPopGUIInformation.addConstraintMap(newConstraintMap);
+                        AddItemToConstaintMapTable(newConstraintMap);
 
                         //            constraintMapsDataModel = new DefaultTableModel(digPopGUIFiles.getConstraintMapFilePaths().toArray(),0);
                         //tblConstraintMaps.setModel((TableModel) digPopGUIFiles.getConstraintMapFilePaths());
@@ -1191,6 +1201,7 @@ public class StepOne extends javax.swing.JFrame {
     private File getFileFromFileChooser() {
         File returnFile = null;
 
+        this.fileChooser.setPreferredSize(this.lastFileChooserDimension);
         int returnVal = fileChooser.showOpenDialog(this);
 
         /**
@@ -1200,6 +1211,8 @@ public class StepOne extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             returnFile = fileChooser.getSelectedFile();
         }
+        
+        this.lastFileChooserDimension = this.fileChooser.getSize();
 
         return returnFile;
     }
@@ -1248,7 +1261,7 @@ public class StepOne extends javax.swing.JFrame {
      * Adds a new constraint map to the table
      * @param value - the map to add to the list
      */
-    private void AddItemToConstaintMapTable(String value) {
+    private void AddItemToConstaintMapTable(ConstraintMap  value) {
         DefaultTableModel model = (DefaultTableModel) tblConstraintMaps.getModel();
         Object[] obj = {value};
         model.addRow(obj);

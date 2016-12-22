@@ -482,7 +482,7 @@ public class FittingCriteria extends javax.swing.JFrame {
         this.markovChain.setTraitWeights(traitWeights);
         
         this.markovChain.getGoalRelationshipFile().setLandUseMapInformation(this.digPopGUIInformation.getLandUseMapInformation());
-        this.markovChain.addConstraintMapFilePath(this.digPopGUIInformation.getConstraintMapsFilePaths());
+        this.markovChain.addConstraintMaps(this.digPopGUIInformation.getConstraintMaps());
         
         if(this.digPopGUIInformation.getFileDirectory() != null){
             createRelationshipFile();

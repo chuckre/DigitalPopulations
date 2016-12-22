@@ -6,18 +6,23 @@
 package cerl.gui.forms;
 
 import cerl.gui.standard.utilities.Result;
+import cerl.gui.utilities.ConstraintMap;
+import cerl.gui.utilities.ConstraintMapsTableItemModel;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.LandUseCombinationTableItemModel;
 import cerl.gui.utilities.StepTwoInstructionNames;
 import cerl.gui.utilities.VacantClass;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
@@ -30,21 +35,11 @@ public class StepTwo extends javax.swing.JFrame {
     private final ArrayList<String> errors;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_TWO_HELP_FILE_NAME.toString();
     private final LandUseCombinationTableItemModel landUseCombinationTableItemModel;
+    private final ConstraintMapsTableItemModel constraintMapsTableItemModel;
     private final DigPopGUIInformation digPopGUIInformation;
     
     private Result landUseLoadClassesResult = new Result();
-
-    /**
-     * Creates new form StepOne
-     */
-    public StepTwo() {
-        this.digPopGUIInformation = new DigPopGUIInformation();
-        this.landUseCombinationTableItemModel = new LandUseCombinationTableItemModel(this.digPopGUIInformation.getLandUseMapInformation().getLandUseMapClassCombinations());
-        initComponents();
-        
-        errors = new ArrayList<>();
-        pack();
-    }
+    
     
     /**
      * Creates new form StepOne
@@ -54,10 +49,68 @@ public class StepTwo extends javax.swing.JFrame {
         this.digPopGUIInformation = digPopGUIInformation;
         this.landUseCombinationTableItemModel = new LandUseCombinationTableItemModel(this.digPopGUIInformation.getLandUseMapInformation().getLandUseMapClassCombinations());
         
+        ArrayList<ConstraintMap> constraintMaps = new ArrayList<ConstraintMap>();
+        if(this.digPopGUIInformation.getConstraintMaps() != null
+                && this.digPopGUIInformation.getConstraintMaps().size() > 0){
+            constraintMaps = this.digPopGUIInformation.getConstraintMaps();
+        }
+        this.constraintMapsTableItemModel = new ConstraintMapsTableItemModel(constraintMaps);
+        
         initComponents();
         errors = new ArrayList<>();
         populateDataFieldsFromFile();
+        
+        /**
+         * Mouse Listener for the MarkovChains display table.
+         * The user can double click a MarkovChain from the table 
+         * and will be given the option to view or delete.  
+         */
+        tblConstraintMaps.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    ConstraintMap constraintMap = constraintMapsTableItemModel.getConstraintMapAt(tblConstraintMaps.getSelectedRow(), tblConstraintMaps.getSelectedColumn());
+                    
+                    openOrDeleteExistingConstraintMap(constraintMap);
+                }
+            }
+        });
+        
+        
         pack();
+    }
+    
+    public void openOrDeleteExistingConstraintMap(ConstraintMap constraintMap){
+        Object[] options = {
+                        "Open",
+                        "Delete"};
+        int selectedOption = JOptionPane.showOptionDialog(this,
+            "Would you like to open or delete the Constraint Map: " + constraintMap.getFilePath(),
+            "Question",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            options,
+            options[0]);
+        
+        if(selectedOption == 0){
+            ConstraintMapDetails constraintMapDetails =new ConstraintMapDetails(this.digPopGUIInformation, constraintMap);
+            constraintMapDetails.setVisible(true);
+            constraintMapDetails.setLocationRelativeTo(this);
+
+            dispose();
+        } else if(selectedOption == 1){
+            int answer = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to delete Constraint Map: " + constraintMap.getFilePath() + "?",
+                "Delete?",
+                JOptionPane.YES_NO_OPTION);
+            
+            if(answer == 0){
+                this.digPopGUIInformation.getConstraintMaps().remove(constraintMap);
+                this.constraintMapsTableItemModel.fireTableDataChanged();
+            }
+        }
+                    
     }
 
     /**
@@ -112,8 +165,9 @@ public class StepTwo extends javax.swing.JFrame {
         jPanelConstraintMap = new javax.swing.JPanel();
         lblConstraintMap = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tblConstraintMaps1 = new javax.swing.JTable();
+        tblConstraintMaps = new javax.swing.JTable();
         constraintMapInfoIcon = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         btnPreviousStep = new javax.swing.JButton();
         lblErrorMessages = new javax.swing.JLabel();
         btnNextStep = new javax.swing.JButton();
@@ -505,30 +559,8 @@ public class StepTwo extends javax.swing.JFrame {
 
         lblConstraintMap.setText("Selected Constraint Maps :");
 
-        tblConstraintMaps1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "File Path"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane3.setViewportView(tblConstraintMaps1);
+        tblConstraintMaps.setModel(constraintMapsTableItemModel);
+        jScrollPane3.setViewportView(tblConstraintMaps);
 
         constraintMapInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         constraintMapInfoIcon.setToolTipText("Help Infomation for Region Map");
@@ -539,19 +571,24 @@ public class StepTwo extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setText("To Open or Delete Existing Constraint Map: Please Double Click on Specified Constraint Map in Table.");
+
         javax.swing.GroupLayout jPanelConstraintMapLayout = new javax.swing.GroupLayout(jPanelConstraintMap);
         jPanelConstraintMap.setLayout(jPanelConstraintMapLayout);
         jPanelConstraintMapLayout.setHorizontalGroup(
             jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelConstraintMapLayout.createSequentialGroup()
+            .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
+                .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
                     .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
-                        .addComponent(lblConstraintMap)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(constraintMapInfoIcon)
-                        .addGap(0, 615, Short.MAX_VALUE)))
+                        .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
+                                .addComponent(lblConstraintMap)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(constraintMapInfoIcon))
+                            .addComponent(jLabel7))
+                        .addGap(0, 303, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelConstraintMapLayout.setVerticalGroup(
@@ -562,7 +599,9 @@ public class StepTwo extends javax.swing.JFrame {
                     .addComponent(lblConstraintMap)
                     .addComponent(constraintMapInfoIcon))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -598,12 +637,12 @@ public class StepTwo extends javax.swing.JFrame {
                 .addComponent(jPanelHouseholdDensityMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelLandUseHouseholdMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addContainerGap(188, Short.MAX_VALUE))
             .addGroup(jPanelStepTwoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStepTwoLayout.createSequentialGroup()
-                    .addContainerGap(452, Short.MAX_VALUE)
+                    .addContainerGap(511, Short.MAX_VALUE)
                     .addComponent(jPanelConstraintMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(1, 1, 1)))
+                    .addContainerGap()))
         );
 
         btnPreviousStep.setText("Previous Step");
@@ -673,7 +712,8 @@ public class StepTwo extends javax.swing.JFrame {
                     .addComponent(btnPreviousStep)
                     .addComponent(btnNextStep))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblErrorMessages))
+                .addComponent(lblErrorMessages)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -824,53 +864,17 @@ public class StepTwo extends javax.swing.JFrame {
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Combination_Classes.toString());
     }//GEN-LAST:event_landuseMapCombinationClassesInfoIconMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(StepTwo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(StepTwo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(StepTwo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(StepTwo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new StepTwo().setVisible(true);
-            }
-        });
-    }
+   
     
     /**
      * Adds a new constraint map
      * @param value 
      */
-    private void AddItemToConstaintMapTable(String value){
-        DefaultTableModel model = (DefaultTableModel)tblConstraintMaps1.getModel();
-        Object[] obj = {value};
-        model.addRow(obj);
-    }
+  //  private void AddItemToConstaintMapTable(ConstraintMap value){
+   //     DefaultTableModel model = (DefaultTableModel)tblConstraintMaps.getModel();
+ //       Object[] obj = {value};
+ //       model.addRow(obj);
+ //   }
     
     /**
      * Updates the error messages
@@ -926,12 +930,6 @@ public class StepTwo extends javax.swing.JFrame {
         
         txtRegionMap.setText(this.digPopGUIInformation.getRegionMapFilePath());
         txtCensusEnumerations.setText(this.digPopGUIInformation.getCensusEnumerationsFilePath());
-        
-        if(this.digPopGUIInformation.getConstraintMapsFilePaths() != null){
-            for(int i = 0; i<this.digPopGUIInformation.getConstraintMapsFilePaths().size(); i++){
-                AddItemToConstaintMapTable(this.digPopGUIInformation.getConstraintMapsFilePaths().get(i));
-            }
-        }
 
         txtPopulationMicroData.setText(this.digPopGUIInformation.getPopulationMicroDataFilePath());
         txtHouseholdMicroData.setText(this.digPopGUIInformation.getHouseholdMicroDataFilePath());
@@ -983,6 +981,7 @@ public class StepTwo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenu_About;
     private javax.swing.JPanel jPanelConstraintMap;
@@ -1014,7 +1013,7 @@ public class StepTwo extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemExitApplication;
     private javax.swing.JLabel populationMicroDataInfoIcon;
     private javax.swing.JLabel regionMapInfoIcon;
-    private javax.swing.JTable tblConstraintMaps1;
+    private javax.swing.JTable tblConstraintMaps;
     private javax.swing.JTextField txtCensusEnumerations;
     private javax.swing.JTextField txtHouseholdDensityMap;
     private javax.swing.JTextField txtHouseholdMicroData;

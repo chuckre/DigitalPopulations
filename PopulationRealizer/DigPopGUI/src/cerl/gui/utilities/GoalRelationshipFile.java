@@ -20,12 +20,14 @@ public class GoalRelationshipFile {
     private String populationDensity; //the landuse.csv or map.asc
     private String populationDensityType; //map or landuse, only one allowed
     private ArrayList<Traits> traits; 
-    private Forbid forbid;
-
+    private ArrayList<Forbid> forbids;
+    
     /**
      * Creates a new, empty, goal relationship file
      */
-    public GoalRelationshipFile(){}
+    public GoalRelationshipFile(){
+        this.forbids = new ArrayList<Forbid>();
+    }
     
     /**
      * Creates a new goal relationship file from the provided values
@@ -35,12 +37,12 @@ public class GoalRelationshipFile {
      * @param traits - the list of traits
      * @param forbid - the list of constraints for placing households
      */
-    public GoalRelationshipFile(LandUseMapInformation landUseMapInformation, String populationDensity, String populationDensityType, ArrayList<Traits> traits, Forbid forbid) {
+     public GoalRelationshipFile(LandUseMapInformation landUseMapInformation, String populationDensity, String populationDensityType, ArrayList<Traits> traits, ArrayList<Forbid> forbids) {
         this.landUseMapInformation = landUseMapInformation;
         this.populationDensity = populationDensity;
         this.populationDensityType = populationDensityType;
         this.traits = traits;
-        this.forbid = forbid;
+        this.forbids = forbids;
     }
 
     /**
@@ -84,8 +86,8 @@ public class GoalRelationshipFile {
      * @return 
      */
     @XmlElement(name="forbid")
-    public Forbid getForbid() {
-        return forbid;
+    public ArrayList<Forbid> getForbids() {
+        return forbids;
     }
 
     /**
@@ -120,11 +122,20 @@ public class GoalRelationshipFile {
         this.traits = traits;
     }
 
+
     /**
-     * Sets the list of constraints
+     * Sets the list of constraint forbids
      * @param forbid - the new list of constraints
      */
-    public void setForbid(Forbid forbid) {
-        this.forbid = forbid;
+    public void setForbid(ArrayList<Forbid> forbids) {
+        this.forbids = forbids;
+    }
+    
+    /**
+     * Adds to the list of constraint forbids
+     * @param forbid  - the new forbid
+     */
+    public void addForbid(Forbid forbid) {
+        this.forbids.add(forbid);
     }
 }

@@ -267,15 +267,15 @@ public class MarkovChain {
         this.traitWeightLocation = traitWeightLocation;
     }
     
+
     /**
      * Adds the list of constraint maps to the list for the Goal Relationship File
      * @param constraintMapsFilePaths - the new list of constraint map file names
      */
-    public void addConstraintMapFilePath(ArrayList<String> constraintMapsFilePaths) {
-        constraintMapsFilePaths.stream().forEach((c) -> {
-            Forbid f = new Forbid();
-            f.setMap(c);
-            this.goalRelationshipFile.setForbid(f);
+    public void addConstraintMaps(ArrayList<ConstraintMap> constraintMaps) {
+        this.goalRelationshipFile.getForbids().clear();
+        constraintMaps.stream().forEach((c) -> {
+            this.goalRelationshipFile.addForbid(c.getForbid());
         });
     }
     
