@@ -234,22 +234,11 @@ public class customTableModel  extends AbstractTableModel {
             if((value.getClass().toString() != null) && (allowedType != null) && (!value.getClass().toString().equals(allowedType))){
                 if(allowedType.contains("Double")){
                     Boolean isValid = Validations.validateAndReturnDouble(value.toString());
-                    //try{
-                      //  double d = Double.parseDouble(value.toString());
                         ((customTableCell) (tableCells.get(row).get(col))).setError(!isValid);
-                    //} catch(NumberFormatException e){
-                      //  ((customTableCell) (tableCells.get(row).get(col))).setError(true);
-                    //}
                 }
                 else if(allowedType.contains("Integer")){
                     Boolean isValid = Validations.validateAndReturnInteger(value.toString());
                     ((customTableCell) (tableCells.get(row).get(col))).setError(!isValid);
-                    //try{
-                      //  int i = Integer.parseInt(value.toString());
-                        //((customTableCell) (tableCells.get(row).get(col))).setError(false);
-                    //} catch(NumberFormatException e){
-                      //  ((customTableCell) (tableCells.get(row).get(col))).setError(true);
-                    //}
                 }
             }   
         }            

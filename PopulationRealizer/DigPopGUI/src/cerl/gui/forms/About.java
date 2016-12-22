@@ -41,7 +41,7 @@ public class About extends javax.swing.JFrame {
 
         jLabel_FullText.setBackground(new java.awt.Color(255, 255, 255));
         jLabel_FullText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel_FullText.setText("<html>This software was funded by OSD-ASA(ALT) and produced for the Phase Zero Assessment of Urban Security Threats ERDC project,<br> developed by Red Horse, and designed by Dr. Charles R. Ehlschlaeger, Jeff Burkhalter,<br> Craig Cheney, Ben Hough, Roger Jenkins, Alexandria Johnson, and Meghan Rivera.</html>");
+        jLabel_FullText.setText("<html>This software was funded by OSD-ASA(ALT) and produced for the Phase Zero Assessment <br>of Urban Security Threats ERDC project, developed by RedHorse, and designed by <br>Dr. Charles R. Ehlschlaeger, Jeff Burkhalter, Craig Cheney, Ben Hough, Roger Jenkins, <br>Alexandria Johnson, and Meghan Rivera.</html>");
 
         jLabel_About.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel_About.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -57,7 +57,7 @@ public class About extends javax.swing.JFrame {
             jPanel_AboutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_AboutLayout.createSequentialGroup()
                 .addComponent(HeaderIcon)
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(jLabel_About, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_AboutLayout.createSequentialGroup()
                 .addContainerGap()

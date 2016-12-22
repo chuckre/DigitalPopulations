@@ -29,10 +29,10 @@ import javax.swing.table.TableColumn;
 public class MarkovChainMatrix extends javax.swing.JFrame {
     private final String markovName;
     private final MarkovTableModel myTable;
-    private int START_EDITABLE_ROW;
-    private int START_EDITABLE_COL;
-    private int END_EDITABLE_ROW;
-    private int END_EDITABLE_COL;
+    private final int START_EDITABLE_ROW = 1;
+    private final int START_EDITABLE_COL = 2;        
+    private final int END_EDITABLE_ROW;
+    private final int END_EDITABLE_COL;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_FOUR_HELP_FILE_NAME.toString();
     private final DigPopGUIInformation digPopGUIInformation;
     private final MarkovChain currentMarkovChain;
@@ -51,6 +51,8 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         this.markovName = this.currentMarkovChain.getMarkovName();
         
         List<SurveyColumnValuesGrouping> surveyGroups = this.currentMarkovChain.getSelectSurveyClass().getSurveyColumnValuesGroupings();
+        END_EDITABLE_ROW = surveyGroups.size();
+        END_EDITABLE_COL = 1 + this.currentMarkovChain.getCensusClasses().size();
         
         //load table
         myTable = populateMarkovTableModel(surveyGroups);
@@ -87,9 +89,15 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         columnNames.addAll(this.currentMarkovChain.getAllSelectedCensusClassesUserDefinedNames());
         columnNames.addAll(Arrays.asList("Amount Left",""));
         
+        int[][] cells = new int[2][Math.max(END_EDITABLE_COL-START_EDITABLE_COL, END_EDITABLE_ROW-START_EDITABLE_ROW)+1];
+        
+        int numRows = END_EDITABLE_ROW - START_EDITABLE_ROW + 1;
+        int numCols = END_EDITABLE_COL - START_EDITABLE_COL + 1;
+        
         //create table with custom MarkovTableModel
         MarkovTableModel mtmTable = new MarkovTableModel(this.currentMarkovChain.getColumnNames()
-                , this.currentMarkovChain.getGenericTableCells(),this.currentMarkovChain.getEmptyCells());
+                , this.currentMarkovChain.getGenericTableCells(),this.currentMarkovChain.getEmptyCells()
+                , numRows, numCols);
         
         return mtmTable;
     }
@@ -101,7 +109,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
      */
     private MarkovTableModel populateMarkovTableModel(List<SurveyColumnValuesGrouping> surveyGroups){
         MarkovTableModel myModel;
-        
+                
         if(this.currentMarkovChain.getMarkovChainTableCells().size() > 0){
             myModel = populateExistingMarkovTableModel(surveyGroups);
         } else{
@@ -126,11 +134,17 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         ArrayList<ArrayList<Object>> cellValues = new ArrayList<>(); //MarkovTableCell[6][7];
         
         //based on the number of rows/columns, set the limits of editable cells
-        START_EDITABLE_ROW = 1;
-        START_EDITABLE_COL = 2;
-        END_EDITABLE_ROW = surveyGroups.size();//3;
-        END_EDITABLE_COL = 1 + this.currentMarkovChain.getCensusClasses().size();//4;
         int[][] cells = new int[2][Math.max(END_EDITABLE_COL-START_EDITABLE_COL, END_EDITABLE_ROW-START_EDITABLE_ROW)+1];
+        
+        int numRows = END_EDITABLE_ROW - START_EDITABLE_ROW + 1;
+        int numCols = END_EDITABLE_COL - START_EDITABLE_COL + 1;
+        
+        for(int r=0; r<numRows; r++){
+            cells[0][r] = numCols; //in a row, there are numCols cells
+        }
+        for(int c=0; c<numCols; c++){
+            cells[1][c] = numRows; //in a column, there are numRows cells
+        }
         
         //Set up rows and columns
         int numberOfNeededRows = 3 + surveyGroups.size();
@@ -199,7 +213,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         cellValues.get(numberOfNeededRows - 2).add(numberOfNeededColumn - 2, new MarkovTableCell(numberOfNeededRows -2, numberOfNeededColumn-2, "", false, false, false, false));
         
         //create table with custom MarkovTableModel
-        MarkovTableModel mtmTable = new MarkovTableModel(columnNames, cellValues,cells);
+        MarkovTableModel mtmTable = new MarkovTableModel(columnNames, cellValues, cells, numRows, numCols);
         this.currentMarkovChain.setEmptyCells(cells);
         //this.currentMarkovChain.setMarkovChainTableCells(cellValues);
         this.currentMarkovChain.setMarkovTableCellsFromGeneric(cellValues);
