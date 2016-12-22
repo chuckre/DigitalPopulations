@@ -167,6 +167,7 @@ public class StepTwo extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblConstraintMaps = new javax.swing.JTable();
         constraintMapInfoIcon = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         btnPreviousStep = new javax.swing.JButton();
         lblErrorMessages = new javax.swing.JLabel();
         btnNextStep = new javax.swing.JButton();
@@ -570,19 +571,24 @@ public class StepTwo extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setText("To Open or Delete Existing Constraint Map: Please Double Click on Specified Constraint Map in Table.");
+
         javax.swing.GroupLayout jPanelConstraintMapLayout = new javax.swing.GroupLayout(jPanelConstraintMap);
         jPanelConstraintMap.setLayout(jPanelConstraintMapLayout);
         jPanelConstraintMapLayout.setHorizontalGroup(
             jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelConstraintMapLayout.createSequentialGroup()
+            .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
+                .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
                     .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
-                        .addComponent(lblConstraintMap)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(constraintMapInfoIcon)
-                        .addGap(0, 615, Short.MAX_VALUE)))
+                        .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
+                                .addComponent(lblConstraintMap)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(constraintMapInfoIcon))
+                            .addComponent(jLabel7))
+                        .addGap(0, 303, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelConstraintMapLayout.setVerticalGroup(
@@ -593,7 +599,9 @@ public class StepTwo extends javax.swing.JFrame {
                     .addComponent(lblConstraintMap)
                     .addComponent(constraintMapInfoIcon))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -629,12 +637,12 @@ public class StepTwo extends javax.swing.JFrame {
                 .addComponent(jPanelHouseholdDensityMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelLandUseHouseholdMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addContainerGap(188, Short.MAX_VALUE))
             .addGroup(jPanelStepTwoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStepTwoLayout.createSequentialGroup()
-                    .addContainerGap(452, Short.MAX_VALUE)
+                    .addContainerGap(511, Short.MAX_VALUE)
                     .addComponent(jPanelConstraintMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(1, 1, 1)))
+                    .addContainerGap()))
         );
 
         btnPreviousStep.setText("Previous Step");
@@ -704,7 +712,8 @@ public class StepTwo extends javax.swing.JFrame {
                     .addComponent(btnPreviousStep)
                     .addComponent(btnNextStep))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblErrorMessages))
+                .addComponent(lblErrorMessages)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -972,6 +981,7 @@ public class StepTwo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenu_About;
     private javax.swing.JPanel jPanelConstraintMap;
