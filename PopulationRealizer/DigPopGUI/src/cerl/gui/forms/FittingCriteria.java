@@ -8,6 +8,7 @@ package cerl.gui.forms;
 import cerl.gui.standard.utilities.FileType;
 import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.Result;
+import cerl.gui.standard.utilities.Validations;
 import cerl.gui.standard.utilities.customTableModel;
 import cerl.gui.standard.utilities.customTableCell;
 import cerl.gui.standard.utilities.customTableCellRenderer;
@@ -243,6 +244,7 @@ public class FittingCriteria extends javax.swing.JFrame {
         jTable_TraitInformation = new javax.swing.JTable();
         btnNextStep = new javax.swing.JButton();
         btnPreviousStep = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu_FileHelpMenu = new javax.swing.JMenu();
@@ -250,7 +252,7 @@ public class FittingCriteria extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Step Five");
-        setPreferredSize(new java.awt.Dimension(1000, 300));
+        setPreferredSize(new java.awt.Dimension(1000, 350));
 
         jLabel_Header.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel_Header.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -278,6 +280,9 @@ public class FittingCriteria extends javax.swing.JFrame {
                 btnPreviousStepActionPerformed(evt);
             }
         });
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Weights must be values between 0 and 0.99");
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -313,7 +318,8 @@ public class FittingCriteria extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnPreviousStep)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnNextStep)))
+                        .addComponent(btnNextStep))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -324,12 +330,14 @@ public class FittingCriteria extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNextStep)
                     .addComponent(btnPreviousStep))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jLabel_Header.getAccessibleContext().setAccessibleName("Header");
@@ -365,7 +373,7 @@ public class FittingCriteria extends javax.swing.JFrame {
             dispose();
         }
         else{
-            JOptionPane.showMessageDialog(null, "All weights are required", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "All weights are required, and must be between 0 and 1", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnNextStepActionPerformed
 
@@ -402,6 +410,11 @@ public class FittingCriteria extends javax.swing.JFrame {
             int c = columns.indexOf("Trait Weight");
             if(cells.get(r).get(c).toString().equals("")){
                 return false;
+            } else if (Validations.validateAndReturnDouble(cells.get(r).get(c).toString())){
+                Double d = Double.parseDouble(cells.get(r).get(c).toString());
+                if((d>=1) || (d < 0.0)){
+                    return false;
+                }
             }
         }
         return true;
@@ -562,6 +575,7 @@ public class FittingCriteria extends javax.swing.JFrame {
     private javax.swing.JButton btnNextStep;
     private javax.swing.JButton btnPreviousStep;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel_Header;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
@@ -581,6 +595,6 @@ public class FittingCriteria extends javax.swing.JFrame {
             tableCol.setCellRenderer(new customTableCellRenderer());
         }
         //adds the listener for the cell calculations/validations
-        jTable_TraitInformation.getModel().addTableModelListener(new customTableModelListener(jTable_TraitInformation));
+        jTable_TraitInformation.getModel().addTableModelListener(new customTableModelListener(jTable_TraitInformation, true));
     }
 }

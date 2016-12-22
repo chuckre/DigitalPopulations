@@ -17,6 +17,7 @@ import javax.swing.event.TableModelListener;
  */
 public class customTableModelListener implements TableModelListener {
     private final JTable table;
+    private Boolean MinMaxVerifier = false;
     
     /**
      * Creates a new customTableModelListener for the provided JTable
@@ -24,6 +25,17 @@ public class customTableModelListener implements TableModelListener {
      */
     public customTableModelListener(JTable table){
         this.table = table;
+        MinMaxVerifier = false;
+    }
+    
+    /**
+     * Creates a new customTableModelListener for the provided parameters
+     * @param table - the JTable to set the new listener on
+     * @param MinMaxVerifier - if input cells are limited between min/max values
+     */
+    public customTableModelListener(JTable table, Boolean MinMaxVerifier){
+        this.table = table;
+        this.MinMaxVerifier = MinMaxVerifier;
     }
     
     /**
@@ -37,8 +49,12 @@ public class customTableModelListener implements TableModelListener {
         customTableModel model = (customTableModel)e.getSource();
         //String columnName = model.getColumnName(column);
         //Object data = model.getValueAt(row, column);
-        
-        //handle data
-        model.handleTableChange(row, column);
+                    
+        if((this.MinMaxVerifier!=null) && (this.MinMaxVerifier)){
+            model.verifyData(row,column,0.0,1.0);
+        } else{
+            //handle data
+            model.handleTableChange(row, column);    
+        }
     }
 }

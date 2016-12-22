@@ -233,22 +233,58 @@ public class customTableModel  extends AbstractTableModel {
             
             if((value.getClass().toString() != null) && (allowedType != null) && (!value.getClass().toString().equals(allowedType))){
                 if(allowedType.contains("Double")){
-                    try{
-                        double d = Double.parseDouble(value.toString());
-                        ((customTableCell) (tableCells.get(row).get(col))).setError(false);
-                    } catch(NumberFormatException e){
-                        ((customTableCell) (tableCells.get(row).get(col))).setError(true);
-                    }
+                    Boolean isValid = Validations.validateAndReturnDouble(value.toString());
+                    //try{
+                      //  double d = Double.parseDouble(value.toString());
+                        ((customTableCell) (tableCells.get(row).get(col))).setError(!isValid);
+                    //} catch(NumberFormatException e){
+                      //  ((customTableCell) (tableCells.get(row).get(col))).setError(true);
+                    //}
                 }
                 else if(allowedType.contains("Integer")){
-                    try{
-                        int i = Integer.parseInt(value.toString());
-                        ((customTableCell) (tableCells.get(row).get(col))).setError(false);
-                    } catch(NumberFormatException e){
-                        ((customTableCell) (tableCells.get(row).get(col))).setError(true);
-                    }
+                    Boolean isValid = Validations.validateAndReturnInteger(value.toString());
+                    ((customTableCell) (tableCells.get(row).get(col))).setError(!isValid);
+                    //try{
+                      //  int i = Integer.parseInt(value.toString());
+                        //((customTableCell) (tableCells.get(row).get(col))).setError(false);
+                    //} catch(NumberFormatException e){
+                      //  ((customTableCell) (tableCells.get(row).get(col))).setError(true);
+                    //}
                 }
             }   
         }            
+    }
+    
+    /**
+     * Used to verify the data in a cell if it falls between a min/max value
+     * @param row - The row that was changed
+     * @param column - The column that was changed
+     * @param min - The min allowed value
+     * @param max - The max allowed value
+     */
+    public void verifyData(int row,int column,double min,double max){
+        
+        if (tableCells.get(row).get(column).getClass().equals(customTableCell.class)) {
+            Object value  = ((customTableCell) (tableCells.get(row).get(column))).getValue();
+            String allowedType =  ((customTableCell) (tableCells.get(row).get(column))).getAllowedDataType();
+            
+            if((value.getClass().toString() != null) && (allowedType != null) && (!value.getClass().toString().equals(allowedType))){
+                if(allowedType.contains("Double")){
+                    Boolean isValid = Validations.validateAndReturnDouble(value.toString());
+                    if(isValid){
+                        double d = Double.parseDouble(value.toString());
+                        if((d<min) || (d>=max)){
+                            ((customTableCell) (tableCells.get(row).get(column))).setError(true);
+                        }
+                        else{
+                            ((customTableCell) (tableCells.get(row).get(column))).setError(false);
+                        }
+                    } else{
+                        ((customTableCell) (tableCells.get(row).get(column))).setError(!isValid);
+                    }
+                }
+            }
+        }
+        
     }
 }
