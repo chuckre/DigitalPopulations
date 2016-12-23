@@ -437,7 +437,11 @@ public class DigPopGUIUtilityClass {
                     String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
 
                     for (NewCensusColumnDetails newInfo : newDetailsToAdd) {
-                        int oldValue = Integer.parseInt(lineInfo[newInfo.getOldColumnNumber()]);
+                        int oldValue = 0;
+                        for(int oldColumnNumber : newInfo.getOldValueLookUpColumns()){
+                            oldValue = Integer.parseInt(lineInfo[oldColumnNumber]);
+                        }
+                        
                         int newValue = (int) (oldValue * newInfo.getRandomPercentage());
 
                         line = line + ", " + newValue;
