@@ -257,6 +257,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         jTable_MarkovMatrix.setFillsViewportHeight(true);
         jTable_MarkovMatrix.setMinimumSize(new java.awt.Dimension(100, 300));
         jTable_MarkovMatrix.setName("Markov Chain Matrix"); // NOI18N
+        jTable_MarkovMatrix.setRowHeight(24);
         jTable_MarkovMatrix.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable_MarkovMatrix);
         jTable_MarkovMatrix.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);

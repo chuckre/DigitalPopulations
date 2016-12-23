@@ -120,12 +120,9 @@ public class MarkovTableModel extends customTableModel {
                 clearCell(row, c);
             }
         }
-        
-        int numRows = emptyCells[0].length;
-        int numCols = emptyCells[1].length;
-        
-        for(int r=0; r<numRows; r++){
-            emptyCells[0][r] = numCols; //in a row, there are numCols cells
+                
+        for(int r=0; r<numberOfRows; r++){
+            emptyCells[0][r] = numberOfColumns; //in a row, there are numCols cells
         }
     }
 
@@ -141,12 +138,9 @@ public class MarkovTableModel extends customTableModel {
                 clearCell(r, column);
             }
         }
-        
-        int numRows = emptyCells[0].length;
-        int numCols = emptyCells[1].length;
-        
-        for(int c=0; c<numCols; c++){
-            emptyCells[1][c] = numRows; //in a column, there are numRows cells
+                
+        for(int c=0; c<numberOfColumns; c++){
+            emptyCells[1][c] = numberOfRows; //in a column, there are numRows cells
         }
     }
 
@@ -234,7 +228,9 @@ public class MarkovTableModel extends customTableModel {
             //check columns in this row for the empty cell
             if(!((MarkovTableCell)(markovTable.get(rowWithEmptyCell).get(c))).isUserEntered() && (rowWithEmptyCell > PROPORTION_ROW)){
                 ((MarkovTableCell) (markovTable.get(rowWithEmptyCell).get(c))).setCalculated(true);
-                emptyCells[0][rowWithEmptyCell-1-PROPORTION_ROW] = emptyCells[0][rowWithEmptyCell-1-PROPORTION_ROW] - 1;
+                //filledInEmptyCell(rowWithEmptyCell, c);        
+                //emptyCells[0][rowWithEmptyCell-1-PROPORTION_ROW] = emptyCells[0][rowWithEmptyCell-1-PROPORTION_ROW] - 1;
+                //emptyCells[1][c-1-PROPORTION_COLUMN] = emptyCells[1][c-1-PROPORTION_COLUMN] - 1;
                 //remember the empty column - to set after have updated total
                 colWithEmptyCell = c;
             }
@@ -243,6 +239,7 @@ public class MarkovTableModel extends customTableModel {
         //Set values for the empty cell
         double newMinTotal = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Min", rowMaxTotal);
         double newMaxTotal = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Max", rowMinTotal);
+        filledInEmptyCell(rowWithEmptyCell, colWithEmptyCell);        
         
         //update sum column for this row
         //String newRowValue = "0 - " + DECIMAL_FORMAT.format(rowMinTotal) + "   0 - " + DECIMAL_FORMAT.format(rowMaxTotal);
@@ -293,7 +290,8 @@ public class MarkovTableModel extends customTableModel {
             //check rows in this column for the empty cell
             if(!((MarkovTableCell)(markovTable.get(r).get(colWithEmptyCell))).isUserEntered() && (colWithEmptyCell > PROPORTION_COLUMN)){
                 ((MarkovTableCell) (markovTable.get(r).get(colWithEmptyCell))).setCalculated(true);
-                emptyCells[1][colWithEmptyCell-1-PROPORTION_COLUMN] = emptyCells[1][colWithEmptyCell-1-PROPORTION_COLUMN] - 1;
+                //emptyCells[1][colWithEmptyCell-1-PROPORTION_COLUMN] = emptyCells[1][colWithEmptyCell-1-PROPORTION_COLUMN] - 1;
+                //emptyCells[0][rowWithEmptyCell-1-PROPORTION_ROW] = emptyCells[0][rowWithEmptyCell-1-PROPORTION_ROW] - 1;
                 rowWithEmptyCell = r;
             }
         }
@@ -301,7 +299,8 @@ public class MarkovTableModel extends customTableModel {
         //Set values for the empty cell
         double newMinTotal = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Min", colMaxTotal);
         double newMaxTotal = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Max", colMinTotal);
-
+        filledInEmptyCell(rowWithEmptyCell, colWithEmptyCell);        
+                
         String newColValue = "0 - " + DECIMAL_FORMAT.format(newMinTotal) + "   0 - " + DECIMAL_FORMAT.format(newMaxTotal);
             
         //set column total
@@ -372,7 +371,7 @@ public class MarkovTableModel extends customTableModel {
             }
             
             //set column total
-            String newColValue = sumColumn(c, PROPORTION_ROW+1, sumRow);
+            sumColumn(c, PROPORTION_ROW+1, sumRow);
         }
         
         //calculate all rows
@@ -382,7 +381,7 @@ public class MarkovTableModel extends customTableModel {
             }
             
             //calculate the amount left for the row, by min and max
-            String newRowValue = sumRow(r, PROPORTION_COLUMN+1, sumCol);
+            sumRow(r, PROPORTION_COLUMN+1, sumCol);
         }
         
         return markovTable;
@@ -539,19 +538,14 @@ public class MarkovTableModel extends customTableModel {
             if(minValLocation > 0){
                 minVal = Double.parseDouble(thisCell.substring(0, minValLocation));
                 maxVal = Double.parseDouble(thisCell.substring(minValLocation+3));
-            }
-            
-            if((value != "") && (row-PROPORTION_ROW < emptyCells[0].length) && (col-PROPORTION_COLUMN < emptyCells[1].length)){
-                System.out.println("Updated empty cells");
-                emptyCells[0][row-PROPORTION_ROW-1] = emptyCells[0][row-PROPORTION_ROW-1] - 1;
-                emptyCells[1][col-PROPORTION_COLUMN-1] = emptyCells[1][col-PROPORTION_COLUMN-1] - 1;
-            }
+            }            
         } 
         
-        
         if (markovTable.get(row).get(col) == null) {
+            filledInEmptyCell(row,col); 
             markovTable.get(row).set(col, new MarkovTableCell(row, col, maxVal, minVal, value, false, false, false, true)); 
         } else if (markovTable.get(row).get(col).getClass().equals(MarkovTableCell.class)) {
+            filledInEmptyCell(row,col); 
             ((MarkovTableCell) (markovTable.get(row).get(col))).setMin(minVal);
             ((MarkovTableCell) (markovTable.get(row).get(col))).setMax(maxVal);
             ((MarkovTableCell) (markovTable.get(row).get(col))).setValue(value);
@@ -564,6 +558,19 @@ public class MarkovTableModel extends customTableModel {
         this.setOrClearErrors(row,col);
         //this.calculateMarkov(row, col);
         this.fireTableCellUpdated(row, col);
+    }
+    
+    /**
+     * Handles tracking that a cell was filled in that was previously empty
+     * @param row - the row filled in
+     * @param col - the column filled in
+     */
+    private void filledInEmptyCell(int row, int col){
+        if((emptyCells[0].length > (row-PROPORTION_ROW-1)) && (emptyCells[1].length > (col-PROPORTION_COLUMN-1))
+                && (row > 0) && (col > 0)){
+            emptyCells[0][row-PROPORTION_ROW-1] = emptyCells[0][row-PROPORTION_ROW-1] - 1;
+            emptyCells[1][col-PROPORTION_COLUMN-1] = emptyCells[1][col-PROPORTION_COLUMN-1] - 1;
+        }
     }
     
     /**
