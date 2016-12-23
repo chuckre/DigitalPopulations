@@ -200,17 +200,17 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel_Phase2RandomPlacement">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Phase 2 - Random Placement Percentage"/>
+            <Property name="text" type="java.lang.String" value="Phase 2 - Random Placement Percentage (0.0 - 1.0)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel_Phase2SkipTracts">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Phase 2 - Skip Tracts Probability"/>
+            <Property name="text" type="java.lang.String" value="Phase 2 - Skip Tracts Probability (0.0 - 1.0)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel_Phase2SkippedTracts">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Phase 2 - Skipped Tracts Probability Delta"/>
+            <Property name="text" type="java.lang.String" value="Phase 2 - Skipped Tracts Probability Delta (0.0 - 1.0)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="Phase2RandomPercentInfoIcon">
@@ -752,21 +752,17 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel_ParallelThreads" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="ParallelThreadsInfoIcon" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel_OutputDirectory" pref="148" max="32767" attributes="0"/>
+                      <Component id="jLabel_ParallelThreads" max="32767" attributes="0"/>
+                      <Component id="jLabel_Phase1TimeLimit" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                          <Component id="Phase1TimeLimitInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="ParallelThreadsInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel_OutputDirectory" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="OutputDirectoryInfoIcon" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="jLabel_Phase1TimeLimit" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="Phase1TimeLimitInfoIcon" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="OutputDirectoryInfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -793,11 +789,10 @@
                                   <Component id="jTextField_OutputDirectory" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnSelectDirectory" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                   <Component id="jLabel_OutputDirectory" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                  <Component id="OutputDirectoryInfoIcon" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="OutputDirectoryInfoIcon" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -888,7 +883,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel_Phase1TimeLimit">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Phase 1 Time limit"/>
+            <Property name="text" type="java.lang.String" value="Phase 1 Time limit (in minutes)"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[127, 14]"/>
             </Property>
@@ -936,15 +931,15 @@
                       <Component id="jComboBox_Phase4Save" pref="75" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="155" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jLabel_Phase4_TimeLimit" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="Phase4TimeLimitInfoIcon" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel_Phase4Skip" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="SkipPhase4InfoIcon" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -982,12 +977,10 @@
                       <Group type="103" alignment="1" groupAlignment="3" attributes="0">
                           <Component id="jLabel_Phase4Save" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jComboBox_Phase4Save" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_Phase4Skip" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jComboBox_Phase4Skip" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                          <Component id="SkipPhase4InfoIcon" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel_Phase4Skip" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="SkipPhase4InfoIcon" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -1070,7 +1063,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel_Phase4_TimeLimit">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Phase 4 Time Limit"/>
+            <Property name="text" type="java.lang.String" value="Phase 4 Time Limit (in minutes)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox_Phase4Save">
@@ -1261,7 +1254,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel_Phase3TimeLimit">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Phase 3 Time limit"/>
+            <Property name="text" type="java.lang.String" value="Phase 3 Time limit (in minutes)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox_Phase3Skip">
