@@ -41,6 +41,7 @@ public class StepSeven extends javax.swing.JFrame {
         initComponents();
         this.digPopGUIInformation = new DigPopGUIInformation();
         this.RunProperties = new RunFile();
+        setDataOnForm();
     }
     
     /**
@@ -53,12 +54,11 @@ public class StepSeven extends javax.swing.JFrame {
         
         if(this.digPopGUIInformation.getRunFile() != null){
             this.RunProperties = this.digPopGUIInformation.getRunFile();
-            setDataOnForm();
         } else{
             this.RunProperties = new RunFile();
             populateData();
         }
-        
+        setDataOnForm();
         pack();
     }
 
@@ -83,7 +83,7 @@ public class StepSeven extends javax.swing.JFrame {
             result = FileUtility.ReadTextFile(newRunFile.getPath());
             //result = FileUtility.ParseXMLFileIntoSpecifiedObject(newRunFile.getPath(), RunFile.class);
             this.RunProperties = new RunFile(result.getValue().toString());
-            setDataOnForm();
+            //setDataOnForm();
         }
         this.jLabel_Errors.setText("All data fields are required");
     }
@@ -244,11 +244,11 @@ public class StepSeven extends javax.swing.JFrame {
 
         jPanel_Phase2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel_Phase2RandomPlacement.setText("Phase 2 - Random Placement Percentage");
+        jLabel_Phase2RandomPlacement.setText("Phase 2 - Random Placement Percentage (0.0 - 1.0)");
 
-        jLabel_Phase2SkipTracts.setText("Phase 2 - Skip Tracts Probability");
+        jLabel_Phase2SkipTracts.setText("Phase 2 - Skip Tracts Probability (0.0 - 1.0)");
 
-        jLabel_Phase2SkippedTracts.setText("Phase 2 - Skipped Tracts Probability Delta");
+        jLabel_Phase2SkippedTracts.setText("Phase 2 - Skipped Tracts Probability Delta (0.0 - 1.0)");
 
         Phase2RandomPercentInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         Phase2RandomPercentInfoIcon.setToolTipText("Help Infomation for Phase 2 Random Placement Percentage");
@@ -701,7 +701,7 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
-        jLabel_Phase1TimeLimit.setText("Phase 1 Time limit");
+        jLabel_Phase1TimeLimit.setText("Phase 1 Time limit (in minutes)");
         jLabel_Phase1TimeLimit.setPreferredSize(new java.awt.Dimension(127, 14));
 
         btnSelectDirectory.setText("Select Directory");
@@ -718,18 +718,15 @@ public class StepSeven extends javax.swing.JFrame {
             .addGroup(jPanel_SeedsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_SeedsLayout.createSequentialGroup()
-                        .addComponent(jLabel_ParallelThreads)
-                        .addGap(18, 18, 18)
-                        .addComponent(ParallelThreadsInfoIcon))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_SeedsLayout.createSequentialGroup()
-                        .addComponent(jLabel_OutputDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(OutputDirectoryInfoIcon))
-                    .addGroup(jPanel_SeedsLayout.createSequentialGroup()
-                        .addComponent(jLabel_Phase1TimeLimit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Phase1TimeLimitInfoIcon)))
+                    .addComponent(jLabel_OutputDirectory, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(jLabel_ParallelThreads, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel_Phase1TimeLimit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(Phase1TimeLimitInfoIcon, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(ParallelThreadsInfoIcon, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(OutputDirectoryInfoIcon, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField_Phase1TimeLimit)
@@ -750,10 +747,9 @@ public class StepSeven extends javax.swing.JFrame {
                             .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jTextField_OutputDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnSelectDirectory))
-                            .addGroup(jPanel_SeedsLayout.createSequentialGroup()
+                            .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel_OutputDirectory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6))
-                            .addComponent(OutputDirectoryInfoIcon))
+                                .addComponent(OutputDirectoryInfoIcon)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel_SeedsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel_ParallelThreads)
@@ -823,7 +819,7 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
-        jLabel_Phase4_TimeLimit.setText("Phase 4 Time Limit");
+        jLabel_Phase4_TimeLimit.setText("Phase 4 Time Limit (in minutes)");
 
         jComboBox_Phase4Save.setModel(new DefaultComboBoxModel<>(TRUE_FALSE_VALUES));
         jComboBox_Phase4Save.addActionListener(new java.awt.event.ActionListener() {
@@ -859,14 +855,14 @@ public class StepSeven extends javax.swing.JFrame {
                     .addComponent(jTextField_Phase4_Lags)
                     .addComponent(jComboBox_Phase4Save, 0, 75, Short.MAX_VALUE))
                 .addGap(155, 155, 155)
-                .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_Phase4Layout.createSequentialGroup()
                         .addComponent(jLabel_Phase4_TimeLimit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Phase4TimeLimitInfoIcon))
-                    .addGroup(jPanel_Phase4Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Phase4Layout.createSequentialGroup()
                         .addComponent(jLabel_Phase4Skip)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(SkipPhase4InfoIcon)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -894,11 +890,10 @@ public class StepSeven extends javax.swing.JFrame {
                     .addComponent(Phase4SaveInfoIcon)
                     .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel_Phase4Save)
-                        .addComponent(jComboBox_Phase4Save, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jComboBox_Phase4Save, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel_Phase4Skip))
                     .addComponent(jComboBox_Phase4Skip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel_Phase4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(SkipPhase4InfoIcon)
-                        .addComponent(jLabel_Phase4Skip)))
+                    .addComponent(SkipPhase4InfoIcon))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -977,7 +972,7 @@ public class StepSeven extends javax.swing.JFrame {
             }
         });
 
-        jLabel_Phase3TimeLimit.setText("Phase 3 Time limit");
+        jLabel_Phase3TimeLimit.setText("Phase 3 Time limit (in minutes)");
 
         jComboBox_Phase3Skip.setModel(new DefaultComboBoxModel<>(TRUE_FALSE_VALUES));
         jComboBox_Phase3Skip.addActionListener(new java.awt.event.ActionListener() {
