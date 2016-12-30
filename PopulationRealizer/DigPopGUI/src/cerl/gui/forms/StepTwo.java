@@ -6,35 +6,111 @@
 package cerl.gui.forms;
 
 import cerl.gui.standard.utilities.Result;
-import cerl.gui.utilities.DigPopGUIFiles;
-import cerl.gui.utilities.StepOneUtilityClass;
-import cerl.gui.utilities.StepOneUtilityClass.DigPopFileTypeEnum;
-import java.io.File;
+import cerl.gui.utilities.ConstraintMap;
+import cerl.gui.utilities.ConstraintMapsTableItemModel;
+import cerl.gui.utilities.DigPopGUIInformation;
+import cerl.gui.utilities.DigPopGUIUtilityClass;
+import cerl.gui.utilities.HelpFileScreenNames;
+import cerl.gui.utilities.LandUseCombinationTableItemModel;
+import cerl.gui.utilities.StepTwoInstructionNames;
+import cerl.gui.utilities.VacantClass;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
+import java.util.Date;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
- *
+ * The second step in the DigPop GUI
  * @author ajohnson
  */
 public class StepTwo extends javax.swing.JFrame {
     
-    private DigPopGUIFiles digPopGUIFiles; 
-    private DefaultTableModel constraintMapsDataModel;
-    private ArrayList<String> errors;
-
+    private final ArrayList<String> errors;
+    private final String SCREEN_NAME = HelpFileScreenNames.STEP_TWO_HELP_FILE_NAME.toString();
+    private final LandUseCombinationTableItemModel landUseCombinationTableItemModel;
+    private final ConstraintMapsTableItemModel constraintMapsTableItemModel;
+    private final DigPopGUIInformation digPopGUIInformation;
+    
+    private Result landUseLoadClassesResult = new Result();
+    
+    
     /**
      * Creates new form StepOne
+     * @param digPopGUIInformation
      */
-    public StepTwo() {
+    public StepTwo(DigPopGUIInformation digPopGUIInformation) {
+        this.digPopGUIInformation = digPopGUIInformation;
+        this.landUseCombinationTableItemModel = new LandUseCombinationTableItemModel(this.digPopGUIInformation.getLandUseMapInformation().getLandUseMapClassCombinations());
+        
+        ArrayList<ConstraintMap> constraintMaps = new ArrayList<ConstraintMap>();
+        if(this.digPopGUIInformation.getConstraintMaps() != null
+                && this.digPopGUIInformation.getConstraintMaps().size() > 0){
+            constraintMaps = this.digPopGUIInformation.getConstraintMaps();
+        }
+        this.constraintMapsTableItemModel = new ConstraintMapsTableItemModel(constraintMaps);
+        
         initComponents();
-        setIntialWarningIcons();
-        digPopGUIFiles = new DigPopGUIFiles();
-        errors = new ArrayList<String>();
+        errors = new ArrayList<>();
+        populateDataFieldsFromFile();
+        
+        /**
+         * Mouse Listener for the MarkovChains display table.
+         * The user can double click a MarkovChain from the table 
+         * and will be given the option to view or delete.  
+         */
+        tblConstraintMaps.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    ConstraintMap constraintMap = constraintMapsTableItemModel.getConstraintMapAt(tblConstraintMaps.getSelectedRow(), tblConstraintMaps.getSelectedColumn());
+                    
+                    openOrDeleteExistingConstraintMap(constraintMap);
+                }
+            }
+        });
+        
+        
+        pack();
+    }
+    
+    public void openOrDeleteExistingConstraintMap(ConstraintMap constraintMap){
+        Object[] options = {
+                        "Open",
+                        "Delete"};
+        int selectedOption = JOptionPane.showOptionDialog(this,
+            "Would you like to open or delete the Constraint Map: " + constraintMap.getFilePath(),
+            "Question",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            options,
+            options[0]);
+        
+        if(selectedOption == 0){
+            ConstraintMapDetails constraintMapDetails =new ConstraintMapDetails(this.digPopGUIInformation, constraintMap);
+            constraintMapDetails.setVisible(true);
+            constraintMapDetails.setLocationRelativeTo(this);
+
+            dispose();
+        } else if(selectedOption == 1){
+            int answer = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to delete Constraint Map: " + constraintMap.getFilePath() + "?",
+                "Delete?",
+                JOptionPane.YES_NO_OPTION);
+            
+            if(answer == 0){
+                this.digPopGUIInformation.getConstraintMaps().remove(constraintMap);
+                this.constraintMapsTableItemModel.fireTableDataChanged();
+            }
+        }
+                    
     }
 
     /**
@@ -46,43 +122,99 @@ public class StepTwo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        mapRadioButtonGroup = new javax.swing.ButtonGroup();
-        fileChooser = new javax.swing.JFileChooser();
+        jDialogLoadingFile = new javax.swing.JDialog();
+        jLabel5 = new javax.swing.JLabel();
+        jProgressBar1 = new javax.swing.JProgressBar();
         jPanelStepTwo = new javax.swing.JPanel();
         jPanelRegionMapCensusEnum = new javax.swing.JPanel();
         txtRegionMap = new javax.swing.JTextField();
         txtCensusEnumerations = new javax.swing.JTextField();
         lblRegionMap = new javax.swing.JLabel();
         lblCensusEnumerations = new javax.swing.JLabel();
-        jPanelLandUseHouseholdMap = new javax.swing.JPanel();
-        txtLandUseHouseholdMap = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        censusEnumerationsInfoIcon = new javax.swing.JLabel();
+        regionMapInfoIcon = new javax.swing.JLabel();
+        jPanelHouseholdDensityMap = new javax.swing.JPanel();
+        txtHouseholdDensityMap = new javax.swing.JTextField();
+        lblHouseholdDensityMap = new javax.swing.JLabel();
+        householdDensityMapInfoIcon = new javax.swing.JLabel();
         jPanelHouseholdMicroData = new javax.swing.JPanel();
         txtHouseholdMicroData = new javax.swing.JTextField();
         lblHouseholdMicroData = new javax.swing.JLabel();
+        householdMicroDataInfoIcon = new javax.swing.JLabel();
         jPanelPopulationMicroData = new javax.swing.JPanel();
         txtPopulationMicroData = new javax.swing.JTextField();
         lblPopulationMicroData = new javax.swing.JLabel();
+        populationMicroDataInfoIcon = new javax.swing.JLabel();
+        jPanelLandUseHouseholdMap = new javax.swing.JPanel();
+        lblLanduseMap = new javax.swing.JLabel();
+        txtLandUseHouseholdMap = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtVacantClasses = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtVacantClassDescription = new javax.swing.JTextField();
+        btnLandUseAddCombinationClass = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableLandUseClassCombinations = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        txtLandUseComment = new javax.swing.JTextField();
+        landuseMapInfoIcon = new javax.swing.JLabel();
+        landuseMapCommentInfoIcon = new javax.swing.JLabel();
+        landuseMapVacentClassesInfoIcon = new javax.swing.JLabel();
+        landuseMapVacentClassesDescriptionInfoIcon = new javax.swing.JLabel();
+        landuseMapCombinationClassesInfoIcon = new javax.swing.JLabel();
         jPanelConstraintMap = new javax.swing.JPanel();
         lblConstraintMap = new javax.swing.JLabel();
-        txtLandUseHouseholdMap1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jPanelConstraintMap1 = new javax.swing.JPanel();
-        lblConstraintMap1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tblConstraintMaps1 = new javax.swing.JTable();
-        btnNextStep = new javax.swing.JButton();
+        tblConstraintMaps = new javax.swing.JTable();
+        constraintMapInfoIcon = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        btnPreviousStep = new javax.swing.JButton();
         lblErrorMessages = new javax.swing.JLabel();
+        btnNextStep = new javax.swing.JButton();
         jMenuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuItemExitApplication = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
+        jMenu_About = new javax.swing.JMenu();
+
+        jDialogLoadingFile.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        jDialogLoadingFile.setAlwaysOnTop(true);
+        jDialogLoadingFile.setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
+        jDialogLoadingFile.setModal(true);
+        jDialogLoadingFile.setResizable(false);
+        jDialogLoadingFile.setType(java.awt.Window.Type.UTILITY);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Please Wait While File is Loading.....");
+
+        jProgressBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jProgressBar1.setIndeterminate(true);
+        jProgressBar1.setString("");
+
+        javax.swing.GroupLayout jDialogLoadingFileLayout = new javax.swing.GroupLayout(jDialogLoadingFile.getContentPane());
+        jDialogLoadingFile.getContentPane().setLayout(jDialogLoadingFileLayout);
+        jDialogLoadingFileLayout.setHorizontalGroup(
+            jDialogLoadingFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogLoadingFileLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jDialogLoadingFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jDialogLoadingFileLayout.setVerticalGroup(
+            jDialogLoadingFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogLoadingFileLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Step One");
+        setTitle("Step Two");
 
         jPanelStepTwo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -96,6 +228,24 @@ public class StepTwo extends javax.swing.JFrame {
 
         lblCensusEnumerations.setText("Selected Census Enumerations:");
 
+        censusEnumerationsInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        censusEnumerationsInfoIcon.setToolTipText("Help Infomation for Region Map");
+        censusEnumerationsInfoIcon.setIconTextGap(0);
+        censusEnumerationsInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                censusEnumerationsInfoIconMouseClicked(evt);
+            }
+        });
+
+        regionMapInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        regionMapInfoIcon.setToolTipText("Help Infomation for Region Map");
+        regionMapInfoIcon.setIconTextGap(0);
+        regionMapInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                regionMapInfoIconMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelRegionMapCensusEnumLayout = new javax.swing.GroupLayout(jPanelRegionMapCensusEnum);
         jPanelRegionMapCensusEnum.setLayout(jPanelRegionMapCensusEnumLayout);
         jPanelRegionMapCensusEnumLayout.setHorizontalGroup(
@@ -106,9 +256,13 @@ public class StepTwo extends javax.swing.JFrame {
                     .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
                         .addComponent(lblCensusEnumerations)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCensusEnumerations))
+                        .addComponent(censusEnumerationsInfoIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCensusEnumerations, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE))
                     .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
                         .addComponent(lblRegionMap)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(regionMapInfoIcon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtRegionMap)))
                 .addContainerGap())
@@ -117,40 +271,57 @@ public class StepTwo extends javax.swing.JFrame {
             jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtRegionMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblRegionMap))
+                .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtRegionMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblRegionMap))
+                    .addComponent(regionMapInfoIcon))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCensusEnumerations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCensusEnumerations))
+                .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtCensusEnumerations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblCensusEnumerations))
+                    .addComponent(censusEnumerationsInfoIcon))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
-        jPanelLandUseHouseholdMap.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanelHouseholdDensityMap.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        txtLandUseHouseholdMap.setEditable(false);
+        txtHouseholdDensityMap.setEditable(false);
 
-        jLabel1.setText("Selected Household Density Map :");
+        lblHouseholdDensityMap.setText("Selected Household Density Map:");
 
-        javax.swing.GroupLayout jPanelLandUseHouseholdMapLayout = new javax.swing.GroupLayout(jPanelLandUseHouseholdMap);
-        jPanelLandUseHouseholdMap.setLayout(jPanelLandUseHouseholdMapLayout);
-        jPanelLandUseHouseholdMapLayout.setHorizontalGroup(
-            jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
+        householdDensityMapInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        householdDensityMapInfoIcon.setToolTipText("Help Infomation for Region Map");
+        householdDensityMapInfoIcon.setIconTextGap(0);
+        householdDensityMapInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                householdDensityMapInfoIconMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelHouseholdDensityMapLayout = new javax.swing.GroupLayout(jPanelHouseholdDensityMap);
+        jPanelHouseholdDensityMap.setLayout(jPanelHouseholdDensityMapLayout);
+        jPanelHouseholdDensityMapLayout.setHorizontalGroup(
+            jPanelHouseholdDensityMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelHouseholdDensityMapLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblHouseholdDensityMap)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtLandUseHouseholdMap)
+                .addComponent(householdDensityMapInfoIcon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtHouseholdDensityMap, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanelLandUseHouseholdMapLayout.setVerticalGroup(
-            jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
+        jPanelHouseholdDensityMapLayout.setVerticalGroup(
+            jPanelHouseholdDensityMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelHouseholdDensityMapLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtLandUseHouseholdMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                .addGroup(jPanelHouseholdDensityMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(householdDensityMapInfoIcon)
+                    .addGroup(jPanelHouseholdDensityMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtHouseholdDensityMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblHouseholdDensityMap)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -161,6 +332,15 @@ public class StepTwo extends javax.swing.JFrame {
 
         lblHouseholdMicroData.setText("Selected Household Micro-data:");
 
+        householdMicroDataInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        householdMicroDataInfoIcon.setToolTipText("Help Infomation for Region Map");
+        householdMicroDataInfoIcon.setIconTextGap(0);
+        householdMicroDataInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                householdMicroDataInfoIconMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelHouseholdMicroDataLayout = new javax.swing.GroupLayout(jPanelHouseholdMicroData);
         jPanelHouseholdMicroData.setLayout(jPanelHouseholdMicroDataLayout);
         jPanelHouseholdMicroDataLayout.setHorizontalGroup(
@@ -169,16 +349,20 @@ public class StepTwo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblHouseholdMicroData)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtHouseholdMicroData)
+                .addComponent(householdMicroDataInfoIcon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtHouseholdMicroData, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelHouseholdMicroDataLayout.setVerticalGroup(
             jPanelHouseholdMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelHouseholdMicroDataLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelHouseholdMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblHouseholdMicroData)
-                    .addComponent(txtHouseholdMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelHouseholdMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(householdMicroDataInfoIcon)
+                    .addGroup(jPanelHouseholdMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblHouseholdMicroData)
+                        .addComponent(txtHouseholdMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -187,7 +371,16 @@ public class StepTwo extends javax.swing.JFrame {
 
         txtPopulationMicroData.setEditable(false);
 
-        lblPopulationMicroData.setText("Selected Population Micro-data :");
+        lblPopulationMicroData.setText("Selected Population Micro-data:");
+
+        populationMicroDataInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        populationMicroDataInfoIcon.setToolTipText("Help Infomation for Region Map");
+        populationMicroDataInfoIcon.setIconTextGap(0);
+        populationMicroDataInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                populationMicroDataInfoIconMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelPopulationMicroDataLayout = new javax.swing.GroupLayout(jPanelPopulationMicroData);
         jPanelPopulationMicroData.setLayout(jPanelPopulationMicroDataLayout);
@@ -197,33 +390,188 @@ public class StepTwo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblPopulationMicroData)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPopulationMicroData)
+                .addComponent(populationMicroDataInfoIcon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPopulationMicroData, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelPopulationMicroDataLayout.setVerticalGroup(
             jPanelPopulationMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPopulationMicroDataLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelPopulationMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPopulationMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPopulationMicroData))
+                .addGroup(jPanelPopulationMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(populationMicroDataInfoIcon)
+                    .addGroup(jPanelPopulationMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtPopulationMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblPopulationMicroData)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanelLandUseHouseholdMap.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanelLandUseHouseholdMap.setMinimumSize(new java.awt.Dimension(100, 100));
+
+        lblLanduseMap.setText("Selected Land Use Map:");
+
+        txtLandUseHouseholdMap.setEditable(false);
+
+        jLabel2.setText("Vacant Classes: ");
+
+        jLabel3.setText("Vacant Class Description: ");
+
+        btnLandUseAddCombinationClass.setText("Add Custom Combination of Classes");
+        btnLandUseAddCombinationClass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLandUseAddCombinationClassActionPerformed(evt);
+            }
+        });
+
+        jTableLandUseClassCombinations.setModel(landUseCombinationTableItemModel);
+        jScrollPane1.setViewportView(jTableLandUseClassCombinations);
+
+        jLabel4.setText("Comment: ");
+
+        landuseMapInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        landuseMapInfoIcon.setToolTipText("Help Infomation for Region Map");
+        landuseMapInfoIcon.setIconTextGap(0);
+        landuseMapInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                landuseMapInfoIconMouseClicked(evt);
+            }
+        });
+
+        landuseMapCommentInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        landuseMapCommentInfoIcon.setToolTipText("Help Infomation for Region Map");
+        landuseMapCommentInfoIcon.setIconTextGap(0);
+        landuseMapCommentInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                landuseMapCommentInfoIconMouseClicked(evt);
+            }
+        });
+
+        landuseMapVacentClassesInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        landuseMapVacentClassesInfoIcon.setToolTipText("Help Infomation for Region Map");
+        landuseMapVacentClassesInfoIcon.setIconTextGap(0);
+        landuseMapVacentClassesInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                landuseMapVacentClassesInfoIconMouseClicked(evt);
+            }
+        });
+
+        landuseMapVacentClassesDescriptionInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        landuseMapVacentClassesDescriptionInfoIcon.setToolTipText("Help Infomation for Region Map");
+        landuseMapVacentClassesDescriptionInfoIcon.setIconTextGap(0);
+        landuseMapVacentClassesDescriptionInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                landuseMapVacentClassesDescriptionInfoIconMouseClicked(evt);
+            }
+        });
+
+        landuseMapCombinationClassesInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        landuseMapCombinationClassesInfoIcon.setToolTipText("Help Infomation for Region Map");
+        landuseMapCombinationClassesInfoIcon.setIconTextGap(0);
+        landuseMapCombinationClassesInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                landuseMapCombinationClassesInfoIconMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelLandUseHouseholdMapLayout = new javax.swing.GroupLayout(jPanelLandUseHouseholdMap);
+        jPanelLandUseHouseholdMap.setLayout(jPanelLandUseHouseholdMapLayout);
+        jPanelLandUseHouseholdMapLayout.setHorizontalGroup(
+            jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
+                    .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
+                        .addComponent(lblLanduseMap)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(landuseMapInfoIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtLandUseHouseholdMap))
+                    .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
+                        .addComponent(btnLandUseAddCombinationClass)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(landuseMapCombinationClassesInfoIcon)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
+                        .addGap(119, 119, 119)
+                        .addGroup(jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(landuseMapCommentInfoIcon)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtLandUseComment))
+                            .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(landuseMapVacentClassesDescriptionInfoIcon)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtVacantClassDescription))
+                            .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(landuseMapVacentClassesInfoIcon)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtVacantClasses)))))
+                .addContainerGap())
+        );
+        jPanelLandUseHouseholdMapLayout.setVerticalGroup(
+            jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
+                        .addGroup(jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblLanduseMap)
+                                .addComponent(txtLandUseHouseholdMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(landuseMapInfoIcon))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(txtLandUseComment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(landuseMapCommentInfoIcon))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(txtVacantClasses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(landuseMapVacentClassesInfoIcon))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtVacantClassDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(landuseMapVacentClassesDescriptionInfoIcon))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnLandUseAddCombinationClass)
+                    .addComponent(landuseMapCombinationClassesInfoIcon))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanelConstraintMap.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanelConstraintMap.setMinimumSize(new java.awt.Dimension(100, 100));
 
-        lblConstraintMap.setText("Selected Land Use Map:");
+        lblConstraintMap.setText("Selected Constraint Maps :");
 
-        txtLandUseHouseholdMap1.setEditable(false);
+        tblConstraintMaps.setModel(constraintMapsTableItemModel);
+        jScrollPane3.setViewportView(tblConstraintMaps);
 
-        jLabel2.setText("Vacent Classes: ");
+        constraintMapInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        constraintMapInfoIcon.setToolTipText("Help Infomation for Region Map");
+        constraintMapInfoIcon.setIconTextGap(0);
+        constraintMapInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                constraintMapInfoIconMouseClicked(evt);
+            }
+        });
 
-        jTextField1.setText("jTextField1");
-
-        jLabel3.setText("Vacent Class Description: ");
-
-        jTextField2.setText("jTextField1");
+        jLabel7.setText("To Open or Delete Existing Constraint Map: Please Double Click on Specified Constraint Map in Table.");
 
         javax.swing.GroupLayout jPanelConstraintMapLayout = new javax.swing.GroupLayout(jPanelConstraintMap);
         jPanelConstraintMap.setLayout(jPanelConstraintMapLayout);
@@ -232,90 +580,28 @@ public class StepTwo extends javax.swing.JFrame {
             .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
                     .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
-                        .addComponent(lblConstraintMap)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
+                                .addComponent(lblConstraintMap)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1))
-                            .addComponent(txtLandUseHouseholdMap1)))
-                    .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 521, Short.MAX_VALUE)))
+                                .addComponent(constraintMapInfoIcon))
+                            .addComponent(jLabel7))
+                        .addGap(0, 303, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelConstraintMapLayout.setVerticalGroup(
             jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelConstraintMapLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblConstraintMap)
-                    .addComponent(txtLandUseHouseholdMap1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(constraintMapInfoIcon))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelConstraintMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(114, Short.MAX_VALUE))
-        );
-
-        jPanelConstraintMap1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanelConstraintMap1.setMinimumSize(new java.awt.Dimension(100, 100));
-
-        lblConstraintMap1.setText("Selected Constraint Maps :");
-
-        tblConstraintMaps1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "File Path"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane3.setViewportView(tblConstraintMaps1);
-
-        javax.swing.GroupLayout jPanelConstraintMap1Layout = new javax.swing.GroupLayout(jPanelConstraintMap1);
-        jPanelConstraintMap1.setLayout(jPanelConstraintMap1Layout);
-        jPanelConstraintMap1Layout.setHorizontalGroup(
-            jPanelConstraintMap1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelConstraintMap1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelConstraintMap1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
-                    .addGroup(jPanelConstraintMap1Layout.createSequentialGroup()
-                        .addComponent(lblConstraintMap1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanelConstraintMap1Layout.setVerticalGroup(
-            jPanelConstraintMap1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelConstraintMap1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblConstraintMap1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -326,16 +612,16 @@ public class StepTwo extends javax.swing.JFrame {
             .addGroup(jPanelStepTwoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelStepTwoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelLandUseHouseholdMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelHouseholdDensityMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelPopulationMicroData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelRegionMapCensusEnum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelHouseholdMicroData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelConstraintMap, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanelLandUseHouseholdMap, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(jPanelStepTwoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelStepTwoLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jPanelConstraintMap1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelConstraintMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         jPanelStepTwoLayout.setVerticalGroup(
@@ -348,21 +634,33 @@ public class StepTwo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelHouseholdMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelLandUseHouseholdMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelHouseholdDensityMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelConstraintMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addComponent(jPanelLandUseHouseholdMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(188, Short.MAX_VALUE))
             .addGroup(jPanelStepTwoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelStepTwoLayout.createSequentialGroup()
-                    .addContainerGap(452, Short.MAX_VALUE)
-                    .addComponent(jPanelConstraintMap1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(1, 1, 1)))
+                    .addContainerGap(511, Short.MAX_VALUE)
+                    .addComponent(jPanelConstraintMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
 
-        btnNextStep.setText("Next Step");
+        btnPreviousStep.setText("Previous Step");
+        btnPreviousStep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreviousStepActionPerformed(evt);
+            }
+        });
 
         lblErrorMessages.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblErrorMessages.setForeground(new java.awt.Color(255, 0, 0));
+
+        btnNextStep.setText("Next Step");
+        btnNextStep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextStepActionPerformed(evt);
+            }
+        });
 
         menuFile.setText("File");
 
@@ -372,7 +670,20 @@ public class StepTwo extends javax.swing.JFrame {
         jMenuBar.add(menuFile);
 
         menuHelp.setText("Help");
+        menuHelp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuHelpMouseClicked(evt);
+            }
+        });
         jMenuBar.add(menuHelp);
+
+        jMenu_About.setText("About");
+        jMenu_About.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu_AboutMouseClicked(evt);
+            }
+        });
+        jMenuBar.add(jMenu_About);
 
         setJMenuBar(jMenuBar);
 
@@ -383,10 +694,11 @@ public class StepTwo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelStepTwo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnNextStep)))
+                        .addComponent(btnPreviousStep)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNextStep))
+                    .addComponent(jPanelStepTwo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblErrorMessages)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -396,7 +708,9 @@ public class StepTwo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanelStepTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnNextStep)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPreviousStep)
+                    .addComponent(btnNextStep))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblErrorMessages)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -406,159 +720,165 @@ public class StepTwo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * @param args the command line arguments
+     * Handles about menu item, opens About pop-up
+     * @param evt 
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(StepTwo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(StepTwo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(StepTwo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(StepTwo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+    private void jMenu_AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_AboutMouseClicked
+        new About().setVisible(true);
+    }//GEN-LAST:event_jMenu_AboutMouseClicked
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new StepTwo().setVisible(true);
-            }
-        });
-    }
-    
-    private void setIntialWarningIcons(){
-        setIconImage(DigPopFileTypeEnum.Census_Enumerations, false);
-        setIconImage(DigPopFileTypeEnum.Household_Micro_Data, false);
-        setIconImage(DigPopFileTypeEnum.Land_Use_Household_Map, false);
-        setIconImage(DigPopFileTypeEnum.Region_Map, false);
-    }
+    /**
+     * Handles help menu item, opens the Help information for the current screen
+     * @param evt 
+     */
+    private void menuHelpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuHelpMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenName(SCREEN_NAME);
+    }//GEN-LAST:event_menuHelpMouseClicked
 
-    private void getAndVerifyFile(DigPopFileTypeEnum fileType) {
-
-        File file = getFileFromFileChooser();
-        if (file != null) {
-            Result result = StepOneUtilityClass.verifyFile(file, fileType);
-
-            if (result.isSuccess()
-                    && (boolean)result.getValue()) {
-
-                switch (fileType) {
-                    case Land_Use_Household_Map:
-                        txtLandUseHouseholdMap.setText(file.getPath());
-                        digPopGUIFiles.setLandUseHouseholdMapFilePath(file.getPath());
-                        break;
-                    case Region_Map:
-                        txtRegionMap.setText(file.getPath());
-                        digPopGUIFiles.setRegionMapFilePath(file.getPath());
-                        break;
-                    case Census_Enumerations:
-                        txtCensusEnumerations.setText(file.getPath());
-                        digPopGUIFiles.setCensusEnumerationsFilePath(file.getPath());
-                        break;
-                    case Constraint_Map:
-                        /**
-                         * TODO Need to figure out how I am displaying this
-                         */
-                        
-                        digPopGUIFiles.addConstraintMapFilePath(file.getPath());
-                        
-                        AddItemToConstaintMapTable(file.getPath());
-                                
-            //            constraintMapsDataModel = new DefaultTableModel(digPopGUIFiles.getConstraintMapFilePaths().toArray(),0);
+    /**
+     * Saves the data, and takes the user back to Step 1
+     * @param evt 
+     */
+    private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
+        save();
         
-        //tblConstraintMaps.setModel((TableModel) digPopGUIFiles.getConstraintMapFilePaths());
-                        
-                        break;
-                    case Population_Micro_Data:
-                        txtPopulationMicroData.setText(file.getPath());
-                        digPopGUIFiles.setPopulationMicroDataFilePath(file.getPath());
-                        break;
-                    case Household_Micro_Data:
-                        txtHouseholdMicroData.setText(file.getPath());
-                        digPopGUIFiles.setHouseholdMicroData(file.getPath());
-                        break;
+        new StepOne(this.digPopGUIInformation).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnPreviousStepActionPerformed
+
+    /**
+     * Saves the data and takes the user to Step 3
+     * @param evt 
+     */
+    private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
+        save();
+        
+        new StepThree(this.digPopGUIInformation).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnNextStepActionPerformed
+
+    /**
+     * Handles the custom adding of a new land use combo class
+     * @param evt 
+     */
+    private void btnLandUseAddCombinationClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLandUseAddCombinationClassActionPerformed
+
+        if(this.digPopGUIInformation.getLandUseMapInformation().getAllClasses() == null
+                || this.digPopGUIInformation.getLandUseMapInformation().getAllClasses().isEmpty() ){
+            SwingWorker<Void,Void> worker = new SwingWorker<Void,Void>()
+            {
+                @Override
+                protected Void doInBackground()
+                {
+                    DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+                    Date dateobj = new Date();
+                    System.out.println(df.format(dateobj));
+                    try {
+                        landUseLoadClassesResult = DigPopGUIUtilityClass.getClassesFromLandUseASCFile(digPopGUIInformation.getLandUseMapFilePath());
+                    } catch (IOException ex) {
+                        landUseLoadClassesResult.setErrorMessage("DigPopGUIUtilityClass.getClassesFromLandUseASCFile", ex.getMessage());
+                        landUseLoadClassesResult.setSuccess(false);
+                    }
+
+                    dateobj = new Date();
+                    System.out.println(df.format(dateobj));
+                    return null;
                 }
-                setIconImage(fileType, true);
-            } else {
-                errors.add(fileType + ":" +result.getErrorMessage());
-                setErrorMessage();
-                setIconImage(fileType, false);
-                
-            }
+
+                @Override
+                protected void done()
+                {
+                    if(landUseLoadClassesResult.isSuccess()){
+                        ArrayList<String> classes = (ArrayList<String>)landUseLoadClassesResult.getValue();
+
+                        digPopGUIInformation.getLandUseMapInformation().setAllClasses(classes);
+                    }
+                    jDialogLoadingFile.dispose();
+                }
+            };
+
+            worker.execute();
+
+            jDialogLoadingFile.pack();
+            jDialogLoadingFile.setLocationRelativeTo(this);
+            jDialogLoadingFile.setVisible(true);
         }
-    }
-
-    private File getFileFromFileChooser() {
-        File returnFile = null;
-
-        int returnVal = fileChooser.showOpenDialog(this);
-
-        /**
-         * FileChooser will return APPROVE_OPTION if the user selected a file
-         * from the dialog.
-         */
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            returnFile = fileChooser.getSelectedFile();
-        }
-
-        return returnFile;
-    }
-
-    private void setIconImage(DigPopFileTypeEnum fileType, boolean showValidIcon) {
-
-        ImageIcon imageIcon;
-
-        if (showValidIcon) {
-            imageIcon = StepOneUtilityClass.GetValidImageIcon();
-        } else {
-            imageIcon = StepOneUtilityClass.GetInValidImageIcon();
+        else
+        {
+            landUseLoadClassesResult.setSuccess(true);
         }
 
-        switch (fileType) {
-            case Land_Use_Household_Map:
-                lblLandUseHouseholdDensityMap.setIcon(imageIcon);
-                break;
-            case Region_Map:
-                lblRegionMap.setIcon(imageIcon);
-                break;
-            case Census_Enumerations:
-                lblCensusEnumerations.setIcon(imageIcon);
-                break;
-            case Constraint_Map:
-                lblConstraintMap.setIcon(imageIcon);
-                break;
-            case Population_Micro_Data:
-                lblPopulationMicroData.setIcon(imageIcon);
-                break;
-            case Household_Micro_Data:
-                lblHouseholdMicroData.setIcon(imageIcon);
-                break;
+        if(landUseLoadClassesResult.isSuccess()){
+            LandUseDefineCombinationClasses landUseDefineCombinationClasses = new LandUseDefineCombinationClasses(this.digPopGUIInformation, this);
+            landUseDefineCombinationClasses.setVisible(true);
+            landUseDefineCombinationClasses.setAlwaysOnTop(true);
+            landUseDefineCombinationClasses.setLocationRelativeTo(this);
+            this.setVisible(false);
+            this.setAlwaysOnTop(false);
         }
-    }
+
+        landUseLoadClassesResult = new Result();
+    }//GEN-LAST:event_btnLandUseAddCombinationClassActionPerformed
+
+    private void censusEnumerationsInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_censusEnumerationsInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Census_File.toString());
+    }//GEN-LAST:event_censusEnumerationsInfoIconMouseClicked
+
+    private void regionMapInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regionMapInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Region_Map.toString());
+    }//GEN-LAST:event_regionMapInfoIconMouseClicked
+
+    private void populationMicroDataInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_populationMicroDataInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Population_File.toString());
+    }//GEN-LAST:event_populationMicroDataInfoIconMouseClicked
+
+    private void householdMicroDataInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_householdMicroDataInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Household_File.toString());
+    }//GEN-LAST:event_householdMicroDataInfoIconMouseClicked
+
+    private void householdDensityMapInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_householdDensityMapInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Household_Density_Map_File.toString());
+    }//GEN-LAST:event_householdDensityMapInfoIconMouseClicked
+
+    private void landuseMapInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_landuseMapInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Land_Use_Map_File.toString());
+    }//GEN-LAST:event_landuseMapInfoIconMouseClicked
+
+    private void landuseMapCommentInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_landuseMapCommentInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Land_Use_Map_File.toString());
+    }//GEN-LAST:event_landuseMapCommentInfoIconMouseClicked
+
+    private void landuseMapVacentClassesInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_landuseMapVacentClassesInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Vacant_Classes.toString());
+    }//GEN-LAST:event_landuseMapVacentClassesInfoIconMouseClicked
+
+    private void landuseMapVacentClassesDescriptionInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_landuseMapVacentClassesDescriptionInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Vacant_Class_Description.toString());
+    }//GEN-LAST:event_landuseMapVacentClassesDescriptionInfoIconMouseClicked
+
+    private void constraintMapInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_constraintMapInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Constraint_Map.toString());
+    }//GEN-LAST:event_constraintMapInfoIconMouseClicked
+
+    private void landuseMapCombinationClassesInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_landuseMapCombinationClassesInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Combination_Classes.toString());
+    }//GEN-LAST:event_landuseMapCombinationClassesInfoIconMouseClicked
+
+   
     
-    private void AddItemToConstaintMapTable(String value){
-        DefaultTableModel model = (DefaultTableModel)tblConstraintMaps.getModel();
-        Object[] obj = {value};
-        model.addRow(obj);
-    }
+    /**
+     * Adds a new constraint map
+     * @param value 
+     */
+  //  private void AddItemToConstaintMapTable(ConstraintMap value){
+   //     DefaultTableModel model = (DefaultTableModel)tblConstraintMaps.getModel();
+ //       Object[] obj = {value};
+ //       model.addRow(obj);
+ //   }
     
+    /**
+     * Updates the error messages
+     */
     private void setErrorMessage()
     {
         String errorMessageText = "<html>";
@@ -579,44 +899,129 @@ public class StepTwo extends javax.swing.JFrame {
         lblErrorMessages.setText(errorMessageText);
         ((JFrame)lblErrorMessages.getTopLevelAncestor()).pack();
     }
+    
+    /**
+     * Populates the text fields from an existing save file
+     */
+    private void populateDataFieldsFromFile(){
+        if(this.digPopGUIInformation == null){
+            return;
+        }
+        
+        if((this.digPopGUIInformation.getLandUseMapFilePath() != null) && !this.digPopGUIInformation.getLandUseMapFilePath().equals("")){
+            txtLandUseHouseholdMap.setText(this.digPopGUIInformation.getLandUseMapFilePath());
+            jPanelLandUseHouseholdMap.setVisible(true);
+            jPanelHouseholdDensityMap.setVisible(false);
+            
+            UpdateLandUseClassCombinationTable();
+            if((this.digPopGUIInformation.getLandUseMapInformation() != null) 
+                    && (this.digPopGUIInformation.getLandUseMapInformation().getVacantClasses() != null))
+            {
+                this.txtVacantClassDescription.setText(this.digPopGUIInformation.getLandUseMapInformation().getVacantClasses().getDescription());
+                this.txtVacantClasses.setText(this.digPopGUIInformation.getLandUseMapInformation().getVacantClasses().getClasses());
+            }
+            this.txtLandUseComment.setText(this.digPopGUIInformation.getLandUseMapInformation().getComment());
+            
+        } else{
+            txtHouseholdDensityMap.setText(this.digPopGUIInformation.getHouseholdDensityMapFilePath());
+            jPanelLandUseHouseholdMap.setVisible(false);
+            jPanelHouseholdDensityMap.setVisible(true);
+        }
+        
+        txtRegionMap.setText(this.digPopGUIInformation.getRegionMapFilePath());
+        txtCensusEnumerations.setText(this.digPopGUIInformation.getCensusEnumerationsFilePath());
+
+        txtPopulationMicroData.setText(this.digPopGUIInformation.getPopulationMicroDataFilePath());
+        txtHouseholdMicroData.setText(this.digPopGUIInformation.getHouseholdMicroDataFilePath());
+        
+        pack();
+    }
+    
+    /**
+     * Updates the list of combination classes for land use maps
+     */
+    public void UpdateLandUseClassCombinationTable(){
+        if(this.digPopGUIInformation.getLandUseMapInformation().getLandUseMapClassCombinations().size()>0){
+            this.landUseCombinationTableItemModel.fireTableDataChanged();
+            pack();
+        }
+    }
+    
+    /**
+     * Saves the information provided
+     */
+    private void save(){
+        VacantClass vacant = new VacantClass(this.txtVacantClassDescription.getText(), this.txtVacantClasses.getText());
+        this.digPopGUIInformation.getLandUseMapInformation().setVacantClasses(vacant);
+        this.digPopGUIInformation.getLandUseMapInformation().setComment(this.txtLandUseComment.getText());
+        
+        saveToFile();
+    }
+    
+    /**
+     * Saves the information to the DigPop object
+     */
+    private void saveToFile(){
+        //Save to file
+        Result    result = DigPopGUIUtilityClass.saveDigPopGUIInformationSaveFile(
+                    this.digPopGUIInformation,
+                    this.digPopGUIInformation.getFilePath());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLandUseAddCombinationClass;
     private javax.swing.JButton btnNextStep;
-    private javax.swing.JFileChooser fileChooser;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnPreviousStep;
+    private javax.swing.JLabel censusEnumerationsInfoIcon;
+    private javax.swing.JLabel constraintMapInfoIcon;
+    private javax.swing.JLabel householdDensityMapInfoIcon;
+    private javax.swing.JLabel householdMicroDataInfoIcon;
+    private javax.swing.JDialog jDialogLoadingFile;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JMenu jMenu_About;
     private javax.swing.JPanel jPanelConstraintMap;
-    private javax.swing.JPanel jPanelConstraintMap1;
+    private javax.swing.JPanel jPanelHouseholdDensityMap;
     private javax.swing.JPanel jPanelHouseholdMicroData;
-    private javax.swing.JPanel jPanelHouseholdMicroData1;
     private javax.swing.JPanel jPanelLandUseHouseholdMap;
     private javax.swing.JPanel jPanelPopulationMicroData;
     private javax.swing.JPanel jPanelRegionMapCensusEnum;
     private javax.swing.JPanel jPanelStepTwo;
+    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable jTableLandUseClassCombinations;
+    private javax.swing.JLabel landuseMapCombinationClassesInfoIcon;
+    private javax.swing.JLabel landuseMapCommentInfoIcon;
+    private javax.swing.JLabel landuseMapInfoIcon;
+    private javax.swing.JLabel landuseMapVacentClassesDescriptionInfoIcon;
+    private javax.swing.JLabel landuseMapVacentClassesInfoIcon;
     private javax.swing.JLabel lblCensusEnumerations;
     private javax.swing.JLabel lblConstraintMap;
-    private javax.swing.JLabel lblConstraintMap1;
     private javax.swing.JLabel lblErrorMessages;
+    private javax.swing.JLabel lblHouseholdDensityMap;
     private javax.swing.JLabel lblHouseholdMicroData;
-    private javax.swing.JLabel lblHouseholdMicroData1;
+    private javax.swing.JLabel lblLanduseMap;
     private javax.swing.JLabel lblPopulationMicroData;
     private javax.swing.JLabel lblRegionMap;
-    private javax.swing.ButtonGroup mapRadioButtonGroup;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenuItem menuItemExitApplication;
-    private javax.swing.JTable tblConstraintMaps1;
+    private javax.swing.JLabel populationMicroDataInfoIcon;
+    private javax.swing.JLabel regionMapInfoIcon;
+    private javax.swing.JTable tblConstraintMaps;
     private javax.swing.JTextField txtCensusEnumerations;
+    private javax.swing.JTextField txtHouseholdDensityMap;
     private javax.swing.JTextField txtHouseholdMicroData;
-    private javax.swing.JTextField txtHouseholdMicroData1;
+    private javax.swing.JTextField txtLandUseComment;
     private javax.swing.JTextField txtLandUseHouseholdMap;
-    private javax.swing.JTextField txtLandUseHouseholdMap1;
     private javax.swing.JTextField txtPopulationMicroData;
     private javax.swing.JTextField txtRegionMap;
+    private javax.swing.JTextField txtVacantClassDescription;
+    private javax.swing.JTextField txtVacantClasses;
     // End of variables declaration//GEN-END:variables
 }
