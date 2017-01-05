@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<help>
+    <name>DigPopGUI</name>
+    <introduction>This software was funded by OSD-ASA(ALT) and produced for the Phase Zero Assessment of Urban Security Threats ERDC project, developed by Red Horse, and designed by Dr. Charles R. Ehlschlaeger, Jeff Burkhalter, Craig Cheney, Ben Hough, Roger Jenkins, Alexandria Johnson, and Meghan Rivera.</introduction>
+    <screen>
+        <name>Step 1 - Maps</name>
+        <description>This page allows users to enter all the applicable files.</description>
+        <instruction>
+            <instructionName>Land Use or Household Density Map</instructionName>
+            <helpText>The Land Use Map is a raster map that provides land use data (city, farm, forest, etc.) for the regions in the region map.  Digital Populations uses this to guide the random placement of households within a region toward cells where people actually tend to live.  Must use exact same coordinate system as the Region Map. The Population Density map is the result of applying the per-class density table to the land-use map.  If this file is specified in the fitting criteria file, Digital Populations will skip the above processes altogether and use it directly.  In this case, the land-use map need not appear in the relationship file at all.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Region Map</instructionName>
+            <helpText>This raster map provides the location of the regions or tracts that Digital Populations will populate.  This is the finest resolution that DigPop can work with -- a region is selected based on statistical analysis, but the location of a household within a region is random.  Coordinate system must be planar (i.e. UTM).  DigPop does not understand coordinate systems, so distance calculations will not be correct in other systems.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Census Enumerations</instructionName>
+            <helpText>Regional summaries of socioeconomically attributes of interests</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Constraint Map</instructionName>
+            <helpText>Optional: Specifies areas where households with a specific value are NOT allowed, by explicitly disallowing the placement of certain households into certain map cells.  To use the constraint map, users must specify the map, then specify the household trait and value from the microdata that links to corresponding raster value on the map.  For example, houses with grid electricity would only be placed where a raster map of grid power has a specific raster value corresponding to access to electricity. For example, urban/rural regions, regions with/without electric </helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Population Micro-Data</instructionName>
+            <helpText>This optional table provides residents for the households.  Each record identifies which household it resides within, and the residents are cloned when their household is cloned.  This allows Digital Populations to compute statistics from personal data.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Household Micro-Data</instructionName>
+            <helpText>Digital Populations can't create households and people from scratch.  Instead, it clones the households from this table in a way that matches the region statistics.  The more households provided here, the fewer times any particular archtype needs to be cloned, and the better the result.  The relationship file describes how data in this table relates to the statistics in the region table.</helpText>
+        </instruction>
+    </screen>
+    <screen>
+        <name>Step 2 - Goal Relationship File</name>
+        <description>This page allows users to setup the Goal Relationship File, which specifies a complete set of files for one region and how they relate to each other.</description>
+        <instruction>
+            <instructionName>Census File</instructionName>
+            <helpText>This is the name of the census enumeration file from Step 1, with the regional summaries of socioeconomically attributes of interests.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Population File</instructionName>
+            <helpText>The file provided in Step 1, the population table where each row describes one individual.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Region Map</instructionName>
+            <helpText>The file provided in Step 1, this raster map provides the location of the regions or tracts that Digital Populations will populate.  This is the finest resolution that DigPop can work with -- a region is selected based on statistical analysis, but the location of a household within a region is random.  Coordinate system must be planar (i.e. UTM).  DigPop does not understand coordinate systems, so distance calculations will not be correct in other systems.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Constraint Map</instructionName>
+            <helpText>The file provided in Step 1, specifies areas where households with a specific value are NOT allowed, by explicitly disallowing the placement of certain households into certain map cells.  To use the constraint map, users must specify the map, then specify the household trait and value from the microdata that links to corresponding raster value on the map.  For example, houses with grid electricity would only be placed where a raster map of grid power has a specific raster value corresponding to access to electricity. For example, urban/rural regions, regions with/without electric </helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Household File</instructionName>
+            <helpText>The file provided in Step 1, the household table provides a Unique ID Field that identifies the specific house each person lives in.  Records without household ID values will be ignored.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Household Density Map File</instructionName>
+            <helpText>Population Density Map file is being used. In order to use a Land Use Population Map, please return to Step 1 and remove the selected Population Density Map. Only displayed if the user selected to use a Population Density Map in Step 1.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Land Use Map Information</instructionName>
+            <helpText>Land Use Population Map file is being used. In order to use a Population Density Map, please return to Step 1 and remove the selected Land Use Population Map. Only displayed if the user selected to use a Land Use Population Map in Step 1.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Vacant Classes</instructionName>
+            <helpText>The land use map guides where households can and cannot be placed. Vacant classes are the numerical areas that households cannot be placed (e.g. Open Water).</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Vacant Class Description</instructionName>
+            <helpText>The text description of the selected classes that households cannot be placed (e.g. Open Water).</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Combination Classes</instructionName>
+            <helpText>Combination classes group classes from the land use map that are expected to have similar population density to simplify analysis. All classes in the land use map must be covered either by a vacancy class or combination element. </helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Classes</instructionName>
+            <helpText>The class or list of classes to be grouped together into a single population type. This is either a single item (e.g. 23), a range (e.g. 90-99), or a comma delimited combination of both (e.g. 4,41-60,71-80)</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Target</instructionName>
+            <helpText>The new class number for the combined class.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Description</instructionName>
+            <helpText>The text description of the new combination class, to describe the population type (e.g. "Developed, Low Intensity")</helpText>
+        </instruction>
+    </screen>
+    <screen>
+        <name>Step 3 - Census and Survey Data</name>
+        <description>This page allows users to configure the linkages between the census and survey data.</description>
+        <instruction>
+            <instructionName>Available Census Data</instructionName>
+            <helpText>The columns from the census enumeration .csv file provided in Step 1. If a name has already been provided for the census data, it will be displayed as "[Census ID] - [Provided Name]".</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Available Survey Data</instructionName>
+            <helpText>The columns from the household or population micro-data .csv file provided in Step 1. Only one survey data field may be selected per Markov Chain</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>User Defined Description</instructionName>
+            <helpText>Allows the user to edit the description for a census data trait ID. Will be pre-populated, but editable, if previous Markov Chains have been created.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Available Survey Data Column Values</instructionName>
+            <helpText>The values to be selected for combination into a single user defined description. Each data column value can only be used one per Markov Chain. Once a value has been added to a group, it will be removed from the Available Survey Data Column value list. </helpText>
+        </instruction>
+        <instruction>
+            <instructionName>User Defined Description</instructionName>
+            <helpText>Allows the user to add or edit the description for a survey data column values. Will be pre-populated if previous Markov Chains have been created.</helpText>
+        </instruction>
+    </screen>
+    <screen>
+        <name>Step 4 - Markov Chain</name>
+        <description>This page allows users to create a Markov Chain for creating multiple census enumeration files.</description>
+        <instruction>
+            <instructionName>Markov Chain Name</instructionName>
+            <helpText>The user entered name of the current Markov Chain matrix.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Census Information</instructionName>
+            <helpText>The user provided descriptions for census data traits selected in Step 3.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Survey Information</instructionName>
+            <helpText>The user provided descriptions for survey data traits selected in Step 3.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Amount Left</instructionName>
+            <helpText>Calculated as the available minimum or maximum values for the associated survey/census information based on values entered in the associated row/column. System calculated; Min Range (constrained by the max values) is from 0 to "[Proportion] – [Sum(minimum values provided)]", Max Range (constrained by the min values) is from 0 to "[Proportion] – [Sum(maximum values provided)]".</helpText>
+        </instruction>
+    </screen>
+    <screen>
+        <name>Step 5 - Generate Fitting Criteria File</name>
+        <description>This page allows users to setup the Trait Weights for the Fitting Criteria File, which is the master control file.  The fitting criteria file specifies dependent file and criteria for one run.  The Markov Table generates new census region trait columns for the census enumeration .csv based on the microdata values (e.g. enumerations for 'flushed to pipe sewer').</description>
+        <instruction>
+            <instructionName>ID</instructionName>
+            <helpText>The system generated trait ID for the new census region trait columns from the Markov Chain matrix. Populates the ID XML value.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Census Region Trait</instructionName>
+            <helpText>The new census region trait column names for the census enumeration based on the microdata values used in the Markov Chain matrix (e.g. enumerations for 'flushed to pipe sewer'). Populates the Region Trait XML value.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Census Region Total</instructionName>
+            <helpText>The Census Region Totals are generated by the system based on the Markov Chain name as "[Markov Chain Name]_MC_Total". Proportion values are calculated by the software from the raw inputs for the Markov Chain matrix.  The 'Census Region Totals' calculated to determine the proportion values are added as a new field to the census enumeration .csv file. Populates the Region Total XML value.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Survey Trait Table</instructionName>
+            <helpText>The name of the table type that is being used, either HOUSEHOLDS or POPULATION. Populates the Pums Trait Table XML value.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Survey Trait Select</instructionName>
+            <helpText>Populated from the selected Survey Trait column values in Step 3. Populates the Pums Trait Select XML value. </helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Survey Trait Field</instructionName>
+            <helpText>Populated from the selected Survey Data traits in step 3. Populates the Pums Trait Field XML value.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Survey Total Table</instructionName>
+            <helpText>The name of the table type that is being used, either HOUSEHOLDS or POPULATION. Populates the Pums Total Table XML value.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Survey Total Field</instructionName>
+            <helpText>System generated, will always be 1. Populates the Pums Total Field XML value.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>User Entered Description</instructionName>
+            <helpText>The user defined description for the survey column data, provided in Step 3. To edit, please go back to Step 3. Populates the User Entered Description XML value.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Total Weight</instructionName>
+            <helpText>The only editable field on the page. Values must be between 0 and 1. Populates the Trait Weight XML value.</helpText>
+        </instruction>
+    </screen>
+    <screen>
+        <name>Step 6 - Generate Trait Clusters</name>
+        <description>This page allows users to Generate Trait Clusters. Cluster elements instruct the DigiPop tool's Phase 4 to introduce a degree of clustering by moving "similar" households closer to each other when computing precise easting/northing locations for each household.  The referenced trait provides a definition of "similar", and the remaining attributes specify an amount of clustering.</description>
+        <instruction>
+            <instructionName>Trait ID</instructionName>
+            <helpText>The identifier for one of the Trait elements specified in Step 5. The value of the selected trait IDs with weights that can be clustered.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Reduction</instructionName>
+            <helpText>Percentage reduction in "inertia," which is a measure of the randomness of an arrangement of households.  A reduction of inertia is an increase of clustering, and is achieved by moving households closer together. Goal will be this much lower than the "inertia" values calculated when phase 4 begins. The integer value of the reduction must be greater than 1.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Distance</instructionName>
+            <helpText>The Maximum size of clusters to build. Only houses within this radius will be considered for clustering.  This values is in the same units as the input maps. Value must be greater than 0.</helpText>
+        </instruction>
+    </screen>
+    <screen>
+        <name>Step 7 - Generate Run Parameter File</name>
+        <description>This page allows users to setup the Run Parameter File.  This is a record of all options and settings active the last time Digital Populations was run.  It provide access to "hidden" and internal options, and makes it easy to exactly reproduce an older run.</description>
+        <instruction>
+            <instructionName>Name of Run</instructionName>
+            <helpText>Used as a comment to organize the runs.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Fitting File path</instructionName>
+            <helpText>Path and name of main fitting criteria file, relative to current directory</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Log the results of phase 1?</instructionName>
+            <helpText>If true, the log file will receive the results of phase 1.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Log the quality evaluation reports between phases?</instructionName>
+            <helpText>If true, the log file will receive detailed reports from  the quality evaluation objects between phases.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Does each Household record contain a full copy of the archetype record?</instructionName>
+            <helpText>If false, each record in households.csv will contain coordinates plus a reference to one of the archetypes.  If true, each record will also contain a full copy of the archetype record.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Does each Population record contain a full copy of the archetype record?</instructionName>
+            <helpText>If false, each record in populations.csv will contain coordinates plus a reference to one of the archetypes.  If true, each record will also contain a full copy of the archetype record.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>First Realization Index</instructionName>
+            <helpText>(argument -f) Index of first realization to generate. All realizations between 'first' and 'final' will be run and saved. In other words, ConflatePumsQueryWithTracts will run repeatedly, once for each realization, but with different random seeds each time.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Final Realization Index</instructionName>
+            <helpText>(argument -l)  Index of final realization to generate.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Random Number seed</instructionName>
+            <helpText>(argument -r) Random seed that will guide the creation of all random numbers. Running the program twice with the same seed will result in the exact same output. (When the program is NOT running parallel threads and the computer uses the same number of compute cycles.)  Delete from file to make program generate a new random seed.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Use only the first census tract?</instructionName>
+            <helpText>This is a speed hack that causes algorithm to use only the first census tract.  The program runs very quickly, but the output is useless: used for debugging criteria_file. (Seeing what error messages pop up.)</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Output Directory</instructionName>
+            <helpText>(argument -o) Target directory for all output files, relative to current directory.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Number of parallel threads</instructionName>
+            <helpText>The number of threads being run at the same time in parallel. Recommended to be in the range from 1 to a maximum of the number of processors on the users' computer.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Phase 1 Time limit</instructionName>
+            <helpText>Limit phase 1 to this many minutes.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Phase 2 - Random Placement Percentage</instructionName>
+            <helpText>(argument -s) This fraction of households will be placed randomly, regardless of whether the placement is a good fit or not.  Setting to zero will greatly improve the output of phase 2, but also take a great deal longer.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Phase 2 - Skip Tracts Probability</instructionName>
+            <helpText>(argument -s) This fraction of tracts will be ignored when phase 2 tries to place a household into a tract.  If phase2_random_tract_prob is triggered, then this setting is not used.  Setting this to zero will make phase 2 properly evaluate all tracts, but take a great deal longer.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Phase 2 - Skipped Tracts Probability Delta</instructionName>
+            <helpText>If phase2_tract_skip_prob_init caused phase 2 to skip every tract, then the fraction will be reduced by this amount, and placement will be tried again.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Phase 3 and 4 Intermediate Save Interval</instructionName>
+            <helpText>Phase 3 will write a set of files every this many minutes.  Phase 4 also uses this timer for the same purpose.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Skip Phase 3?</instructionName>
+            <helpText>If true, phase 3 will be skipped altogether.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Phase 3 Time limit</instructionName>
+            <helpText>Limit phase 3 to this many minutes.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Phase 4 - Number of Lags</instructionName>
+            <helpText>As a rule of thumb, 5 - 10 lags is appropriate.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Phase 4 - Save both ends?</instructionName>
+            <helpText>Determine if the user should save at both ends of Phase 4.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Skip Phase 4?</instructionName>
+            <helpText>If true, phase 4 will be skipped altogether.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Phase 4 Time Limit</instructionName>
+            <helpText>Limit phase 4 to this many minutes.</helpText>
+        </instruction>
+    </screen>
+</help>

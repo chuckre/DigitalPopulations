@@ -4,3 +4,5 @@ out
 *.iml
 *.class
 .DS_Store
+/PopulationRealizer/DigPopGUI/dist/
+/PopulationRealizer/DigPopGUI/build/
