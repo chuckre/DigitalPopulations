@@ -451,7 +451,6 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
      * after the user selects the number of runs to be ran.
      */
     private void saveMarkovToCSVFileInformation(){
-        
         /**
          * Clear out the current NewCensusColumnDetails before saving.
          */
@@ -471,21 +470,8 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         int rowToStartAt = 1;
         int currentColumnNumber = 2;
 
-//        for(int censusCounter = 0; censusCounter < censusClasses.size(); censusCounter++){
-//
-//            cerl.gui.utilities.Class censusClass = censusClasses.get(censusCounter);
-//            currentColumnNumber += censusCounter;
-
-        
-
             for(int surveyCounter = 0; surveyCounter < surveyGroupings.size(); surveyCounter++){
-
                 SurveyColumnValuesGrouping surveyGrouping = surveyGroupings.get(surveyCounter);
-
-                
-
-                //column number in original csv file
-            //    details.setOldColumnNumber(censusClass.getColumnNumber());
                 
                 double newTotalRandomNumber = 0;
                 ArrayList<Integer> oldValueLookUpColumns = new ArrayList<Integer>();
@@ -508,17 +494,11 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
                     }
                     
                     newTotalRandomNumber += foundRandomNumber;
-                    
                     currentColumnNumber += censusCounter;
                 }
 
-//                //set min and max numbers
-//                details.setMin(minMaxValues[0]);
-//                details.setMax(minMaxValues[1]);
-//                details.calculateNewRandomPercentage();
-
+                //set min and max numbers
                 //New column header that will appear in the new csv file
-               // details.setNewColumnHeader(censusClass.toString() + "_" + surveyGrouping.toString());
                 NewCensusColumnDetails details = new NewCensusColumnDetails(
                         surveyGrouping.toString() + "_" + newTotalRandomNumber,
                         newTotalRandomNumber,
@@ -527,8 +507,6 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
 
                 newCensusColumnDetails.add(details);
             }
-       // }
-        
         /**
          * Add the new NewCensusColumnDetails to the current MarkovChain object
          */

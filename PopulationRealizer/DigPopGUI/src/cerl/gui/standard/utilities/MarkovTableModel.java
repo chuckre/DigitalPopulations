@@ -228,10 +228,6 @@ public class MarkovTableModel extends customTableModel {
             //check columns in this row for the empty cell
             if(!((MarkovTableCell)(markovTable.get(rowWithEmptyCell).get(c))).isUserEntered() && (rowWithEmptyCell > PROPORTION_ROW)){
                 ((MarkovTableCell) (markovTable.get(rowWithEmptyCell).get(c))).setCalculated(true);
-                //filledInEmptyCell(rowWithEmptyCell, c);        
-                //emptyCells[0][rowWithEmptyCell-1-PROPORTION_ROW] = emptyCells[0][rowWithEmptyCell-1-PROPORTION_ROW] - 1;
-                //emptyCells[1][c-1-PROPORTION_COLUMN] = emptyCells[1][c-1-PROPORTION_COLUMN] - 1;
-                //remember the empty column - to set after have updated total
                 colWithEmptyCell = c;
             }
         }
@@ -240,9 +236,13 @@ public class MarkovTableModel extends customTableModel {
         double newMinTotal = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Min", rowMaxTotal);
         double newMaxTotal = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Max", rowMinTotal);
         filledInEmptyCell(rowWithEmptyCell, colWithEmptyCell);        
+        /*if((emptyCells[0].length > (rowWithEmptyCell-PROPORTION_ROW-1)) && (emptyCells[1].length > (colWithEmptyCell-PROPORTION_COLUMN-1))
+                && (rowWithEmptyCell > 0) && (colWithEmptyCell > 0)){
+            emptyCells[0][rowWithEmptyCell-PROPORTION_ROW-1] = emptyCells[0][rowWithEmptyCell-PROPORTION_ROW-1] - 1;
+            emptyCells[1][colWithEmptyCell-PROPORTION_COLUMN-1] = emptyCells[1][colWithEmptyCell-PROPORTION_COLUMN-1] - 1;
+        }*/
         
         //update sum column for this row
-        //String newRowValue = "0 - " + DECIMAL_FORMAT.format(rowMinTotal) + "   0 - " + DECIMAL_FORMAT.format(rowMaxTotal);
         String newRowValue = "0 - " + DECIMAL_FORMAT.format(newMinTotal) + "   0 - " + DECIMAL_FORMAT.format(newMaxTotal);
         
         if(markovTable.get(row).get(sumCol) == null){
@@ -290,8 +290,6 @@ public class MarkovTableModel extends customTableModel {
             //check rows in this column for the empty cell
             if(!((MarkovTableCell)(markovTable.get(r).get(colWithEmptyCell))).isUserEntered() && (colWithEmptyCell > PROPORTION_COLUMN)){
                 ((MarkovTableCell) (markovTable.get(r).get(colWithEmptyCell))).setCalculated(true);
-                //emptyCells[1][colWithEmptyCell-1-PROPORTION_COLUMN] = emptyCells[1][colWithEmptyCell-1-PROPORTION_COLUMN] - 1;
-                //emptyCells[0][rowWithEmptyCell-1-PROPORTION_ROW] = emptyCells[0][rowWithEmptyCell-1-PROPORTION_ROW] - 1;
                 rowWithEmptyCell = r;
             }
         }
@@ -300,6 +298,11 @@ public class MarkovTableModel extends customTableModel {
         double newMinTotal = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Min", colMaxTotal);
         double newMaxTotal = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Max", colMinTotal);
         filledInEmptyCell(rowWithEmptyCell, colWithEmptyCell);        
+        /*if((emptyCells[0].length > (rowWithEmptyCell-PROPORTION_ROW-1)) && (emptyCells[1].length > (colWithEmptyCell-PROPORTION_COLUMN-1))
+                && (rowWithEmptyCell > 0) && (colWithEmptyCell > 0)){
+            emptyCells[0][rowWithEmptyCell-PROPORTION_ROW-1] = emptyCells[0][rowWithEmptyCell-PROPORTION_ROW-1] - 1;
+            emptyCells[1][colWithEmptyCell-PROPORTION_COLUMN-1] = emptyCells[1][colWithEmptyCell-PROPORTION_COLUMN-1] - 1;
+        }*/
                 
         String newColValue = "0 - " + DECIMAL_FORMAT.format(newMinTotal) + "   0 - " + DECIMAL_FORMAT.format(newMaxTotal);
             
@@ -326,8 +329,7 @@ public class MarkovTableModel extends customTableModel {
      * @return 0 if the value was set, or the total provided if no cell was changed
      */
     private double setCalculatedField(int rowWithEmptyCell, int colWithEmptyCell, String minOrMax, double total){
-        //synchronized(markovTable){
-
+        
         if((colWithEmptyCell > 0) && (rowWithEmptyCell > 0) && (minOrMax != null)){
             if(minOrMax == "Min"){
                 ((MarkovTableCell) (markovTable.get(rowWithEmptyCell).get(colWithEmptyCell))).setMin(total);
@@ -341,7 +343,6 @@ public class MarkovTableModel extends customTableModel {
         }
         
         return total;
-        //}
     }
     
     /**
@@ -579,6 +580,7 @@ public class MarkovTableModel extends customTableModel {
      *   1. The min/max values are negative, 
      *   2. The min/max values are greater than the current row's proportion
      *   3. The min/max values are greater than the current column's proportion
+     *   4. The cell values cause the sum of the row/column to be greater than the total allowed
      * @param row - The row of the cell to check for errors
      * @param col - The column of the cell to check for errors
      */
@@ -589,7 +591,10 @@ public class MarkovTableModel extends customTableModel {
                 || (((MarkovTableCell) (markovTable.get(row).get(col))).getMin() > ((MarkovTableCell) (markovTable.get(PROPORTION_ROW).get(col))).getMin())
                 || (((MarkovTableCell) (markovTable.get(row).get(col))).getMin() > ((MarkovTableCell) (markovTable.get(row).get(PROPORTION_COLUMN))).getMin())
                 || (((MarkovTableCell) (markovTable.get(row).get(col))).getMax() > ((MarkovTableCell) (markovTable.get(PROPORTION_ROW).get(col))).getMax())
-                || (((MarkovTableCell) (markovTable.get(row).get(col))).getMax() > ((MarkovTableCell) (markovTable.get(row).get(PROPORTION_COLUMN))).getMax())){
+                || (((MarkovTableCell) (markovTable.get(row).get(col))).getMax() > ((MarkovTableCell) (markovTable.get(row).get(PROPORTION_COLUMN))).getMax())
+                || ((emptyCells[0][row-PROPORTION_ROW-1] == 0) && (((MarkovTableCell) (markovTable.get(PROPORTION_ROW).get(col))).getMax() > 0))
+                || ((emptyCells[1][col-PROPORTION_COLUMN-1] == 0) && (((MarkovTableCell) (markovTable.get(row).get(PROPORTION_COLUMN))).getMax() > 0)))
+                {
             ((MarkovTableCell) (markovTable.get(row).get(col))).setError(true);
         } else{
             ((MarkovTableCell) (markovTable.get(row).get(col))).setError(false);
