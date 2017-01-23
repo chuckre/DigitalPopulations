@@ -84,13 +84,13 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
      * @return MarkovTableModel populated with data
      */
     private MarkovTableModel populateExistingMarkovTableModel(List<SurveyColumnValuesGrouping> surveyGroups){
-        ArrayList<String> columnNames = new ArrayList<>();
+        //ArrayList<String> columnNames = new ArrayList<>();
         //Census Value Names
-        columnNames.addAll(Arrays.asList("","Value"));
-        columnNames.addAll(this.currentMarkovChain.getAllSelectedCensusClassesUserDefinedNames());
-        columnNames.addAll(Arrays.asList("Amount Left",""));
+        //columnNames.addAll(Arrays.asList("","Value"));
+        //columnNames.addAll(this.currentMarkovChain.getAllSelectedCensusClassesUserDefinedNames());
+        //columnNames.addAll(Arrays.asList("Amount Left",""));
         
-        int[][] cells = new int[2][Math.max(END_EDITABLE_COL-START_EDITABLE_COL, END_EDITABLE_ROW-START_EDITABLE_ROW)+1];
+        //int[][] cells = new int[2][Math.max(END_EDITABLE_COL-START_EDITABLE_COL, END_EDITABLE_ROW-START_EDITABLE_ROW)+1];
         
         int numRows = END_EDITABLE_ROW - START_EDITABLE_ROW + 1;
         int numCols = END_EDITABLE_COL - START_EDITABLE_COL + 1;
