@@ -18,6 +18,8 @@ import java.awt.Dimension;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -759,6 +761,8 @@ public class StepOne extends javax.swing.JFrame {
      */
     private void btnPopulationMicroDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPopulationMicroDataActionPerformed
 
+        addFileFilterForCSVOnly();
+
         getAndVerifyFile(DigPopFileTypeEnum.Population_Micro_Data);
     }//GEN-LAST:event_btnPopulationMicroDataActionPerformed
 
@@ -775,6 +779,8 @@ public class StepOne extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnHouseholdMicroDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHouseholdMicroDataActionPerformed
+
+        addFileFilterForCSVOnly();
 
         getAndVerifyFile(DigPopFileTypeEnum.Household_Micro_Data);
     }//GEN-LAST:event_btnHouseholdMicroDataActionPerformed
@@ -793,6 +799,8 @@ public class StepOne extends javax.swing.JFrame {
      */
     private void btnConstaintMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConstaintMapActionPerformed
 
+        addFileFilterForASCOnly();
+        
         getAndVerifyFile(DigPopFileTypeEnum.Constraint_Map);
     }//GEN-LAST:event_btnConstaintMapActionPerformed
 
@@ -817,6 +825,8 @@ public class StepOne extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnCensusEnumerationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCensusEnumerationsActionPerformed
+        
+        addFileFilterForCSVOnly();
 
         getAndVerifyFile(DigPopFileTypeEnum.Census_Enumerations);
     }//GEN-LAST:event_btnCensusEnumerationsActionPerformed
@@ -827,6 +837,8 @@ public class StepOne extends javax.swing.JFrame {
      */
     private void btnRegionMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegionMapActionPerformed
 
+        addFileFilterForASCOnly();
+        
         getAndVerifyFile(DigPopFileTypeEnum.Region_Map);
     }//GEN-LAST:event_btnRegionMapActionPerformed
 
@@ -844,6 +856,9 @@ public class StepOne extends javax.swing.JFrame {
      * @param evt 
      */
     private void btnLandMapHouseholdMapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLandMapHouseholdMapActionPerformed
+        
+        addFileFilterForASCOnly();
+        
         if(rbtnLandUseMap.isSelected())
         {
             getAndVerifyFile(DigPopFileTypeEnum.Land_Use_Map);
@@ -1265,6 +1280,18 @@ public class StepOne extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tblConstraintMaps.getModel();
         Object[] obj = {value};
         model.addRow(obj);
+    }
+    
+    private void addFileFilterForASCOnly(){
+        FileFilter ascFilter = new FileNameExtensionFilter(
+                "ASC files", "asc");
+        fileChooser.setFileFilter(ascFilter);
+    }
+    
+    private void addFileFilterForCSVOnly(){
+        FileFilter ascFilter = new FileNameExtensionFilter(
+                "CSV files", "csv");
+        fileChooser.setFileFilter(ascFilter);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
