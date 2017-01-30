@@ -603,8 +603,17 @@ public class MarkovTableModel extends customTableModel {
      * @return 
      */
     public double[] getMinMaxObject(int row, int column){
-        double min = ((MarkovTableCell)markovTable.get(row).get(column)).getMin();
-        double max = ((MarkovTableCell)markovTable.get(row).get(column)).getMax();
+        
+        double min = 0; 
+        double max = 0;
+        
+        if(markovTable.size() >= row
+                && markovTable.get(row) != null
+                && markovTable.get(row).size() >= column
+                && markovTable.get(row).get(column) != null){
+            min = ((MarkovTableCell)markovTable.get(row).get(column)).getMin();
+            max = ((MarkovTableCell)markovTable.get(row).get(column)).getMax();
+        }
         double[] values = new double[]{min, max};
         
         return values;
