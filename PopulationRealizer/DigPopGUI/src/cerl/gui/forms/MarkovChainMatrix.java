@@ -157,24 +157,18 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
             }
         }
         
-        //MarkovTableCell(int row, int column, Object value, boolean calculated, boolean userEntered, boolean error, boolean editable)
-        cellValues.get(0).add(0, new MarkovTableCell(0, 0, "Value", false, false, false, false));
-        cellValues.get(numberOfNeededRows - 2).add(0, new MarkovTableCell(numberOfNeededRows - 2, 0, "Amount Left", false, false, false, false));
-        cellValues.get(numberOfNeededRows - 1).add(0, new MarkovTableCell(numberOfNeededRows - 1, 0, "", false, false, false, false));
-        cellValues.get(0).add(1, new MarkovTableCell(0, 1, "Proportion", false, false, false, false));
+        //Set All Values takes: (Object value, boolean calculated, boolean userEntered, boolean error, boolean editable)
+        ((MarkovTableCell)cellValues.get(0).get(0)).setAllValues("Value", false, false, false, false);
+        ((MarkovTableCell)cellValues.get(numberOfNeededRows - 2).get(0)).setAllValues("Amount Left", false, false, false, false);
+        ((MarkovTableCell)cellValues.get(numberOfNeededRows - 1).get(0)).setAllValues("", false, false, false, false);
+        ((MarkovTableCell)cellValues.get(0).get(1)).setAllValues("Proportion", false, false, false, false);
               
         //Survey Values
         int otherCounter = 0;
         for(int counter = 1; counter <= surveyGroups.size(); counter++){
             SurveyColumnValuesGrouping selected = surveyGroups.get(otherCounter);
             
-            cellValues.get(counter).add(
-                    0, 
-                    new MarkovTableCell(
-                            counter, 
-                            1, 
-                            selected.toString(), 
-                            false, false, false, false));
+            ((MarkovTableCell)cellValues.get(counter).get(0)).setAllValues(selected.toString(), false, false, false, false);
             
             otherCounter++;
         }
@@ -182,7 +176,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         //load proportions
         long allSurveyGroupsTotal = this.currentMarkovChain.getSelectSurveyClass().getAllSurveyGroupsTotal();
         long allCensusTotal = this.currentMarkovChain.getAllCensusTotal();
-        
+        //census proportions
         otherCounter = 2;
         for(int counter = 0; counter < this.currentMarkovChain.getCensusClasses().size(); counter++){
             cerl.gui.utilities.Class selected = this.currentMarkovChain.getCensusClasses().get(counter);
@@ -190,10 +184,12 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
             double proportions = (double)selected.getClassTotal() / allCensusTotal;
             proportions =Math.round(proportions * 100.0) / 100.0;
             
-            cellValues.get(0).add(otherCounter, new MarkovTableCell(0, otherCounter, proportions, proportions, proportions, false, false, false, false));
+            ((MarkovTableCell)cellValues.get(0).get(otherCounter)).setAllValues(proportions, false, false, false, false);
+            ((MarkovTableCell)cellValues.get(0).get(otherCounter)).setMin(proportions);
+            ((MarkovTableCell)cellValues.get(0).get(otherCounter)).setMax(proportions);
             otherCounter++;
         }
-        
+        //survey proportions
         otherCounter = 1;
         for(int counter = 0; counter < surveyGroups.size(); counter++){
             SurveyColumnValuesGrouping selected = surveyGroups.get(counter);
@@ -201,17 +197,19 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
             double proportions = (double)selected.getGroupingTotal() / allSurveyGroupsTotal;
             proportions =Math.round(proportions * 100.0) / 100.0;
             
-            cellValues.get(otherCounter).add(1, new MarkovTableCell(otherCounter, 1, proportions, proportions, proportions, false, false, false, false));
+            ((MarkovTableCell)cellValues.get(otherCounter).get(1)).setAllValues(proportions, false, false, false, false);
+            ((MarkovTableCell)cellValues.get(otherCounter).get(1)).setMin(proportions);
+            ((MarkovTableCell)cellValues.get(otherCounter).get(1)).setMax(proportions);
             otherCounter++;
         }
         
-        //non-editable corner cells
-        cellValues.get(0).add(numberOfNeededColumn -2, new MarkovTableCell(0, numberOfNeededColumn-2, "Range Min:    Range Max:", false, false, false, false));
-        cellValues.get(0).add(numberOfNeededColumn - 1, new MarkovTableCell(0, numberOfNeededColumn -1, "", false, false, false, false));
-        cellValues.get(numberOfNeededRows - 2).add(1, new MarkovTableCell(numberOfNeededRows - 2, 1, "Range Min:    Range Max:", false, false, false, false));
-        cellValues.get(numberOfNeededRows - 1).add(1, new MarkovTableCell(numberOfNeededRows - 1, 1, "", false, false, false, false));
-        cellValues.get(numberOfNeededRows - 1).add(numberOfNeededColumn - 1, new MarkovTableCell(numberOfNeededRows -1, numberOfNeededColumn-1, "", false, false, false, false));
-        cellValues.get(numberOfNeededRows - 2).add(numberOfNeededColumn - 2, new MarkovTableCell(numberOfNeededRows -2, numberOfNeededColumn-2, "", false, false, false, false));
+        //Update non-editable corner cells
+        ((MarkovTableCell)cellValues.get(0).get(numberOfNeededColumn -2)).setAllValues("Range Min:    Range Max:", false, false, false, false);
+        ((MarkovTableCell)cellValues.get(0).get(numberOfNeededColumn -1)).setAllValues("", false, false, false, false);
+        ((MarkovTableCell)cellValues.get(numberOfNeededRows - 2).get(1)).setAllValues("Range Min:    Range Max:", false, false, false, false);
+        ((MarkovTableCell)cellValues.get(numberOfNeededRows - 1).get(1)).setAllValues("", false, false, false, false);
+        ((MarkovTableCell)cellValues.get(numberOfNeededRows - 1).get(numberOfNeededColumn - 1)).setAllValues("", false, false, false, false);
+        ((MarkovTableCell)cellValues.get(numberOfNeededRows - 2).get(numberOfNeededColumn - 2)).setAllValues("", false, false, false, false);
         
         //create table with custom MarkovTableModel
         MarkovTableModel mtmTable = new MarkovTableModel(columnNames, cellValues, cells, numRows, numCols);

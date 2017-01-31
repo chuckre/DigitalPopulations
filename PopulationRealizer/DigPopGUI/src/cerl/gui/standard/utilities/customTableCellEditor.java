@@ -126,7 +126,7 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
             cellValue = setupDialog(o.toString());
         }
         JTextField cellEditor = (JTextField)super.getTableCellEditorComponent(jtable, o, bln, i, i1);
-        
+             
         if((cellValue != null) && (o!=null)){
             cellEditor.setText(cellValue);
         }

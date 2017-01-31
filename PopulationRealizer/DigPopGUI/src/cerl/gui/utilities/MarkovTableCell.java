@@ -198,6 +198,17 @@ public class MarkovTableCell {
     public void setValue(Object value) {
         this.value = value;
     }
+    
+    /**
+     * Sets all values associated with the current cell.
+     */
+    public void setAllValues(Object value, boolean calculated, boolean userEntered, boolean error, boolean editable) {
+        this.calculated = calculated;
+        this.editable = editable;
+        this.error = error;
+        this.userEntered = userEntered;
+        this.value = value;
+    }
 
     /**
      * Updates the flag if the current cell is calculated by the system.
