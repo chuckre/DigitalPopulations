@@ -7,6 +7,7 @@ package cerl.gui.standard.utilities;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ItemListener;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import javax.swing.DefaultCellEditor;
@@ -16,6 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellEditor;
 
 /**
@@ -33,6 +36,7 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
      */
     public customTableCellEditor() {
         super(new JTextField());
+        
     }
     
     /**
@@ -130,7 +134,30 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
         if((cellValue != null) && (o!=null)){
             cellEditor.setText(cellValue);
         }
+       test = (MarkovTableModel)jtable.getModel();
+        currentRow = i;
+        currentColumn = i1;
+      
+        
+//        int rowNum = jtable.getRowCount() - 1;
+//        int columnNum = jtable.getColumnCount() - 1;
+//        
+//        JTextField emptyCell = (JTextField)super.getTableCellEditorComponent(jtable, null, true, rowNum, columnNum);
+//        emptyCell.requestFocus();
         
         return cellEditor;
     }
+MarkovTableModel test ;
+int currentRow, currentColumn;
+
+    @Override
+    protected void fireEditingStopped() {
+        
+        test.fireTableCellUpdated(currentRow, currentColumn);
+        
+        
+        super.fireEditingStopped(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 }
