@@ -10,13 +10,18 @@ import java.awt.Dimension;
 import java.awt.event.ItemListener;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.util.EventObject;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTree;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellEditor;
@@ -26,17 +31,17 @@ import javax.swing.table.TableCellEditor;
  * Requires users to enter both the min and max before continuing.
  * @author mrivera
  */
-public class customTableCellEditor extends DefaultCellEditor implements TableCellEditor {
+public class customTableCellEditor extends DefaultCellEditor implements TableCellEditor  {
     private JLabel validationLabel;
     private double rowProportion;
     private double colProportion;
-    
+     JComponent component = new JTextField();
+     JComponent component2 = new JTextField();
     /**
      * Creates a new customTableCellEditor
      */
     public customTableCellEditor() {
-        super(new JTextField());
-        
+        super(new JTextField()); 
     }
     
     /**
@@ -137,27 +142,45 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
        test = (MarkovTableModel)jtable.getModel();
         currentRow = i;
         currentColumn = i1;
-      
         
 //        int rowNum = jtable.getRowCount() - 1;
 //        int columnNum = jtable.getColumnCount() - 1;
 //        
 //        JTextField emptyCell = (JTextField)super.getTableCellEditorComponent(jtable, null, true, rowNum, columnNum);
 //        emptyCell.requestFocus();
-        
-        return cellEditor;
+      component =cellEditor;
+      jtable1 = jtable;
+      cellEditor.transferFocus();
+      
+//component2 = (JTextField)super.getTableCellEditorComponent(jtable, o, bln, jtable1.getRowCount(),jtable1.getColumnCount());
+//component2.grabFocus();
+//test.fireTableCellUpdated(i, i1);
+return cellEditor;
     }
+    
 MarkovTableModel test ;
 int currentRow, currentColumn;
+JTable jtable1;
+boolean changed = false;
+@Override
+ public Object getCellEditorValue() {
+  
+        return ((JTextField) component).getText();
+    }
 
     @Override
     protected void fireEditingStopped() {
         
-        test.fireTableCellUpdated(currentRow, currentColumn);
         
         
-        super.fireEditingStopped(); //To change body of generated methods, choose Tools | Templates.
+      //  super.stopCellEditing();
+         super.fireEditingStopped(); //To change body of generated methods, choose Tools | Templates.
+         
+        //jtable1.requestFocus(true);
+//jtable1.editCellAt(jtable1.getRowCount(),jtable1.getColumnCount());
+//        test.fireTableCellUpdated(jtable1.getRowCount(),jtable1.getColumnCount());
+        
+        
+       
     }
-    
-    
 }
