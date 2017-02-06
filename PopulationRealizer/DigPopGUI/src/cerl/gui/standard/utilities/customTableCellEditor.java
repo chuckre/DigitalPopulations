@@ -96,7 +96,7 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
 
             @Override
             public boolean isCellEditable(EventObject eo) {
-                return true;//super.isCellEditable(eo); //To change body of generated methods, choose Tools | Templates.
+                return super.isCellEditable(eo); //true;To change body of generated methods, choose Tools | Templates.
             }
             
         };
@@ -238,8 +238,9 @@ boolean changed = false;
         jtable1.requestFocus(true);
 jtable1.editCellAt(rowNum,columnNum);
         test.fireTableCellUpdated(rowNum,columnNum);
-        
-        
+        test.fireTableRowsUpdated(0, rowNum);
+        test.fireTableDataChanged();
+     //   test.handleTableChange(rowNum, columnNum);
        
     }
 }
