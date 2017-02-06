@@ -570,6 +570,8 @@ public class MarkovTableModel extends customTableModel {
         this.setOrClearErrors(row,col);
         //this.calculateMarkov(row, col);
         this.fireTableCellUpdated(row, col);
+        
+        this.fireTableRowsUpdated(row, row);
         this.fireTableDataChanged();
     }
     
