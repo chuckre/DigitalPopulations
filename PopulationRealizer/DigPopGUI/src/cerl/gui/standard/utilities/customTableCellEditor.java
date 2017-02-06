@@ -7,6 +7,8 @@ package cerl.gui.standard.utilities;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
@@ -42,6 +44,63 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
      */
     public customTableCellEditor() {
         super(new JTextField()); 
+        delegate = new DefaultCellEditor.EditorDelegate()
+        {
+            @Override
+            public void setValue(Object value)
+            {
+                super.setValue(value);
+            }
+
+            @Override
+            public Object getCellEditorValue()
+            {
+                return super.value;
+            }
+
+            @Override
+            public void itemStateChanged(ItemEvent ie) {
+                super.itemStateChanged(ie); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                super.actionPerformed(ae); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void cancelCellEditing() {
+                super.cancelCellEditing(); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public boolean stopCellEditing() {
+                return super.stopCellEditing(); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public boolean startCellEditing(EventObject eo) {
+                return super.startCellEditing(eo); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public boolean shouldSelectCell(EventObject eo) {
+               stopCellEditing(); 
+        
+//        JTextField emptyCell = (JTextField)getTableCellEditorComponent(jtable1, null, true, rowNum, columnNum);
+//        emptyCell.requestFocus();
+               
+               
+                return false;//super.shouldSelectCell(eo); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public boolean isCellEditable(EventObject eo) {
+                return super.isCellEditable(eo); //To change body of generated methods, choose Tools | Templates.
+            }
+            
+        };
+        super.delegate = delegate;
     }
     
     /**
@@ -143,8 +202,8 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
         currentRow = i;
         currentColumn = i1;
         
-//        int rowNum = jtable.getRowCount() - 1;
-//        int columnNum = jtable.getColumnCount() - 1;
+        rowNum = jtable.getRowCount() - 1;
+        columnNum = jtable.getColumnCount() - 1;
 //        
 //        JTextField emptyCell = (JTextField)super.getTableCellEditorComponent(jtable, null, true, rowNum, columnNum);
 //        emptyCell.requestFocus();
@@ -157,7 +216,7 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
 //test.fireTableCellUpdated(i, i1);
 return cellEditor;
     }
-    
+   int rowNum ,columnNum; 
 MarkovTableModel test ;
 int currentRow, currentColumn;
 JTable jtable1;
@@ -176,9 +235,9 @@ boolean changed = false;
       //  super.stopCellEditing();
          super.fireEditingStopped(); //To change body of generated methods, choose Tools | Templates.
          
-        //jtable1.requestFocus(true);
-//jtable1.editCellAt(jtable1.getRowCount(),jtable1.getColumnCount());
-//        test.fireTableCellUpdated(jtable1.getRowCount(),jtable1.getColumnCount());
+        jtable1.requestFocus(true);
+jtable1.editCellAt(rowNum,columnNum);
+        test.fireTableCellUpdated(rowNum,columnNum);
         
         
        
