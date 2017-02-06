@@ -96,7 +96,7 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
 
             @Override
             public boolean isCellEditable(EventObject eo) {
-                return super.isCellEditable(eo); //To change body of generated methods, choose Tools | Templates.
+                return true;//super.isCellEditable(eo); //To change body of generated methods, choose Tools | Templates.
             }
             
         };
