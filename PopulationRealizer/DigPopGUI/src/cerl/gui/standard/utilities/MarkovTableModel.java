@@ -233,7 +233,15 @@ public class MarkovTableModel extends customTableModel {
         //Set values for the empty cell
         double newMinTotal = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Min", rowMaxTotal);
         double newMaxTotal = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Max", rowMinTotal); 
-        ((MarkovTableCell) (markovTable.get(rowWithEmptyCell).get(colWithEmptyCell))).setValue(rowMinTotal + " - " + rowMaxTotal);
+        
+        
+        if(colWithEmptyCell >= startCol
+                && colWithEmptyCell > PROPORTION_COLUMN 
+                && colWithEmptyCell < sumCol)
+        {
+            ((MarkovTableCell) (markovTable.get(rowWithEmptyCell).get(colWithEmptyCell))).setValue(rowMinTotal + " - " + rowMaxTotal);
+        }
+        
         filledInEmptyCell(rowWithEmptyCell, colWithEmptyCell);        
         /*if((emptyCells[0].length > (rowWithEmptyCell-PROPORTION_ROW-1)) && (emptyCells[1].length > (colWithEmptyCell-PROPORTION_COLUMN-1))
                 && (rowWithEmptyCell > 0) && (colWithEmptyCell > 0)){
@@ -243,7 +251,7 @@ public class MarkovTableModel extends customTableModel {
         
         //update sum column for this row
         String newRowValue = "0 - " + DECIMAL_FORMAT.format(newMinTotal) + "   0 - " + DECIMAL_FORMAT.format(newMaxTotal);
-        
+        System.out.println(newRowValue);
         if(markovTable.get(row).get(sumCol) == null){
             markovTable.get(row).set(sumCol, new MarkovTableCell(row, sumCol, newMaxTotal, newMinTotal, newRowValue, true, false, false, false));
         } else{
@@ -296,7 +304,13 @@ public class MarkovTableModel extends customTableModel {
         //Set values for the empty cell
         double newMinTotal = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Min", colMaxTotal);
         double newMaxTotal = setCalculatedField(rowWithEmptyCell, colWithEmptyCell, "Max", colMinTotal);
-        ((MarkovTableCell) (markovTable.get(rowWithEmptyCell).get(colWithEmptyCell))).setValue(colMinTotal + " - " + colMaxTotal);
+        
+        if(rowWithEmptyCell >= startRow
+                && rowWithEmptyCell > PROPORTION_ROW 
+                && rowWithEmptyCell < sumRow)
+        {
+            ((MarkovTableCell) (markovTable.get(rowWithEmptyCell).get(colWithEmptyCell))).setValue(colMinTotal + " - " + colMaxTotal);
+        }
         filledInEmptyCell(rowWithEmptyCell, colWithEmptyCell);        
         /*if((emptyCells[0].length > (rowWithEmptyCell-PROPORTION_ROW-1)) && (emptyCells[1].length > (colWithEmptyCell-PROPORTION_COLUMN-1))
                 && (rowWithEmptyCell > 0) && (colWithEmptyCell > 0)){
@@ -304,8 +318,8 @@ public class MarkovTableModel extends customTableModel {
             emptyCells[1][colWithEmptyCell-PROPORTION_COLUMN-1] = emptyCells[1][colWithEmptyCell-PROPORTION_COLUMN-1] - 1;
         }*/
                 
-        String newColValue = "0 - " + DECIMAL_FORMAT.format(newMinTotal) + "   0 - " + DECIMAL_FORMAT.format(newMaxTotal);
-            
+        String  newColValue= "0 - " + DECIMAL_FORMAT.format(newMinTotal) + "   0 - " + DECIMAL_FORMAT.format(newMaxTotal);
+            System.out.println(newColValue);
         //set column total
         if(markovTable.get(sumRow).get(col) == null){
             markovTable.get(sumRow).set(col, new MarkovTableCell(sumRow, col, newMaxTotal, newMinTotal, newColValue, true, false, false, false));
