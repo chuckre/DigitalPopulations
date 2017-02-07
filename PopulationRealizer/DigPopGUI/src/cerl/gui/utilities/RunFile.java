@@ -49,7 +49,7 @@ public class RunFile {
         this.do_dump_statistics = true;
         this.do_write_all_hoh_fields = true;
         this.do_write_all_pop_fields = true;
-        this.only_one_region = true;
+        this.only_one_region = false;
         this.phase3_skip = false;
         this.phase4_save_both_ends = true;
         this.phase4_skip = false;

@@ -19,7 +19,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -743,10 +745,21 @@ public class StepThree extends javax.swing.JFrame {
             
             censusAllListModel.addElement(c);
         });
-        censusSurveyClasses.getHouseholdMicroDataClasses().stream().forEach((c) -> {
-            surveyAllListModel.addElement(c);
-        });
-        censusSurveyClasses.getPopulationMicroDataClasses().stream().forEach((c) -> {
+        
+        ArrayList<cerl.gui.utilities.Class> allSurveyClasses = new ArrayList<cerl.gui.utilities.Class>();
+        allSurveyClasses.addAll(censusSurveyClasses.getHouseholdMicroDataClasses());
+        allSurveyClasses.addAll(censusSurveyClasses.getPopulationMicroDataClasses());
+        
+       Collections.sort(allSurveyClasses,cerl.gui.utilities.Class.ClassNameComparator);
+        
+//        censusSurveyClasses.getHouseholdMicroDataClasses().stream().forEach((c) -> {
+//            surveyAllListModel.add(c);
+//        });
+//        censusSurveyClasses.getPopulationMicroDataClasses().stream().forEach((c) -> {
+//            surveyAllListModel.add(c);
+//        });
+
+        allSurveyClasses.stream().forEach((c) -> {
             surveyAllListModel.addElement(c);
         });
         
@@ -758,6 +771,7 @@ public class StepThree extends javax.swing.JFrame {
         jScrollPaneCensusSelected.setViewportView(censusSelectedList);
         
         surveyAllList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
         jScrollPaneSurveyAll.setViewportView(surveyAllList);
         
         jScrollPaneSurveyDataGroups.setViewportView(surveyGroupsList);
