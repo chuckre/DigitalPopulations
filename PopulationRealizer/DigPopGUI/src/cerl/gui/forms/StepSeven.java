@@ -899,7 +899,7 @@ public class StepSeven extends javax.swing.JFrame {
 
         jPanel_Phase3and4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel_Phase34SaveInterval.setText("Phase 3 and 4 Intermediate Save Interval");
+        jLabel_Phase34SaveInterval.setText("Phase 3 and 4 Intermediate Save Interval (in minutes)");
 
         Phase34SaveInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         Phase34SaveInfoIcon.setToolTipText("Help Infomation for Phase 3 and 4 Intermediate Save Interval");
@@ -1790,13 +1790,13 @@ public class StepSeven extends javax.swing.JFrame {
         
         if(Validations.validateAndReturnInteger(value)){
             int i = Integer.parseInt(value);
-            if(i > 1){
+            if(i > 0){
                 this.RunProperties.setParallel_threads(i);
                 jLabel_Errors.setText(" ");
                 pack();
             }
             else{
-                jLabel_Errors.setText("The Parallel Threads Must be Greater than 1");
+                jLabel_Errors.setText("The Parallel Threads Must be Greater than 0");
                 pack();
             }
         } else {

@@ -7,15 +7,25 @@ package cerl.gui.standard.utilities;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.util.EventObject;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTree;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellEditor;
 
 /**
@@ -23,16 +33,74 @@ import javax.swing.table.TableCellEditor;
  * Requires users to enter both the min and max before continuing.
  * @author mrivera
  */
-public class customTableCellEditor extends DefaultCellEditor implements TableCellEditor {
+public class customTableCellEditor extends DefaultCellEditor implements TableCellEditor  {
     private JLabel validationLabel;
     private double rowProportion;
     private double colProportion;
-    
+     JComponent component = new JTextField();
+     JComponent component2 = new JTextField();
     /**
      * Creates a new customTableCellEditor
      */
     public customTableCellEditor() {
-        super(new JTextField());
+        super(new JTextField()); 
+        delegate = new DefaultCellEditor.EditorDelegate()
+        {
+            @Override
+            public void setValue(Object value)
+            {
+                super.setValue(value);
+            }
+
+            @Override
+            public Object getCellEditorValue()
+            {
+                return super.value;
+            }
+
+            @Override
+            public void itemStateChanged(ItemEvent ie) {
+                super.itemStateChanged(ie); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                super.actionPerformed(ae); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void cancelCellEditing() {
+                super.cancelCellEditing(); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public boolean stopCellEditing() {
+                return super.stopCellEditing(); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public boolean startCellEditing(EventObject eo) {
+                return super.startCellEditing(eo); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public boolean shouldSelectCell(EventObject eo) {
+               stopCellEditing(); 
+        
+//        JTextField emptyCell = (JTextField)getTableCellEditorComponent(jtable1, null, true, rowNum, columnNum);
+//        emptyCell.requestFocus();
+               
+               
+                return false;//super.shouldSelectCell(eo); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public boolean isCellEditable(EventObject eo) {
+                return super.isCellEditable(eo); //true;To change body of generated methods, choose Tools | Templates.
+            }
+            
+        };
+        super.delegate = delegate;
     }
     
     /**
@@ -126,11 +194,53 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
             cellValue = setupDialog(o.toString());
         }
         JTextField cellEditor = (JTextField)super.getTableCellEditorComponent(jtable, o, bln, i, i1);
-        
+             
         if((cellValue != null) && (o!=null)){
             cellEditor.setText(cellValue);
         }
+       test = (MarkovTableModel)jtable.getModel();
+        currentRow = i;
+        currentColumn = i1;
         
-        return cellEditor;
+        rowNum = jtable.getRowCount() - 1;
+        columnNum = jtable.getColumnCount() - 1;
+//        
+//        JTextField emptyCell = (JTextField)super.getTableCellEditorComponent(jtable, null, true, rowNum, columnNum);
+//        emptyCell.requestFocus();
+      component =cellEditor;
+      jtable1 = jtable;
+      cellEditor.transferFocus();
+      
+//component2 = (JTextField)super.getTableCellEditorComponent(jtable, o, bln, jtable1.getRowCount(),jtable1.getColumnCount());
+//component2.grabFocus();
+//test.fireTableCellUpdated(i, i1);
+return cellEditor;
+    }
+   int rowNum ,columnNum; 
+MarkovTableModel test ;
+int currentRow, currentColumn;
+JTable jtable1;
+boolean changed = false;
+@Override
+ public Object getCellEditorValue() {
+  
+        return ((JTextField) component).getText();
+    }
+
+    @Override
+    protected void fireEditingStopped() {
+        
+        
+        
+      //  super.stopCellEditing();
+         super.fireEditingStopped(); //To change body of generated methods, choose Tools | Templates.
+         
+        jtable1.requestFocus(true);
+jtable1.editCellAt(rowNum,columnNum);
+        test.fireTableCellUpdated(rowNum,columnNum);
+        test.fireTableRowsUpdated(0, rowNum);
+        test.fireTableDataChanged();
+     //   test.handleTableChange(rowNum, columnNum);
+       
     }
 }

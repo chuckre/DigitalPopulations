@@ -6,6 +6,7 @@
 package cerl.gui.utilities;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.xml.bind.annotation.XmlElement;
@@ -14,7 +15,7 @@ import javax.xml.bind.annotation.XmlElement;
  * The census and survey classes
  * @author ajohnson
  */
-public class Class implements Cloneable {
+public class Class implements Cloneable{
     private String className; 
     private long classTotal;
     private int columnNumber;
@@ -297,4 +298,21 @@ public class Class implements Cloneable {
  
         return clonedClass;
     }
+    
+   public static Comparator<cerl.gui.utilities.Class> ClassNameComparator
+                          = new Comparator<cerl.gui.utilities.Class>() {
+
+	    public int compare(Class class1, Class class2) {
+
+	      String className1 = class1.getClassName().toUpperCase();
+	      String className2 = class2.getClassName().toUpperCase();
+
+	      //ascending order
+	      return className1.compareTo(className2);
+
+	      //descending order
+	      //return fruitName2.compareTo(fruitName1);
+	    }
+
+	};
 }
