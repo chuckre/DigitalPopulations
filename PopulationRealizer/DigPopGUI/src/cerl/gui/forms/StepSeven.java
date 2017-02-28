@@ -1535,7 +1535,7 @@ public class StepSeven extends javax.swing.JFrame {
                     this.digPopGUIInformation.getFileDirectory());
             
             if(result.isSuccess()){
-                this.jLabel_Errors.setText("The Run file was saved and new Census csv files are greated.");
+                this.jLabel_Errors.setText("The Run file was saved and new Census csv files are created.");
             }else
             {
                 this.jLabel_Errors.setText(result.getErrorMessage());
