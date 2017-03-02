@@ -68,6 +68,7 @@ do
 
 	command="$command --outfile=$1_rzn$rznIDZero.tif --calc=$fomula --NoDataValue=-1"
 	echo $command
+	$command
 	echo rm randomfield_rzn$rznIDZero.tif
 done
 
