@@ -61,6 +61,7 @@ do
 
 	command="$command --outfile=$1_rzn$rznIDZero.tif --calc=$fomula --NoDataValue=-1"
 	echo $command
+	$command
 done
 
 ./SARasterStat $1 $2 $3 $1
