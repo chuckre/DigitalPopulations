@@ -21,6 +21,8 @@ fi
 nMap=$(($#/3-1))
 #echo $nMap
 
+# A file to store commands
+echo "#!/bin/bash" > temp.sh
 
 #Log:
 logFile=$1.log
@@ -60,11 +62,13 @@ do
 	echo "  **Fomula $fomula" >> $logFile
 
 	command="$command --outfile=$1_rzn$rznIDZero.tif --calc=$fomula --NoDataValue=-1"
-	echo $command
-	$command
+	echo $command >> temp.sh
+#	$command
 done
 
-./SARasterStat $1 $2 $3 $1
+echo ./SARasterStat $1 $2 $3 $1 >> temp.sh
+
+bash temp.sh
 
 #Log:
 now="$(date)"

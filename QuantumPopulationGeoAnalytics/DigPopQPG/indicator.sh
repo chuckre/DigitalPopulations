@@ -28,6 +28,9 @@ UR=$(randomNumber '0.0' '1.0')
 
 nMap=$(($#/3-2))
 
+# A file to store commands
+echo "#!/bin/bash" > temp.sh
+
 #Log:
 logFile=$1.log
 now="$(date)"
@@ -46,7 +49,7 @@ do
 	fomula="\"numpy.power(A,$uncertainty)"
 	printf -v rznIDZero "%03d" $rzn
 	command="gdal_calc.py -A randomfield_rzn$rznIDZero.tif"
-	echo ./RandomField randomfield_rzn$rznIDZero.tif $9_rzn$rznIDZero.tif $D $E $F 
+	echo ./RandomField randomfield_rzn$rznIDZero.tif $9_rzn$rznIDZero.tif $D $E $F >> temp.sh
 	for i in `seq 1 $nMap`
 	do
 		minID=$((3*i+7))
@@ -67,12 +70,14 @@ do
 	echo "  **Fomula $fomula" >> $logFile
 
 	command="$command --outfile=$1_rzn$rznIDZero.tif --calc=$fomula --NoDataValue=-1"
-	echo $command
-	$command
-	echo rm randomfield_rzn$rznIDZero.tif
+	echo $command >> temp.sh
+#	$command
+	echo rm randomfield_rzn$rznIDZero.tif >> temp.sh
 done
 
-./SARasterStat $1 $2 $3 $1
+echo ./SARasterStat $1 $2 $3 $1 >> temp.sh
+
+bash temp.sh
 
 #Log:
 now="$(date)"
