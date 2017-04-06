@@ -30,7 +30,7 @@ public class StepSeven extends javax.swing.JFrame {
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_SEVEN_HELP_FILE_NAME.toString();
     private final String DEFAULT_NEW_FILE_NAME = "last-run.properties";
     private final FileType DEFAULT_NEW_FILE_TYPE = FileType.TXT;
-    private final String[] TRUE_FALSE_VALUES = { "", "TRUE", "FALSE" };
+    private final String[] TRUE_FALSE_VALUES = { "TRUE", "FALSE" };
     private final DigPopGUIInformation digPopGUIInformation;
     private RunFile RunProperties;
     
@@ -132,9 +132,9 @@ public class StepSeven extends javax.swing.JFrame {
         //Must change to string otherwise "true" always true in if statement
         switch(value.toString()){
             case "true":
-                return 1;
+                return 0;
             case "false":
-                return 2;
+                return 1;
             default:
                 return 0;
         }
@@ -1376,42 +1376,42 @@ public class StepSeven extends javax.swing.JFrame {
         String errorText = "<html>The following data fields must be provided missing: ";
         
         //Check all true/false combo boxes:
-        if(jComboBox_LogPhase1Results.getSelectedIndex() <= 0){
+        if(jComboBox_LogPhase1Results.getSelectedIndex() < 0){
             errorText += "<br /> - " + this.jLabel_LogPhase1Results.getText();
             isValid = false;
         }
         
-        if(jComboBox_LogQualityEval.getSelectedIndex() <= 0){
+        if(jComboBox_LogQualityEval.getSelectedIndex() < 0){
             errorText += "<br /> - " + this.jLabel_LogQualityEval.getText();
             isValid = false;
         }
         
-        if(jComboBox_HouseholdArchetype.getSelectedIndex() <= 0){
+        if(jComboBox_HouseholdArchetype.getSelectedIndex() < 0){
             errorText += "<br /> - " + this.jLabel_HouseholdArchetype.getText();
             isValid = false;
         }
         
-        if(jComboBox_PopulationArchetype.getSelectedIndex() <= 0){
+        if(jComboBox_PopulationArchetype.getSelectedIndex() < 0){
             errorText += "<br /> - " + this.jLabel_PopulationArchetype.getText();
             isValid = false;
         }
         
-        if(jComboBox_FirstCensusTract.getSelectedIndex() <= 0){
+        if(jComboBox_FirstCensusTract.getSelectedIndex() < 0){
             errorText += "<br /> - " + this.jLabel_FirstCensusTract.getText();
             isValid = false;
         }
         
-        if(jComboBox_Phase3Skip.getSelectedIndex() <= 0){
+        if(jComboBox_Phase3Skip.getSelectedIndex() < 0){
             errorText += "<br /> - " + this.jLabel_Phase3Skip.getText();
             isValid = false;
         }
         
-        if(jComboBox_Phase4Save.getSelectedIndex() <= 0){
+        if(jComboBox_Phase4Save.getSelectedIndex() < 0){
             errorText += "<br /> - " + this.jLabel_Phase4Save.getText();
             isValid = false;
         }
         
-        if(jComboBox_Phase4Skip.getSelectedIndex() <= 0){
+        if(jComboBox_Phase4Skip.getSelectedIndex() < 0){
             errorText += "<br /> - " + this.jLabel_Phase4Skip.getText();
             isValid = false;
         }
@@ -1488,9 +1488,9 @@ public class StepSeven extends javax.swing.JFrame {
      */
     private Boolean returnTrueFalseValue(javax.swing.JComboBox<String> picklist){
         switch (picklist.getSelectedIndex()){
-            case 1:
+            case 0:
                 return true;
-            case 2:
+            case 1:
                 return false;
             default:
                 break;
