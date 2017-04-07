@@ -20,6 +20,7 @@ import java.text.DecimalFormat;
 import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  * Creates a new Step 7 for the DigPop GUI
@@ -232,6 +233,7 @@ public class StepSeven extends javax.swing.JFrame {
         jTextField_RandomNumberSeed = new javax.swing.JTextField();
         randomNumberSeedInfoIcon = new javax.swing.JLabel();
         jLabel_RandomNumberSeed = new javax.swing.JLabel();
+        btnBackToStep1 = new javax.swing.JButton();
         jMenuBar = new javax.swing.JMenuBar();
         jMenu_File = new javax.swing.JMenu();
         jMenu_Help = new javax.swing.JMenu();
@@ -1107,6 +1109,13 @@ public class StepSeven extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnBackToStep1.setText("Exit Scenario");
+        btnBackToStep1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackToStep1ActionPerformed(evt);
+            }
+        });
+
         jMenu_File.setText("File");
         jMenuBar.add(jMenu_File);
 
@@ -1138,6 +1147,8 @@ public class StepSeven extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnPreviousStep)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBackToStep1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_Save))
                     .addComponent(jPanel_Phase4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel_Phase3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1184,7 +1195,8 @@ public class StepSeven extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_Save)
-                    .addComponent(btnPreviousStep))
+                    .addComponent(btnPreviousStep)
+                    .addComponent(btnBackToStep1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1944,6 +1956,17 @@ public class StepSeven extends javax.swing.JFrame {
         
         this.RunProperties.setOutput_dir(jTextField_OutputDirectory.getText());
     }//GEN-LAST:event_btnSelectDirectoryActionPerformed
+
+    private void btnBackToStep1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackToStep1ActionPerformed
+        int result = JOptionPane.showConfirmDialog(null, "Are you sure?", "Warning",JOptionPane.YES_NO_OPTION);
+        if(result == JOptionPane.YES_OPTION){
+            new StepOne(this.digPopGUIInformation).setVisible(true);
+            dispose();
+        }
+        else{
+            //do nothing
+        }
+    }//GEN-LAST:event_btnBackToStep1ActionPerformed
     
     /**
      * Pulls the directory the user selected from the file chooser
@@ -2019,6 +2042,7 @@ public class StepSeven extends javax.swing.JFrame {
     private javax.swing.JLabel PopulationAchetypeInfoIcon;
     private javax.swing.JLabel SkipPhase3InfoIcon;
     private javax.swing.JLabel SkipPhase4InfoIcon;
+    private javax.swing.JButton btnBackToStep1;
     private javax.swing.JButton btnPreviousStep;
     private javax.swing.JButton btnSelectDirectory;
     private javax.swing.JButton btn_Save;

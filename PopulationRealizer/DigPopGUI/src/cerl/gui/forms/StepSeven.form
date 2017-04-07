@@ -63,6 +63,8 @@
                   <Group type="102" attributes="0">
                       <Component id="btnPreviousStep" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnBackToStep1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btn_Save" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jPanel_Phase4" alignment="0" max="32767" attributes="0"/>
@@ -119,6 +121,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btn_Save" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnPreviousStep" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnBackToStep1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -1399,5 +1402,13 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="btnBackToStep1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Exit Scenario"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackToStep1ActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

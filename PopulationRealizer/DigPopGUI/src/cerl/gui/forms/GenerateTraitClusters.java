@@ -304,7 +304,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
             ArrayList<String> comboValues = new ArrayList<>();
             
             for(int i=0;i<fitTraits.size();i++){
-                comboValues.add(fitTraits.get(i).getId() +"");
+                comboValues.add(fitTraits.get(i).getDesc());
             }
             trait.setModel(new DefaultComboBoxModel(comboValues.toArray()));
         }
