@@ -466,8 +466,8 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
          * Row data starts at index 1.
          * Column data starts at index 2.
          */
-        int rowToStartAt = 1;
-        int currentColumnNumber = 2;
+        int rowToStartAt = START_EDITABLE_ROW;
+        int currentColumnNumber = START_EDITABLE_COL;
 
             for(int surveyCounter = 0; surveyCounter < surveyGroupings.size(); surveyCounter++){
                 SurveyColumnValuesGrouping surveyGrouping = surveyGroupings.get(surveyCounter);
@@ -493,7 +493,9 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
                     }
                     
                     newTotalRandomNumber += foundRandomNumber;
-                    currentColumnNumber += censusCounter;
+                    if(currentColumnNumber < END_EDITABLE_COL){
+                        currentColumnNumber++;
+                    }
                 }
 
                 //set min and max numbers

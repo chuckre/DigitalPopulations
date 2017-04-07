@@ -126,7 +126,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 for(int c=0; c<columnNames.size(); c++){
                     switch(columnNames.get(c)){
                     case "Trait ID": //int
-                        cellValues.get(r).add(c, new customTableCell(thisTrait.getId(), false, "Integer", false));
+                        cellValues.get(r).add(c, new customTableCell(thisTrait.getDesc(), false, "Integer", false));
                         break;
                     case "Reduction": //int
                         cellValues.get(r).add(c, new customTableCell("", true, "Integer", false));
