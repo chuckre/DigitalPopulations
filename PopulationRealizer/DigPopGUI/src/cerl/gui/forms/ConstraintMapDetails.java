@@ -46,7 +46,7 @@ public class ConstraintMapDetails extends javax.swing.JFrame {
 
     private void loadDetails(Forbid currentForbid) {
         this.txtConstraintMapDescription.setText(currentForbid.getDesc());
-        this.txtConstraintMapMapSelect.setText(currentForbid.getMapSelect());
+        this.txtConstraintMapMapSelect.setText(currentForbid.getMap());
         this.txtConstraintMapPumsTraitField.setText(currentForbid.getPumsTraitField());
         this.txtConstraintMapPumsTraitTable.setText(currentForbid.getPumsTraitTable());
         this.txtConstraintMapPumsTraitSelect.setText(currentForbid.getPumsTraitSelect());

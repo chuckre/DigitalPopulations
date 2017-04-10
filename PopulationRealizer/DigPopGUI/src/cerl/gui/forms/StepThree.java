@@ -611,10 +611,9 @@ public class StepThree extends javax.swing.JFrame {
      */
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
         saveToFile();
-        
-        StepSeven stepSeven = new StepSeven(this.digPopGUIInformation);
-        stepSeven.setVisible(true);
-        stepSeven.setLocationRelativeTo(this);
+        //Step 5
+        new FittingCriteria(this.digPopGUIInformation).setVisible(true);
+        dispose();
         
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed

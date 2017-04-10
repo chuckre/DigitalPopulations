@@ -411,7 +411,8 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     private void jButton_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveActionPerformed
         // TODO add your handling code here:
         saveToFile();
-        new FittingCriteria(this.digPopGUIInformation, this.currentMarkovChainId).setVisible(true);
+        //new FittingCriteria(this.digPopGUIInformation, this.currentMarkovChainId).setVisible(true);
+        new StepThree(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton_SaveActionPerformed
 

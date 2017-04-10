@@ -1960,7 +1960,7 @@ public class StepSeven extends javax.swing.JFrame {
     private void btnBackToStep1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackToStep1ActionPerformed
         int result = JOptionPane.showConfirmDialog(null, "Are you sure?", "Warning",JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
-            new StepOne(this.digPopGUIInformation).setVisible(true);
+            new StepZero().setVisible(true);
             dispose();
         }
         else{
