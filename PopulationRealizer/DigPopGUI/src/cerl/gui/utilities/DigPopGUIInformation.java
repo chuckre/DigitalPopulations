@@ -518,6 +518,18 @@ public class DigPopGUIInformation {
     }
 
     /**
+     * Gets the next available Trait ID for fitting traits 
+     * @return the next available ID as an integer, or 1 if no values are provided yet
+     */
+    public int getNextFittingTraitID(){
+        int newTraitID = 0;
+        if((FittingTraits != null) && (FittingTraits.size() > 0)){
+            newTraitID = FittingTraits.get(FittingTraits.size()-1).getId();
+        }
+        return newTraitID+1;
+    }
+    
+    /**
      * Sets the list of Fitting Criteria Traits associated with the Markov Chain
      * @param FittingTraits - the new list of Traits
      */
