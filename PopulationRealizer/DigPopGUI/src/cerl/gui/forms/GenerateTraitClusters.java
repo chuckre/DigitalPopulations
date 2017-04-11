@@ -24,6 +24,8 @@ import cerl.gui.utilities.MarkovChain;
 import cerl.gui.utilities.Traits;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -48,8 +50,6 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     private final String FITTING_FILE_EXT = ".dprxml";
     private final FileType DEFAULT_NEW_FILE_TYPE = FileType.XML;
     private final DigPopGUIInformation digPopGUIInformation;
-    //private int currentMarkovChainId;
-    //private MarkovChain markovChain;
     
     /**
      * Creates new Step 6 form GenerateTraitClusters
@@ -59,7 +59,6 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         //load table
         myTable = populateTableModel(new MarkovChain());
         initComponents();
-        
         setupCustomTable();
     }
     
@@ -75,10 +74,32 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         //load table
         myTable = new customTableModel(columnNames, cellValues);
         initComponents();
-        
         setupCustomTable();
-    }
+        
+        jTable_TraitInformation.addMouseListener(new MouseAdapter() {
+           /**
+            * The user can double click a Trait from the table 
+            * and will be given the option to delete it.  
+           */
+           public void mousePressed(MouseEvent me) {
+               if (me.getClickCount() == 2) {
+                   int row = jTable_TraitInformation.getSelectedRow();
 
+                    int answer = JOptionPane.showConfirmDialog(
+                       null,
+                       "Are you sure you want to delete this cluster: " + myTable.getValueAt(row, 1) + "?",
+                       "Delete?",
+                       JOptionPane.YES_NO_OPTION);
+
+                   if(answer == 0){
+                       myTable.removeRow(row);
+                       myTable.fireTableDataChanged();
+                   }
+               }
+           }
+        });
+    }
+    
     private ArrayList<String> populateColumnNames(){
         ArrayList<String> columnNames = new ArrayList<>();
         //Census Value Names
@@ -118,49 +139,9 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 }
             }
         }
-        else if(this.digPopGUIInformation.getFittingTraits() != null){
-            ArrayList<Traits> fitTraits = this.digPopGUIInformation.getFittingTraits();
-            
-            for(int r=0; r<fitTraits.size(); r++){
-                cellValues.add(r, new ArrayList<>());
-                Traits thisTrait = fitTraits.get(r);
-                
-                for(int c=0; c<columnNames.size(); c++){
-                    switch(columnNames.get(c)){
-                    case "Trait ID": //int
-                        cellValues.get(r).add(c, new customTableCell(thisTrait.getId(), false, "Integer", false));
-                        break;
-                    case "Trait Description": //string
-                        cellValues.get(r).add(c, new customTableCell(thisTrait.getDesc(), false, "Integer", false));
-                        break;
-                    case "Reduction": //int
-                        cellValues.get(r).add(c, new customTableCell("", true, "Integer", false));
-                        break;
-                    case "Distance": //int
-                        cellValues.get(r).add(c, new customTableCell("", true, "Integer", false));
-                        break;
-                    default:
-                        break;
-                    }
-                }
-            }
-        }
         else if(this.digPopGUIInformation.getTraitClusters() != null){
             cellValues = this.digPopGUIInformation.getTraitClusters();
-        } /*else {
-            //Add rows
-            cellValues.add(0,new ArrayList<>());
-
-            //Add Column - Trait ID's
-            //cellValues[0][0] = new customTableCell("123", false, "Integer", false);
-            cellValues.get(0).add(0, new customTableCell("123", false, "Integer", false));
-
-            //Reduction
-            cellValues.get(0).add(1, new customTableCell("", true, "Integer", false));
-
-            //Distance
-            cellValues.get(0).add(2, new customTableCell("", true, "Integer", false));
-        }*/
+        }
         return cellValues;
     }
     
@@ -175,20 +156,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
 
         //columns must be rows+1 because the header row is the -1th row.
         ArrayList<ArrayList<Object>> cellValues = new ArrayList<>();
-        
-        //Add rows
-  /*      cellValues.add(0,new ArrayList<>());
 
-        //Add Column - Trait ID's
-        //cellValues[0][0] = new customTableCell("123", false, "Integer", false);
-        cellValues.get(0).add(0, new customTableCell("123", false, "Integer", false));
-
-        //Reduction
-        cellValues.get(0).add(1, new customTableCell("", true, "Integer", false));
-
-        //Distance
-        cellValues.get(0).add(2, new customTableCell("", true, "Integer", false));
-*/
         //create table with customTableModel
         customTableModel myTableModel = new customTableModel(columnNames, cellValues);
         
@@ -226,7 +194,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         jLabel_Header.setName("Header"); // NOI18N
 
         jLabel_TraitClusters.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel_TraitClusters.setText("Trait Clusters");
+        jLabel_TraitClusters.setText("Click the button to add a new cluster, or double click a trait cluster in the table below to remove it.");
 
         jTable_TraitInformation.setModel(myTable);
         jTable_TraitInformation.setMinimumSize(new java.awt.Dimension(100, 300));
@@ -284,7 +252,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel_Header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel_TraitClusters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton_NewCluster)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -331,40 +299,35 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         //create the dropdown selector for Trait ID
         //Trait ID (List with descriptions)
         JComboBox trait = new JComboBox();
-        
-        ArrayList<MarkovChain> myMarkovs = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChains();
-            
-        //for(MarkovChain mc : myMarkovs){
-            if(this.digPopGUIInformation.getFittingTraits() != null){
-                ArrayList<Traits> fitTraits = this.digPopGUIInformation.getFittingTraits();
-                ArrayList<DropDownListItem> comboValues = new ArrayList<>();
-
-                for(int i=0;i<fitTraits.size();i++){
-                    boolean alreadyUsed = false;
                     
-                    if(myTable.getRowCount() > 0){
-                        for(ArrayList<customTableCell> cellArray : myTable.getCustomTableCells()){
-                            for(customTableCell cell : cellArray){
-                                if(cell.toString().equals(fitTraits.get(i).getDesc())){
-                                    alreadyUsed = true;
-                                    break;
-                                }
+        if(this.digPopGUIInformation.getFittingTraits() != null){
+            ArrayList<Traits> fitTraits = this.digPopGUIInformation.getFittingTraits();
+            ArrayList<DropDownListItem> comboValues = new ArrayList<>();
+
+            for(int i=0;i<fitTraits.size();i++){
+                boolean alreadyUsed = false;
+
+                if(myTable.getRowCount() > 0){
+                    for(ArrayList<customTableCell> cellArray : myTable.getCustomTableCells()){
+                        for(customTableCell cell : cellArray){
+                            if(cell.toString().equals(fitTraits.get(i).getDesc())){
+                                alreadyUsed = true;
+                                break;
                             }
                         }
                     }
-                    if(!alreadyUsed){
-                        comboValues.add(new DropDownListItem(fitTraits.get(i).getId(), fitTraits.get(i).getDesc()));                                                            
-                    }
                 }
-                trait.setModel(new DefaultComboBoxModel(comboValues.toArray()));
+                if(!alreadyUsed){
+                    comboValues.add(new DropDownListItem(fitTraits.get(i).getId(), fitTraits.get(i).getDesc()));                                                            
+                }
             }
-            else if(this.digPopGUIInformation.getTraitList() != null){
-                trait.setModel(new DefaultComboBoxModel(this.digPopGUIInformation.getTraitList().toArray()));
-            } else {
-                //String[] traitList = {"123", "456", "789"};
-                trait.setModel(new DefaultComboBoxModel(new ArrayList<>().toArray()));
-            }     
-        //}
+            trait.setModel(new DefaultComboBoxModel(comboValues.toArray()));
+        }
+        else if(this.digPopGUIInformation.getTraitList() != null){
+            trait.setModel(new DefaultComboBoxModel(this.digPopGUIInformation.getTraitList().toArray()));
+        } else {
+            trait.setModel(new DefaultComboBoxModel(new ArrayList<>().toArray()));
+        }     
         
         trait.setRenderer(new DropDownListRenderer());
         //create the reduction/distance textboxes
@@ -467,7 +430,6 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
      */
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
         saveData();
-        //new FittingCriteria(this.digPopGUIInformation, this.currentMarkovChainId).setVisible(true);
         new FittingCriteria(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
@@ -509,7 +471,6 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
             clusters.add(r, newCluster);
         }
         this.digPopGUIInformation.setTraitPositionClusters(clusters);
-        //this.markovChain.setTraitPositionClusters(clusters);
     }
     
     /**
@@ -518,7 +479,6 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     private void createFittingCriteriaFile(){
         String saveFileDirectory = this.digPopGUIInformation.getFileDirectory();
         
-        //String mcName = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(currentMarkovChainId).getMarkovName();
         String fileName = FITTING_FILE_NAME + FITTING_FILE_EXT;
         
         //create new Fitting Criteria file

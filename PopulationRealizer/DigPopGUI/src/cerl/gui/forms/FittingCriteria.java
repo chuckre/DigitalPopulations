@@ -68,10 +68,9 @@ public class FittingCriteria extends javax.swing.JFrame {
             final int totalRows = getTotalRows(myMarkovs);
             int newTraitID = this.digPopGUIInformation.getNextFittingTraitID();
             int iterator = 0;
+            
             //already populated for all markovs
-            System.out.println("totalRows: " + totalRows + ", newTraitID: " + newTraitID);
             if((newTraitID > 1) && (newTraitID-1 == totalRows)){
-                System.out.println("already pop");
                 cellValues.addAll(populateTableCellValues(columnNames));
             }
             else{
