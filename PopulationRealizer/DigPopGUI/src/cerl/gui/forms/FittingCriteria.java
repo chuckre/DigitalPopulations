@@ -24,7 +24,9 @@ import cerl.gui.utilities.Weights;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableColumn;
 
@@ -523,7 +525,7 @@ public class FittingCriteria extends javax.swing.JFrame {
             dispose();
         }
         else{
-            JOptionPane.showMessageDialog(null, "All weights are required, and must be between 0 and 1", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "All weights are required, must be between 0 and 1, and must be unique", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnNextStepActionPerformed
 
@@ -553,20 +555,35 @@ public class FittingCriteria extends javax.swing.JFrame {
      * @return true if data entered is valid, false if an error exists
      */
     private Boolean validateFile(){
-        ArrayList<ArrayList<Object>> cells = myTable.getTableCells();
+        ArrayList<ArrayList<customTableCell>> cells = myTable.getCustomTableCells();
         ArrayList<String> columns = myTable.getColumns();
         
+        int c = columns.indexOf("Trait Weight");
+
+        Set<Object> noDups = new HashSet<>();
+        
         for(int r = 0; r<cells.size(); r++){
-            int c = columns.indexOf("Trait Weight");
-            if(cells.get(r).get(c).toString().equals("")){
+            String cellVal = cells.get(r).get(c).toString();
+            
+            //check for duplicate weights
+            boolean added = noDups.add(cells.get(r).get(c).toString());
+            if(!added){ //didn't get added, duplicate
+                cells.get(r).get(c).setError(true);
                 return false;
-            } else if (Validations.validateAndReturnDouble(cells.get(r).get(c).toString())){
-                Double d = Double.parseDouble(cells.get(r).get(c).toString());
+            }
+            
+            //check for all weights provided
+            if(cellVal.equals("")){
+                return false;
+            } else if (Validations.validateAndReturnDouble(cellVal)){
+                Double d = Double.parseDouble(cellVal);
+                //must have values between 0 and 1
                 if((d>=1) || (d < 0.0)){
                     return false;
                 }
             }
         }
+        
         return true;
     }
     
@@ -631,6 +648,7 @@ public class FittingCriteria extends javax.swing.JFrame {
         this.digPopGUIInformation.setTraitWeights(traitWeights);
         
         this.digPopGUIInformation.getGoalRelationshipFile().setLandUseMapInformation(this.digPopGUIInformation.getLandUseMapInformation());
+        this.digPopGUIInformation.getGoalRelationshipFile().setPopulationDensity(this.digPopGUIInformation.getHouseholdDensityMapFilePath());
         //this.markovChain.addConstraintMaps(this.digPopGUIInformation.getConstraintMaps());
         
         if(this.digPopGUIInformation.getFileDirectory() != null){
@@ -663,7 +681,7 @@ public class FittingCriteria extends javax.swing.JFrame {
             try {
                 //LandUseMapInformation relInfo = this.digPopGUIInformation.getLandUseMapInformation();
                 GoalRelationshipFile goalFile = this.digPopGUIInformation.getGoalRelationshipFile();
-                
+                goalFile.setTraits(this.digPopGUIInformation.getFittingTraits());
                 //Need to create the file as empty version of the object
                 result = FileUtility.ParseObjectToXML(goalFile, newRelationshipFile.getPath(), goalFile.getClass());
 

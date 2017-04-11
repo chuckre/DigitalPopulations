@@ -620,29 +620,29 @@ public class RunFile {
         String output = "";
         
         output = String.format(
-                                "#%s\n" +
-                                "#%s\n" +
-                                "criteria_file=%s\n" +
-                                "do_dump_number_archtypes=%s\n" +
-                                "do_dump_statistics=%s\n" +
-                                "do_write_all_hoh_fields=%s\n" +
-                                "do_write_all_pop_fields=%s\n" +
-                                "final_rzn_num=%s\n" +
-                                "first_rzn_num=%s\n" +
-                                "initial_seed=%s\n" +
-                                "only_one_region=%s\n" +
-                                "output_dir=%s\n" +
-                                "parallel_threads=%s\n" +
-                                "phase1_time_limit=%s\n" +
-                                "phase2_random_tract_prob=%s\n" +
-                                "phase2_tract_skip_prob_delta=%s\n" +
-                                "phase2_tract_skip_prob_init=%s\n" +
-                                "phase3_save_intermediate=%s\n" +
-                                "phase3_skip=%s\n" +
-                                "phase3_time_limit=%s\n" +
-                                "phase4_num_lags=%s\n" +
-                                "phase4_save_both_ends=%s\n" +
-                                "phase4_skip=%s\n" +
+                                "#%s\r\n" +
+                                "#%s\r\n" +
+                                "criteria_file=%s\r\n" +
+                                "do_dump_number_archtypes=%s\r\n" +
+                                "do_dump_statistics=%s\r\n" +
+                                "do_write_all_hoh_fields=%s\r\n" +
+                                "do_write_all_pop_fields=%s\r\n" +
+                                "final_rzn_num=%s\r\n" +
+                                "first_rzn_num=%s\r\n" +
+                                "initial_seed=%s\r\n" +
+                                "only_one_region=%s\r\n" +
+                                "output_dir=%s\r\n" +
+                                "parallel_threads=%s\r\n" +
+                                "phase1_time_limit=%s\r\n" +
+                                "phase2_random_tract_prob=%s\r\n" +
+                                "phase2_tract_skip_prob_delta=%s\r\n" +
+                                "phase2_tract_skip_prob_init=%s\r\n" +
+                                "phase3_save_intermediate=%s\r\n" +
+                                "phase3_skip=%s\r\n" +
+                                "phase3_time_limit=%s\r\n" +
+                                "phase4_num_lags=%s\r\n" +
+                                "phase4_save_both_ends=%s\r\n" +
+                                "phase4_skip=%s\r\n" +
                                 "phase4_time_limit=%s",
                                 this.runName,
                                 this.dateOfRun,

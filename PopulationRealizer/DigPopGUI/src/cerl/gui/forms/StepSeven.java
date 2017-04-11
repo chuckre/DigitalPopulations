@@ -1958,7 +1958,7 @@ public class StepSeven extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSelectDirectoryActionPerformed
 
     private void btnBackToStep1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackToStep1ActionPerformed
-        int result = JOptionPane.showConfirmDialog(null, "Are you sure?", "Warning",JOptionPane.YES_NO_OPTION);
+        int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit this scenario?", "Warning",JOptionPane.YES_NO_OPTION);
         if(result == JOptionPane.YES_OPTION){
             new StepZero().setVisible(true);
             dispose();
