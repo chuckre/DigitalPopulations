@@ -29,7 +29,8 @@ import javax.swing.JOptionPane;
  */
 public class StepSeven extends javax.swing.JFrame {
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_SEVEN_HELP_FILE_NAME.toString();
-    private final String DEFAULT_NEW_FILE_NAME = "last-run.properties";
+    private final String DEFAULT_NEW_FILE_NAME = "last-run";
+    private final String DEFAULT_FILE_EXTENSION = ".properties";
     private final FileType DEFAULT_NEW_FILE_TYPE = FileType.TXT;
     private final String[] TRUE_FALSE_VALUES = { "TRUE", "FALSE" };
     private final DigPopGUIInformation digPopGUIInformation;
@@ -63,6 +64,17 @@ public class StepSeven extends javax.swing.JFrame {
         pack();
     }
 
+    private String getFullRunFileName(){
+        String fullFileName = DEFAULT_NEW_FILE_NAME;
+        if(this.digPopGUIInformation.getRunFile() != null){
+            String name = this.digPopGUIInformation.getRunFile().getRunName();
+            name = name.replaceAll("[^a-zA-Z0-9-_\\.]", "_");
+            fullFileName = fullFileName.concat(name);
+        } 
+        fullFileName = fullFileName.concat(DEFAULT_FILE_EXTENSION);
+        return fullFileName;
+    }
+    
     /**
      * If an existing run file exists, populate from the existing data
      */
@@ -72,9 +84,9 @@ public class StepSeven extends javax.swing.JFrame {
         if(saveFilePath.contains(".XML")){
             saveFilePath = saveFilePath.substring(0, saveFilePath.lastIndexOf("\\")+1);
         }
-        
+                
         //create new run file
-        File newRunFile = new File(String.format("%s\\%s", saveFilePath, DEFAULT_NEW_FILE_NAME));
+        File newRunFile = new File(String.format("%s\\%s", saveFilePath, getFullRunFileName()));
         
         //check if existing file exists
         Result result = FileUtility.VerifySecondaryFileExists(newRunFile, DEFAULT_NEW_FILE_TYPE);
@@ -1530,7 +1542,7 @@ public class StepSeven extends javax.swing.JFrame {
         this.RunProperties.setCriteria_file(String.format("%s\\%s", saveFilePath, "FittingCriteria.dprxml"));
         
         //create new run file
-        File newRunFile = new File(String.format("%s\\%s", saveFilePath, DEFAULT_NEW_FILE_NAME));
+        File newRunFile = new File(String.format("%s\\%s", saveFilePath, getFullRunFileName()));
                 
         //write to file
         Result result = FileUtility.WriteNewTextFile(newRunFile.getPath(), this.RunProperties.toString());
