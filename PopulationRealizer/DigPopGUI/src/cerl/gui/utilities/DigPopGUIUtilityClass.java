@@ -257,9 +257,10 @@ public class DigPopGUIUtilityClass {
      * Gets the survey data column values from the .csv file
      * @param filePath - the path of the file to read
      * @param columnNumber - the number of columns to ignore at the start of the file
+     * @param tableType - the type of file, either household or population data
      * @return the found column values
      */
-    public static Result getSurveyDataColumnValues(String filePath, int columnNumber) {
+    public static Result getSurveyDataColumnValues(String filePath, int columnNumber, String tableType) {
         Result result = new Result();
         List<SurveyColumnValue> columnValues = new ArrayList<SurveyColumnValue>();
 
@@ -278,7 +279,7 @@ public class DigPopGUIUtilityClass {
                     Optional<SurveyColumnValue> foundFromStream = columnValues.stream().filter(c -> c.getValue() == value).findFirst();
 
                     if (!foundFromStream.isPresent()) {
-                        columnValues.add(new SurveyColumnValue(lineCounter, Integer.parseInt(lineInfo[columnNumber]), false, 1));
+                        columnValues.add(new SurveyColumnValue(lineCounter, Integer.parseInt(lineInfo[columnNumber]), false, 1, tableType));
                     } else {
                         SurveyColumnValue found = foundFromStream.get();
                         found.addOneToNumberOfTimesUsed();

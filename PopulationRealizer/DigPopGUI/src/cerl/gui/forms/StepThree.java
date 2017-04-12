@@ -542,18 +542,21 @@ public class StepThree extends javax.swing.JFrame {
 
                 if(selectSurveyClass.getAllSurveyColumnValues().isEmpty()){
                     String filePath = "";
+                    String fileType = "";
                     switch(selectSurveyClass.getDigPopFileTypeEnum()){
                         case Household_Micro_Data:
                             filePath = digPopGUIInformation.getHouseholdMicroDataFilePath();
+                            fileType = "HOUSEHOLD";
                             break;
                         case Population_Micro_Data:
                             filePath = digPopGUIInformation.getPopulationMicroDataFilePath();
+                            fileType = "POPULATION";
                             break;
                     }
 
                     Result result = DigPopGUIUtilityClass.getSurveyDataColumnValues(
                             filePath, 
-                            selectSurveyClass.getColumnNumber());
+                            selectSurveyClass.getColumnNumber(),fileType);
                     ArrayList<SurveyColumnValue> columnValues = (ArrayList<SurveyColumnValue>)result.getValue();
                     selectSurveyClass.setAllSurveyColumnValues(columnValues);
                 }

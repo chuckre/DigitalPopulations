@@ -69,17 +69,14 @@ public class FittingCriteria extends javax.swing.JFrame {
             
             final int totalRows = getTotalRows(myMarkovs);
             int newTraitID = this.digPopGUIInformation.getNextFittingTraitID();
-            int iterator = 0;
             
             //already populated for all markovs
-            if((newTraitID > 1) && (newTraitID-1 == totalRows)){
+            if((newTraitID > 1) && (this.digPopGUIInformation.getFittingTraits().size() == totalRows)){
                 cellValues.addAll(populateTableCellValues(columnNames));
-            }
-            else{
+            } else{
                 for(MarkovChain mc : myMarkovs){
-                    newTraitID += iterator;
+                    newTraitID = cellValues.size() + 1;
                     cellValues.addAll(populateTableCellValues(mc,columnNames,newTraitID));
-                    iterator += cellValues.size();
                 }
             }
         }
@@ -201,17 +198,8 @@ public class FittingCriteria extends javax.swing.JFrame {
         ArrayList<String> censusClasses = thisMarkovChain.getAllSelectedCensusClassesUserDefinedNames();
         List<SurveyColumnValuesGrouping> surveyTraits = thisMarkovChain.getSelectSurveyClass().getSurveyColumnValuesGroupings();
 
-        //for tables used
-        String householdOrPopulation = "";
-
         //to calculate the match up - set all census values to match all survey
         String censusRegionTrait = "";
-
-        if(this.digPopGUIInformation.getValidHouseholdMicroDataFilePath()){
-            householdOrPopulation = "HOUSEHOLD";
-        } else if(this.digPopGUIInformation.getValidPopulationMicroDataFilePath()){
-            householdOrPopulation = "POPULATION";
-        }
 
         for(int c = 0; c<censusClasses.size(); c++){
             censusRegionTrait += censusClasses.get(c) + " - ";
@@ -238,16 +226,16 @@ public class FittingCriteria extends javax.swing.JFrame {
                     cellValues.get(r).add(c, new customTableCell(thisMarkovChain.getMarkovName() + "_Total", false, "String", false));
                     break;
                 case "Survey Trait Table": //String
-                    cellValues.get(r).add(c, new customTableCell(householdOrPopulation, false, "String", false));
+                    cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getSurveyColumnValues().get(0).getSourceFile(), false, "String", false));
                     break;
                 case "Survey Trait Select": //String
                     cellValues.get(r).add(c, new customTableCell(r, false, "Integer", false));
                     break;
                 case "Survey Trait Field": //String
-                    cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getAllRowIdsAsString(), false, "String", false));
+                    cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getAllValuesAsString(), false, "String", false));
                     break;
                 case "Survey Total Table": //String
-                    cellValues.get(r).add(c, new customTableCell(householdOrPopulation, false, "String", false));
+                    cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getSurveyColumnValues().get(0).getSourceFile(), false, "String", false));
                     break;
                 case "Survey Total Field": //int
                     cellValues.get(r).add(c, new customTableCell(1, false, "Integer", false));
@@ -298,19 +286,10 @@ public class FittingCriteria extends javax.swing.JFrame {
         ArrayList<String> censusClasses = thisMarkovChain.getAllSelectedCensusClassesUserDefinedNames();
         List<SurveyColumnValuesGrouping> surveyTraits = thisMarkovChain.getSelectSurveyClass().getSurveyColumnValuesGroupings();
 
-        //for tables used
-        String householdOrPopulation = "";
-
         //to calculate the match up - set all census values to match all survey
         //int censusCounter = 0;
         //int surveyCounter = 0;
         String censusRegionTrait = "";
-
-        if(this.digPopGUIInformation.getValidHouseholdMicroDataFilePath()){
-            householdOrPopulation = "HOUSEHOLD";
-        } else if(this.digPopGUIInformation.getValidPopulationMicroDataFilePath()){
-            householdOrPopulation = "POPULATION";
-        }
 
         for(int c = 0; c<censusClasses.size(); c++){
             censusRegionTrait += censusClasses.get(c) + " - ";
@@ -337,16 +316,16 @@ public class FittingCriteria extends javax.swing.JFrame {
                     cellValues.get(r).add(c, new customTableCell(thisMarkovChain.getMarkovName() + "_Total", false, "String", false));
                     break;
                 case "Survey Trait Table": //String
-                    cellValues.get(r).add(c, new customTableCell(householdOrPopulation, false, "String", false));
+                    cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getSurveyColumnValues().get(0).getSourceFile(), false, "String", false));
                     break;
                 case "Survey Trait Select": //String
                     cellValues.get(r).add(c, new customTableCell(r, false, "Integer", false));
                     break;
                 case "Survey Trait Field": //String
-                    cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getAllRowIdsAsString(), false, "String", false));
+                    cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getAllValuesAsString(), false, "String", false));
                     break;
                 case "Survey Total Table": //String
-                    cellValues.get(r).add(c, new customTableCell(householdOrPopulation, false, "String", false));
+                    cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getSurveyColumnValues().get(0).getSourceFile(), false, "String", false));
                     break;
                 case "Survey Total Field": //int
                     cellValues.get(r).add(c, new customTableCell(1, false, "Integer", false));

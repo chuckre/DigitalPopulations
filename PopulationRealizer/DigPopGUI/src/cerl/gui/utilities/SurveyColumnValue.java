@@ -13,9 +13,10 @@ package cerl.gui.utilities;
  */
 public class SurveyColumnValue  implements Cloneable {
     private int rowId;
-    private int value;
+    private int value; /* the pumsTraitField */
     private boolean used;
     private int numberOfTimesUsed; 
+    private String sourceFile; /* the pumsTraitTable */
 
     /**
      * Creates a new, empty survey column value object
@@ -31,13 +32,15 @@ public class SurveyColumnValue  implements Cloneable {
      * @param rowId - the index of the first row the value appears in the survey data
      * @param value - the column index from the survey data file
      * @param used - true if the survey column is used
+     * @param sourceFile - "Household" or "Population" based on where it originated
      * @param numberOfTimesUsed - the counter tracking the number of times it has been used in the survey data column
      */
-    public SurveyColumnValue(int rowId, int value, boolean used, int numberOfTimesUsed) {
+    public SurveyColumnValue(int rowId, int value, boolean used, int numberOfTimesUsed, String sourceFile) {
         this.rowId = rowId;
         this.value = value;
         this.used = used;
         this.numberOfTimesUsed = numberOfTimesUsed;
+        this.sourceFile = sourceFile;
     }
 
     /**
@@ -73,7 +76,7 @@ public class SurveyColumnValue  implements Cloneable {
     }
 
     /**
-     * Gets the value from the survey column
+     * Gets the value, pumsTraitField, from the survey column
      * @return the integer value from the survey column data
      */
     public int getValue() {
@@ -81,7 +84,7 @@ public class SurveyColumnValue  implements Cloneable {
     }
 
     /**
-     * Sets the value for the survey column data item
+     * Sets the value, pumsTraitField, for the survey column data item
      * @param value - the new value from the survey data
      */
     public void setValue(int value) {
@@ -105,12 +108,28 @@ public class SurveyColumnValue  implements Cloneable {
     }
 
     /**
+     * Gets the source file, pumsTraitTable, associated with this column
+     * @return 
+     */
+    public String getSourceFile() {
+        return sourceFile;
+    }
+
+    /**
+     * Sets the source file, pumsTraitTable, associated with this column. 
+     * @param sourceFile 
+     */
+    public void setSourceFile(String sourceFile) {
+        this.sourceFile = sourceFile;
+    }
+    
+    /**
      * Returns the string value with the first row the value was used in, the number of times used in the column, and the value
      * @return the string representation of the survey column value data
      */
     @Override
     public String toString() {
-        return "First Row ID: " + this.rowId + "   -   Used: " +  this.numberOfTimesUsed + " times   -   Value: " + this.value;
+        return "First Row ID: " + this.rowId + "   -   Used: " +  this.numberOfTimesUsed + " times   -   Value: " + this.value + " - Source: " + this.sourceFile;
     }
     
     /**
