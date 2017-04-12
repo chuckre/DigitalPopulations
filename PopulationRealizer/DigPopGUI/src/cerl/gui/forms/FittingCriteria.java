@@ -230,10 +230,10 @@ public class FittingCriteria extends javax.swing.JFrame {
                     cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getSurveyColumnValues().get(0).getSourceFile(), false, "String", false));
                     break;
                 case "Survey Trait Select": //String
-                    cellValues.get(r).add(c, new customTableCell(r, false, "Integer", false));
+                    cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getAllValuesAsString(), false, "String", false));
                     break;
                 case "Survey Trait Field": //String
-                    cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getAllValuesAsString(), false, "String", false));
+                    cellValues.get(r).add(c, new customTableCell(thisMarkovChain.getSelectSurveyClass().getClassName(), false, "String", false));
                     break;
                 case "Survey Total Table": //String
                     cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getSurveyColumnValues().get(0).getSourceFile(), false, "String", false));
@@ -321,10 +321,10 @@ public class FittingCriteria extends javax.swing.JFrame {
                     cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getSurveyColumnValues().get(0).getSourceFile(), false, "String", false));
                     break;
                 case "Survey Trait Select": //String
-                    cellValues.get(r).add(c, new customTableCell(r, false, "Integer", false));
+                    cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getAllValuesAsString(), false, "String", false));
                     break;
                 case "Survey Trait Field": //String
-                    cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getAllValuesAsString(), false, "String", false));
+                    cellValues.get(r).add(c, new customTableCell(thisMarkovChain.getSelectSurveyClass().getClassName(), false, "String", false));
                     break;
                 case "Survey Total Table": //String
                     cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getSurveyColumnValues().get(0).getSourceFile(), false, "String", false));
