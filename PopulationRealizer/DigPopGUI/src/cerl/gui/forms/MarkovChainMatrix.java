@@ -502,7 +502,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
                 //set min and max numbers
                 //New column header that will appear in the new csv file
                 NewCensusColumnDetails details = new NewCensusColumnDetails(
-                        surveyGrouping.toString() + "_" + newTotalRandomNumber,
+                        surveyGrouping.toString(), 
                         newTotalRandomNumber,
                         oldValueLookUpColumns
                 );

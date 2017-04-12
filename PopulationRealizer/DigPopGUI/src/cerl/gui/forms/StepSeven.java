@@ -1555,6 +1555,7 @@ public class StepSeven extends javax.swing.JFrame {
             result = DigPopGUIUtilityClass.CreateNewCensusCSVFiles(
                     this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChains(),
                     this.RunProperties.getParallel_threads(),
+                    this.digPopGUIInformation.getRunFile().getRunName(),
                     this.digPopGUIInformation.getCensusEnumerationsFilePath(),
                     this.digPopGUIInformation.getFileDirectory());
             

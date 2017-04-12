@@ -431,7 +431,7 @@ public class DigPopGUIUtilityClass {
 
                 if (counter == 1) {
                     for (NewCensusColumnDetails newInfo : newDetailsToAdd) {
-                        line = line + ", " + newInfo.getNewColumnHeader() + "_" + newInfo.getRandomPercentage() + "%";
+                        line = line + ", " + newInfo.getNewColumnHeader(); // + "_" + newInfo.getRandomPercentage() + "%";
                     }
                 } else {
 
@@ -493,6 +493,7 @@ public class DigPopGUIUtilityClass {
     public static Result CreateNewCensusCSVFiles(
             ArrayList<MarkovChain> markovChains,
             int numberOfRuns,
+            String runName,
             String censusEnumerationFullPath,
             String fileDirectory) {
 
@@ -502,21 +503,22 @@ public class DigPopGUIUtilityClass {
         String onlyFilename = (new File(censusEnumerationFullPath)).getName();
 
         while (counter <= numberOfRuns && result.isSuccess()) {
+            String newFileName = String.format(
+                    "%s\\%s_Run_%s_%s", 
+                    fileDirectory,
+                    runName,
+                    counter, onlyFilename);
+            ArrayList<NewCensusColumnDetails> newColumns = new ArrayList<>();
             for (MarkovChain markovChain : markovChains) {
-                String newFileName = String.format(
-                        "%s\\%s_Run_%s_%s",
-                        fileDirectory,
-                        markovChain.getMarkovName(),
-                        counter,
-                        onlyFilename);
-                try {
-                    result = DigPopGUIUtilityClass.outputNewCensusFile(
-                            censusEnumerationFullPath,
-                            newFileName,
-                            markovChain.getNewCensusColumnDetails());
-                } catch (IOException ex) {
-                    Logger.getLogger(MarkovChainMatrix.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                newColumns.addAll(markovChain.getNewCensusColumnDetails());
+            }
+            try {
+                result = DigPopGUIUtilityClass.outputNewCensusFile(
+                        censusEnumerationFullPath,
+                        newFileName,
+                        newColumns);
+            } catch (IOException ex) {
+                Logger.getLogger(MarkovChainMatrix.class.getName()).log(Level.SEVERE, null, ex);
             }
             counter++;
         }

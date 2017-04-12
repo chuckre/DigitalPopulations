@@ -220,7 +220,8 @@ public class FittingCriteria extends javax.swing.JFrame {
                     startingTraitID++;
                     break;
                 case "Census Region Trait": //String
-                    cellValues.get(r).add(c, new customTableCell(censusRegionTrait, false, "String", false));
+                    cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getUserDefinedDescription(), false, "String", false));
+                    //cellValues.get(r).add(c, new customTableCell(censusRegionTrait, false, "String", false));
                     break;
                 case "Census Region Total": //String
                     cellValues.get(r).add(c, new customTableCell(thisMarkovChain.getMarkovName() + "_Total", false, "String", false));
@@ -310,7 +311,8 @@ public class FittingCriteria extends javax.swing.JFrame {
                     cellValues.get(r).add(c, new customTableCell(r, false, "Integer", false));
                     break;
                 case "Census Region Trait": //String
-                    cellValues.get(r).add(c, new customTableCell(censusRegionTrait, false, "String", false));
+                    cellValues.get(r).add(c, new customTableCell(surveyTraits.get(r).getUserDefinedDescription(), false, "String", false));
+                    //cellValues.get(r).add(c, new customTableCell(censusRegionTrait, false, "String", false));
                     break;
                 case "Census Region Total": //String
                     cellValues.get(r).add(c, new customTableCell(thisMarkovChain.getMarkovName() + "_Total", false, "String", false));
