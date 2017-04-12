@@ -103,6 +103,20 @@ public class SurveyColumnValuesGrouping implements Cloneable {
     }
     
     /**
+     * Gets all the values as a comma delimited string for the group
+     * @return 
+     */
+    public String getAllValuesAsString(){
+        String returnValue = "";
+        
+        for(SurveyColumnValue s : surveyColumnValues){
+            returnValue = returnValue + s.getValue() + ",";
+        }
+        returnValue = returnValue.substring(0, returnValue.lastIndexOf(","));
+        return returnValue;
+    }
+    
+    /**
      * Creates a clone of the survey column value grouping
      * @return a new cloned survey column value grouping
      * @throws CloneNotSupportedException 

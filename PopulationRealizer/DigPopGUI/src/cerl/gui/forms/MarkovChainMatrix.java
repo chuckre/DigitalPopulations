@@ -411,7 +411,8 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     private void jButton_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveActionPerformed
         // TODO add your handling code here:
         saveToFile();
-        new FittingCriteria(this.digPopGUIInformation, this.currentMarkovChainId).setVisible(true);
+        //new FittingCriteria(this.digPopGUIInformation, this.currentMarkovChainId).setVisible(true);
+        new StepThree(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton_SaveActionPerformed
 
@@ -466,8 +467,8 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
          * Row data starts at index 1.
          * Column data starts at index 2.
          */
-        int rowToStartAt = 1;
-        int currentColumnNumber = 2;
+        int rowToStartAt = START_EDITABLE_ROW;
+        int currentColumnNumber = START_EDITABLE_COL;
 
             for(int surveyCounter = 0; surveyCounter < surveyGroupings.size(); surveyCounter++){
                 SurveyColumnValuesGrouping surveyGrouping = surveyGroupings.get(surveyCounter);
@@ -493,13 +494,15 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
                     }
                     
                     newTotalRandomNumber += foundRandomNumber;
-                    currentColumnNumber += censusCounter;
+                    if(currentColumnNumber < END_EDITABLE_COL){
+                        currentColumnNumber++;
+                    }
                 }
 
                 //set min and max numbers
                 //New column header that will appear in the new csv file
                 NewCensusColumnDetails details = new NewCensusColumnDetails(
-                        surveyGrouping.toString() + "_" + newTotalRandomNumber,
+                        surveyGrouping.toString(), 
                         newTotalRandomNumber,
                         oldValueLookUpColumns
                 );

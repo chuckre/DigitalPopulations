@@ -394,8 +394,11 @@ public class FileUtility {
             result = String.format(
                     "%s_%s.%s", 
                     dateString,
-                    starterName,
+                    starterName.replaceAll("[^a-zA-Z0-9-_\\.]", "_"),
                     type.toString());
+        } else{
+            result = starterName.replaceAll("[^a-zA-Z0-9-_\\.]", "_");
+            result = result.concat(type.toString());
         }
         
         return result;

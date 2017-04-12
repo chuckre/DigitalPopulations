@@ -5,6 +5,7 @@
  */
 package cerl.gui.utilities;
 
+import cerl.gui.standard.utilities.customTableCell;
 import java.io.File;
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlElement;
@@ -48,6 +49,18 @@ public class DigPopGUIInformation {
 
     private CensusSurveyClasses censusSurveyClasses;
 
+    //Goal Fitting Criteria File
+    private ArrayList<String> FittingCriteriaColumnNames;
+    private ArrayList<ArrayList<customTableCell>> FittingCriteriaCellValues;
+    private ArrayList<Traits> FittingTraits;
+    private ArrayList<Weights> TraitWeights;
+    private Double traitWeightLocation;
+    private ArrayList<ArrayList<Object>> traitClusters;
+    private ArrayList<String> traitList;
+    private ArrayList<Cluster> traitPositionClusters;
+    //Goal Relationship File
+    private GoalRelationshipFile goalRelationshipFile;
+    
     private RunFile runFile;
 
     /**
@@ -57,6 +70,7 @@ public class DigPopGUIInformation {
         this.censusSurveyClasses = new CensusSurveyClasses();
         this.landUseMapInformation = new LandUseMapInformation();
         this.constraintMaps = new ArrayList<ConstraintMap>();
+        this.goalRelationshipFile = new GoalRelationshipFile();
     }
 
     /**
@@ -126,6 +140,7 @@ public class DigPopGUIInformation {
         this.householdMicroDataFilePath = householdMicroDataFilePath;
         this.validHouseholdMicroDataFilePath = validHouseholdMicroDataFilePath;
         this.censusSurveyClasses = censusSurveyClasses;
+        this.goalRelationshipFile = new GoalRelationshipFile();
         this.runFile = runFile;
     }
 
@@ -247,8 +262,29 @@ public class DigPopGUIInformation {
      */
     public void setConstraintMaps(ArrayList<ConstraintMap> constraintMaps) {
         this.constraintMaps = constraintMaps;
+        addConstraintMaps(constraintMaps);
     }
-
+    
+    /**
+     * Adds the list of constraint maps to the list for the Goal Relationship File
+     * @param constraintMapsFilePaths - the new list of constraint map file names
+     */
+    public void addConstraintMaps(ArrayList<ConstraintMap> constraintMaps) {
+        this.goalRelationshipFile.getForbids().clear();
+        constraintMaps.stream().forEach((c) -> {
+            this.goalRelationshipFile.addForbid(c.getForbid());
+        });
+    }
+    
+    /**
+     * Adds new ConstraintMap to the ConstraintMaps ArrayList
+     * @param path New ConstraintMap
+     */
+    public void addConstraintMap(ConstraintMap path) {
+        this.constraintMaps.add(path);
+        this.goalRelationshipFile.addForbid(path.getForbid());
+    }
+   
     /**
      * Gets the Population MicroData File Path as a string 
      * @return String Population MicroData File Path
@@ -279,14 +315,6 @@ public class DigPopGUIInformation {
      */
     public void setHouseholdMicroDataFilePath(String householdMicroDataFilePath) {
         this.householdMicroDataFilePath = householdMicroDataFilePath;
-    }
-
-    /**
-     * Adds new ConstraintMap to the ConstraintMaps ArrayList
-     * @param path New ConstraintMap
-     */
-    public void addConstraintMap(ConstraintMap path) {
-        this.constraintMaps.add(path);
     }
 
     /**
@@ -480,4 +508,162 @@ public class DigPopGUIInformation {
     public void setFileDirectory(String fileDirectory) {
         this.fileDirectory = fileDirectory;
     }
+    
+        /**
+     * Gets the list of Fitting Criteria traits associated with the Markov Chain matrix
+     * @return - the list of Traits
+     */
+    public ArrayList<Traits> getFittingTraits() {
+        return FittingTraits;
+    }
+
+    /**
+     * Gets the next available Trait ID for fitting traits 
+     * @return the next available ID as an integer, or 1 if no values are provided yet
+     */
+    public int getNextFittingTraitID(){
+        int newTraitID = 0;
+        if((FittingTraits != null) && (FittingTraits.size() > 0)){
+            newTraitID = FittingTraits.get(FittingTraits.size()-1).getId();
+        }
+        return newTraitID+1;
+    }
+    
+    /**
+     * Sets the list of Fitting Criteria Traits associated with the Markov Chain
+     * @param FittingTraits - the new list of Traits
+     */
+    public void setFittingTraits(ArrayList<Traits> FittingTraits) {
+        this.FittingTraits = FittingTraits;
+    }
+    
+    /**
+     * Gets the list of weights associated with the Fitting Criteria traits
+     * @return - the list of weights
+     */
+     public ArrayList<Weights> getTraitWeights() {
+        return TraitWeights;
+    }
+
+     /**
+      * Sets the list of weights for the Fitting Criteria traits
+      * @param TraitWeights - the new list of weights
+      */
+    public void setTraitWeights(ArrayList<Weights> TraitWeights) {
+        this.TraitWeights = TraitWeights;
+    }
+    
+    /**
+     * Gets the list of all Fitting Criteria columns
+     * @return - the list of the column names
+     */
+     public ArrayList<String> getFittingCriteriaColumnNames() {
+        return FittingCriteriaColumnNames;
+    }
+
+    /**
+     * Sets the list of column names for the Fitting Criteria
+     * @param FittingCriteriaColumnNames - the new list of column names
+     */
+    public void setFittingCriteriaColumnNames(ArrayList<String> FittingCriteriaColumnNames) {
+        this.FittingCriteriaColumnNames = FittingCriteriaColumnNames;
+    }
+
+    /**
+     * Gets the 2D list as a row/column list of values for all fitting criteria cells
+     * @return - the 2D arraylist of all the customTableCells
+     */
+    @XmlElement(name="fittingCriteriaCellValues")
+    public ArrayList<ArrayList<customTableCell>> getFittingCriteriaCellValues() {
+        return FittingCriteriaCellValues;
+    }
+
+    /**
+     * Sets the full list of cells based on a 2D arraylist as row/column combos
+     * @param FittingCriteriaCellValues - the new 2D list of cells
+     */
+    public void setFittingCriteriaCellValues(ArrayList<ArrayList<customTableCell>> FittingCriteriaCellValues) {
+        this.FittingCriteriaCellValues = FittingCriteriaCellValues;
+    }
+    
+    /**
+     * Gets the trait weight location field
+     * @return the value of the trait weight location
+     */
+    public Double getTraitWeightLocation() {
+        return traitWeightLocation;
+    }
+
+    /**
+     * Sets the trait weight location field
+     * @param traitWeightLocation - the new trait weight location
+     */
+    public void setTraitWeightLocation(Double traitWeightLocation) {
+        this.traitWeightLocation = traitWeightLocation;
+    }
+    
+    /**
+     * Gets the Goal Relationship File object
+     * @return the Goal Relationship File object
+     */
+    public GoalRelationshipFile getGoalRelationshipFile() {
+        return goalRelationshipFile;
+    }
+
+    /**
+     * Sets the Goal Relationship File object for the specific Markov Chain
+     * @param goalRelationshipFile - the new Goal Relationship File
+     */
+    public void setGoalRelationshipFile(GoalRelationshipFile goalRelationshipFile) {
+        this.goalRelationshipFile = goalRelationshipFile;
+    }
+    
+    /**
+     * Gets the list of Trait Clusters as a 2D ArrayList
+     * @return - the 2D ArrayList of trait clusters
+     */
+    public ArrayList<ArrayList<Object>> getTraitClusters() {
+        return traitClusters;
+    }
+
+    /**
+     * Sets the 2D ArrayList of trait clusters
+     * @param traitClusters - the new ArrayList of trait clusters
+     */
+    public void setTraitClusters(ArrayList<ArrayList<Object>> traitClusters) {
+        this.traitClusters = traitClusters;
+    }
+
+    /**
+     * Gets the list of Traits
+     * @return - the ArrayList of traits
+     */
+    public ArrayList<String> getTraitList() {
+        return traitList;
+    }
+
+    /**
+     * Sets the list of traits
+     * @param traitList - the new ArrayList of traits
+     */
+    public void setTraitList(ArrayList<String> traitList) {
+        this.traitList = traitList;
+    }
+    
+    /**
+     * Gets the ArrayList of Trait Position Clusters
+     * @return - an ArrayList of Clusters
+     */
+    public ArrayList<Cluster> getTraitPositionClusters() {
+        return traitPositionClusters;
+    }
+
+    /**
+     * Sets the ArrayList of trait position clusters
+     * @param traitPositionClusters - the new ArrayList of clusters
+     */
+    public void setTraitPositionClusters(ArrayList<Cluster> traitPositionClusters) {
+        this.traitPositionClusters = traitPositionClusters;
+    }
+
 }

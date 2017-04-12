@@ -20,6 +20,7 @@ import java.text.DecimalFormat;
 import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  * Creates a new Step 7 for the DigPop GUI
@@ -28,9 +29,10 @@ import javax.swing.JFileChooser;
  */
 public class StepSeven extends javax.swing.JFrame {
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_SEVEN_HELP_FILE_NAME.toString();
-    private final String DEFAULT_NEW_FILE_NAME = "last-run.properties";
+    private final String DEFAULT_NEW_FILE_NAME = "last-run";
+    private final String DEFAULT_FILE_EXTENSION = ".properties";
     private final FileType DEFAULT_NEW_FILE_TYPE = FileType.TXT;
-    private final String[] TRUE_FALSE_VALUES = { "", "TRUE", "FALSE" };
+    private final String[] TRUE_FALSE_VALUES = { "TRUE", "FALSE" };
     private final DigPopGUIInformation digPopGUIInformation;
     private RunFile RunProperties;
     
@@ -62,6 +64,17 @@ public class StepSeven extends javax.swing.JFrame {
         pack();
     }
 
+    private String getFullRunFileName(){
+        String fullFileName = DEFAULT_NEW_FILE_NAME;
+        if(this.digPopGUIInformation.getRunFile() != null){
+            String name = this.digPopGUIInformation.getRunFile().getRunName();
+            name = name.replaceAll("[^a-zA-Z0-9-_\\.]", "_");
+            fullFileName = fullFileName.concat(name);
+        } 
+        fullFileName = fullFileName.concat(DEFAULT_FILE_EXTENSION);
+        return fullFileName;
+    }
+    
     /**
      * If an existing run file exists, populate from the existing data
      */
@@ -71,9 +84,9 @@ public class StepSeven extends javax.swing.JFrame {
         if(saveFilePath.contains(".XML")){
             saveFilePath = saveFilePath.substring(0, saveFilePath.lastIndexOf("\\")+1);
         }
-        
+                
         //create new run file
-        File newRunFile = new File(String.format("%s\\%s", saveFilePath, DEFAULT_NEW_FILE_NAME));
+        File newRunFile = new File(String.format("%s\\%s", saveFilePath, getFullRunFileName()));
         
         //check if existing file exists
         Result result = FileUtility.VerifySecondaryFileExists(newRunFile, DEFAULT_NEW_FILE_TYPE);
@@ -132,9 +145,9 @@ public class StepSeven extends javax.swing.JFrame {
         //Must change to string otherwise "true" always true in if statement
         switch(value.toString()){
             case "true":
-                return 1;
+                return 0;
             case "false":
-                return 2;
+                return 1;
             default:
                 return 0;
         }
@@ -232,6 +245,7 @@ public class StepSeven extends javax.swing.JFrame {
         jTextField_RandomNumberSeed = new javax.swing.JTextField();
         randomNumberSeedInfoIcon = new javax.swing.JLabel();
         jLabel_RandomNumberSeed = new javax.swing.JLabel();
+        btnBackToStep1 = new javax.swing.JButton();
         jMenuBar = new javax.swing.JMenuBar();
         jMenu_File = new javax.swing.JMenu();
         jMenu_Help = new javax.swing.JMenu();
@@ -1107,6 +1121,13 @@ public class StepSeven extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnBackToStep1.setText("Exit Scenario");
+        btnBackToStep1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackToStep1ActionPerformed(evt);
+            }
+        });
+
         jMenu_File.setText("File");
         jMenuBar.add(jMenu_File);
 
@@ -1138,6 +1159,8 @@ public class StepSeven extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnPreviousStep)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBackToStep1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_Save))
                     .addComponent(jPanel_Phase4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel_Phase3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1184,7 +1207,8 @@ public class StepSeven extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_Save)
-                    .addComponent(btnPreviousStep))
+                    .addComponent(btnPreviousStep)
+                    .addComponent(btnBackToStep1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1376,42 +1400,42 @@ public class StepSeven extends javax.swing.JFrame {
         String errorText = "<html>The following data fields must be provided missing: ";
         
         //Check all true/false combo boxes:
-        if(jComboBox_LogPhase1Results.getSelectedIndex() <= 0){
+        if(jComboBox_LogPhase1Results.getSelectedIndex() < 0){
             errorText += "<br /> - " + this.jLabel_LogPhase1Results.getText();
             isValid = false;
         }
         
-        if(jComboBox_LogQualityEval.getSelectedIndex() <= 0){
+        if(jComboBox_LogQualityEval.getSelectedIndex() < 0){
             errorText += "<br /> - " + this.jLabel_LogQualityEval.getText();
             isValid = false;
         }
         
-        if(jComboBox_HouseholdArchetype.getSelectedIndex() <= 0){
+        if(jComboBox_HouseholdArchetype.getSelectedIndex() < 0){
             errorText += "<br /> - " + this.jLabel_HouseholdArchetype.getText();
             isValid = false;
         }
         
-        if(jComboBox_PopulationArchetype.getSelectedIndex() <= 0){
+        if(jComboBox_PopulationArchetype.getSelectedIndex() < 0){
             errorText += "<br /> - " + this.jLabel_PopulationArchetype.getText();
             isValid = false;
         }
         
-        if(jComboBox_FirstCensusTract.getSelectedIndex() <= 0){
+        if(jComboBox_FirstCensusTract.getSelectedIndex() < 0){
             errorText += "<br /> - " + this.jLabel_FirstCensusTract.getText();
             isValid = false;
         }
         
-        if(jComboBox_Phase3Skip.getSelectedIndex() <= 0){
+        if(jComboBox_Phase3Skip.getSelectedIndex() < 0){
             errorText += "<br /> - " + this.jLabel_Phase3Skip.getText();
             isValid = false;
         }
         
-        if(jComboBox_Phase4Save.getSelectedIndex() <= 0){
+        if(jComboBox_Phase4Save.getSelectedIndex() < 0){
             errorText += "<br /> - " + this.jLabel_Phase4Save.getText();
             isValid = false;
         }
         
-        if(jComboBox_Phase4Skip.getSelectedIndex() <= 0){
+        if(jComboBox_Phase4Skip.getSelectedIndex() < 0){
             errorText += "<br /> - " + this.jLabel_Phase4Skip.getText();
             isValid = false;
         }
@@ -1488,9 +1512,9 @@ public class StepSeven extends javax.swing.JFrame {
      */
     private Boolean returnTrueFalseValue(javax.swing.JComboBox<String> picklist){
         switch (picklist.getSelectedIndex()){
-            case 1:
+            case 0:
                 return true;
-            case 2:
+            case 1:
                 return false;
             default:
                 break;
@@ -1518,7 +1542,7 @@ public class StepSeven extends javax.swing.JFrame {
         this.RunProperties.setCriteria_file(String.format("%s\\%s", saveFilePath, "FittingCriteria.dprxml"));
         
         //create new run file
-        File newRunFile = new File(String.format("%s\\%s", saveFilePath, DEFAULT_NEW_FILE_NAME));
+        File newRunFile = new File(String.format("%s\\%s", saveFilePath, getFullRunFileName()));
                 
         //write to file
         Result result = FileUtility.WriteNewTextFile(newRunFile.getPath(), this.RunProperties.toString());
@@ -1531,11 +1555,12 @@ public class StepSeven extends javax.swing.JFrame {
             result = DigPopGUIUtilityClass.CreateNewCensusCSVFiles(
                     this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChains(),
                     this.RunProperties.getParallel_threads(),
+                    this.digPopGUIInformation.getRunFile().getRunName(),
                     this.digPopGUIInformation.getCensusEnumerationsFilePath(),
                     this.digPopGUIInformation.getFileDirectory());
             
             if(result.isSuccess()){
-                this.jLabel_Errors.setText("The Run file was saved and new Census csv files are greated.");
+                this.jLabel_Errors.setText("The Run file was saved and new Census csv files are created.");
             }else
             {
                 this.jLabel_Errors.setText(result.getErrorMessage());
@@ -1944,6 +1969,17 @@ public class StepSeven extends javax.swing.JFrame {
         
         this.RunProperties.setOutput_dir(jTextField_OutputDirectory.getText());
     }//GEN-LAST:event_btnSelectDirectoryActionPerformed
+
+    private void btnBackToStep1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackToStep1ActionPerformed
+        int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit this scenario?", "Warning",JOptionPane.YES_NO_OPTION);
+        if(result == JOptionPane.YES_OPTION){
+            new StepZero().setVisible(true);
+            dispose();
+        }
+        else{
+            //do nothing
+        }
+    }//GEN-LAST:event_btnBackToStep1ActionPerformed
     
     /**
      * Pulls the directory the user selected from the file chooser
@@ -2019,6 +2055,7 @@ public class StepSeven extends javax.swing.JFrame {
     private javax.swing.JLabel PopulationAchetypeInfoIcon;
     private javax.swing.JLabel SkipPhase3InfoIcon;
     private javax.swing.JLabel SkipPhase4InfoIcon;
+    private javax.swing.JButton btnBackToStep1;
     private javax.swing.JButton btnPreviousStep;
     private javax.swing.JButton btnSelectDirectory;
     private javax.swing.JButton btn_Save;

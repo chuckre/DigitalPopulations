@@ -5,6 +5,8 @@
  */
 package cerl.gui.forms;
 
+import cerl.gui.standard.utilities.DropDownListItem;
+import cerl.gui.standard.utilities.DropDownListRenderer;
 import cerl.gui.standard.utilities.FileType;
 import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.Result;
@@ -22,6 +24,8 @@ import cerl.gui.utilities.MarkovChain;
 import cerl.gui.utilities.Traits;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -46,8 +50,6 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     private final String FITTING_FILE_EXT = ".dprxml";
     private final FileType DEFAULT_NEW_FILE_TYPE = FileType.XML;
     private final DigPopGUIInformation digPopGUIInformation;
-    private int currentMarkovChainId;
-    private MarkovChain markovChain;
     
     /**
      * Creates new Step 6 form GenerateTraitClusters
@@ -55,45 +57,63 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     public GenerateTraitClusters() {
         this.digPopGUIInformation = new DigPopGUIInformation();
         //load table
-        myTable = populateTableModel();
+        myTable = populateTableModel(new MarkovChain());
         initComponents();
-        
         setupCustomTable();
     }
     
     /**
      * Creates new Step 6 form GenerateTraitClusters with existing data
      * @param digPopGUIInformation - the object holding all information for this run
-     * @param currentMarkovChainId - the unique ID of the selected Markov chain
      */
-    public GenerateTraitClusters(DigPopGUIInformation digPopGUIInformation, int currentMarkovChainId) {
-        this.currentMarkovChainId = currentMarkovChainId;
-        
+    public GenerateTraitClusters(DigPopGUIInformation digPopGUIInformation) {
         this.digPopGUIInformation = digPopGUIInformation;
-        
-        this.markovChain = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(currentMarkovChainId);
-        
+        ArrayList<String> columnNames = populateColumnNames();
+        ArrayList<ArrayList<Object>> cellValues = populateCellValues(columnNames);
+                
         //load table
-        myTable = populateTableModel();
+        myTable = new customTableModel(columnNames, cellValues);
         initComponents();
-        
         setupCustomTable();
-    }
+        
+        jTable_TraitInformation.addMouseListener(new MouseAdapter() {
+           /**
+            * The user can double click a Trait from the table 
+            * and will be given the option to delete it.  
+           */
+           public void mousePressed(MouseEvent me) {
+               if (me.getClickCount() == 2) {
+                   int row = jTable_TraitInformation.getSelectedRow();
 
-    /**
-     * Populates the custom table with data
-     * @return 
-     */
-    private customTableModel populateTableModel(){
+                    int answer = JOptionPane.showConfirmDialog(
+                       null,
+                       "Are you sure you want to delete this cluster: " + myTable.getValueAt(row, 1) + "?",
+                       "Delete?",
+                       JOptionPane.YES_NO_OPTION);
+
+                   if(answer == 0){
+                       myTable.removeRow(row);
+                       myTable.fireTableDataChanged();
+                   }
+               }
+           }
+        });
+    }
+    
+    private ArrayList<String> populateColumnNames(){
         ArrayList<String> columnNames = new ArrayList<>();
         //Census Value Names
-        columnNames.addAll(Arrays.asList("Trait ID","Reduction","Distance"));
+        columnNames.addAll(Arrays.asList("Trait ID", "Trait Description","Reduction","Distance"));
 
+        return columnNames;
+    }
+    
+    private ArrayList<ArrayList<Object>> populateCellValues(ArrayList<String> columnNames){
         //columns must be rows+1 because the header row is the -1th row.
         ArrayList<ArrayList<Object>> cellValues = new ArrayList<>();
         
-        if(this.markovChain.getTraitPositionClusters() != null){
-            ArrayList<Cluster> posCluster = this.markovChain.getTraitPositionClusters();
+        if(this.digPopGUIInformation.getTraitPositionClusters() != null){
+            ArrayList<Cluster> posCluster = this.digPopGUIInformation.getTraitPositionClusters();
             
             for(int r=0; r<posCluster.size(); r++){
                 cellValues.add(r, new ArrayList<>());
@@ -103,6 +123,9 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                     switch(columnNames.get(c)){
                     case "Trait ID": //int
                         cellValues.get(r).add(c, new customTableCell(thisCluster.getId(), false, "Integer", false));
+                        break;
+                    case "Trait Description": //string
+                        cellValues.get(r).add(c, new customTableCell(thisCluster.getDescription(), false, "String", false));
                         break;
                     case "Reduction": //int
                         cellValues.get(r).add(c, new customTableCell(thisCluster.getReduction(), true, "Integer", false));
@@ -116,46 +139,24 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 }
             }
         }
-        else if(this.markovChain.getFittingTraits() != null){
-            ArrayList<Traits> fitTraits = this.markovChain.getFittingTraits();
-            
-            for(int r=0; r<fitTraits.size(); r++){
-                cellValues.add(r, new ArrayList<>());
-                Traits thisTrait = fitTraits.get(r);
-                
-                for(int c=0; c<columnNames.size(); c++){
-                    switch(columnNames.get(c)){
-                    case "Trait ID": //int
-                        cellValues.get(r).add(c, new customTableCell(thisTrait.getId(), false, "Integer", false));
-                        break;
-                    case "Reduction": //int
-                        cellValues.get(r).add(c, new customTableCell("", true, "Integer", false));
-                        break;
-                    case "Distance": //int
-                        cellValues.get(r).add(c, new customTableCell("", true, "Integer", false));
-                        break;
-                    default:
-                        break;
-                    }
-                }
-            }
+        else if(this.digPopGUIInformation.getTraitClusters() != null){
+            cellValues = this.digPopGUIInformation.getTraitClusters();
         }
-        else if(this.markovChain.getTraitClusters() != null){
-            cellValues = this.markovChain.getTraitClusters();
-        } else {
-            //Add rows
-            cellValues.add(0,new ArrayList<>());
+        return cellValues;
+    }
+    
+    /**
+     * Populates the custom table with data, for a new markov chain
+     * @return 
+     */
+    private customTableModel populateTableModel(MarkovChain thisMarkovChain){
+        ArrayList<String> columnNames = new ArrayList<>();
+        //Census Value Names
+        columnNames.addAll(Arrays.asList("Trait ID","Trait Description","Reduction","Distance"));
 
-            //Add Column - Trait ID's
-            //cellValues[0][0] = new customTableCell("123", false, "Integer", false);
-            cellValues.get(0).add(0, new customTableCell("123", false, "Integer", false));
+        //columns must be rows+1 because the header row is the -1th row.
+        ArrayList<ArrayList<Object>> cellValues = new ArrayList<>();
 
-            //Reduction
-            cellValues.get(0).add(1, new customTableCell("", true, "Integer", false));
-
-            //Distance
-            cellValues.get(0).add(2, new customTableCell("", true, "Integer", false));
-        }
         //create table with customTableModel
         customTableModel myTableModel = new customTableModel(columnNames, cellValues);
         
@@ -193,7 +194,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         jLabel_Header.setName("Header"); // NOI18N
 
         jLabel_TraitClusters.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel_TraitClusters.setText("Trait Clusters");
+        jLabel_TraitClusters.setText("Click the button to add a new cluster, or double click a trait cluster in the table below to remove it.");
 
         jTable_TraitInformation.setModel(myTable);
         jTable_TraitInformation.setMinimumSize(new java.awt.Dimension(100, 300));
@@ -251,7 +252,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel_Header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel_TraitClusters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton_NewCluster)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -298,22 +299,37 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
         //create the dropdown selector for Trait ID
         //Trait ID (List with descriptions)
         JComboBox trait = new JComboBox();
-        
-        if(this.markovChain.getFittingTraits() != null){
-            ArrayList<Traits> fitTraits = this.markovChain.getFittingTraits();
-            ArrayList<String> comboValues = new ArrayList<>();
-            
+                    
+        if(this.digPopGUIInformation.getFittingTraits() != null){
+            ArrayList<Traits> fitTraits = this.digPopGUIInformation.getFittingTraits();
+            ArrayList<DropDownListItem> comboValues = new ArrayList<>();
+
             for(int i=0;i<fitTraits.size();i++){
-                comboValues.add(fitTraits.get(i).getId() +"");
+                boolean alreadyUsed = false;
+
+                if(myTable.getRowCount() > 0){
+                    for(ArrayList<customTableCell> cellArray : myTable.getCustomTableCells()){
+                        for(customTableCell cell : cellArray){
+                            if(cell.toString().equals(fitTraits.get(i).getDesc())){
+                                alreadyUsed = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if(!alreadyUsed){
+                    comboValues.add(new DropDownListItem(fitTraits.get(i).getId(), fitTraits.get(i).getDesc()));                                                            
+                }
             }
             trait.setModel(new DefaultComboBoxModel(comboValues.toArray()));
         }
-        else if(this.markovChain.getTraitList() != null){
-            trait.setModel(new DefaultComboBoxModel(this.markovChain.getTraitList().toArray()));
+        else if(this.digPopGUIInformation.getTraitList() != null){
+            trait.setModel(new DefaultComboBoxModel(this.digPopGUIInformation.getTraitList().toArray()));
         } else {
-            String[] traitList = {"123", "456", "789"};
-            trait.setModel(new DefaultComboBoxModel(traitList));
+            trait.setModel(new DefaultComboBoxModel(new ArrayList<>().toArray()));
         }     
+        
+        trait.setRenderer(new DropDownListRenderer());
         //create the reduction/distance textboxes
         JFormattedTextField reduction = new JFormattedTextField(intFormat);
         JFormattedTextField distance = new JFormattedTextField(intFormat);
@@ -365,9 +381,10 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
             //add to table
             ArrayList<Object> cellValues = new ArrayList<>();
             //populateRow
-            cellValues.add(0, new customTableCell(trait.getSelectedItem().toString(), false, "Integer", false));
-            cellValues.add(1, new customTableCell(reduction.getText(), true, "Integer", false));
-            cellValues.add(2, new customTableCell(distance.getText(), true, "Integer", false));
+            cellValues.add(0, new customTableCell(((DropDownListItem)trait.getSelectedItem()).getId(), false, "Integer", false));
+            cellValues.add(1, new customTableCell(((DropDownListItem)trait.getSelectedItem()).getDescription(), false, "String", false));
+            cellValues.add(2, new customTableCell(reduction.getText(), true, "Integer", false));
+            cellValues.add(3, new customTableCell(distance.getText(), true, "Integer", false));
             
             myTable.addRow(cellValues);            
         } else if(result == JOptionPane.CANCEL_OPTION){
@@ -399,7 +416,11 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
         saveData();
         createFittingCriteriaFile();
-        new StepThree(this.digPopGUIInformation).setVisible(true);
+        
+        StepSeven stepSeven = new StepSeven(this.digPopGUIInformation);
+        stepSeven.setVisible(true);
+        stepSeven.setLocationRelativeTo(this);
+        
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed
 
@@ -409,7 +430,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
      */
     private void btnPreviousStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreviousStepActionPerformed
         saveData();
-        new FittingCriteria(this.digPopGUIInformation, this.currentMarkovChainId).setVisible(true);
+        new FittingCriteria(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_btnPreviousStepActionPerformed
 
@@ -431,6 +452,9 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 case "Trait ID": //int
                     newCluster.setId(Integer.parseInt(tableCell));
                     break;
+                case "Trait Description": //string
+                    newCluster.setDescription(tableCell);
+                    break;
                 case "Reduction": //int
                     newCluster.setReduction(Integer.parseInt(tableCell));
                     break;
@@ -446,7 +470,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
             }
             clusters.add(r, newCluster);
         }
-        this.markovChain.setTraitPositionClusters(clusters);
+        this.digPopGUIInformation.setTraitPositionClusters(clusters);
     }
     
     /**
@@ -455,8 +479,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
     private void createFittingCriteriaFile(){
         String saveFileDirectory = this.digPopGUIInformation.getFileDirectory();
         
-        String mcName = this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChainByID(currentMarkovChainId).getMarkovName();
-        String fileName = FITTING_FILE_NAME + mcName.replace(" ", "_") + FITTING_FILE_EXT;
+        String fileName = FITTING_FILE_NAME + FITTING_FILE_EXT;
         
         //create new Fitting Criteria file
         File newFittingFile = new File(String.format("%s\\%s", saveFileDirectory, fileName));
@@ -469,9 +492,9 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 FittingCriteriaInformation fitInfo = new FittingCriteriaInformation();
                 
                 fitInfo.setRelationshipFile(fileName);
-                fitInfo.setTraits(this.markovChain.getFittingTraits());
-                fitInfo.setWeights(this.markovChain.getTraitWeights());
-                fitInfo.setPositionRules(this.markovChain.getTraitPositionClusters());
+                fitInfo.setTraits(this.digPopGUIInformation.getFittingTraits());
+                fitInfo.setWeights(this.digPopGUIInformation.getTraitWeights());
+                fitInfo.setPositionRules(this.digPopGUIInformation.getTraitPositionClusters());
                 
                 //Need to create the file as empty version of the object
                 result = FileUtility.ParseObjectToXML(fitInfo, newFittingFile.getPath(), fitInfo.getClass());

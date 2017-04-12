@@ -9,7 +9,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.EventObject;
@@ -21,11 +20,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JTree;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.TableCellEditor;
 
 /**
@@ -87,10 +81,6 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
             public boolean shouldSelectCell(EventObject eo) {
                stopCellEditing(); 
         
-//        JTextField emptyCell = (JTextField)getTableCellEditorComponent(jtable1, null, true, rowNum, columnNum);
-//        emptyCell.requestFocus();
-               
-               
                 return false;//super.shouldSelectCell(eo); //To change body of generated methods, choose Tools | Templates.
             }
 
@@ -198,49 +188,38 @@ public class customTableCellEditor extends DefaultCellEditor implements TableCel
         if((cellValue != null) && (o!=null)){
             cellEditor.setText(cellValue);
         }
-       test = (MarkovTableModel)jtable.getModel();
+        test = (MarkovTableModel)jtable.getModel();
         currentRow = i;
         currentColumn = i1;
         
         rowNum = jtable.getRowCount() - 1;
         columnNum = jtable.getColumnCount() - 1;
-//        
-//        JTextField emptyCell = (JTextField)super.getTableCellEditorComponent(jtable, null, true, rowNum, columnNum);
-//        emptyCell.requestFocus();
-      component =cellEditor;
-      jtable1 = jtable;
-      cellEditor.transferFocus();
+
+        component =cellEditor;
+        jtable1 = jtable;
+        cellEditor.transferFocus();
       
-//component2 = (JTextField)super.getTableCellEditorComponent(jtable, o, bln, jtable1.getRowCount(),jtable1.getColumnCount());
-//component2.grabFocus();
-//test.fireTableCellUpdated(i, i1);
-return cellEditor;
+        return cellEditor;
     }
-   int rowNum ,columnNum; 
-MarkovTableModel test ;
-int currentRow, currentColumn;
-JTable jtable1;
-boolean changed = false;
-@Override
- public Object getCellEditorValue() {
-  
+    
+    int rowNum, columnNum; 
+    MarkovTableModel test;
+    int currentRow, currentColumn;
+    JTable jtable1;
+    boolean changed = false;
+    @Override
+    public Object getCellEditorValue() {
         return ((JTextField) component).getText();
     }
 
     @Override
     protected void fireEditingStopped() {
-        
-        
-        
-      //  super.stopCellEditing();
-         super.fireEditingStopped(); //To change body of generated methods, choose Tools | Templates.
+        super.fireEditingStopped(); //To change body of generated methods, choose Tools | Templates.
          
         jtable1.requestFocus(true);
-jtable1.editCellAt(rowNum,columnNum);
+        jtable1.editCellAt(rowNum,columnNum);
         test.fireTableCellUpdated(rowNum,columnNum);
         test.fireTableRowsUpdated(0, rowNum);
-        test.fireTableDataChanged();
-     //   test.handleTableChange(rowNum, columnNum);
-       
+        test.fireTableDataChanged();  
     }
 }

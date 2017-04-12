@@ -9,12 +9,14 @@ import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * Used for writing out the Goal Relationship .dprxml file
  * @author mrivera
  */
 @XmlRootElement(name="FileRelationship")
+@XmlType(propOrder={"populationDensity","populationDensityType","landUseMapInformation","traits","forbids"})
 public class GoalRelationshipFile {
     private LandUseMapInformation landUseMapInformation;
     private String populationDensity; //the landuse.csv or map.asc

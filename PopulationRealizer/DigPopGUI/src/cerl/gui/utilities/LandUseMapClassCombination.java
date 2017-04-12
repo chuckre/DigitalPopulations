@@ -5,11 +5,13 @@
  */
 package cerl.gui.utilities;
 
+import cerl.gui.standard.utilities.CommaSeparatedListAdapter;
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Used for the Land Use Combination Table Model in Step 2
@@ -19,6 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name="combination")
 public class LandUseMapClassCombination {
     @XmlAttribute(name="classes")
+    @XmlJavaTypeAdapter(CommaSeparatedListAdapter.class)
     private ArrayList<String> classes;
     
     @XmlAttribute(name="target")
