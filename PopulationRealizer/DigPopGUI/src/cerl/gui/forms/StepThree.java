@@ -546,7 +546,7 @@ public class StepThree extends javax.swing.JFrame {
                     switch(selectSurveyClass.getDigPopFileTypeEnum()){
                         case Household_Micro_Data:
                             filePath = digPopGUIInformation.getHouseholdMicroDataFilePath();
-                            fileType = "HOUSEHOLD";
+                            fileType = "HOUSEHOLDS";
                             break;
                         case Population_Micro_Data:
                             filePath = digPopGUIInformation.getPopulationMicroDataFilePath();
