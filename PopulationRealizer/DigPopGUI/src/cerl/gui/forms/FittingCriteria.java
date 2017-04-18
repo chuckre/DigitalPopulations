@@ -651,7 +651,7 @@ public class FittingCriteria extends javax.swing.JFrame {
     private void createRelationshipFile(){
         String saveFileDirectory = this.digPopGUIInformation.getFileDirectory();
         String fileName = RELATIONSHIP_FILE_NAME + RELATIONSHIP_FILE_EXT;
-         
+        
         //create new Fitting Criteria file
         File newRelationshipFile = new File(String.format("%s\\%s", saveFileDirectory, fileName));
                 

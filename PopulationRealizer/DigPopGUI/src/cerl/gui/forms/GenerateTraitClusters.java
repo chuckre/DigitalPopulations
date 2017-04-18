@@ -491,7 +491,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
             try {
                 FittingCriteriaInformation fitInfo = new FittingCriteriaInformation();
                 
-                fitInfo.setRelationshipFile(fileName);
+                fitInfo.setRelationshipFile("goal_relationship.dprxml");
                 fitInfo.setTraits(this.digPopGUIInformation.getFittingTraits());
                 fitInfo.setWeights(this.digPopGUIInformation.getTraitWeights());
                 fitInfo.setPositionRules(this.digPopGUIInformation.getTraitPositionClusters());
