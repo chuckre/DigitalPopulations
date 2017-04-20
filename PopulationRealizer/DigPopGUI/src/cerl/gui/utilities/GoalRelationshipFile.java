@@ -6,6 +6,7 @@
 package cerl.gui.utilities;
 
 import java.util.ArrayList;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -19,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder={"populationDensity","populationDensityType","landUseMapInformation","traits","forbids"})
 public class GoalRelationshipFile {
     private LandUseMapInformation landUseMapInformation;
-    private String populationDensity; //the landuse.csv or map.asc
+    private PopulationDensityMap populationDensity; //the landuse.csv or map.asc
     private String populationDensityType; //map or landuse, only one allowed
     private ArrayList<Traits> traits; 
     private ArrayList<Forbid> forbids;
@@ -39,7 +40,7 @@ public class GoalRelationshipFile {
      * @param traits - the list of traits
      * @param forbid - the list of constraints for placing households
      */
-     public GoalRelationshipFile(LandUseMapInformation landUseMapInformation, String populationDensity, String populationDensityType, ArrayList<Traits> traits, ArrayList<Forbid> forbids) {
+     public GoalRelationshipFile(LandUseMapInformation landUseMapInformation, PopulationDensityMap populationDensity, String populationDensityType, ArrayList<Traits> traits, ArrayList<Forbid> forbids) {
         this.landUseMapInformation = landUseMapInformation;
         this.populationDensity = populationDensity;
         this.populationDensityType = populationDensityType;
@@ -61,7 +62,7 @@ public class GoalRelationshipFile {
      * @return 
      */
     @XmlElement(name="popdensity")
-    public String getPopulationDensity() {
+    public PopulationDensityMap getPopulationDensity() {
         return populationDensity;
     }
 
@@ -104,7 +105,7 @@ public class GoalRelationshipFile {
      * Sets the population density, landuse or household density map
      * @param populationDensity - the new map
      */
-    public void setPopulationDensity(String populationDensity) {
+    public void setPopulationDensity(PopulationDensityMap populationDensity) {
         this.populationDensity = populationDensity;
     }
 

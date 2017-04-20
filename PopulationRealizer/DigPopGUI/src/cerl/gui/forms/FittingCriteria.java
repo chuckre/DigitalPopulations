@@ -18,6 +18,7 @@ import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.GoalRelationshipFile;
 import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.MarkovChain;
+import cerl.gui.utilities.PopulationDensityMap;
 import cerl.gui.utilities.SurveyColumnValuesGrouping;
 import cerl.gui.utilities.Traits;
 import cerl.gui.utilities.Weights;
@@ -628,9 +629,16 @@ public class FittingCriteria extends javax.swing.JFrame {
         this.digPopGUIInformation.setFittingTraits(theseTraits);
         this.digPopGUIInformation.setTraitWeights(traitWeights);
         
-        this.digPopGUIInformation.getGoalRelationshipFile().setLandUseMapInformation(this.digPopGUIInformation.getLandUseMapInformation());
-        this.digPopGUIInformation.getGoalRelationshipFile().setPopulationDensity(this.digPopGUIInformation.getHouseholdDensityMapFilePath());
-        //this.markovChain.addConstraintMaps(this.digPopGUIInformation.getConstraintMaps());
+        if(this.digPopGUIInformation.getLandUseMapInformation().getMap().length() > 0){
+            this.digPopGUIInformation.getGoalRelationshipFile().setLandUseMapInformation(this.digPopGUIInformation.getLandUseMapInformation());
+        } else{ //do not add so not in output XML file
+            this.digPopGUIInformation.getGoalRelationshipFile().setLandUseMapInformation(null);
+        }
+        if(this.digPopGUIInformation.getHouseholdDensityMapFilePath().length() > 0){
+            this.digPopGUIInformation.getGoalRelationshipFile().setPopulationDensity(new PopulationDensityMap(this.digPopGUIInformation.getHouseholdDensityMapFilePath()));
+        } else{ //do not add so not in output XML file
+            this.digPopGUIInformation.getGoalRelationshipFile().setPopulationDensity(null);
+        }
         
         if(this.digPopGUIInformation.getFileDirectory() != null){
             createRelationshipFile();
