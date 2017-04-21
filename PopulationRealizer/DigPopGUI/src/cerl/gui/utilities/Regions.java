@@ -6,11 +6,13 @@
 package cerl.gui.utilities;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * Used in the Goal Relationship file - Regions tag
  * @author mrivera
  */
+@XmlType(propOrder={"id","map","table","key","vacancies","population","households"})
 public class Regions {
     private String id;
     private String map;

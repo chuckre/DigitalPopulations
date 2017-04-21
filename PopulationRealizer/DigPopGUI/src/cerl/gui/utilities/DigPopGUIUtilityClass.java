@@ -44,9 +44,9 @@ public class DigPopGUIUtilityClass {
      */
     private static final String HELP_FILE_PATH = "/cerl/gui/resources/HelpText.xml";
 
-    private static final int FIRST_COLUMN_FOR_CENSUS_ENUMERATIONS_FILE = 9;
-    private static final int FIRST_COLUMN_FOR_HOUSEHOLD_ENUMERATIONS_FILE = 8;
-    private static final int FIRST_COLUMN_FOR_POPULATION_ENUMERATIONS_FILE = 6;
+    private static final int FIRST_COLUMN_FOR_CENSUS_ENUMERATIONS_FILE = 0;
+    private static final int FIRST_COLUMN_FOR_HOUSEHOLD_ENUMERATIONS_FILE = 0;
+    private static final int FIRST_COLUMN_FOR_POPULATION_ENUMERATIONS_FILE = 0;
 
     /**
      * Calls FileUtility to read in the applications help file and stores into 

@@ -11,7 +11,6 @@ import cerl.gui.utilities.ConstraintMap;
 import cerl.gui.utilities.ConstraintMapsTableItemModel;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
-import cerl.gui.utilities.GoalRelationshipFile;
 import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.Households;
 import cerl.gui.utilities.LandUseCombinationTableItemModel;
@@ -26,7 +25,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
@@ -43,6 +42,7 @@ public class StepTwo extends javax.swing.JFrame {
     private final ConstraintMapsTableItemModel constraintMapsTableItemModel;
     private final DigPopGUIInformation digPopGUIInformation;
     
+    private CensusSurveyClasses censusSurveyClasses;
     private Result landUseLoadClassesResult = new Result();
     
     /**
@@ -59,6 +59,17 @@ public class StepTwo extends javax.swing.JFrame {
             constraintMaps = this.digPopGUIInformation.getConstraintMaps();
         }
         this.constraintMapsTableItemModel = new ConstraintMapsTableItemModel(constraintMaps);
+        
+        //Pull in census Survey Classes for use in dropdowns
+        this.censusSurveyClasses = this.digPopGUIInformation.getCensusSurveyClasses(); 
+        
+        if(this.censusSurveyClasses.getCensusClasses().isEmpty()){
+            Result result = DigPopGUIUtilityClass.getLoadedCensusSurveyClasses(
+                this.digPopGUIInformation.getCensusEnumerationsFilePath(),
+                this.digPopGUIInformation.getPopulationMicroDataFilePath(),
+                this.digPopGUIInformation.getHouseholdMicroDataFilePath());
+            this.censusSurveyClasses = (CensusSurveyClasses) result.getValue();
+        }
         
         initComponents();
         errors = new ArrayList<>();
@@ -271,7 +282,7 @@ public class StepTwo extends javax.swing.JFrame {
             }
         });
 
-        jLabel_KeyColumn.setText("Key Column Name:");
+        jLabel_KeyColumn.setText("Key Column:");
         jLabel_KeyColumn.setPreferredSize(new java.awt.Dimension(250, 14));
 
         KeyColumnInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
@@ -283,13 +294,14 @@ public class StepTwo extends javax.swing.JFrame {
             }
         });
 
+        jComboBox_KeyColumn.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(this.censusSurveyClasses.getCensusClasses()));
         jComboBox_KeyColumn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_KeyColumnActionPerformed(evt);
             }
         });
 
-        jLabel_PopulationColumnName.setText("Population Column Name:");
+        jLabel_PopulationColumnName.setText("Population Column:");
         jLabel_PopulationColumnName.setPreferredSize(new java.awt.Dimension(250, 14));
 
         PopulationInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
@@ -301,13 +313,14 @@ public class StepTwo extends javax.swing.JFrame {
             }
         });
 
+        jComboBox_Population.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(this.censusSurveyClasses.getCensusClasses()));
         jComboBox_Population.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_PopulationActionPerformed(evt);
             }
         });
 
-        jLabel_VacanciesColumn.setText("Vacancies Column Name:");
+        jLabel_VacanciesColumn.setText("Vacancies Column:");
         jLabel_VacanciesColumn.setPreferredSize(new java.awt.Dimension(250, 14));
 
         VacanciesColumnInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
@@ -319,13 +332,14 @@ public class StepTwo extends javax.swing.JFrame {
             }
         });
 
+        jComboBox_Vacancies.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(this.censusSurveyClasses.getCensusClasses()));
         jComboBox_Vacancies.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_VacanciesActionPerformed(evt);
             }
         });
 
-        jLabel_HouseholdRegionTag.setText("Household Column Name:");
+        jLabel_HouseholdRegionTag.setText("Household Column:");
         jLabel_HouseholdRegionTag.setPreferredSize(new java.awt.Dimension(250, 14));
 
         HouseholdRegionTagInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
@@ -337,6 +351,7 @@ public class StepTwo extends javax.swing.JFrame {
             }
         });
 
+        jComboBox_HouseholdsRegionTag.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(this.censusSurveyClasses.getCensusClasses()));
         jComboBox_HouseholdsRegionTag.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_HouseholdsRegionTagActionPerformed(evt);
@@ -376,19 +391,17 @@ public class StepTwo extends javax.swing.JFrame {
                         .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblCensusEnumerations)
                             .addComponent(jLabel_PopulationColumnName, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
                 .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(censusEnumerationsInfoIcon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCensusEnumerations))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRegionMapCensusEnumLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addComponent(PopulationInfoIcon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox_Population, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRegionMapCensusEnumLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addComponent(HouseholdRegionTagInfoIcon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox_HouseholdsRegionTag, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -484,7 +497,7 @@ public class StepTwo extends javax.swing.JFrame {
             }
         });
 
-        jLabel_Members.setText("Members Column Name");
+        jLabel_Members.setText("Members Column");
         jLabel_Members.setPreferredSize(new java.awt.Dimension(250, 14));
 
         MembersInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
@@ -496,13 +509,14 @@ public class StepTwo extends javax.swing.JFrame {
             }
         });
 
+        jComboBox_Members.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(this.censusSurveyClasses.getHouseholdMicroDataClasses()));
         jComboBox_Members.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_MembersActionPerformed(evt);
             }
         });
 
-        jLabel_Household_KeyColumnName.setText("Key Column Name");
+        jLabel_Household_KeyColumnName.setText("Key Column");
         jLabel_Household_KeyColumnName.setPreferredSize(new java.awt.Dimension(250, 14));
 
         HouseholdKeyInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
@@ -514,6 +528,7 @@ public class StepTwo extends javax.swing.JFrame {
             }
         });
 
+        jComboBox_HouseholdKey.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(this.censusSurveyClasses.getHouseholdMicroDataClasses()));
         jComboBox_HouseholdKey.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_HouseholdKeyActionPerformed(evt);
@@ -583,7 +598,7 @@ public class StepTwo extends javax.swing.JFrame {
             }
         });
 
-        jLabel_Pop_HouseholdColumnName.setText("Household Column Name");
+        jLabel_Pop_HouseholdColumnName.setText("Household Column");
         jLabel_Pop_HouseholdColumnName.setPreferredSize(new java.awt.Dimension(250, 14));
 
         Pop_HouseholdColumnInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
@@ -595,6 +610,7 @@ public class StepTwo extends javax.swing.JFrame {
             }
         });
 
+        jComboBox_Pop_HouseholdColumnName.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(this.censusSurveyClasses.getPopulationMicroDataClasses()));
         jComboBox_Pop_HouseholdColumnName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_Pop_HouseholdColumnNameActionPerformed(evt);
@@ -1201,36 +1217,46 @@ public class StepTwo extends javax.swing.JFrame {
             jPanelLandUseHouseholdMap.setVisible(false);
             jPanelHouseholdDensityMap.setVisible(true);
         }
-        
-        //Pull in census Survey Classes for use in dropdowns
-        CensusSurveyClasses censusSurveyClasses = this.digPopGUIInformation.getCensusSurveyClasses(); 
-        
-        if(censusSurveyClasses.getCensusClasses().isEmpty()){
-            Result result = DigPopGUIUtilityClass.getLoadedCensusSurveyClasses(
-                this.digPopGUIInformation.getCensusEnumerationsFilePath(),
-                this.digPopGUIInformation.getPopulationMicroDataFilePath(),
-                this.digPopGUIInformation.getHouseholdMicroDataFilePath());
-            censusSurveyClasses = (CensusSurveyClasses) result.getValue();
-        }
-        
+                
         //Region map fields for goal relationship file <regions> tag parameters:
-        txtRegionMap.setText(this.digPopGUIInformation.getRegionMapFilePath()); //map
-        txtCensusEnumerations.setText(this.digPopGUIInformation.getCensusEnumerationsFilePath()); //table
-        this.jComboBox_KeyColumn.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(censusSurveyClasses.getCensusClasses())); //key
-        this.jComboBox_Vacancies.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(censusSurveyClasses.getCensusClasses())); //vacancies
-        this.jComboBox_Population.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(censusSurveyClasses.getCensusClasses())); //population
-        this.jComboBox_HouseholdsRegionTag.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(censusSurveyClasses.getCensusClasses())); //households
+        Regions thisRegion = this.digPopGUIInformation.getGoalRelationshipFile().getRegions();
+        
+        txtRegionMap.setText(thisRegion.getMap() != null ? thisRegion.getMap() : this.digPopGUIInformation.getRegionMapFilePath()); //map
+        txtCensusEnumerations.setText(thisRegion.getTable() != null ? thisRegion.getTable() : this.digPopGUIInformation.getCensusEnumerationsFilePath()); //table
+        this.jComboBox_KeyColumn.setSelectedIndex(getIndexFromValue(thisRegion.getKey(), jComboBox_KeyColumn));
+        this.jComboBox_Vacancies.setSelectedIndex(getIndexFromValue(thisRegion.getVacancies(), jComboBox_Vacancies));
+        this.jComboBox_Population.setSelectedIndex(getIndexFromValue(thisRegion.getPopulation(),jComboBox_Population));
+        this.jComboBox_HouseholdsRegionTag.setSelectedIndex(getIndexFromValue(thisRegion.getHouseholds(), jComboBox_HouseholdsRegionTag));
         
         //Household tag fields for goal relationship file:
-        txtHouseholdMicroData.setText(this.digPopGUIInformation.getHouseholdMicroDataFilePath()); //table
-        this.jComboBox_Members.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(censusSurveyClasses.getHouseholdMicroDataClasses())); //members
-        this.jComboBox_HouseholdKey.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(censusSurveyClasses.getHouseholdMicroDataClasses())); //key
+        Households thisHousehold = this.digPopGUIInformation.getGoalRelationshipFile().getHouseholds();
+        
+        txtHouseholdMicroData.setText(thisHousehold.getTable() != null ? thisHousehold.getTable() : this.digPopGUIInformation.getHouseholdMicroDataFilePath()); //table
+        this.jComboBox_Members.setSelectedIndex(getIndexFromValue(thisHousehold.getMembers(), jComboBox_Members));
+        this.jComboBox_HouseholdKey.setSelectedIndex(getIndexFromValue(thisHousehold.getKey(),jComboBox_HouseholdKey));
         
         //Population tag fields for goal relationship file
-        txtPopulationMicroData.setText(this.digPopGUIInformation.getPopulationMicroDataFilePath()); //table
-        this.jComboBox_Pop_HouseholdColumnName.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(censusSurveyClasses.getPopulationMicroDataClasses())); //household
+        Population thisPopulation = this.digPopGUIInformation.getGoalRelationshipFile().getPopulation();
+        
+        txtPopulationMicroData.setText(thisPopulation.getTable() != null ? thisPopulation.getTable() : this.digPopGUIInformation.getPopulationMicroDataFilePath()); //table
+        this.jComboBox_Pop_HouseholdColumnName.setSelectedIndex(getIndexFromValue(thisPopulation.getHousehold(),jComboBox_Pop_HouseholdColumnName));
         
         pack();
+    }
+    
+    /**
+     * Finds the matching index of the value in lookuplist
+     * @param value - the value to find
+     * @param lookupList - the lookup list to search
+     * @return - the index of the located item, or 0 if not found
+     */
+    private Integer getIndexFromValue(String value, JComboBox lookupList){
+        for(int i = 0; i<lookupList.getItemCount(); i++){
+            if(lookupList.getItemAt(i).toString().equals(value)){
+                return i;
+            }
+        }
+        return 0;
     }
     
     /**

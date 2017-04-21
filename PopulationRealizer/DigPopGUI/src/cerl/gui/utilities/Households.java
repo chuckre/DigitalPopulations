@@ -6,11 +6,13 @@
 package cerl.gui.utilities;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * The household tag for the goal relationship file
  * @author mrivera
  */
+@XmlType(propOrder={"table","members","key"})
 public class Households {
     private String table;
     private String members;
