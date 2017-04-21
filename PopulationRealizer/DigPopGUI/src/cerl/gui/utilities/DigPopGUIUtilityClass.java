@@ -30,6 +30,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -527,4 +528,13 @@ public class DigPopGUIUtilityClass {
 
     }
 
+    public static DefaultComboBoxModel getNewDefaultComboBoxModel(ArrayList<Class> itemsToStream){
+        DefaultComboBoxModel newModel = new DefaultComboBoxModel();
+        
+        itemsToStream.stream().forEach((c) -> {
+            newModel.addElement(c);
+        });
+        
+        return newModel;
+    }
 }

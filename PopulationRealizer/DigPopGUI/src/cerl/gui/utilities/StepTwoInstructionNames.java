@@ -22,8 +22,11 @@ public enum StepTwoInstructionNames {
         Target("Target"),
         Description("Description"),
         Region_Map("Region Map"),
-        Constraint_Map("Constraint Map");
-                              
+        Constraint_Map("Constraint Map"),
+        Region_Tag("Region Tag"), 
+        Household_Tag("Household Tag"),
+        Population_Tag("Population Tag");
+        
         private String instructionName = ""; 
     
         /**

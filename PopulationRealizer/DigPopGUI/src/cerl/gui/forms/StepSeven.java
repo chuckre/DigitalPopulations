@@ -1536,7 +1536,7 @@ public class StepSeven extends javax.swing.JFrame {
         this.RunProperties.setDateOfRun(Calendar.getInstance().getTime());
         
         if(saveFilePath.contains(".XML")){
-            saveFilePath = saveFilePath.substring(0, saveFilePath.lastIndexOf("\\")+1);
+            saveFilePath = saveFilePath.substring(0, saveFilePath.lastIndexOf("\\"));
         }
         
         this.RunProperties.setCriteria_file(String.format("%s\\%s", saveFilePath, "FittingCriteria.dprxml"));
