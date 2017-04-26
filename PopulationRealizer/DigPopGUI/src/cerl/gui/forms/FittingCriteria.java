@@ -5,8 +5,6 @@
  */
 package cerl.gui.forms;
 
-import cerl.gui.standard.utilities.FileType;
-import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.Result;
 import cerl.gui.standard.utilities.Validations;
 import cerl.gui.standard.utilities.customTableModel;
@@ -15,14 +13,12 @@ import cerl.gui.standard.utilities.customTableCellRenderer;
 import cerl.gui.standard.utilities.customTableModelListener;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
-import cerl.gui.utilities.GoalRelationshipFile;
 import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.MarkovChain;
 import cerl.gui.utilities.PopulationDensityMap;
 import cerl.gui.utilities.SurveyColumnValuesGrouping;
 import cerl.gui.utilities.Traits;
 import cerl.gui.utilities.Weights;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -39,9 +35,6 @@ import javax.swing.table.TableColumn;
 public class FittingCriteria extends javax.swing.JFrame {
     private final customTableModel myTable;
     private final String SCREEN_NAME = HelpFileScreenNames.STEP_FIVE_HELP_FILE_NAME.toString();
-    private final String RELATIONSHIP_FILE_NAME = "goal_relationship";
-    private final String RELATIONSHIP_FILE_EXT = ".dprxml";
-    private final FileType RELATIONSHIP_FILE_TYPE = FileType.XML;
     private final DigPopGUIInformation digPopGUIInformation;
     
     /**

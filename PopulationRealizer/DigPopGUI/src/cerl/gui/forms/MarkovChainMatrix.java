@@ -19,7 +19,6 @@ import cerl.gui.utilities.MarkovChain;
 import cerl.gui.utilities.MarkovTableCell;
 import cerl.gui.utilities.NewCensusColumnDetails;
 import cerl.gui.utilities.SurveyColumnValuesGrouping;
-import java.awt.event.ActionEvent;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.table.TableColumn;
 
@@ -490,7 +489,7 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
                         foundRandomNumber = foundMax;
                     }else {
                         foundRandomNumber = ThreadLocalRandom.current().nextDouble(foundMin, foundMax);
-                        foundRandomNumber =Math.round(foundRandomNumber  * 100.0) / 100.0;
+                        foundRandomNumber = Math.round(foundRandomNumber  * 100.0) / 100.0;
                     }
                     
                     newTotalRandomNumber += foundRandomNumber;

@@ -6,7 +6,6 @@
 package cerl.gui.utilities;
 
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Used with the Markov Chain matrix for the Census Column information
@@ -27,8 +26,6 @@ public class NewCensusColumnDetails {
         this.randomPercentage = 0.0;
         this.oldValueLookUpColumns = new ArrayList<>();
     }
-
-    
 
     /**
      * Creates a new census column object from the provided parameters
