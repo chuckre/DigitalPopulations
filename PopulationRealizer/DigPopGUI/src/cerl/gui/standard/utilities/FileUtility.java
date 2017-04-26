@@ -221,7 +221,7 @@ public class FileUtility {
                 byte[] output = line.getBytes();
                 out.write(output);
             }
-
+            result.setValue(newFilePath);
             result.setSuccess(true);
         } catch (FileNotFoundException ex) {
             result.setErrorMessage("WriteNewTextFileFromArrayOfLines", ex.getMessage());
@@ -368,7 +368,7 @@ public class FileUtility {
             jaxbMarshaller.marshal(objectToParseIntoXML, file);
             
             result.setSuccess(true);
-            
+            result.setValue(filePath);
         } catch (JAXBException ex) {
             result.setErrorMessage(
                     "ParseObjectToXML",

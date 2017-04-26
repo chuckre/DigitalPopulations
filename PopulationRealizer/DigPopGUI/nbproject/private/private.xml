@@ -3,7 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Projects/CERL_BCS_DEV/DigitalPopulations/PopulationRealizer/DigPopGUI/src/cerl/gui/forms/GenerateTraitClusters.java</file>
+            <file>file:/C:/Projects/CERL_BCS_DEV/DigitalPopulations/PopulationRealizer/DigPopGUI/src/cerl/gui/utilities/GoalRelationshipFile.java</file>
+            <file>file:/C:/Projects/CERL_BCS_DEV/DigitalPopulations/PopulationRealizer/DigPopGUI/src/cerl/gui/forms/StepTwo.java</file>
+            <file>file:/C:/Projects/CERL_BCS_DEV/DigitalPopulations/PopulationRealizer/DigPopGUI/src/cerl/gui/utilities/DigPopGUIUtilityClass.java</file>
+            <file>file:/C:/Projects/CERL_BCS_DEV/DigitalPopulations/PopulationRealizer/DigPopGUI/src/cerl/gui/utilities/StepTwoInstructionNames.java</file>
+            <file>file:/C:/Projects/CERL_BCS_DEV/DigitalPopulations/PopulationRealizer/DigPopGUI/src/cerl/gui/forms/StepSeven.java</file>
         </group>
     </open-files>
 </project-private>

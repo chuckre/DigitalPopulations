@@ -7,6 +7,7 @@ package cerl.gui.utilities;
 
 import cerl.gui.forms.HelpFileDisplay;
 import cerl.gui.forms.MarkovChainMatrix;
+import cerl.gui.standard.utilities.FileType;
 import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.HelpFile;
 import cerl.gui.standard.utilities.Instruction;
@@ -47,7 +48,11 @@ public class DigPopGUIUtilityClass {
     private static final int FIRST_COLUMN_FOR_CENSUS_ENUMERATIONS_FILE = 0;
     private static final int FIRST_COLUMN_FOR_HOUSEHOLD_ENUMERATIONS_FILE = 0;
     private static final int FIRST_COLUMN_FOR_POPULATION_ENUMERATIONS_FILE = 0;
-
+    
+    private static final String RELATIONSHIP_FILE_NAME = "goal_relationship";
+    private static final String RELATIONSHIP_FILE_EXT = ".dprxml";
+    private static final FileType RELATIONSHIP_FILE_TYPE = FileType.XML;
+    
     /**
      * Calls FileUtility to read in the applications help file and stores into 
      * the HelpFile object. 
@@ -441,7 +446,7 @@ public class DigPopGUIUtilityClass {
                     for (NewCensusColumnDetails newInfo : newDetailsToAdd) {
                         int oldValue = 0;
                         for(int oldColumnNumber : newInfo.getOldValueLookUpColumns()){
-                            oldValue = Integer.parseInt(lineInfo[oldColumnNumber]);
+                            oldValue += Integer.parseInt(lineInfo[oldColumnNumber]);
                         }
                         
                         int newValue = (int) (oldValue * newInfo.getRandomPercentage());
@@ -528,6 +533,11 @@ public class DigPopGUIUtilityClass {
 
     }
 
+    /**
+     * Creates a new Default Combo Box Model from the ArrayList if items
+     * @param itemsToStream - the items to add to the model
+     * @return the new Default Combo Box Model populated with ArrayList items
+     */
     public static DefaultComboBoxModel getNewDefaultComboBoxModel(ArrayList<Class> itemsToStream){
         DefaultComboBoxModel newModel = new DefaultComboBoxModel();
         
@@ -536,5 +546,41 @@ public class DigPopGUIUtilityClass {
         });
         
         return newModel;
+    }
+    
+    /**
+     * Creates the Goal Relationship .dprxml file with the information provided 
+     * Saves file into the same folder as the log file selected on the initial step
+     */
+    public static Result createGoalRelationshipFile(String saveFileDirectory, GoalRelationshipFile goalFile){
+        Result result = new Result();
+        
+        String fileName = RELATIONSHIP_FILE_NAME + RELATIONSHIP_FILE_EXT;
+        
+        //create new Fitting Criteria file
+        File newRelationshipFile = new File(String.format("%s\\%s", saveFileDirectory, fileName));
+                
+        //write to file
+        result = FileUtility.VerifyFileType(RELATIONSHIP_FILE_TYPE, newRelationshipFile);
+        
+        if(result.isSuccess()){
+            try {
+                //Need to create the file as empty version of the object
+                result = FileUtility.ParseObjectToXML(goalFile, newRelationshipFile.getPath(), goalFile.getClass());
+
+                //If successully created object - go to Next Step
+                if(result.isSuccess()){
+                    System.out.println("Successfully created goal relationship file");
+                }else {
+                    result.setErrorMessage("Error parsing goal relationship file");
+                }
+
+            } catch (Exception ex) {
+                result.setSuccess(false);
+                result.setErrorMessage("Error parsing goal relationship file");
+                System.err.print(ex.getMessage());
+            }
+        }
+        return result;
     }
 }

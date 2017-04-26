@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import junit.framework.Assert;
@@ -55,21 +55,31 @@ public class FileUtilityJUnitTest {
     
     @Test 
     public void newRandomizerTester(){
+        ArrayList<Integer> alist = new ArrayList();
+        alist.addAll(Arrays.asList(1,2,3));
         
-        NewCensusColumnDetails test1 = new NewCensusColumnDetails("One", 1, .2, .2, 0.0);
-        NewCensusColumnDetails test12 = new NewCensusColumnDetails("2", 1, .1, .2, 0.0);
-        NewCensusColumnDetails test13 = new NewCensusColumnDetails("3", 1, .02, .05, 0.0);
-        NewCensusColumnDetails test14 = new NewCensusColumnDetails("4", 1, .2, .8, 0.0);
-        NewCensusColumnDetails test15 = new NewCensusColumnDetails("5", 1, .8, .9, 0.0);
+        NewCensusColumnDetails test1 = new NewCensusColumnDetails("One", .2, alist);
+        alist.clear();
+        alist.addAll(Arrays.asList(4,2,1));
+        NewCensusColumnDetails test12 = new NewCensusColumnDetails("2", .1, alist);
+        alist.clear();
+        alist.addAll(Arrays.asList(10,5,30));
+        NewCensusColumnDetails test13 = new NewCensusColumnDetails("3", .02, alist);
+        alist.clear();
+        alist.addAll(Arrays.asList(100,21,31));
+        NewCensusColumnDetails test14 = new NewCensusColumnDetails("4", .2, alist);
+        alist.clear();
+        alist.addAll(Arrays.asList(11,22,33));
+        NewCensusColumnDetails test15 = new NewCensusColumnDetails("5", .8, alist);
         
         System.out.println("-----------------");
         for(int count = 0; count <= 100; count++){
             
-            test1.calculateNewRandomPercentage();
-            test12.calculateNewRandomPercentage();
-            test13.calculateNewRandomPercentage();
-            test14.calculateNewRandomPercentage();
-            test15.calculateNewRandomPercentage();
+            test1.setRandomPercentage(Math.random());
+            test12.setRandomPercentage(Math.random());
+            test13.setRandomPercentage(Math.random());
+            test14.setRandomPercentage(Math.random());
+            test15.setRandomPercentage(Math.random());
             
             double value1= test1.getRandomPercentage();
             double value12= test12.getRandomPercentage();
@@ -77,50 +87,37 @@ public class FileUtilityJUnitTest {
             double value14= test14.getRandomPercentage();
             double value15= test15.getRandomPercentage();
             
-            boolean true1;
-            boolean true12;
-            boolean true13;
-            boolean true14;
-            boolean true15;
-            
+            boolean true1 = false;
+            boolean true12 = false;
+            boolean true13 = false;
+            boolean true14 = false;
+            boolean true15 = false;
+            /*
             if(value1 >= test1.getMin() && value1 <= test1.getMax()){
                 true1 = true;
             }
-            else{
-                true1 = false;
-            }
-            
             if(value12 >= test12.getMin() && value12 <= test12.getMax()){
                 true12 = true;
             }
-            else{
-                true12 = false;
-            }
-            
             if(value13 >= test13.getMin() && value13 <= test13.getMax()){
                 true13 = true;
             }
-            else{
-                true13 = false;
-            }
-            
             if(value14 >= test14.getMin() && value14 <= test14.getMax()){
                 true14 = true;
             }
-            else{
-                true14 = false;
-            }
             if(value15 >= test15.getMin() && value15 <= test15.getMax()){
                 true15 = true;
-            }
-            else{
-                true15 = false;
-            }
-            System.out.println(test1.getMin() + "-" + test1.getMax() + " : " + value1 + " ---- " + true1);
-            System.out.println(test12.getMin() + "-" + test12.getMax() + " : " + value12 + " ---- " + true12);
-            System.out.println(test13.getMin() + "-" + test13.getMax() + " : " + value13 + " ---- " + true13);
-            System.out.println(test14.getMin() + "-" + test14.getMax() + " : " + value14 + " ---- " + true14);
-            System.out.println(test15.getMin() + "-" + test15.getMax() + " : " + value15 + " ---- " + true15);
+            }*/
+            System.out.println(//test1.getMin() + "-" + test1.getMax() + " : " + 
+                    value1 + " ---- " + true1);
+            System.out.println(//test12.getMin() + "-" + test12.getMax() + " : " + 
+                    value12 + " ---- " + true12);
+            System.out.println(//test13.getMin() + "-" + test13.getMax() + " : " + 
+                    value13 + " ---- " + true13);
+            System.out.println(//test14.getMin() + "-" + test14.getMax() + " : " + 
+                    value14 + " ---- " + true14);
+            System.out.println(//test15.getMin() + "-" + test15.getMax() + " : " + 
+                    value15 + " ---- " + true15);
             
             System.out.println("-----------------");
         }
@@ -223,11 +220,11 @@ public class FileUtilityJUnitTest {
     
     @Test 
     public void getSurveyDataColumnValuesNEWWWWWWWWWWWWWWWWWWWWWWWWW1(){
-        DigPopGUIUtilityClass.getSurveyDataColumnValues("P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv", 13);
+        DigPopGUIUtilityClass.getSurveyDataColumnValues("P:\\CERL\\md_sample-data\\md_survey_microdata_people.csv", 13, "POPULATION");
     }
     @Test 
     public void getSurveyDataColumnValuesNEWWWWWWWWWWWWWWWWWWWWWWWWW2(){
-        DigPopGUIUtilityClass.getSurveyDataColumnValues("P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv", 13);
+        DigPopGUIUtilityClass.getSurveyDataColumnValues("P:\\CERL\\md_sample-data\\md_survey_microdata_household.csv", 13, "HOUSEHOLD");
     }
     
  
