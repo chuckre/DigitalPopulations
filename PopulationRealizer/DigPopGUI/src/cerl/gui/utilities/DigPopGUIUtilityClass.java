@@ -446,7 +446,7 @@ public class DigPopGUIUtilityClass {
                     for (NewCensusColumnDetails newInfo : newDetailsToAdd) {
                         int oldValue = 0;
                         for(int oldColumnNumber : newInfo.getOldValueLookUpColumns()){
-                            oldValue = Integer.parseInt(lineInfo[oldColumnNumber]);
+                            oldValue += Integer.parseInt(lineInfo[oldColumnNumber]);
                         }
                         
                         int newValue = (int) (oldValue * newInfo.getRandomPercentage());

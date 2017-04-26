@@ -444,19 +444,41 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
                     this.digPopGUIInformation.getFilePath());
     }
     
+    private ArrayList<NewCensusColumnDetails> setCensusTotalColumns(){
+        ArrayList<cerl.gui.utilities.Class> censusClasses = this.currentMarkovChain.getCensusClasses();
+        ArrayList<NewCensusColumnDetails> newCensusColumnDetails = new ArrayList<>();
+        
+        String colName = this.currentMarkovChain.getMarkovName().replaceAll("[^a-zA-Z0-9-_\\.]", "_");
+        ArrayList<Integer> oldValueLookUpColumns = new ArrayList<Integer>();
+
+        for(int censusCounter = 0; censusCounter < censusClasses.size(); censusCounter++){
+            cerl.gui.utilities.Class censusClass = censusClasses.get(censusCounter);
+            oldValueLookUpColumns.add(censusClass.getColumnNumber());
+        }
+        
+        NewCensusColumnDetails details = new NewCensusColumnDetails(
+            colName+"_Total", 
+            1.0,
+            oldValueLookUpColumns
+        ); 
+        newCensusColumnDetails.add(details);
+
+        return newCensusColumnDetails;
+    }
+    
     /**
      * Saves the Markov Chain details to the NewCensusColumnDetails Array List. 
      * This information is used to create the new Census Enumeration CSV file
      * after the user selects the number of runs to be ran.
      */
     private void saveMarkovToCSVFileInformation(){
-        /**
-         * Clear out the current NewCensusColumnDetails before saving.
-         */
+        //Clear out the current NewCensusColumnDetails before saving.
         this.currentMarkovChain.setNewCensusColumnDetails(new ArrayList<NewCensusColumnDetails>());
         
         ArrayList<NewCensusColumnDetails> newCensusColumnDetails = new ArrayList<>();
             
+        newCensusColumnDetails = setCensusTotalColumns();
+        
         ArrayList<cerl.gui.utilities.Class> censusClasses = this.currentMarkovChain.getCensusClasses();
         List<SurveyColumnValuesGrouping> surveyGroupings =  this.currentMarkovChain.getSelectSurveyClass().getSurveyColumnValuesGroupings();
 
@@ -469,50 +491,47 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
         int rowToStartAt = START_EDITABLE_ROW;
         int currentColumnNumber = START_EDITABLE_COL;
 
-            for(int surveyCounter = 0; surveyCounter < surveyGroupings.size(); surveyCounter++){
-                SurveyColumnValuesGrouping surveyGrouping = surveyGroupings.get(surveyCounter);
-                
-                double newTotalRandomNumber = 0;
-                ArrayList<Integer> oldValueLookUpColumns = new ArrayList<Integer>();
-                
-                for(int censusCounter = 0; censusCounter < censusClasses.size(); censusCounter++){
-                    cerl.gui.utilities.Class censusClass = censusClasses.get(censusCounter);
-                    oldValueLookUpColumns.add(censusClass.getColumnNumber());
-                    
-                    double[] minMaxValues = this.myTable.getMinMaxObject(rowToStartAt + surveyCounter, currentColumnNumber);
-                    
-                    double foundMin = minMaxValues[0];
-                    double foundMax = minMaxValues[1];
-                    
-                    double foundRandomNumber = 0.0;
-                    if(foundMin == foundMax){
-                        foundRandomNumber = foundMax;
-                    }else {
-                        foundRandomNumber = ThreadLocalRandom.current().nextDouble(foundMin, foundMax);
-                        foundRandomNumber = Math.round(foundRandomNumber  * 100.0) / 100.0;
-                    }
-                    
-                    newTotalRandomNumber += foundRandomNumber;
-                    if(currentColumnNumber < END_EDITABLE_COL){
-                        currentColumnNumber++;
-                    }
+        for(int surveyCounter = 0; surveyCounter < surveyGroupings.size(); surveyCounter++){
+            SurveyColumnValuesGrouping surveyGrouping = surveyGroupings.get(surveyCounter);
+
+            double newTotalRandomNumber = 0;
+            ArrayList<Integer> oldValueLookUpColumns = new ArrayList<Integer>();
+
+            for(int censusCounter = 0; censusCounter < censusClasses.size(); censusCounter++){
+                cerl.gui.utilities.Class censusClass = censusClasses.get(censusCounter);
+                oldValueLookUpColumns.add(censusClass.getColumnNumber());
+
+                double[] minMaxValues = this.myTable.getMinMaxObject(rowToStartAt + surveyCounter, currentColumnNumber);
+
+                double foundMin = minMaxValues[0];
+                double foundMax = minMaxValues[1];
+
+                double foundRandomNumber = 0.0;
+                if(foundMin == foundMax){
+                    foundRandomNumber = foundMax;
+                }else {
+                    foundRandomNumber = ThreadLocalRandom.current().nextDouble(foundMin, foundMax);
+                    foundRandomNumber = Math.round(foundRandomNumber  * 100.0) / 100.0;
                 }
 
-                //set min and max numbers
-                //New column header that will appear in the new csv file
-                NewCensusColumnDetails details = new NewCensusColumnDetails(
-                        surveyGrouping.toString(), 
-                        newTotalRandomNumber,
-                        oldValueLookUpColumns
-                );
-
-                newCensusColumnDetails.add(details);
+                newTotalRandomNumber += foundRandomNumber;
+                if(currentColumnNumber < END_EDITABLE_COL){
+                    currentColumnNumber++;
+                }
             }
-        /**
-         * Add the new NewCensusColumnDetails to the current MarkovChain object
-         */
+
+            //set min and max numbers
+            //New column header that will appear in the new csv file
+            NewCensusColumnDetails details = new NewCensusColumnDetails(
+                    surveyGrouping.toString(), 
+                    newTotalRandomNumber,
+                    oldValueLookUpColumns
+            );
+
+            newCensusColumnDetails.add(details);
+        }
+        //Add the new NewCensusColumnDetails to the current MarkovChain object
         this.currentMarkovChain.setNewCensusColumnDetails(newCensusColumnDetails);
-            
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
