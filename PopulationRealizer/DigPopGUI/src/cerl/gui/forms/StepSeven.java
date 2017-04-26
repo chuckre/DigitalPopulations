@@ -1550,17 +1550,28 @@ public class StepSeven extends javax.swing.JFrame {
         //provide message to user that the file has been created
         if(isValid){
             this.jLabel_Errors.setText("The Run file was saved");
-            
+            String saveFileDirectory = this.digPopGUIInformation.getFileDirectory();
+        
             //Now that the save file is valid we create the new census csv files.
             result = DigPopGUIUtilityClass.CreateNewCensusCSVFiles(
                     this.digPopGUIInformation.getCensusSurveyClasses().getMarkovChains(),
                     this.RunProperties.getParallel_threads(),
                     this.digPopGUIInformation.getRunFile().getRunName(),
                     this.digPopGUIInformation.getCensusEnumerationsFilePath(),
-                    this.digPopGUIInformation.getFileDirectory());
+                    saveFileDirectory);
             
             if(result.isSuccess()){
-                this.jLabel_Errors.setText("The Run file was saved and new Census csv files are created.");
+                //set census enumeration csv file table in regions trait for goal file:
+                this.digPopGUIInformation.getGoalRelationshipFile().getRegions().setTable(result.getValue().toString());
+                //create goal relationship file
+                result = DigPopGUIUtilityClass.createGoalRelationshipFile(saveFileDirectory, this.digPopGUIInformation.getGoalRelationshipFile());
+                
+                if(result.isSuccess()){
+                    this.jLabel_Errors.setText("The Run file, Goal Relationship File and new Census csv files are created.");
+                }
+                else{
+                    this.jLabel_Errors.setText("The Run file and new Census csv files are created.");
+                }
             }else
             {
                 this.jLabel_Errors.setText(result.getErrorMessage());
