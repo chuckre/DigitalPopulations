@@ -489,15 +489,15 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
          * Column data starts at index 2.
          */
         int rowToStartAt = START_EDITABLE_ROW;
-        int currentColumnNumber = START_EDITABLE_COL;
-
-        for(int surveyCounter = 0; surveyCounter < surveyGroupings.size(); surveyCounter++){
+        
+        for(int surveyCounter = 0; surveyCounter < surveyGroupings.size(); surveyCounter++){ //rows
+            int currentColumnNumber = START_EDITABLE_COL;
             SurveyColumnValuesGrouping surveyGrouping = surveyGroupings.get(surveyCounter);
 
             double newTotalRandomNumber = 0;
             ArrayList<Integer> oldValueLookUpColumns = new ArrayList<Integer>();
 
-            for(int censusCounter = 0; censusCounter < censusClasses.size(); censusCounter++){
+            for(int censusCounter = 0; censusCounter < censusClasses.size(); censusCounter++){ //columns
                 cerl.gui.utilities.Class censusClass = censusClasses.get(censusCounter);
                 oldValueLookUpColumns.add(censusClass.getColumnNumber());
 
