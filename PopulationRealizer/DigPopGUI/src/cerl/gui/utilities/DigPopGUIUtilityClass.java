@@ -424,33 +424,47 @@ public class DigPopGUIUtilityClass {
 
         ArrayList<String> outputLines = new ArrayList<>();
 
-        int counter = 1;
+        int counter = 1; //current row in the file
 
         FileInputStream inputStream = null;
 
         Scanner sc = null;
         try {
-            inputStream = new FileInputStream(oldFilePath);
+            inputStream = new FileInputStream(oldFilePath); //open existing file
             sc = new Scanner(inputStream, "UTF-8");
             while (sc.hasNextLine()) {
-                String line = sc.nextLine();
+                String line = sc.nextLine(); //read row
 
-                if (counter == 1) {
+                if (counter == 1) { //header row
                     for (NewCensusColumnDetails newInfo : newDetailsToAdd) {
                         line = line + ", " + newInfo.getNewColumnHeader(); // + "_" + newInfo.getRandomPercentage() + "%";
                     }
-                } else {
+                } else { //data rows
 
                     String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-
+                    ArrayList<Integer> newValuesArray = new ArrayList();
+                    
+                    int markovCounter = 0; //used for total columns
+                    
                     for (NewCensusColumnDetails newInfo : newDetailsToAdd) {
                         int oldValue = 0;
-                        for(int oldColumnNumber : newInfo.getOldValueLookUpColumns()){
-                            oldValue += Integer.parseInt(lineInfo[oldColumnNumber]);
+                        
+                        //if is the total column, should sum previous columns
+                        if(newInfo.getNumberOfColumnsPriorToSum() > 0){
+                            for(int columnNumber=0; columnNumber < newInfo.getNumberOfColumnsPriorToSum(); columnNumber++){
+                                oldValue += newValuesArray.get(markovCounter + columnNumber);
+                            }
+                            markovCounter = newValuesArray.size()+1; //all new columns + total column
+                        }
+                        else{ //sum columns provided
+                            for(int oldColumnNumber : newInfo.getOldValueLookUpColumns()){
+                                oldValue += Integer.parseInt(lineInfo[oldColumnNumber]);
+                            }
                         }
                         
                         int newValue = (int) (oldValue * newInfo.getRandomPercentage());
-
+                        newValuesArray.add(newValue); 
+                        
                         line = line + ", " + newValue;
                     }
                 }

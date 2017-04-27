@@ -17,6 +17,7 @@ public class NewCensusColumnDetails {
     
     private Double randomPercentage;
     private ArrayList<Integer> oldValueLookUpColumns;
+    private Integer numberOfColumnsPriorToSum;
 
     /**
      * Creates a new census column detail item with:
@@ -25,6 +26,7 @@ public class NewCensusColumnDetails {
     public NewCensusColumnDetails() {
         this.randomPercentage = 0.0;
         this.oldValueLookUpColumns = new ArrayList<>();
+        this.numberOfColumnsPriorToSum = -1;
     }
 
     /**
@@ -32,10 +34,11 @@ public class NewCensusColumnDetails {
      * @param newColumnHeader - the new header name
      * @param randomPercentage - the calculated random percentage
      */
-    public NewCensusColumnDetails(String newColumnHeader, Double randomPercentage, ArrayList<Integer> oldValueLookUpColumns) {
+    public NewCensusColumnDetails(String newColumnHeader, Double randomPercentage, ArrayList<Integer> oldValueLookUpColumns, Integer numberOfColumnsPriorToSum) {
         this.newColumnHeader = newColumnHeader;
         this.randomPercentage = randomPercentage;
         this.oldValueLookUpColumns = oldValueLookUpColumns;
+        this.numberOfColumnsPriorToSum = numberOfColumnsPriorToSum;
     }
 
     /**
@@ -46,15 +49,22 @@ public class NewCensusColumnDetails {
         return newColumnHeader;
     }
 
+    /**
+     * Gets the list of column numbers for census values to calculate the new value
+     * @return ArrayList of column numbers
+     */
     public ArrayList<Integer> getOldValueLookUpColumns() {
         return oldValueLookUpColumns;
     }
 
+    /**
+     * Sets the list of columns used for calculating the new value
+     * @param oldValueLookUpColumns - the arrayList of column numbers
+     */
     public void setOldValueLookUpColumns(ArrayList<Integer> oldValueLookUpColumns) {
         this.oldValueLookUpColumns = oldValueLookUpColumns;
     }
     
-
     /**
      * Sets the string value of the column header
      * @param newColumnHeader - the new text for the header
@@ -63,6 +73,10 @@ public class NewCensusColumnDetails {
         this.newColumnHeader = newColumnHeader;
     }
 
+    /**
+     * Sets the new random percentage used for calculating the new column
+     * @param randomPercentage - the percentage as a double (i.e. 70% = 0.75)
+     */
     public void setRandomPercentage(Double randomPercentage) {
         this.randomPercentage = randomPercentage;
     }
@@ -74,18 +88,21 @@ public class NewCensusColumnDetails {
     public Double getRandomPercentage() {
         return randomPercentage;
     }
-    
+
     /**
-     * Calculates a new random percentage for the current census column
-     * Calculated as the next random double between the minimum and maximum values
-     * Rounded to a single decimal point
+     * Gets value for the number of columns prior used for summing a new total column
+     * @return the integer value of the number of columns prior to sum
      */
-//    public void calculateNewRandomPercentage() {
-//        if(this.min.equals(this.max)){
-//            this.randomPercentage = this.max;
-//        }else {
-//            this.randomPercentage = ThreadLocalRandom.current().nextDouble(min, max);
-//            this.randomPercentage =Math.round(this.randomPercentage  * 100.0) / 100.0;
-//        }
-//    }
+    public Integer getNumberOfColumnsPriorToSum() {
+        return numberOfColumnsPriorToSum;
+    }
+
+    /**
+     * Sets the value for the number of columns prior to the current column
+     *  to sum for new total columns
+     * @param numberOfColumnsPriorToSum - the number of columns prior needed for sum
+     */
+    public void setNumberOfColumnsPriorToSum(Integer numberOfColumnsPriorToSum) {
+        this.numberOfColumnsPriorToSum = numberOfColumnsPriorToSum;
+    }
 }
