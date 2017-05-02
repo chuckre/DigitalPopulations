@@ -36,6 +36,7 @@ public class FittingCriteriaInformation {
      * Creates a new, empty Fitting Criteria Information object
      */
     public FittingCriteriaInformation(){
+        location = 1.0; //default value
     }
     
     /**

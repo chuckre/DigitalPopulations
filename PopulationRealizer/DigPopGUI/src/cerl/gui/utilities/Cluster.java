@@ -27,6 +27,7 @@ public class Cluster {
     @XmlAttribute(name="distance")
     private Integer distance;
 
+    @XmlAttribute(name="description")
     private String description;
 
     /**
