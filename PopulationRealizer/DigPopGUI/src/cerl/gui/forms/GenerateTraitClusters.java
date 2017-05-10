@@ -22,6 +22,7 @@ import cerl.gui.utilities.FittingCriteriaInformation;
 import cerl.gui.utilities.HelpFileScreenNames;
 import cerl.gui.utilities.MarkovChain;
 import cerl.gui.utilities.Traits;
+import cerl.gui.utilities.WeightWrapper;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
@@ -506,7 +507,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 
                 fitInfo.setRelationshipFile("goal_relationship.dprxml");
                 fitInfo.setTraits(this.digPopGUIInformation.getFittingTraits());
-                fitInfo.setWeights(this.digPopGUIInformation.getTraitWeights());
+                fitInfo.setWeights(new WeightWrapper(this.digPopGUIInformation.getTraitWeights()));
                 fitInfo.setPositionRules(this.digPopGUIInformation.getTraitPositionClusters());
                 
                 //Need to create the file as empty version of the object
@@ -517,6 +518,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                     System.out.println("successfully updated file");
                     //ArrayList<String> fittingValues = (ArrayList<String>)result.getValue();
                 }else {
+                    System.out.println("unable to update Fitting Criteria file" + result.getErrorMessage());
                     //lblErrorMessages.setText(result.getErrorMessage());
                 }
 

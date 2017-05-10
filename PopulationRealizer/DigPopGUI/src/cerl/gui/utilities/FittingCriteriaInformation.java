@@ -17,18 +17,15 @@ import javax.xml.bind.annotation.XmlType;
  * @author mrivera
  */
 @XmlRootElement(name="FittingCriteria")
-@XmlType(propOrder={"traits","weights","location","positionRules"})
+@XmlType(propOrder={"traits","weights","positionRules"})
 public class FittingCriteriaInformation {
     private String relationshipFile;
     
     //Traits
     private ArrayList<Traits> traits; 
     //Weights
-    private ArrayList<Weights> weights;
-    
-    //@XmlElementRef(name="location")
-    private double location;
-    
+    private WeightWrapper weights;
+        
     //Position rules
     private ArrayList<Cluster> positionRules;
 
@@ -36,7 +33,6 @@ public class FittingCriteriaInformation {
      * Creates a new, empty Fitting Criteria Information object
      */
     public FittingCriteriaInformation(){
-        location = 1.0; //default value
     }
     
     /**
@@ -47,10 +43,9 @@ public class FittingCriteriaInformation {
      * @param weights - the weight values for each trait
      * @param positionRules - the list of clusters for moving households closer to each other
      */
-    public FittingCriteriaInformation(String relationshipFile, ArrayList<Traits> traits, double location, ArrayList<Weights> weights, ArrayList<Cluster> positionRules) {
+    public FittingCriteriaInformation(String relationshipFile, ArrayList<Traits> traits, WeightWrapper weights, ArrayList<Cluster> positionRules) {
         this.relationshipFile = relationshipFile;
         this.traits = traits;
-        this.location = location;
         this.weights = weights;
         this.positionRules = positionRules;
     }
@@ -75,21 +70,11 @@ public class FittingCriteriaInformation {
     }
 
     /**
-     * Gets the location for weights
-     * @return 
-     */
-    public double getLocation() {
-        return location;
-    }
-
-    /**
      * Gets the list of weights associated with traits
      * @return 
      */
-    @XmlElementWrapper(name="weights")
-    @XmlElement(name="trait")
-    public ArrayList<Weights> getWeights() {
-        return weights;
+    public WeightWrapper getWeights() {
+        return this.weights;
     }
 
     /**
@@ -119,18 +104,10 @@ public class FittingCriteriaInformation {
     }
 
     /**
-     * Sets the location weight to be used with generated traits
-     * @param location - the new location
-     */
-    public void setLocation(double location) {
-        this.location = location;
-    }
-
-    /**
      * Sets the list of trait weights 
      * @param weights - the new set of weights
      */
-    public void setWeights(ArrayList<Weights> weights) {
+    public void setWeights(WeightWrapper weights) {
         this.weights = weights;
     }
 
@@ -148,6 +125,6 @@ public class FittingCriteriaInformation {
      */
     @Override
     public String toString() {
-        return "<FittingCriteria " + "relationshipFile=" + relationshipFile + "><traits=" + traits + "><weights location=" + location + ">" + weights + "<positionRules>" + positionRules + "</position-rules>";
+        return "<FittingCriteria " + "relationshipFile=" + relationshipFile + "><traits=" + traits + "><weights>" + this.weights + "</weights><positionRules>" + positionRules + "</position-rules>";
     }
 }
