@@ -125,7 +125,7 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                         cellValues.get(r).add(c, new customTableCell(thisCluster.getId(), false, "Integer", false));
                         break;
                     case "Trait Description": //string
-                        cellValues.get(r).add(c, new customTableCell(thisCluster.getDescription(), false, "String", false));
+                        cellValues.get(r).add(c, new customTableCell(getTraitDescByID(thisCluster.getId()), false, "String", false));
                         break;
                     case "Reduction": //int
                         cellValues.get(r).add(c, new customTableCell(thisCluster.getReduction(), true, "Integer", false));
@@ -143,6 +143,19 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
             cellValues = this.digPopGUIInformation.getTraitClusters();
         }
         return cellValues;
+    }
+    
+    /**
+     * Gets the description of a cluster by the Cluster's trait id
+     * @param ClusterId - the trait id selected
+     * @return - the description of the cluster/trait
+     */
+    private String getTraitDescByID(int ClusterId){
+        ArrayList<Traits> fitTraits = this.digPopGUIInformation.getFittingTraits();
+                
+        String retVal = fitTraits.stream().filter(c -> c.getId() == ClusterId).findFirst().get().getDesc();
+        
+        return retVal;
     }
     
     /**
@@ -452,9 +465,9 @@ public class GenerateTraitClusters extends javax.swing.JFrame {
                 case "Trait ID": //int
                     newCluster.setId(Integer.parseInt(tableCell));
                     break;
-                case "Trait Description": //string
+                /*case "Trait Description": //string
                     newCluster.setDescription(tableCell);
-                    break;
+                    break;*/
                 case "Reduction": //int
                     newCluster.setReduction(Integer.parseInt(tableCell));
                     break;

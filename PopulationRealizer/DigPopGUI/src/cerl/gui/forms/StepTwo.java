@@ -1239,8 +1239,9 @@ public class StepTwo extends javax.swing.JFrame {
         Population thisPopulation = this.digPopGUIInformation.getGoalRelationshipFile().getPopulation();
         
         txtPopulationMicroData.setText(thisPopulation.getTable() != null ? thisPopulation.getTable() : this.digPopGUIInformation.getPopulationMicroDataFilePath()); //table
-        this.jComboBox_Pop_HouseholdColumnName.setSelectedIndex(getIndexFromValue(thisPopulation.getHousehold(),jComboBox_Pop_HouseholdColumnName));
-        
+        if(thisPopulation.getHousehold() != null){
+            this.jComboBox_Pop_HouseholdColumnName.setSelectedIndex(getIndexFromValue(thisPopulation.getHousehold(),jComboBox_Pop_HouseholdColumnName));
+        }
         pack();
     }
     
@@ -1293,10 +1294,11 @@ public class StepTwo extends javax.swing.JFrame {
                         , this.jComboBox_HouseholdKey.getSelectedItem().toString()));
                 
         //Save Population tag fields for goal relationship file
-        this.digPopGUIInformation.getGoalRelationshipFile()
+        if(this.jComboBox_Pop_HouseholdColumnName.getSelectedItem() != null){
+            this.digPopGUIInformation.getGoalRelationshipFile()
                 .setPopulation(new Population(txtPopulationMicroData.getText()
                         ,this.jComboBox_Pop_HouseholdColumnName.getSelectedItem().toString()));
-        
+        }
         saveToFile();
     }
     

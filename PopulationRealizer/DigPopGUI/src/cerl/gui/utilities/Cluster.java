@@ -27,8 +27,7 @@ public class Cluster {
     @XmlAttribute(name="distance")
     private Integer distance;
 
-    @XmlAttribute(name="description")
-    private String description;
+    //private String description;
 
     /**
      * Creates a new, empty cluster object
@@ -61,9 +60,9 @@ public class Cluster {
      * Gets the Trait Description of the current cluster
      * @return the Trait Description that is clustered
      */
-    public String getDescription() {
+    /*public String getDescription() {
         return description;
-    }
+    }*/
     
     /**
      * Gets the percentage reduction value for the current cluster
@@ -93,9 +92,9 @@ public class Cluster {
      * Sets the current trait Description for the cluster
      * @param desc - the trait Description
      */
-    public void setDescription(String desc) {
+    /*public void setDescription(String desc) {
         this.description = desc;
-    }
+    }*/
 
     /**
      * Sets the reduction percentage for the current cluster
