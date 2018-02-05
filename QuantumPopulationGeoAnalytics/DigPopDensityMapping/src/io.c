@@ -9,14 +9,18 @@
 #include <ogr_api.h>
 #include <cpl_conv.h>
 
+
+#define LINESIZE 40000
+
+
 int getHHNum(FILE * file) {
 	int hhCount = 0;
 
 	rewind(file);
-	char line[4000];
-	fgets(line, 4000, file);
+	char line[LINESIZE];
+	fgets(line, LINESIZE, file);
 	
-	while(NULL != fgets(line, 4000, file)) {
+	while(NULL != fgets(line, LINESIZE, file)) {
 		hhCount ++;
 	}
 	
