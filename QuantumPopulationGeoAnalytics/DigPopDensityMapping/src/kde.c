@@ -23,7 +23,9 @@ void kde(float * density, int nRow, int nCol, float cellSize, float xMin, float 
 		for(int k = 0; k < nHH; k++) {
 			rowID = (int)((yMax - yCor[k]) / cellSize);
 			colID = (int)((xCor[k] - xMin) / cellSize);
-			density[rowID * nCol + colID] += pCount[k];
+			if(colID >= 0 && colID < nCol && rowID >= 0 && rowID < nRow) {
+				density[rowID * nCol + colID] += pCount[k];
+			}
 		}
 	}
 	else {
