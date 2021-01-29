@@ -273,7 +273,10 @@ public class customTableModel  extends AbstractTableModel {
                     }
                 }
             }
-        }
-        
+        }   
+    }
+    
+    public void removeRow(int row){
+        tableCells.remove(row);
     }
 }

@@ -19,7 +19,6 @@ import cerl.gui.utilities.MarkovChain;
 import cerl.gui.utilities.MarkovTableCell;
 import cerl.gui.utilities.NewCensusColumnDetails;
 import cerl.gui.utilities.SurveyColumnValuesGrouping;
-import java.awt.event.ActionEvent;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.table.TableColumn;
 
@@ -411,7 +410,8 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     private void jButton_SaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveActionPerformed
         // TODO add your handling code here:
         saveToFile();
-        new FittingCriteria(this.digPopGUIInformation, this.currentMarkovChainId).setVisible(true);
+        //new FittingCriteria(this.digPopGUIInformation, this.currentMarkovChainId).setVisible(true);
+        new StepThree(this.digPopGUIInformation).setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton_SaveActionPerformed
 
@@ -445,14 +445,31 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
     }
     
     /**
+     * Creates the total columns, as the sum of the new column values
+     * @return 
+     */
+    private ArrayList<NewCensusColumnDetails> setCensusTotalColumns(ArrayList<NewCensusColumnDetails> newCensusColumnDetails){
+        String colName = this.currentMarkovChain.getMarkovName().replaceAll("[^a-zA-Z0-9-_\\.]", "_");
+        ArrayList<Integer> oldValueLookUpColumns = new ArrayList<Integer>();
+        
+        NewCensusColumnDetails details = new NewCensusColumnDetails(
+            colName+"_Total", 
+            1.0,
+            oldValueLookUpColumns,
+            newCensusColumnDetails.size()
+        ); 
+        newCensusColumnDetails.add(details);
+
+        return newCensusColumnDetails;
+    }
+    
+    /**
      * Saves the Markov Chain details to the NewCensusColumnDetails Array List. 
      * This information is used to create the new Census Enumeration CSV file
      * after the user selects the number of runs to be ran.
      */
     private void saveMarkovToCSVFileInformation(){
-        /**
-         * Clear out the current NewCensusColumnDetails before saving.
-         */
+        //Clear out the current NewCensusColumnDetails before saving.
         this.currentMarkovChain.setNewCensusColumnDetails(new ArrayList<NewCensusColumnDetails>());
         
         ArrayList<NewCensusColumnDetails> newCensusColumnDetails = new ArrayList<>();
@@ -466,51 +483,54 @@ public class MarkovChainMatrix extends javax.swing.JFrame {
          * Row data starts at index 1.
          * Column data starts at index 2.
          */
-        int rowToStartAt = 1;
-        int currentColumnNumber = 2;
+        int rowToStartAt = START_EDITABLE_ROW;
+        
+        for(int surveyCounter = 0; surveyCounter < surveyGroupings.size(); surveyCounter++){ //rows
+            int currentColumnNumber = START_EDITABLE_COL;
+            SurveyColumnValuesGrouping surveyGrouping = surveyGroupings.get(surveyCounter);
 
-            for(int surveyCounter = 0; surveyCounter < surveyGroupings.size(); surveyCounter++){
-                SurveyColumnValuesGrouping surveyGrouping = surveyGroupings.get(surveyCounter);
-                
-                double newTotalRandomNumber = 0;
-                ArrayList<Integer> oldValueLookUpColumns = new ArrayList<Integer>();
-                
-                for(int censusCounter = 0; censusCounter < censusClasses.size(); censusCounter++){
-                    cerl.gui.utilities.Class censusClass = censusClasses.get(censusCounter);
-                    oldValueLookUpColumns.add(censusClass.getColumnNumber());
-                    
-                    double[] minMaxValues = this.myTable.getMinMaxObject(rowToStartAt + surveyCounter, currentColumnNumber);
-                    
-                    double foundMin = minMaxValues[0];
-                    double foundMax = minMaxValues[1];
-                    
-                    double foundRandomNumber = 0.0;
-                    if(foundMin == foundMax){
-                        foundRandomNumber = foundMax;
-                    }else {
-                        foundRandomNumber = ThreadLocalRandom.current().nextDouble(foundMin, foundMax);
-                        foundRandomNumber =Math.round(foundRandomNumber  * 100.0) / 100.0;
-                    }
-                    
-                    newTotalRandomNumber += foundRandomNumber;
-                    currentColumnNumber += censusCounter;
+            double newTotalRandomNumber = 0;
+            ArrayList<Integer> oldValueLookUpColumns = new ArrayList<Integer>();
+
+            for(int censusCounter = 0; censusCounter < censusClasses.size(); censusCounter++){ //columns
+                cerl.gui.utilities.Class censusClass = censusClasses.get(censusCounter);
+                oldValueLookUpColumns.add(censusClass.getColumnNumber());
+
+                double[] minMaxValues = this.myTable.getMinMaxObject(rowToStartAt + surveyCounter, currentColumnNumber);
+
+                double foundMin = minMaxValues[0];
+                double foundMax = minMaxValues[1];
+
+                double foundRandomNumber = 0.0;
+                if(foundMin == foundMax){
+                    foundRandomNumber = foundMax;
+                }else {
+                    foundRandomNumber = ThreadLocalRandom.current().nextDouble(foundMin, foundMax);
+                    foundRandomNumber = Math.round(foundRandomNumber  * 100.0) / 100.0;
                 }
 
-                //set min and max numbers
-                //New column header that will appear in the new csv file
-                NewCensusColumnDetails details = new NewCensusColumnDetails(
-                        surveyGrouping.toString() + "_" + newTotalRandomNumber,
-                        newTotalRandomNumber,
-                        oldValueLookUpColumns
-                );
-
-                newCensusColumnDetails.add(details);
+                newTotalRandomNumber += foundRandomNumber;
+                if(currentColumnNumber < END_EDITABLE_COL){
+                    currentColumnNumber++;
+                }
             }
-        /**
-         * Add the new NewCensusColumnDetails to the current MarkovChain object
-         */
+
+            //set min and max numbers
+            //New column header that will appear in the new csv file
+            NewCensusColumnDetails details = new NewCensusColumnDetails(
+                    surveyGrouping.toString(), 
+                    newTotalRandomNumber,
+                    oldValueLookUpColumns,
+                    0
+            );
+
+            newCensusColumnDetails.add(details);
+        }
+        
+        newCensusColumnDetails = setCensusTotalColumns(newCensusColumnDetails);
+        
+        //Add the new NewCensusColumnDetails to the current MarkovChain object
         this.currentMarkovChain.setNewCensusColumnDetails(newCensusColumnDetails);
-            
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -19,7 +19,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -542,18 +541,21 @@ public class StepThree extends javax.swing.JFrame {
 
                 if(selectSurveyClass.getAllSurveyColumnValues().isEmpty()){
                     String filePath = "";
+                    String fileType = "";
                     switch(selectSurveyClass.getDigPopFileTypeEnum()){
                         case Household_Micro_Data:
                             filePath = digPopGUIInformation.getHouseholdMicroDataFilePath();
+                            fileType = "HOUSEHOLDS";
                             break;
                         case Population_Micro_Data:
                             filePath = digPopGUIInformation.getPopulationMicroDataFilePath();
+                            fileType = "POPULATION";
                             break;
                     }
 
                     Result result = DigPopGUIUtilityClass.getSurveyDataColumnValues(
                             filePath, 
-                            selectSurveyClass.getColumnNumber());
+                            selectSurveyClass.getColumnNumber(),fileType);
                     ArrayList<SurveyColumnValue> columnValues = (ArrayList<SurveyColumnValue>)result.getValue();
                     selectSurveyClass.setAllSurveyColumnValues(columnValues);
                 }
@@ -611,10 +613,9 @@ public class StepThree extends javax.swing.JFrame {
      */
     private void btnNextStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextStepActionPerformed
         saveToFile();
-        
-        StepSeven stepSeven = new StepSeven(this.digPopGUIInformation);
-        stepSeven.setVisible(true);
-        stepSeven.setLocationRelativeTo(this);
+        //Step 5
+        new FittingCriteria(this.digPopGUIInformation).setVisible(true);
+        dispose();
         
         dispose();
     }//GEN-LAST:event_btnNextStepActionPerformed

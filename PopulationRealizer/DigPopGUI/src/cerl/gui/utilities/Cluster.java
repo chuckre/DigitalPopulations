@@ -27,6 +27,8 @@ public class Cluster {
     @XmlAttribute(name="distance")
     private Integer distance;
 
+    //private String description;
+
     /**
      * Creates a new, empty cluster object
      */
@@ -36,10 +38,11 @@ public class Cluster {
     /**
      * Creates a new cluster object with the given parameters
      * @param id - the trait ID to be clustered. Trait must be a normal tract-based trait (i.e. one with 'regionTrait' and 'regionTotal'.)
+     * @param desc - the trait description. User-friendly name
      * @param reduction - the percentage reduction in "inertia," which is a measure of the randomness of an arrangement of households.  A reduction of inertia is an increase of clustering, and is achieved by moving households closer together. Goal will be this much lower than the "inertia" values calculated when phase 4 begins.
      * @param distance - the Maximum size of clusters to build. Only houses within this radius will be considered for clustering.  1000 meters or 0.01 degrees is a good starting point.  This values is in the same units as the input maps.
      */
-    public Cluster(Integer id, Integer reduction, Integer distance) {
+    public Cluster(Integer id, String desc, Integer reduction, Integer distance) {
         this.id = id;
         this.reduction = reduction;
         this.distance = distance;
@@ -53,6 +56,14 @@ public class Cluster {
         return id;
     }
 
+    /**
+     * Gets the Trait Description of the current cluster
+     * @return the Trait Description that is clustered
+     */
+    /*public String getDescription() {
+        return description;
+    }*/
+    
     /**
      * Gets the percentage reduction value for the current cluster
      * @return the reduction value for the current cluster
@@ -76,6 +87,14 @@ public class Cluster {
     public void setId(Integer id) {
         this.id = id;
     }
+    
+    /**
+     * Sets the current trait Description for the cluster
+     * @param desc - the trait Description
+     */
+    /*public void setDescription(String desc) {
+        this.description = desc;
+    }*/
 
     /**
      * Sets the reduction percentage for the current cluster

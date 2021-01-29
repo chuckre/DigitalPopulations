@@ -225,7 +225,7 @@ public class Traits {
      */
     @Override
     public String toString() {
-        return "<traits " + "id=" + id 
+        return "<trait " + "id=" + id 
                 + " regionTrait=" + regionTrait 
                 + " regionTotal=" + regionTotal 
                 + " pumsTraitTable=" + pumsTraitTable 

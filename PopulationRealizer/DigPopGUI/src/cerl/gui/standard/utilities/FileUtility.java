@@ -221,7 +221,7 @@ public class FileUtility {
                 byte[] output = line.getBytes();
                 out.write(output);
             }
-
+            result.setValue(newFilePath);
             result.setSuccess(true);
         } catch (FileNotFoundException ex) {
             result.setErrorMessage("WriteNewTextFileFromArrayOfLines", ex.getMessage());
@@ -368,7 +368,7 @@ public class FileUtility {
             jaxbMarshaller.marshal(objectToParseIntoXML, file);
             
             result.setSuccess(true);
-            
+            result.setValue(filePath);
         } catch (JAXBException ex) {
             result.setErrorMessage(
                     "ParseObjectToXML",
@@ -394,8 +394,11 @@ public class FileUtility {
             result = String.format(
                     "%s_%s.%s", 
                     dateString,
-                    starterName,
+                    starterName.replaceAll("[^a-zA-Z0-9-_\\.]", "_"),
                     type.toString());
+        } else{
+            result = starterName.replaceAll("[^a-zA-Z0-9-_\\.]", "_");
+            result = result.concat(type.toString());
         }
         
         return result;

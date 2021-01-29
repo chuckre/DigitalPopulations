@@ -32,26 +32,41 @@
     </screen>
     <screen>
         <name>Step 2 - Goal Relationship File</name>
-        <description>This page allows users to setup the Goal Relationship File, which specifies a complete set of files for one region and how they relate to each other.</description>
-        <instruction>
-            <instructionName>Census File</instructionName>
-            <helpText>This is the name of the census enumeration file from Step 1, with the regional summaries of socioeconomically attributes of interests.</helpText>
-        </instruction>
-        <instruction>
-            <instructionName>Population File</instructionName>
-            <helpText>The file provided in Step 1, the population table where each row describes one individual.</helpText>
-        </instruction>
         <instruction>
             <instructionName>Region Map</instructionName>
             <helpText>The file provided in Step 1, this raster map provides the location of the regions or tracts that Digital Populations will populate.  This is the finest resolution that DigPop can work with -- a region is selected based on statistical analysis, but the location of a household within a region is random.  Coordinate system must be planar (i.e. UTM).  DigPop does not understand coordinate systems, so distance calculations will not be correct in other systems.</helpText>
         </instruction>
         <instruction>
-            <instructionName>Constraint Map</instructionName>
-            <helpText>The file provided in Step 1, specifies areas where households with a specific value are NOT allowed, by explicitly disallowing the placement of certain households into certain map cells.  To use the constraint map, users must specify the map, then specify the household trait and value from the microdata that links to corresponding raster value on the map.  For example, houses with grid electricity would only be placed where a raster map of grid power has a specific raster value corresponding to access to electricity. For example, urban/rural regions, regions with/without electric </helpText>
+            <instructionName>Census File</instructionName>
+            <helpText>This is the name of the census enumeration file from Step 1, with the regional summaries of socioeconomically attributes of interests.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Region Tag</instructionName>
+            <helpText>The following fields are used in the Region Tag of the goal relationship file, dropdowns are populated from the census enumeration file provided in Step 1. 
+                    The "Key Column" links the map and the table.
+                    The "Household Column" gives the number of households in each region.
+                    The "Population Column" gives the number of people in each region.
+                    The "Vacancies Column" gives the number of empty households in each region.
+            </helpText>
+        </instruction>
+        <description>This page allows users to setup the Goal Relationship File, which specifies a complete set of files for one region and how they relate to each other.</description>
+        <instruction>
+            <instructionName>Population File</instructionName>
+            <helpText>The file provided in Step 1, the population table where each row describes one individual.</helpText>
+        </instruction>
+        <description>This page allows users to setup the Goal Relationship File, which specifies a complete set of files for one region and how they relate to each other.</description>
+        <instruction>
+            <instructionName>Population Tag</instructionName>
+            <helpText>The "household" field is used in the Population Tag of the goal relationship file to name the column that provides a link to a record in the households table.</helpText>
         </instruction>
         <instruction>
             <instructionName>Household File</instructionName>
             <helpText>The file provided in Step 1, the household table provides a Unique ID Field that identifies the specific house each person lives in.  Records without household ID values will be ignored.</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Household Tag</instructionName>
+            <helpText>The "key" field is used in the Household Tag of the goal relationship file, to name the column that provides a unique ID for each record.
+            </helpText>
         </instruction>
         <instruction>
             <instructionName>Household Density Map File</instructionName>
@@ -68,6 +83,10 @@
         <instruction>
             <instructionName>Vacant Class Description</instructionName>
             <helpText>The text description of the selected classes that households cannot be placed (e.g. Open Water).</helpText>
+        </instruction>
+        <instruction>
+            <instructionName>Constraint Map</instructionName>
+            <helpText>The file provided in Step 1, specifies areas where households with a specific value are NOT allowed, by explicitly disallowing the placement of certain households into certain map cells.  To use the constraint map, users must specify the map, then specify the household trait and value from the microdata that links to corresponding raster value on the map.  For example, houses with grid electricity would only be placed where a raster map of grid power has a specific raster value corresponding to access to electricity. For example, urban/rural regions, regions with/without electric </helpText>
         </instruction>
         <instruction>
             <instructionName>Combination Classes</instructionName>

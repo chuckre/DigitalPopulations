@@ -9,16 +9,21 @@ import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * Used for writing out the Goal Relationship .dprxml file
  * @author mrivera
  */
 @XmlRootElement(name="FileRelationship")
+@XmlType(propOrder={"populationDensity","populationDensityType","landUseMapInformation","regions","households","population","traits","forbids"})
 public class GoalRelationshipFile {
     private LandUseMapInformation landUseMapInformation;
-    private String populationDensity; //the landuse.csv or map.asc
+    private PopulationDensityMap populationDensity; //the landuse.csv or map.asc
     private String populationDensityType; //map or landuse, only one allowed
+    private Regions regions;
+    private Households households;
+    private Population population;
     private ArrayList<Traits> traits; 
     private ArrayList<Forbid> forbids;
     
@@ -27,6 +32,9 @@ public class GoalRelationshipFile {
      */
     public GoalRelationshipFile(){
         this.forbids = new ArrayList<Forbid>();
+        this.regions = new Regions();
+        this.households = new Households();
+        this.population = new Population();
     }
     
     /**
@@ -37,10 +45,13 @@ public class GoalRelationshipFile {
      * @param traits - the list of traits
      * @param forbid - the list of constraints for placing households
      */
-     public GoalRelationshipFile(LandUseMapInformation landUseMapInformation, String populationDensity, String populationDensityType, ArrayList<Traits> traits, ArrayList<Forbid> forbids) {
+     public GoalRelationshipFile(LandUseMapInformation landUseMapInformation, PopulationDensityMap populationDensity, String populationDensityType, Regions regions, Households households, Population population, ArrayList<Traits> traits, ArrayList<Forbid> forbids) {
         this.landUseMapInformation = landUseMapInformation;
         this.populationDensity = populationDensity;
         this.populationDensityType = populationDensityType;
+        this.regions = regions;
+        this.households = households;
+        this.population = population;
         this.traits = traits;
         this.forbids = forbids;
     }
@@ -59,7 +70,7 @@ public class GoalRelationshipFile {
      * @return 
      */
     @XmlElement(name="popdensity")
-    public String getPopulationDensity() {
+    public PopulationDensityMap getPopulationDensity() {
         return populationDensity;
     }
 
@@ -102,7 +113,7 @@ public class GoalRelationshipFile {
      * Sets the population density, landuse or household density map
      * @param populationDensity - the new map
      */
-    public void setPopulationDensity(String populationDensity) {
+    public void setPopulationDensity(PopulationDensityMap populationDensity) {
         this.populationDensity = populationDensity;
     }
 
@@ -137,5 +148,56 @@ public class GoalRelationshipFile {
      */
     public void addForbid(Forbid forbid) {
         this.forbids.add(forbid);
+    }
+
+    /**
+     * Gets the regions tag for the goal relationship file
+     * @return 
+     */
+    @XmlElement(name="regions")
+    public Regions getRegions() {
+        return regions;
+    }
+
+    /**
+     * Sets the regions tag
+     * @param regions 
+     */
+    public void setRegions(Regions regions) {
+        this.regions = regions;
+    }
+
+    /**
+     * Gets the households tag
+     * @return 
+     */
+    @XmlElement(name="households")
+    public Households getHouseholds() {
+        return households;
+    }
+
+    /**
+     * Sets the households tag
+     * @param households 
+     */
+    public void setHouseholds(Households households) {
+        this.households = households;
+    }
+
+    /**
+     * Gets the population tag
+     * @return 
+     */
+    @XmlElement(name="population")
+    public Population getPopulation() {
+        return population;
+    }
+
+    /**
+     * Sets the population tag
+     * @param population 
+     */
+    public void setPopulation(Population population) {
+        this.population = population;
     }
 }

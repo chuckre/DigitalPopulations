@@ -7,6 +7,7 @@ package cerl.gui.utilities;
 
 import cerl.gui.forms.HelpFileDisplay;
 import cerl.gui.forms.MarkovChainMatrix;
+import cerl.gui.standard.utilities.FileType;
 import cerl.gui.standard.utilities.FileUtility;
 import cerl.gui.standard.utilities.HelpFile;
 import cerl.gui.standard.utilities.Instruction;
@@ -30,6 +31,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -43,10 +45,14 @@ public class DigPopGUIUtilityClass {
      */
     private static final String HELP_FILE_PATH = "/cerl/gui/resources/HelpText.xml";
 
-    private static final int FIRST_COLUMN_FOR_CENSUS_ENUMERATIONS_FILE = 9;
-    private static final int FIRST_COLUMN_FOR_HOUSEHOLD_ENUMERATIONS_FILE = 8;
-    private static final int FIRST_COLUMN_FOR_POPULATION_ENUMERATIONS_FILE = 6;
-
+    private static final int FIRST_COLUMN_FOR_CENSUS_ENUMERATIONS_FILE = 0;
+    private static final int FIRST_COLUMN_FOR_HOUSEHOLD_ENUMERATIONS_FILE = 0;
+    private static final int FIRST_COLUMN_FOR_POPULATION_ENUMERATIONS_FILE = 0;
+    
+    private static final String RELATIONSHIP_FILE_NAME = "goal_relationship";
+    private static final String RELATIONSHIP_FILE_EXT = ".dprxml";
+    private static final FileType RELATIONSHIP_FILE_TYPE = FileType.XML;
+    
     /**
      * Calls FileUtility to read in the applications help file and stores into 
      * the HelpFile object. 
@@ -257,9 +263,10 @@ public class DigPopGUIUtilityClass {
      * Gets the survey data column values from the .csv file
      * @param filePath - the path of the file to read
      * @param columnNumber - the number of columns to ignore at the start of the file
+     * @param tableType - the type of file, either household or population data
      * @return the found column values
      */
-    public static Result getSurveyDataColumnValues(String filePath, int columnNumber) {
+    public static Result getSurveyDataColumnValues(String filePath, int columnNumber, String tableType) {
         Result result = new Result();
         List<SurveyColumnValue> columnValues = new ArrayList<SurveyColumnValue>();
 
@@ -278,7 +285,7 @@ public class DigPopGUIUtilityClass {
                     Optional<SurveyColumnValue> foundFromStream = columnValues.stream().filter(c -> c.getValue() == value).findFirst();
 
                     if (!foundFromStream.isPresent()) {
-                        columnValues.add(new SurveyColumnValue(lineCounter, Integer.parseInt(lineInfo[columnNumber]), false, 1));
+                        columnValues.add(new SurveyColumnValue(lineCounter, Integer.parseInt(lineInfo[columnNumber]), false, 1, tableType));
                     } else {
                         SurveyColumnValue found = foundFromStream.get();
                         found.addOneToNumberOfTimesUsed();
@@ -417,33 +424,47 @@ public class DigPopGUIUtilityClass {
 
         ArrayList<String> outputLines = new ArrayList<>();
 
-        int counter = 1;
+        int counter = 1; //current row in the file
 
         FileInputStream inputStream = null;
 
         Scanner sc = null;
         try {
-            inputStream = new FileInputStream(oldFilePath);
+            inputStream = new FileInputStream(oldFilePath); //open existing file
             sc = new Scanner(inputStream, "UTF-8");
             while (sc.hasNextLine()) {
-                String line = sc.nextLine();
+                String line = sc.nextLine(); //read row
 
-                if (counter == 1) {
+                if (counter == 1) { //header row
                     for (NewCensusColumnDetails newInfo : newDetailsToAdd) {
-                        line = line + ", " + newInfo.getNewColumnHeader() + "_" + newInfo.getRandomPercentage() + "%";
+                        line = line + ", " + newInfo.getNewColumnHeader(); // + "_" + newInfo.getRandomPercentage() + "%";
                     }
-                } else {
+                } else { //data rows
 
                     String[] lineInfo = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-
+                    ArrayList<Integer> newValuesArray = new ArrayList();
+                    
+                    int markovCounter = 0; //used for total columns
+                    
                     for (NewCensusColumnDetails newInfo : newDetailsToAdd) {
                         int oldValue = 0;
-                        for(int oldColumnNumber : newInfo.getOldValueLookUpColumns()){
-                            oldValue = Integer.parseInt(lineInfo[oldColumnNumber]);
+                        
+                        //if is the total column, should sum previous columns
+                        if(newInfo.getNumberOfColumnsPriorToSum() > 0){
+                            for(int columnNumber=0; columnNumber < newInfo.getNumberOfColumnsPriorToSum(); columnNumber++){
+                                oldValue += newValuesArray.get(markovCounter + columnNumber);
+                            }
+                            markovCounter = newValuesArray.size()+1; //all new columns + total column
+                        }
+                        else{ //sum columns provided
+                            for(int oldColumnNumber : newInfo.getOldValueLookUpColumns()){
+                                oldValue += Integer.parseInt(lineInfo[oldColumnNumber]);
+                            }
                         }
                         
                         int newValue = (int) (oldValue * newInfo.getRandomPercentage());
-
+                        newValuesArray.add(newValue); 
+                        
                         line = line + ", " + newValue;
                     }
                 }
@@ -492,6 +513,7 @@ public class DigPopGUIUtilityClass {
     public static Result CreateNewCensusCSVFiles(
             ArrayList<MarkovChain> markovChains,
             int numberOfRuns,
+            String runName,
             String censusEnumerationFullPath,
             String fileDirectory) {
 
@@ -501,21 +523,22 @@ public class DigPopGUIUtilityClass {
         String onlyFilename = (new File(censusEnumerationFullPath)).getName();
 
         while (counter <= numberOfRuns && result.isSuccess()) {
+            String newFileName = String.format(
+                    "%s\\%s_Run_%s_%s", 
+                    fileDirectory,
+                    runName,
+                    counter, onlyFilename);
+            ArrayList<NewCensusColumnDetails> newColumns = new ArrayList<>();
             for (MarkovChain markovChain : markovChains) {
-                String newFileName = String.format(
-                        "%s\\%s_Run_%s_%s",
-                        fileDirectory,
-                        markovChain.getMarkovName(),
-                        counter,
-                        onlyFilename);
-                try {
-                    result = DigPopGUIUtilityClass.outputNewCensusFile(
-                            censusEnumerationFullPath,
-                            newFileName,
-                            markovChain.getNewCensusColumnDetails());
-                } catch (IOException ex) {
-                    Logger.getLogger(MarkovChainMatrix.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                newColumns.addAll(markovChain.getNewCensusColumnDetails());
+            }
+            try {
+                result = DigPopGUIUtilityClass.outputNewCensusFile(
+                        censusEnumerationFullPath,
+                        newFileName,
+                        newColumns);
+            } catch (IOException ex) {
+                Logger.getLogger(MarkovChainMatrix.class.getName()).log(Level.SEVERE, null, ex);
             }
             counter++;
         }
@@ -524,4 +547,54 @@ public class DigPopGUIUtilityClass {
 
     }
 
+    /**
+     * Creates a new Default Combo Box Model from the ArrayList if items
+     * @param itemsToStream - the items to add to the model
+     * @return the new Default Combo Box Model populated with ArrayList items
+     */
+    public static DefaultComboBoxModel getNewDefaultComboBoxModel(ArrayList<Class> itemsToStream){
+        DefaultComboBoxModel newModel = new DefaultComboBoxModel();
+        
+        itemsToStream.stream().forEach((c) -> {
+            newModel.addElement(c);
+        });
+        
+        return newModel;
+    }
+    
+    /**
+     * Creates the Goal Relationship .dprxml file with the information provided 
+     * Saves file into the same folder as the log file selected on the initial step
+     */
+    public static Result createGoalRelationshipFile(String saveFileDirectory, GoalRelationshipFile goalFile){
+        Result result = new Result();
+        
+        String fileName = RELATIONSHIP_FILE_NAME + RELATIONSHIP_FILE_EXT;
+        
+        //create new Fitting Criteria file
+        File newRelationshipFile = new File(String.format("%s\\%s", saveFileDirectory, fileName));
+                
+        //write to file
+        result = FileUtility.VerifyFileType(RELATIONSHIP_FILE_TYPE, newRelationshipFile);
+        
+        if(result.isSuccess()){
+            try {
+                //Need to create the file as empty version of the object
+                result = FileUtility.ParseObjectToXML(goalFile, newRelationshipFile.getPath(), goalFile.getClass());
+
+                //If successully created object - go to Next Step
+                if(result.isSuccess()){
+                    System.out.println("Successfully created goal relationship file");
+                }else {
+                    result.setErrorMessage("Error parsing goal relationship file");
+                }
+
+            } catch (Exception ex) {
+                result.setSuccess(false);
+                result.setErrorMessage("Error parsing goal relationship file");
+                System.err.print(ex.getMessage());
+            }
+        }
+        return result;
+    }
 }

@@ -6,12 +6,16 @@
 package cerl.gui.forms;
 
 import cerl.gui.standard.utilities.Result;
+import cerl.gui.utilities.CensusSurveyClasses;
 import cerl.gui.utilities.ConstraintMap;
 import cerl.gui.utilities.ConstraintMapsTableItemModel;
 import cerl.gui.utilities.DigPopGUIInformation;
 import cerl.gui.utilities.DigPopGUIUtilityClass;
 import cerl.gui.utilities.HelpFileScreenNames;
+import cerl.gui.utilities.Households;
 import cerl.gui.utilities.LandUseCombinationTableItemModel;
+import cerl.gui.utilities.Population;
+import cerl.gui.utilities.Regions;
 import cerl.gui.utilities.StepTwoInstructionNames;
 import cerl.gui.utilities.VacantClass;
 import java.awt.event.MouseAdapter;
@@ -21,10 +25,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
-import javax.swing.table.DefaultTableModel;
 
 /**
  * The second step in the DigPop GUI
@@ -38,8 +42,8 @@ public class StepTwo extends javax.swing.JFrame {
     private final ConstraintMapsTableItemModel constraintMapsTableItemModel;
     private final DigPopGUIInformation digPopGUIInformation;
     
+    private CensusSurveyClasses censusSurveyClasses;
     private Result landUseLoadClassesResult = new Result();
-    
     
     /**
      * Creates new form StepOne
@@ -55,6 +59,17 @@ public class StepTwo extends javax.swing.JFrame {
             constraintMaps = this.digPopGUIInformation.getConstraintMaps();
         }
         this.constraintMapsTableItemModel = new ConstraintMapsTableItemModel(constraintMaps);
+        
+        //Pull in census Survey Classes for use in dropdowns
+        this.censusSurveyClasses = this.digPopGUIInformation.getCensusSurveyClasses(); 
+        
+        if(this.censusSurveyClasses.getCensusClasses().isEmpty()){
+            Result result = DigPopGUIUtilityClass.getLoadedCensusSurveyClasses(
+                this.digPopGUIInformation.getCensusEnumerationsFilePath(),
+                this.digPopGUIInformation.getPopulationMicroDataFilePath(),
+                this.digPopGUIInformation.getHouseholdMicroDataFilePath());
+            this.censusSurveyClasses = (CensusSurveyClasses) result.getValue();
+        }
         
         initComponents();
         errors = new ArrayList<>();
@@ -133,6 +148,18 @@ public class StepTwo extends javax.swing.JFrame {
         lblCensusEnumerations = new javax.swing.JLabel();
         censusEnumerationsInfoIcon = new javax.swing.JLabel();
         regionMapInfoIcon = new javax.swing.JLabel();
+        jLabel_KeyColumn = new javax.swing.JLabel();
+        KeyColumnInfoIcon = new javax.swing.JLabel();
+        jComboBox_KeyColumn = new javax.swing.JComboBox<>();
+        jLabel_PopulationColumnName = new javax.swing.JLabel();
+        PopulationInfoIcon = new javax.swing.JLabel();
+        jComboBox_Population = new javax.swing.JComboBox<>();
+        jLabel_VacanciesColumn = new javax.swing.JLabel();
+        VacanciesColumnInfoIcon = new javax.swing.JLabel();
+        jComboBox_Vacancies = new javax.swing.JComboBox<>();
+        jLabel_HouseholdRegionTag = new javax.swing.JLabel();
+        HouseholdRegionTagInfoIcon = new javax.swing.JLabel();
+        jComboBox_HouseholdsRegionTag = new javax.swing.JComboBox<>();
         jPanelHouseholdDensityMap = new javax.swing.JPanel();
         txtHouseholdDensityMap = new javax.swing.JTextField();
         lblHouseholdDensityMap = new javax.swing.JLabel();
@@ -141,10 +168,19 @@ public class StepTwo extends javax.swing.JFrame {
         txtHouseholdMicroData = new javax.swing.JTextField();
         lblHouseholdMicroData = new javax.swing.JLabel();
         householdMicroDataInfoIcon = new javax.swing.JLabel();
+        jLabel_Members = new javax.swing.JLabel();
+        MembersInfoIcon = new javax.swing.JLabel();
+        jComboBox_Members = new javax.swing.JComboBox<>();
+        jLabel_Household_KeyColumnName = new javax.swing.JLabel();
+        HouseholdKeyInfoIcon = new javax.swing.JLabel();
+        jComboBox_HouseholdKey = new javax.swing.JComboBox<>();
         jPanelPopulationMicroData = new javax.swing.JPanel();
         txtPopulationMicroData = new javax.swing.JTextField();
         lblPopulationMicroData = new javax.swing.JLabel();
         populationMicroDataInfoIcon = new javax.swing.JLabel();
+        jLabel_Pop_HouseholdColumnName = new javax.swing.JLabel();
+        Pop_HouseholdColumnInfoIcon = new javax.swing.JLabel();
+        jComboBox_Pop_HouseholdColumnName = new javax.swing.JComboBox<>();
         jPanelLandUseHouseholdMap = new javax.swing.JPanel();
         lblLanduseMap = new javax.swing.JLabel();
         txtLandUseHouseholdMap = new javax.swing.JTextField();
@@ -224,9 +260,9 @@ public class StepTwo extends javax.swing.JFrame {
 
         txtCensusEnumerations.setEditable(false);
 
-        lblRegionMap.setText("Selected Region Map:");
+        lblRegionMap.setText("Region Map:");
 
-        lblCensusEnumerations.setText("Selected Census Enumerations:");
+        lblCensusEnumerations.setText("Census Enumerations:");
 
         censusEnumerationsInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         censusEnumerationsInfoIcon.setToolTipText("Help Infomation for Region Map");
@@ -246,25 +282,129 @@ public class StepTwo extends javax.swing.JFrame {
             }
         });
 
+        jLabel_KeyColumn.setText("Key Column:");
+        jLabel_KeyColumn.setPreferredSize(new java.awt.Dimension(250, 14));
+
+        KeyColumnInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        KeyColumnInfoIcon.setToolTipText("Help Infomation for Logging the results of Phase 1");
+        KeyColumnInfoIcon.setIconTextGap(0);
+        KeyColumnInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                KeyColumnInfoIconMouseClicked(evt);
+            }
+        });
+
+        jComboBox_KeyColumn.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(this.censusSurveyClasses.getCensusClasses()));
+        jComboBox_KeyColumn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_KeyColumnActionPerformed(evt);
+            }
+        });
+
+        jLabel_PopulationColumnName.setText("Population Column:");
+        jLabel_PopulationColumnName.setPreferredSize(new java.awt.Dimension(250, 14));
+
+        PopulationInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        PopulationInfoIcon.setToolTipText("Help Infomation for Logging the results of Phase 1");
+        PopulationInfoIcon.setIconTextGap(0);
+        PopulationInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PopulationInfoIconMouseClicked(evt);
+            }
+        });
+
+        jComboBox_Population.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(this.censusSurveyClasses.getCensusClasses()));
+        jComboBox_Population.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_PopulationActionPerformed(evt);
+            }
+        });
+
+        jLabel_VacanciesColumn.setText("Vacancies Column:");
+        jLabel_VacanciesColumn.setPreferredSize(new java.awt.Dimension(250, 14));
+
+        VacanciesColumnInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        VacanciesColumnInfoIcon.setToolTipText("Help Infomation for Logging the results of Phase 1");
+        VacanciesColumnInfoIcon.setIconTextGap(0);
+        VacanciesColumnInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                VacanciesColumnInfoIconMouseClicked(evt);
+            }
+        });
+
+        jComboBox_Vacancies.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(this.censusSurveyClasses.getCensusClasses()));
+        jComboBox_Vacancies.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_VacanciesActionPerformed(evt);
+            }
+        });
+
+        jLabel_HouseholdRegionTag.setText("Household Column:");
+        jLabel_HouseholdRegionTag.setPreferredSize(new java.awt.Dimension(250, 14));
+
+        HouseholdRegionTagInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        HouseholdRegionTagInfoIcon.setToolTipText("Help Infomation for Logging the results of Phase 1");
+        HouseholdRegionTagInfoIcon.setIconTextGap(0);
+        HouseholdRegionTagInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HouseholdRegionTagInfoIconMouseClicked(evt);
+            }
+        });
+
+        jComboBox_HouseholdsRegionTag.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(this.censusSurveyClasses.getCensusClasses()));
+        jComboBox_HouseholdsRegionTag.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_HouseholdsRegionTagActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelRegionMapCensusEnumLayout = new javax.swing.GroupLayout(jPanelRegionMapCensusEnum);
         jPanelRegionMapCensusEnum.setLayout(jPanelRegionMapCensusEnumLayout);
         jPanelRegionMapCensusEnumLayout.setHorizontalGroup(
             jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
+                        .addComponent(jLabel_VacanciesColumn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(VacanciesColumnInfoIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox_Vacancies, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel_HouseholdRegionTag, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                    .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
+                        .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
+                                .addComponent(lblRegionMap)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(regionMapInfoIcon)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtRegionMap, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelRegionMapCensusEnumLayout.createSequentialGroup()
+                                .addComponent(jLabel_KeyColumn, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(KeyColumnInfoIcon)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBox_KeyColumn, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCensusEnumerations)
+                            .addComponent(jLabel_PopulationColumnName, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
                 .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
-                        .addComponent(lblCensusEnumerations)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(censusEnumerationsInfoIcon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCensusEnumerations, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE))
-                    .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
-                        .addComponent(lblRegionMap)
+                        .addComponent(txtCensusEnumerations))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRegionMapCensusEnumLayout.createSequentialGroup()
+                        .addComponent(PopulationInfoIcon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regionMapInfoIcon)
+                        .addComponent(jComboBox_Population, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRegionMapCensusEnumLayout.createSequentialGroup()
+                        .addComponent(HouseholdRegionTagInfoIcon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtRegionMap)))
+                        .addComponent(jComboBox_HouseholdsRegionTag, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelRegionMapCensusEnumLayout.setVerticalGroup(
@@ -272,17 +412,33 @@ public class StepTwo extends javax.swing.JFrame {
             .addGroup(jPanelRegionMapCensusEnumLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCensusEnumerations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCensusEnumerations))
+                        .addComponent(censusEnumerationsInfoIcon))
                     .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtRegionMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblRegionMap))
                     .addComponent(regionMapInfoIcon))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(KeyColumnInfoIcon)
+                    .addComponent(jComboBox_KeyColumn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_KeyColumn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PopulationInfoIcon)
+                    .addComponent(jComboBox_Population, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_PopulationColumnName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(VacanciesColumnInfoIcon)
                     .addGroup(jPanelRegionMapCensusEnumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtCensusEnumerations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblCensusEnumerations))
-                    .addComponent(censusEnumerationsInfoIcon))
-                .addContainerGap(13, Short.MAX_VALUE))
+                        .addComponent(jComboBox_Vacancies, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel_HouseholdRegionTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel_VacanciesColumn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(HouseholdRegionTagInfoIcon)
+                    .addComponent(jComboBox_HouseholdsRegionTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanelHouseholdDensityMap.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -310,7 +466,7 @@ public class StepTwo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(householdDensityMapInfoIcon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtHouseholdDensityMap, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+                .addComponent(txtHouseholdDensityMap)
                 .addContainerGap())
         );
         jPanelHouseholdDensityMapLayout.setVerticalGroup(
@@ -330,7 +486,7 @@ public class StepTwo extends javax.swing.JFrame {
 
         txtHouseholdMicroData.setEditable(false);
 
-        lblHouseholdMicroData.setText("Selected Household Micro-data:");
+        lblHouseholdMicroData.setText("Household Micro-data Table:");
 
         householdMicroDataInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         householdMicroDataInfoIcon.setToolTipText("Help Infomation for Region Map");
@@ -341,17 +497,69 @@ public class StepTwo extends javax.swing.JFrame {
             }
         });
 
+        jLabel_Members.setText("Members Column");
+        jLabel_Members.setPreferredSize(new java.awt.Dimension(250, 14));
+
+        MembersInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        MembersInfoIcon.setToolTipText("Help Infomation for Logging the results of Phase 1");
+        MembersInfoIcon.setIconTextGap(0);
+        MembersInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MembersInfoIconMouseClicked(evt);
+            }
+        });
+
+        jComboBox_Members.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(this.censusSurveyClasses.getHouseholdMicroDataClasses()));
+        jComboBox_Members.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_MembersActionPerformed(evt);
+            }
+        });
+
+        jLabel_Household_KeyColumnName.setText("Key Column");
+        jLabel_Household_KeyColumnName.setPreferredSize(new java.awt.Dimension(250, 14));
+
+        HouseholdKeyInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        HouseholdKeyInfoIcon.setToolTipText("Help Infomation for Logging the results of Phase 1");
+        HouseholdKeyInfoIcon.setIconTextGap(0);
+        HouseholdKeyInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HouseholdKeyInfoIconMouseClicked(evt);
+            }
+        });
+
+        jComboBox_HouseholdKey.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(this.censusSurveyClasses.getHouseholdMicroDataClasses()));
+        jComboBox_HouseholdKey.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_HouseholdKeyActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelHouseholdMicroDataLayout = new javax.swing.GroupLayout(jPanelHouseholdMicroData);
         jPanelHouseholdMicroData.setLayout(jPanelHouseholdMicroDataLayout);
         jPanelHouseholdMicroDataLayout.setHorizontalGroup(
             jPanelHouseholdMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelHouseholdMicroDataLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblHouseholdMicroData)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(householdMicroDataInfoIcon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtHouseholdMicroData, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+                .addGroup(jPanelHouseholdMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelHouseholdMicroDataLayout.createSequentialGroup()
+                        .addComponent(lblHouseholdMicroData)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(householdMicroDataInfoIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtHouseholdMicroData))
+                    .addGroup(jPanelHouseholdMicroDataLayout.createSequentialGroup()
+                        .addComponent(jLabel_Members, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(MembersInfoIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox_Members, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(jLabel_Household_KeyColumnName, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(HouseholdKeyInfoIcon)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox_HouseholdKey, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelHouseholdMicroDataLayout.setVerticalGroup(
@@ -363,6 +571,14 @@ public class StepTwo extends javax.swing.JFrame {
                     .addGroup(jPanelHouseholdMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblHouseholdMicroData)
                         .addComponent(txtHouseholdMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelHouseholdMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(MembersInfoIcon)
+                    .addComponent(jComboBox_Members, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_Members, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(HouseholdKeyInfoIcon)
+                    .addComponent(jComboBox_HouseholdKey, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_Household_KeyColumnName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -371,7 +587,7 @@ public class StepTwo extends javax.swing.JFrame {
 
         txtPopulationMicroData.setEditable(false);
 
-        lblPopulationMicroData.setText("Selected Population Micro-data:");
+        lblPopulationMicroData.setText("Population Micro-data Table:");
 
         populationMicroDataInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
         populationMicroDataInfoIcon.setToolTipText("Help Infomation for Region Map");
@@ -379,6 +595,25 @@ public class StepTwo extends javax.swing.JFrame {
         populationMicroDataInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 populationMicroDataInfoIconMouseClicked(evt);
+            }
+        });
+
+        jLabel_Pop_HouseholdColumnName.setText("Household Column");
+        jLabel_Pop_HouseholdColumnName.setPreferredSize(new java.awt.Dimension(250, 14));
+
+        Pop_HouseholdColumnInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cerl/gui/resources/info.png"))); // NOI18N
+        Pop_HouseholdColumnInfoIcon.setToolTipText("Help Infomation for Logging the results of Phase 1");
+        Pop_HouseholdColumnInfoIcon.setIconTextGap(0);
+        Pop_HouseholdColumnInfoIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Pop_HouseholdColumnInfoIconMouseClicked(evt);
+            }
+        });
+
+        jComboBox_Pop_HouseholdColumnName.setModel(DigPopGUIUtilityClass.getNewDefaultComboBoxModel(this.censusSurveyClasses.getPopulationMicroDataClasses()));
+        jComboBox_Pop_HouseholdColumnName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_Pop_HouseholdColumnNameActionPerformed(evt);
             }
         });
 
@@ -392,7 +627,13 @@ public class StepTwo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(populationMicroDataInfoIcon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPopulationMicroData, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+                .addComponent(txtPopulationMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel_Pop_HouseholdColumnName, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Pop_HouseholdColumnInfoIcon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jComboBox_Pop_HouseholdColumnName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelPopulationMicroDataLayout.setVerticalGroup(
@@ -400,12 +641,17 @@ public class StepTwo extends javax.swing.JFrame {
             .addGroup(jPanelPopulationMicroDataLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelPopulationMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Pop_HouseholdColumnInfoIcon)
+                    .addComponent(jComboBox_Pop_HouseholdColumnName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_Pop_HouseholdColumnName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(populationMicroDataInfoIcon)
                     .addGroup(jPanelPopulationMicroDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtPopulationMicroData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblPopulationMicroData)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        Pop_HouseholdColumnInfoIcon.getAccessibleContext().setAccessibleDescription("Help Infomation for Population Household tag");
 
         jPanelLandUseHouseholdMap.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanelLandUseHouseholdMap.setMinimumSize(new java.awt.Dimension(100, 100));
@@ -482,7 +728,7 @@ public class StepTwo extends javax.swing.JFrame {
             .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelLandUseHouseholdMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelLandUseHouseholdMapLayout.createSequentialGroup()
                         .addComponent(lblLanduseMap)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -864,17 +1110,61 @@ public class StepTwo extends javax.swing.JFrame {
         DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Combination_Classes.toString());
     }//GEN-LAST:event_landuseMapCombinationClassesInfoIconMouseClicked
 
-   
-    
-    /**
-     * Adds a new constraint map
-     * @param value 
-     */
-  //  private void AddItemToConstaintMapTable(ConstraintMap value){
-   //     DefaultTableModel model = (DefaultTableModel)tblConstraintMaps.getModel();
- //       Object[] obj = {value};
- //       model.addRow(obj);
- //   }
+    private void Pop_HouseholdColumnInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Pop_HouseholdColumnInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Population_Tag.toString());
+    }//GEN-LAST:event_Pop_HouseholdColumnInfoIconMouseClicked
+
+    private void jComboBox_Pop_HouseholdColumnNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Pop_HouseholdColumnNameActionPerformed
+        //TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_Pop_HouseholdColumnNameActionPerformed
+
+    private void MembersInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MembersInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Household_Tag.toString());
+    }//GEN-LAST:event_MembersInfoIconMouseClicked
+
+    private void jComboBox_MembersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_MembersActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_MembersActionPerformed
+
+    private void HouseholdKeyInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HouseholdKeyInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Household_Tag.toString());
+    }//GEN-LAST:event_HouseholdKeyInfoIconMouseClicked
+
+    private void jComboBox_HouseholdKeyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_HouseholdKeyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_HouseholdKeyActionPerformed
+
+    private void KeyColumnInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_KeyColumnInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Region_Tag.toString());
+    }//GEN-LAST:event_KeyColumnInfoIconMouseClicked
+
+    private void jComboBox_KeyColumnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_KeyColumnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_KeyColumnActionPerformed
+
+    private void PopulationInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PopulationInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Region_Tag.toString());
+    }//GEN-LAST:event_PopulationInfoIconMouseClicked
+
+    private void jComboBox_PopulationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_PopulationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_PopulationActionPerformed
+
+    private void VacanciesColumnInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VacanciesColumnInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Region_Tag.toString());
+    }//GEN-LAST:event_VacanciesColumnInfoIconMouseClicked
+
+    private void jComboBox_VacanciesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_VacanciesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_VacanciesActionPerformed
+
+    private void HouseholdRegionTagInfoIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HouseholdRegionTagInfoIconMouseClicked
+        DigPopGUIUtilityClass.loadDefaultHelpGUIByScreenInstructionName(SCREEN_NAME, StepTwoInstructionNames.Region_Tag.toString());
+    }//GEN-LAST:event_HouseholdRegionTagInfoIconMouseClicked
+
+    private void jComboBox_HouseholdsRegionTagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_HouseholdsRegionTagActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_HouseholdsRegionTagActionPerformed
     
     /**
      * Updates the error messages
@@ -927,14 +1217,47 @@ public class StepTwo extends javax.swing.JFrame {
             jPanelLandUseHouseholdMap.setVisible(false);
             jPanelHouseholdDensityMap.setVisible(true);
         }
+                
+        //Region map fields for goal relationship file <regions> tag parameters:
+        Regions thisRegion = this.digPopGUIInformation.getGoalRelationshipFile().getRegions();
         
-        txtRegionMap.setText(this.digPopGUIInformation.getRegionMapFilePath());
-        txtCensusEnumerations.setText(this.digPopGUIInformation.getCensusEnumerationsFilePath());
-
-        txtPopulationMicroData.setText(this.digPopGUIInformation.getPopulationMicroDataFilePath());
-        txtHouseholdMicroData.setText(this.digPopGUIInformation.getHouseholdMicroDataFilePath());
+        txtRegionMap.setText(thisRegion.getMap() != null ? thisRegion.getMap() : this.digPopGUIInformation.getRegionMapFilePath()); //map
+        txtCensusEnumerations.setText(thisRegion.getTable() != null ? thisRegion.getTable() : this.digPopGUIInformation.getCensusEnumerationsFilePath()); //table
+        this.jComboBox_KeyColumn.setSelectedIndex(getIndexFromValue(thisRegion.getKey(), jComboBox_KeyColumn));
+        this.jComboBox_Vacancies.setSelectedIndex(getIndexFromValue(thisRegion.getVacancies(), jComboBox_Vacancies));
+        this.jComboBox_Population.setSelectedIndex(getIndexFromValue(thisRegion.getPopulation(),jComboBox_Population));
+        this.jComboBox_HouseholdsRegionTag.setSelectedIndex(getIndexFromValue(thisRegion.getHouseholds(), jComboBox_HouseholdsRegionTag));
         
+        //Household tag fields for goal relationship file:
+        Households thisHousehold = this.digPopGUIInformation.getGoalRelationshipFile().getHouseholds();
+        
+        txtHouseholdMicroData.setText(thisHousehold.getTable() != null ? thisHousehold.getTable() : this.digPopGUIInformation.getHouseholdMicroDataFilePath()); //table
+        this.jComboBox_Members.setSelectedIndex(getIndexFromValue(thisHousehold.getMembers(), jComboBox_Members));
+        this.jComboBox_HouseholdKey.setSelectedIndex(getIndexFromValue(thisHousehold.getKey(),jComboBox_HouseholdKey));
+        
+        //Population tag fields for goal relationship file
+        Population thisPopulation = this.digPopGUIInformation.getGoalRelationshipFile().getPopulation();
+        
+        txtPopulationMicroData.setText(thisPopulation.getTable() != null ? thisPopulation.getTable() : this.digPopGUIInformation.getPopulationMicroDataFilePath()); //table
+        if(thisPopulation.getHousehold() != null){
+            this.jComboBox_Pop_HouseholdColumnName.setSelectedIndex(getIndexFromValue(thisPopulation.getHousehold(),jComboBox_Pop_HouseholdColumnName));
+        }
         pack();
+    }
+    
+    /**
+     * Finds the matching index of the value in lookuplist
+     * @param value - the value to find
+     * @param lookupList - the lookup list to search
+     * @return - the index of the located item, or 0 if not found
+     */
+    private Integer getIndexFromValue(String value, JComboBox lookupList){
+        for(int i = 0; i<lookupList.getItemCount(); i++){
+            if(lookupList.getItemAt(i).toString().equals(value)){
+                return i;
+            }
+        }
+        return 0;
     }
     
     /**
@@ -955,6 +1278,27 @@ public class StepTwo extends javax.swing.JFrame {
         this.digPopGUIInformation.getLandUseMapInformation().setVacantClasses(vacant);
         this.digPopGUIInformation.getLandUseMapInformation().setComment(this.txtLandUseComment.getText());
         
+        //Save Region map fields for goal relationship file <regions> tag parameters:
+        this.digPopGUIInformation.getGoalRelationshipFile()
+                .setRegions(new Regions(txtRegionMap.getText()
+                        , txtCensusEnumerations.getText()
+                        , this.jComboBox_KeyColumn.getSelectedItem().toString()
+                        , this.jComboBox_Vacancies.getSelectedItem().toString()
+                        , this.jComboBox_Population.getSelectedItem().toString()
+                        , this.jComboBox_HouseholdsRegionTag.getSelectedItem().toString()));
+                
+        //Save Household tag fields for goal relationship file:
+        this.digPopGUIInformation.getGoalRelationshipFile()
+                .setHouseholds(new Households(txtHouseholdMicroData.getText()
+                        , this.jComboBox_Members.getSelectedItem().toString()
+                        , this.jComboBox_HouseholdKey.getSelectedItem().toString()));
+                
+        //Save Population tag fields for goal relationship file
+        if(this.jComboBox_Pop_HouseholdColumnName.getSelectedItem() != null){
+            this.digPopGUIInformation.getGoalRelationshipFile()
+                .setPopulation(new Population(txtPopulationMicroData.getText()
+                        ,this.jComboBox_Pop_HouseholdColumnName.getSelectedItem().toString()));
+        }
         saveToFile();
     }
     
@@ -969,6 +1313,13 @@ public class StepTwo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel HouseholdKeyInfoIcon;
+    private javax.swing.JLabel HouseholdRegionTagInfoIcon;
+    private javax.swing.JLabel KeyColumnInfoIcon;
+    private javax.swing.JLabel MembersInfoIcon;
+    private javax.swing.JLabel Pop_HouseholdColumnInfoIcon;
+    private javax.swing.JLabel PopulationInfoIcon;
+    private javax.swing.JLabel VacanciesColumnInfoIcon;
     private javax.swing.JButton btnLandUseAddCombinationClass;
     private javax.swing.JButton btnNextStep;
     private javax.swing.JButton btnPreviousStep;
@@ -976,12 +1327,26 @@ public class StepTwo extends javax.swing.JFrame {
     private javax.swing.JLabel constraintMapInfoIcon;
     private javax.swing.JLabel householdDensityMapInfoIcon;
     private javax.swing.JLabel householdMicroDataInfoIcon;
+    private javax.swing.JComboBox<String> jComboBox_HouseholdKey;
+    private javax.swing.JComboBox<String> jComboBox_HouseholdsRegionTag;
+    private javax.swing.JComboBox<String> jComboBox_KeyColumn;
+    private javax.swing.JComboBox<String> jComboBox_Members;
+    private javax.swing.JComboBox<String> jComboBox_Pop_HouseholdColumnName;
+    private javax.swing.JComboBox<String> jComboBox_Population;
+    private javax.swing.JComboBox<String> jComboBox_Vacancies;
     private javax.swing.JDialog jDialogLoadingFile;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel_HouseholdRegionTag;
+    private javax.swing.JLabel jLabel_Household_KeyColumnName;
+    private javax.swing.JLabel jLabel_KeyColumn;
+    private javax.swing.JLabel jLabel_Members;
+    private javax.swing.JLabel jLabel_Pop_HouseholdColumnName;
+    private javax.swing.JLabel jLabel_PopulationColumnName;
+    private javax.swing.JLabel jLabel_VacanciesColumn;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenu_About;
     private javax.swing.JPanel jPanelConstraintMap;
